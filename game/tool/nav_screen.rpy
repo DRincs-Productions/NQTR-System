@@ -72,6 +72,6 @@ screen room_navigation():
         button xysize (136, 190) action [Hide('wait_navigation'), Jump('new_hour')]:
             has vbox xsize 136 spacing 0
             frame xysize (136, 140) background None:
-                imagebutton idle '/interface/wait.webp' selected_hover '/interface/wait.webp':
+                imagebutton idle '/interface/action-wait.webp' selected_hover '/interface/action-wait.webp':
                     align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('new_hour')] at middle_wait
             text _("WAIT") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
