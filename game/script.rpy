@@ -10,7 +10,7 @@ define e = Character("Eileen")
 
 label start:
 
-    $ cur_location = 'house'
+    $ cur_location = "house"
     $ cur_room = rooms[4]
     $ prev_room = rooms[5]
 

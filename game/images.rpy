@@ -14,3 +14,5 @@ image location lounge a = im.MatrixColor("location/lounge-icon.webp", im.matrix.
 image location terrace a = im.MatrixColor("location/terrace-icon.webp", im.matrix.brightness(-0.5))
 image location courtyard a = im.MatrixColor("location/courtyard-icon.webp", im.matrix.brightness(-0.5))
 
+image icon alice = "Alice/icon.webp"
+image icon ann = "Ann/icon.webp"
