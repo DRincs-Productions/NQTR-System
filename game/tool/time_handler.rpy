@@ -1,3 +1,4 @@
+define event_duration = 6
 init python:
     hour_names = ( (2, _("Night")),
                    (8, _("Morning")),
@@ -17,11 +18,16 @@ init python:
     #               )
 
     class TimeHandler(object):
-        def __init__(self):
-            self.hour_new_day = 8
-            self.weekend_day = 6    # Saturday
+        """Class to manage time, and also related to the constant event_duration. I strongly recommend to modify it according to the use."""
+        def __init__(self, hour_new_day=8, weekend_day=6, day=0):
+            self.hour_new_day = hour_new_day
+            self.weekend_day = weekend_day
             self.hour = self.hour_new_day
-            self.day = 0
+            self.day = day
+            # this variable is used to update images that change according to time.
+            # es image = "sky-[image_time]"
+            self.image_time = 0
+            self.update_image_time()
 
         def get_hour(self):
             hour = self.get_hour(hour)
@@ -70,42 +76,44 @@ init python:
         #         day -= len(month[1])
         #     return month_number
 
-        def new_hour(self, amt):
+        def new_hour(self, amt=event_duration):
+            # if it is too late you have to use new_day()
             if (self.hour < hour_names[1][0]):
                 return False
+
             self.hour += amt
             if (self.hour > 24):
                 self.hour -= 24
+            self.update_image_time()
             return True
+
+        def update_image_time(self):
+            if (self.get_hour_name() == "Evening"):
+                self.image_time = 2
+            elif (self.get_hour_name() == "Night"):
+                self.image_time = 3
+            elif (self.get_hour_name() == "Morning"):
+                self.image_time = 0
+            else:
+                self.image_time = 1
 
         def new_day(self):
             self.hour = self.hour_new_day
             self.day += 1
+            self.update_image_time()
 
-        # def skip_weekend(self):
+        # TODO: skip is weekend
+        # TODO: skip weekend
 
-default time_handler = TimeHandler()
-define event_duration = 6
-default sky_time = 0
-image sky = "check:images_tool/sky-[sky_time].webp"
+default tm = TimeHandler()
 
 label new_hour:
-    if(time_handler.new_hour(event_duration)):
-        if (time_handler.get_hour_name() == "Evening"):
-            $ sky_time = 2
-        elif (time_handler.get_hour_name() == "Night"):
-            $ sky_time = 3
-        elif (time_handler.get_hour_name() == "Morning"):
-            $ sky_time = 0
-        else:
-            $ sky_time = 1
-    else:
+    if(!tm.new_hour()):
         "(It's late, you have to go to bed)"
     return
 
 label new_day:
-    $ time_handler.new_day()
-    $ sky_time = 0
+    $ tm.new_day()
     call check_event
     return
 
