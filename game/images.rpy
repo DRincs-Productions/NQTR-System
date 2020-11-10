@@ -16,3 +16,11 @@ image icon courtyard a = im.MatrixColor("location/courtyard-icon.webp", im.matri
 
 image icon alice = "Alice/icon.webp"
 image icon ann = "Ann/icon.webp"
+
+image bg myroom = "location/myroom-[tm.image_time].webp"
+image bg aliceroom = "location/aliceroom-[tm.image_time].webp"
+image bg annroom = "location/annroom-[tm.image_time].webp"
+image bg bathroom = "location/bathroom.webp"
+image bg lounge = "location/lounge.webp"
+image bg terrace = "location/terrace.webp"
+image bg courtyard = "location/courtyard-[tm.image_time].webp"

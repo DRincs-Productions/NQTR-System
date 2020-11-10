@@ -10,9 +10,10 @@ label new_day:
     call check_event
     return
 
+label after_waiting:
+    scene expression (cur_room.bg)
+    call screen room_navigation
+
 label check_event:
     # Custom code
     return
-
-label AfterWaiting:
-    call screen room_navigation

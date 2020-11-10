@@ -1,13 +1,14 @@
 init -9 python:
     class Room:
         """Class of a Room"""
-        def __init__(self, id, id_location, name='', icon=''):
+        def __init__(self, id, id_location, name='', icon='', bg=''):
             self.id = id
             self.id_location = id_location
             self.name = name
             self.icon = icon
-        def enter(self):
-            return enterRoom(id = self.id)
+            self.bg = bg
+        # def enter(self):
+        #     return enterRoom(id = self.id)
 
     class Commitment(object):
         """Commitment"""
