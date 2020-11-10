@@ -35,6 +35,7 @@ init python:
             return ret
 
         def get_hour_name(self):
+            ret = hour_names[0][0]
             hour = self.hour
             for hour_name in hour_names:
                 if hour < hour_name[0]:
@@ -109,16 +110,3 @@ init python:
         # TODO: skip weekend
 
 default tm = TimeHandler()
-
-label new_hour:
-    if(!tm.new_hour()):
-        "(It's late, you have to go to bed)"
-    return
-
-label new_day:
-    $ tm.new_day()
-    call check_event
-    return
-
-label check_event:
-    return

@@ -20,13 +20,6 @@ init:
         on selected_hover:
             yanchor 1 alpha 0.93
 
-screen wait_navigation():
-    frame align (.99, .99) xysize (123, 395) background None:
-        has vbox:
-            spacing 5
-        imagebutton idle 'interface wait 10' focus_mask True action [Hide('wait_navigation'), SetVariable('spent_time', 10), Jump('Waiting')] at small_zoom
-        imagebutton idle 'interface wait 30' focus_mask True action [Hide('wait_navigation'), SetVariable('spent_time', 30), Jump('Waiting')] at small_zoom
-    timer 2.0 action Hide('wait_navigation')
 
 screen room_navigation():
     modal True
@@ -71,3 +64,14 @@ screen room_navigation():
                     # Room name
                     text room.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
                 key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('AfterWaiting')]
+
+    # Actions
+    hbox:
+        align (.99, .99)
+        # Fixed button to wait
+        button xysize (136, 190) action [Hide('wait_navigation'), Jump('new_hour')]:
+            has vbox xsize 136 spacing 0
+            frame xysize (136, 140) background None:
+                imagebutton idle '/interface/wait.webp' selected_hover '/interface/wait.webp':
+                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('new_hour')] at middle_wait
+            text _("WAIT") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
