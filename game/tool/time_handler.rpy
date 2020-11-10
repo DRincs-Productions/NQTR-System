@@ -102,7 +102,10 @@ init python:
             self.day += 1
             self.update_image_time()
 
-        # TODO: skip is weekend
+        def now_is_between (self, start, end):
+            return (((tm.hour >= start or start > end) and tm.hour < end) or (tm.hour >= start and (tm.hour < end or start > end)))
+
+        # TODO: is weekend
         # TODO: skip weekend
 
 default tm = TimeHandler()

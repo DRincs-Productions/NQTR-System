@@ -11,10 +11,10 @@ init -9 python:
 
     class Commitment(object):
         """Commitment"""
-        def __init__(self, ch, tp_start, tp_stop, name='', id_location='', id_room='', type=''):
+        def __init__(self, ch, tm_start, tm_stop, name='', id_location='', id_room='', type=''):
             self.ch = ch
-            self.tp_start = tp_start
-            self.tp_stop = tp_stop
+            self.tm_start = tm_start
+            self.tm_stop = tm_stop-0.1
             self.id_location = id_location
             self.id_room = id_room
             self.type = type
