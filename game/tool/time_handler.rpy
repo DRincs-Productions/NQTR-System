@@ -35,13 +35,17 @@ init python:
             return ret
 
         def get_hour_name(self):
-            ret = hour_names[0][0]
-            hour = self.hour
-            for hour_name in hour_names:
-                if hour < hour_name[0]:
-                    break
-                ret = hour_name[1]
-            return ret
+            if self.hour >= 22:
+                return hour_names[0][1]
+            if self.hour >= 19:
+                return hour_names[3][1]
+            if self.hour >= 12:
+                return hour_names[2][1]
+            if self.hour >= 7:
+                return hour_names[1][1]
+            if self.hour >= 0:
+                return hour_names[0][1]
+            return hour_names[2][1]
 
         def get_day_number(self):
             return self.day
@@ -104,7 +108,7 @@ init python:
             self.update_image_time()
 
         def now_is_between (self, start, end):
-            return (((tm.hour >= start or start > end) and tm.hour < end) or (tm.hour >= start and (tm.hour < end or start > end)))
+            return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
 
         # TODO: is weekend
         # TODO: skip weekend
