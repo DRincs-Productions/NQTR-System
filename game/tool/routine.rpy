@@ -1,8 +1,3 @@
-# special routine of the NCP
-# they are added after completing missions or for some other reason.
-# if there is another commitment in the default routine at the same time, it will be "overwritten"
-default sp_routine = []
-
 init -9 python:
     class Commitment(object):
         """Commitment and routine"""

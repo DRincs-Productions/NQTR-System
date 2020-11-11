@@ -12,6 +12,14 @@ init python:
     
     def whereIsLocation(ch):
         """returns the Location where a ch is located at that time"""
+        # special routine
+        for ch_pos in sp_routine:
+            if tm.now_is_between(ch_pos.tm_start, ch_pos.tm_stop):
+                location = ch_pos.id_location
+                # Custom code
+                if (ch_pos.type == "no_week"): #TODO: Checkweekend
+                    return ch_pos.id_location
+        # default routine
         location = ''
         for ch_pos in df_routine:
             if tm.now_is_between(ch_pos.tm_start, ch_pos.tm_stop):

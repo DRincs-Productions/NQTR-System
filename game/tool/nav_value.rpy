@@ -7,14 +7,6 @@ define rooms = [
         Room("ann_room", "house_Ann", _("Ann room"), "icon annroom", "bg annroom"),
         Room("courtyard", "house_Ann", _("Courtyard"), "icon courtyard", "bg courtyard"), 
     ]
-# default routine of the NCP
-# do not have a deadline
-define df_routine = [
-        Commitment("alice", 20, 10, id_location="house", id_room="alice_room"),
-        Commitment("alice", 10, 14, id_location="house", id_room="lounge"),
-        Commitment("alice", 10, 14, name="school", type="no_week"),
-        Commitment("alice", 14, 20, id_location="house", id_room="terrace"),
-    ]
 
 define ch_icons = {
         "alice"         : "icon/Alice.webp",
