@@ -2,8 +2,7 @@ init python:
     def checkChLocation(id_location):
         """Returns the commitments of the NCPs in that Location at that time"""
         chs = []
-        for ch_pos in ch_commitments:
-
+        for ch_pos in df_routine:
             # Check Time and Location
             if (ch_pos.id_location == id_location and tm.now_is_between(ch_pos.tm_start, ch_pos.tm_stop)):
                 # Full verification
@@ -14,7 +13,7 @@ init python:
     def whereIsLocation(ch):
         """returns the Location where a ch is located at that time"""
         location = ''
-        for ch_pos in ch_commitments:
+        for ch_pos in df_routine:
             if tm.now_is_between(ch_pos.tm_start, ch_pos.tm_stop):
                 location = ch_pos.id_location
                 # Custom code
