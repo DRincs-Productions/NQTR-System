@@ -9,6 +9,7 @@ init -9 python:
             self.id_room = id_room
             self.type = type
             self.day_deadline = day_deadline
+
     def update_sp_routine():
         """removes expired Commitments"""
         rlist = []
@@ -19,3 +20,9 @@ init -9 python:
         for r in rlist:
             sp_routine.remove(r)
 
+    def checkValidRoutineType(rt):
+        """Check through a custom code if the rt is valid in vase to type"""
+        # Custom code
+        if (rt.type == "no_week"): #TODO: Checkweekend
+            return True
+        return False
