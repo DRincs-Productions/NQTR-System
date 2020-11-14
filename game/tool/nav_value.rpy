@@ -1,6 +1,6 @@
 define rooms = [
         Room("my_room", "house", _("MC room"), "icon myroom", "bg myroom"), 
-        Room("alice_room", "house", _("Alice room"), "icon aliceroom", "bg aliceroom"), 
+        Room("alice_room", "house", _("[a] room"), "icon aliceroom", "bg aliceroom"), 
         Room("bathroom", "house", _("Bathroom"), "icon bathroom", "bg bathroom"), 
         Room("lounge", "house", _("Lounge"), "icon lounge", "bg lounge"), 
         Room("terrace", "house", _("Terrace"), "icon terrace", "bg terrace"), 

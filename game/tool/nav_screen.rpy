@@ -68,10 +68,23 @@ screen room_navigation():
     # Actions
     hbox:
         align (.99, .99)
+        for room in rooms:
+            for ch in chs:
+                if (room.id == ch.id_room and room == cur_room):
+                    button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait')]:
+                        has vbox xsize 136 spacing 0
+                        frame xysize (136, 140) background None:
+                            imagebutton idle '/interface/action-talk.webp' selected_hover '/interface/action-talk.webp':
+                                align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')] at middle_wait
+                            $ ch_icon = ch_icons.get(ch.ch)
+                            imagebutton idle ch_icon focus_mask True at small_face:
+                                action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')]
+                        text _("TALK") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+
         # Fixed button to wait
-        button xysize (136, 190) action [Hide('wait_navigation'), Jump('new_hour')]:
+        button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait')]:
             has vbox xsize 136 spacing 0
             frame xysize (136, 140) background None:
                 imagebutton idle '/interface/action-wait.webp' selected_hover '/interface/action-wait.webp':
-                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('new_hour')] at middle_wait
+                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('wait')] at middle_wait
             text _("WAIT") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
