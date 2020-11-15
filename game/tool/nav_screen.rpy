@@ -24,12 +24,13 @@ init:
 screen room_navigation():
     modal True
     $ i = 0
+    # ch in that Location 
+    $ chs = checkChLocation(cur_location)
+
     hbox:
         yalign 0.99
         xalign 0.01
         spacing 2
-        # ch in that Location 
-        $ chs = checkChLocation(cur_location)
 
         for room in rooms:
             $ i += 1
@@ -45,18 +46,18 @@ screen room_navigation():
                             action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('after_waiting')]
 
                         # Check the presence of ch in that room
-                        $ val = False
+                        $ there_are_ch = False
                         for ch in chs:
                             # If it is the selected room
-                            if room.id == ch.id_room: # TODO: check the time
+                            if room.id == ch.id_room:
                                 # I insert hbox only if they are sure that someone is there
-                                $ val = True
+                                $ there_are_ch = True
 
-                        if val == True:
+                        if there_are_ch:
                             hbox ypos 73 xalign 0.5 spacing - 30:
                                 for ch in chs:
                                     # If it is the selected room
-                                    if room.id == ch.id_room: # TODO: check the time
+                                    if room.id == ch.id_room:
                                         $ ch_icon = ch_icons.get(ch.ch)
                                         imagebutton idle ch_icon focus_mask True at small_face:
                                             action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('after_waiting')]
@@ -69,6 +70,18 @@ screen room_navigation():
     hbox:
         align (.99, .99)
         for room in rooms:
+            # Adds the button list of possible actions in that room
+            if (room == cur_room):
+                for act in getActions(room):
+                    button xysize (126, 190) action [Hide('wait_navigation'), Jump(act.label)]:
+                        has vbox xsize 126 spacing 0
+                        frame xysize (126, 140) background None:
+                            imagebutton idle act.icon align (0.5, 0.0) focus_mask True:
+                                action [Hide('wait_navigation'), Jump(act.label)] at middle_zoom
+                        text act.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+
+            # Add talks for each NPC present.
+            # TODO: there is no possibility of group talk
             for ch in chs:
                 if (room.id == ch.id_room and room == cur_room):
                     button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait')]:
