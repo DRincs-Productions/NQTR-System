@@ -19,7 +19,7 @@ init python:
 
     class TimeHandler(object):
         """Class to manage time, and also related to the constant event_duration. I strongly recommend to modify it according to the use."""
-        def __init__(self, hour_new_day=8, weekend_day=6, day=0):
+        def __init__(self, hour_new_day=5, weekend_day=6, day=0):
             self.hour_new_day = hour_new_day
             self.weekend_day = weekend_day
             self.hour = self.hour_new_day
@@ -41,7 +41,7 @@ init python:
                 return hour_names[3][1]
             if self.hour >= 12:
                 return hour_names[2][1]
-            if self.hour >= 7:
+            if self.hour >= self.hour_new_day:
                 return hour_names[1][1]
             if self.hour >= 0:
                 return hour_names[0][1]
@@ -83,7 +83,7 @@ init python:
 
         def new_hour(self, amt=event_duration):
             # if it is too late you have to use new_day()
-            if (self.hour < hour_names[1][0]):
+            if (self.hour < self.hour_new_day):
                 return False
 
             self.hour += amt
