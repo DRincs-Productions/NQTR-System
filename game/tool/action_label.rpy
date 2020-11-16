@@ -1,7 +1,22 @@
-define ch_talk = ""
+define ch_talk = None
+define wait_hour = 1
+# Block all actions with check_block_spendtime
+default block_spendtime = False
+default block_spendtime_dalogue = _("You can't do it now")
+label check_block_spendtime:
+    if(block_spendtime):
+        "[block_spendtime_dalogue]"
+        call screen room_navigation
+    return
+
+label wait_onehour:
+    $ wait_hour = 1
+    jump wait
 
 label wait:
-    if(tm.new_hour(1)):
+    call check_block_spendtime
+
+    if(tm.new_hour(wait_hour)):
         call check_event
     else:
         "(It's late, you have to go to bed)"
@@ -11,16 +26,15 @@ label error_label:
     "ERROR"
     return
 
-label after_waiting:
-    # aggiornare i dati tipo energia ecc
-    # $ Distribution()
+label change_room:
     scene expression (cur_room.bg)
     call screen room_navigation
 
 label nap:
     menu:
         "Nap for 3 hour":
-            $ tm.new_hour(3)
+            $ wait_hour = 3
+            jump wait
         "Sleep":
             jump sleep
         "Return":
@@ -28,24 +42,33 @@ label nap:
     call screen room_navigation
 
 label sleep:
+    call check_block_spendtime
+
     menu:
         "What time do you want to set the alarm?"
         "[tm.hour_new_day]:00":
             call new_day
+            call check_event
         "7:00":
             call new_day
+            call check_event
             $ tm.new_hour(7-tm.hour_new_day)
         "9:00":
             call new_day
+            call check_event
             $ tm.new_hour(9-tm.hour_new_day)
         "Return":
             pass
     call screen room_navigation
 
 label talk:
-    if(ch_talk == ""):
+    if(ch_talk == None):
         call error_label
         call screen room_navigation
     if(ch_talk == "alice"):
         a "hi, I'm [a]"
+    call screen room_navigation
+
+label take_object:
+    $ removeSpAction("take_object")
     call screen room_navigation

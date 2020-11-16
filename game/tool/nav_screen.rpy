@@ -37,13 +37,13 @@ screen room_navigation():
 
             # If the Locations where I am is the same as the Locations where the room is located
             if (room.id_location == cur_location):
-                button xysize (126, 190) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('after_waiting')]:
+                button xysize (126, 190) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]:
                     has vbox xsize 126 spacing 0
                     frame xysize (126, 140) background None:
                         # Room icon
                         imagebutton align (0.5, 0.0) idle room.icon selected_idle room.icon + ' a' selected_hover room.icon + ' a':
                             selected room == cur_room focus_mask True at middle_zoom
-                            action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('after_waiting')]
+                            action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
 
                         # Check the presence of ch in that room
                         $ there_are_ch = False
@@ -60,11 +60,11 @@ screen room_navigation():
                                     if room.id == ch.id_room:
                                         $ ch_icon = ch_icons.get(ch.ch)
                                         imagebutton idle ch_icon focus_mask True at small_face:
-                                            action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('after_waiting')]
+                                            action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
 
                     # Room name
                     text room.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
-                key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('after_waiting')]
+                key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
 
     # Actions
     hbox:
@@ -84,7 +84,7 @@ screen room_navigation():
             # TODO: there is no possibility of group talk
             for ch in chs:
                 if (room.id == ch.id_room and room == cur_room):
-                    button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait')]:
+                    button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait_onehour')]:
                         has vbox xsize 136 spacing 0
                         frame xysize (136, 140) background None:
                             imagebutton idle '/interface/action-talk.webp' selected_hover '/interface/action-talk.webp':
@@ -95,9 +95,9 @@ screen room_navigation():
                         text _("TALK") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
 
         # Fixed button to wait
-        button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait')]:
+        button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait_onehour')]:
             has vbox xsize 136 spacing 0
             frame xysize (136, 140) background None:
                 imagebutton idle '/interface/action-wait.webp' selected_hover '/interface/action-wait.webp':
-                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('wait')] at middle_wait
+                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('wait_onehour')] at middle_wait
             text _("WAIT") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2

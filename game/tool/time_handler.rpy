@@ -19,10 +19,10 @@ init python:
 
     class TimeHandler(object):
         """Class to manage time, and also related to the constant event_duration. I strongly recommend to modify it according to the use."""
-        def __init__(self, hour_new_day=5, weekend_day=6, day=0):
+        def __init__(self, hour_new_day=5, hour=8, weekend_day=6, day=0):
             self.hour_new_day = hour_new_day
             self.weekend_day = weekend_day
-            self.hour = self.hour_new_day
+            self.hour = hour
             self.day = day
             # this variable is used to update images that change according to time.
             # es image = "sky-[image_time]"
@@ -32,6 +32,7 @@ init python:
         def get_hour(self):
             hour = self.get_hour(hour)
             ret = "[hour]:00"
+            del hour
             return ret
 
         def get_hour_name(self):
@@ -113,4 +114,20 @@ init python:
         # TODO: is weekend
         # TODO: skip weekend
 
+# ATTENTION here it is initialized
+# when a save is loaded it is created with the updateTimeHandler() function
+# SO: if you don't use the default values, you must also change them in updateTimeHandler ()
 default tm = TimeHandler()
+
+init -9 python:
+    def updateTimeHandler():
+        hour_new_day = tm.hour_new_day
+        hour = tm.hour
+        weekend_day = tm.weekend_day
+        day = tm.day
+        store.tm = TimeHandler(hour_new_day = hour_new_day, hour = hour, weekend_day = weekend_day, day = day)
+        del hour_new_day
+        del hour
+        del weekend_day
+        del day
+        return

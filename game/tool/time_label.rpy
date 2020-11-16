@@ -1,8 +1,8 @@
 label new_day:
     $ tm.new_day()
-    call check_event
     # removes expired Commitments
-    $ update_sp_routine()
+    $ clearExpiredSPRoutine()
+    $ clearExpiredSPActions()
     return
 
 label check_event:

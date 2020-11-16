@@ -19,15 +19,10 @@ init python:
                 if checkValidRoutineType(ch_pos):
                     return ch_pos.id_location
         # default routine
-        location = ''
+        location = None
         for ch_pos in df_routine:
             if tm.now_is_between(ch_pos.tm_start, ch_pos.tm_stop):
                 location = ch_pos.id_location
                 if checkValidRoutineType(ch_pos):
                     return ch_pos.id_location
         return location
-
-    def enterRoom(id):
-        """Manages the possibility of entering a room or not"""
-        # Custom code
-        return True
