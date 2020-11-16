@@ -1,10 +1,9 @@
 define ch_talk = None
 define wait_hour = 1
-# Block all actions with check_block_spendtime
-default block_spendtime = False
-default block_spendtime_dalogue = _("You can't do it now")
+# Check if the time "pass" block has been activated
+define block_spendtime_dalogue = _("You can't do it now")
 label check_block_spendtime:
-    if(block_spendtime):
+    if(bl.get("block_spendtime")):
         "[block_spendtime_dalogue]"
         call screen room_navigation
     return
