@@ -9,6 +9,6 @@ define rooms = [
     ]
 
 define ch_icons = {
-        "alice"         : "icon/Alice.webp",
-        "ann"           : "icon/Ann.webp",
+        "alice"     : "icon/Alice.webp",
+        "ann"       : "icon/Ann.webp",
     }
