@@ -9,6 +9,16 @@ init:
             yanchor 1 alpha 0.9
         on selected_hover:
             yanchor 1 alpha 0.9
+    transform actionnnnnn:
+        size (120, 120)
+        on selected_idle:
+            yanchor 0 alpha 1.0
+        on idle:
+            yanchor 0 alpha 1.0
+        on hover:
+            yanchor 1 alpha 0.9
+        on selected_hover:
+            yanchor 1 alpha 0.9
     transform small_face:
         size (60, 60)
         on selected_idle:
@@ -67,37 +77,98 @@ screen room_navigation():
                 key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
 
     # Actions
-    hbox:
-        align (.99, .99)
+    vbox:
+        yalign 0.95
+        xalign 0.99
         for room in rooms:
             # Adds the button list of possible actions in that room
             if (room == cur_room):
                 for act in getActions(room):
-                    button xysize (126, 190) action [Hide('wait_navigation'), Jump(act.label)]:
-                        has vbox xsize 126 spacing 0
-                        frame xysize (126, 140) background None:
+                    button xysize (110, 110):
+                        has vbox ysize 110 spacing 0
+                        frame xysize (110, 110) background None:
                             imagebutton idle act.icon align (0.5, 0.0) focus_mask True:
-                                action [Hide('wait_navigation'), Jump(act.label)] at middle_zoom
-                        text act.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+                                action [Hide('wait_navigation'), Jump(act.label)] at actionnnnnn
+                        # text act.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
 
             # Add talks for each NPC present.
             # TODO: there is no possibility of group talk
             for ch in chs:
                 if (room.id == ch.id_room and room == cur_room):
-                    button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait_onehour')]:
-                        has vbox xsize 136 spacing 0
-                        frame xysize (136, 140) background None:
+                    button xysize (110, 110):
+                        has vbox ysize 110 spacing 0
+                        frame xysize (110, 110) background None:
                             imagebutton idle '/interface/action-talk.webp' selected_hover '/interface/action-talk.webp':
-                                align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')] at middle_wait
+                                align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')] at actionnnnnn
                             $ ch_icon = ch_icons.get(ch.ch)
                             imagebutton idle ch_icon focus_mask True at small_face:
                                 action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')]
-                        text _("TALK") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+                        # text _("TALK") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
 
         # Fixed button to wait
-        button xysize (136, 190) action [Hide('wait_navigation'), Jump('wait_onehour')]:
-            has vbox xsize 136 spacing 0
-            frame xysize (136, 140) background None:
+        button xysize (110, 116):
+            has vbox ysize 116 spacing 0
+            frame xysize (110, 116) background None:
                 imagebutton idle '/interface/action-wait.webp' selected_hover '/interface/action-wait.webp':
-                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('wait_onehour')] at middle_wait
-            text _("WAIT") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('wait_onehour')] at actionnnnnn
+            # text _("WAIT") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+
+    # Time
+    vbox:
+        align (0.5, 0.01)
+        text "[tm.hour]:00" xalign (0.5) font 'DejaVuSans.ttf' size 60 drop_shadow [(2, 2)]
+        text tm.get_weekday_name() xalign (0.5) font 'DejaVuSans.ttf' size 24 drop_shadow [(2, 2)] line_leading -16
+
+    # Tools
+    hbox:
+        align (0.01, 0.01)
+        spacing 2
+
+        imagebutton idle '/interface/menu-options.webp' focus_mask True action ShowMenu('save'):
+            if renpy.variant('small'):
+                at small_menu_mobile
+            else:
+                at small_menu
+
+        imagebutton idle '/interface/menu-user.webp' focus_mask True action [Hide('wait_navigation'), Jump('development')]:
+            if renpy.variant('small'):
+                at small_menu_mobile
+            else:
+                at small_menu
+
+        imagebutton idle '/interface/menu-memo.webp' focus_mask True:
+            action [Hide('wait_navigation'), Jump('development')]
+            if renpy.variant('small'):
+                at small_menu_mobile
+            else:
+                at small_menu
+
+        imagebutton idle '/interface/menu-help.webp' focus_mask True action ShowMenu('help'):
+            if renpy.variant('small'):
+                at small_menu_mobile
+            else:
+                at small_menu
+
+    hbox:
+        align (0.99, 0.01)
+        spacing 2
+
+        text "$20" xalign (1.0) font 'DejaVuSans.ttf' size 30 drop_shadow [(2, 2)]
+
+        imagebutton idle '/interface/menu-inventory.webp' focus_mask True action [Hide('wait_navigation'), Jump('development')]:
+            if renpy.variant('small'):
+                at small_menu_mobile
+            else:
+                at small_menu
+
+        imagebutton idle '/interface/menu-phone.webp' focus_mask True action [Hide('wait_navigation'), Jump('development')]:
+            if renpy.variant('small'):
+                at small_menu_mobile
+            else:
+                at small_menu
+
+        imagebutton idle '/interface/menu-map.webp' focus_mask True action [Hide('wait_navigation'), Jump('development')]:
+            if renpy.variant('small'):
+                at small_menu_mobile
+            else:
+                at small_menu

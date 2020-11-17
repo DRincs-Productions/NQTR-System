@@ -29,12 +29,6 @@ init python:
             self.image_time = 0
             self.update_image_time()
 
-        def get_hour(self):
-            hour = self.get_hour(hour)
-            ret = "[hour]:00"
-            del hour
-            return ret
-
         def get_hour_name(self):
             if self.hour >= 22:
                 return hour_names[0][1]

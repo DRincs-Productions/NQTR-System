@@ -71,3 +71,7 @@ label talk:
 label take_object:
     $ removeSpAction("take_object")
     call screen room_navigation
+
+label development:
+    "In development"
+    call screen room_navigation
