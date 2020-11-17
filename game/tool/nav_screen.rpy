@@ -9,7 +9,7 @@ init:
             yanchor 1 alpha 0.9
         on selected_hover:
             yanchor 1 alpha 0.9
-    transform actionnnnnn:
+    transform middle_action:
         size (120, 120)
         on selected_idle:
             yanchor 0 alpha 1.0
@@ -30,6 +30,26 @@ init:
         on selected_hover:
             yanchor 1 alpha 0.93
 
+    transform small_menu:
+        size (80, 80)
+        on selected_idle:
+            yanchor 0 alpha 0.4
+        on idle:
+            yanchor 0 alpha 0.4
+        on hover:
+            yanchor 1 alpha 1.0
+        on selected_hover:
+            yanchor 1 alpha 1.0
+    transform small_menu_mobile:
+        size (100, 100)
+        on selected_idle:
+            yanchor 0 alpha 0.4
+        on idle:
+            yanchor 0 alpha 0.4
+        on hover:
+            yanchor 1 alpha 1.0
+        on selected_hover:
+            yanchor 1 alpha 1.0
 
 screen room_navigation():
     modal True
@@ -88,7 +108,7 @@ screen room_navigation():
                         has vbox ysize 110 spacing 0
                         frame xysize (110, 110) background None:
                             imagebutton idle act.icon align (0.5, 0.0) focus_mask True:
-                                action [Hide('wait_navigation'), Jump(act.label)] at actionnnnnn
+                                action [Hide('wait_navigation'), Jump(act.label)] at middle_action
                         # text act.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
 
             # Add talks for each NPC present.
@@ -99,7 +119,7 @@ screen room_navigation():
                         has vbox ysize 110 spacing 0
                         frame xysize (110, 110) background None:
                             imagebutton idle '/interface/action-talk.webp' selected_hover '/interface/action-talk.webp':
-                                align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')] at actionnnnnn
+                                align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')] at middle_action
                             $ ch_icon = ch_icons.get(ch.ch)
                             imagebutton idle ch_icon focus_mask True at small_face:
                                 action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')]
@@ -110,7 +130,7 @@ screen room_navigation():
             has vbox ysize 116 spacing 0
             frame xysize (110, 116) background None:
                 imagebutton idle '/interface/action-wait.webp' selected_hover '/interface/action-wait.webp':
-                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('wait_onehour')] at actionnnnnn
+                    align (0.5, 0.0) focus_mask True action [Hide('wait_navigation'), Jump('wait_onehour')] at middle_action
             # text _("WAIT") font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
 
     # Time
