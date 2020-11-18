@@ -23,5 +23,5 @@ default stage_level = {}
 default quest_current = {}
 default task_current = {}
 
-define stage_memory = []
+define stage_memory = {}
 define quest_memory = {}

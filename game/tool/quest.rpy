@@ -69,29 +69,29 @@ init python:
 
         def insertQuest(self):
             """Inserts the quest in the current Quests"""
-            quest_current[id_stageOrTask] = Quest(
+            quest_current[self.id_stageOrTask] = Quest(
                 id_stageOrTask = self.id_stageOrTask,
                 goals = self.goals,
                 day_start = self.day_start,
                 bl_requests = self.bl_requests,
                 stage_level_requests = self.stage_level_requests,
-                description_requests = self.description_requests,
+                description_request = self.description_request,
                 label_start = self.label_start,
                 label_end = self.label_end,
-                label_check = label_check)
+                label_check = self.label_check)
             self.start()
         def insertTask(self):
             """Insert the quest in the current Tasks"""
-            task_current[id_stageOrTask] = Quest(
+            task_current[self.id_stageOrTask] = Quest(
                 id_stageOrTask = self.id_stageOrTask,
                 goals = self.goals,
                 day_start = self.day_start,
                 bl_requests = self.bl_requests,
                 stage_level_requests = self.stage_level_requests,
-                description_requests = self.description_requests,
+                description_request = self.description_request,
                 label_start = self.label_start,
                 label_end = self.label_end,
-                label_check = label_check)
+                label_check = self.label_check)
             self.start()
         def start(self):
             """If you have reached all the objectives then activate the Quest."""
@@ -104,12 +104,12 @@ init python:
             return True
         def request_check(self):
             """Checks the requests, returns True if it satisfies them."""
-            if (day_start != None and tm.day < day_start):
+            if (self.day_start != None and tm.day < self.day_start):
                 return False
-            for stage, level in stage_level_requests.items():
+            for stage, level in self.stage_level_requests.items():
                 if (stage_level[stage] < level):
                     return False
-            for item in bl_requests:
+            for item in self.bl_requests:
                 if (bl_values[item] == False):
                     return False
             return True
@@ -189,7 +189,7 @@ init python:
                 return
             if ((self.id in current_quest) == False):
                 self.next_quest()
-        def start(self, n_quest):
+        def start(self, n_quest=0):
             """Insert the quest number n_quest in the current quests"""
             quest_memory[self.quest_list[n_quest]].insertQuest()
         def next_quest(self):
@@ -208,12 +208,12 @@ init python:
         """Synchronize stage_level with stage_memory."""
         # check if there are less elements than bl_memory
         # in case you add them set with False
-        for x in stage_memory:
+        for x in stage_memory.keys():
             if ((x in stage_level) == False):
                 stage_level[x] = 0
         # check if there are more elements than bl_memory
         # in case it eliminates them
-        for x in stage_level:
+        for x in stage_level.keys():
             if ((x in stage_memory) == False):
                 stage_level.remove(x)
         return
