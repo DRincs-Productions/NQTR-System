@@ -56,8 +56,8 @@ init python:
             self.description = description
             self.advice = advice
             self.bg = bg
-            self.day_start = day_start
             # These are the requirements to start the quest
+            self.day_start = day_start
             self.bl_requests = bl_requests
             self.stage_level_requests = stage_level_requests
             self.description_request = description_request
@@ -104,6 +104,8 @@ init python:
             return True
         def request_check(self):
             """Checks the requests, returns True if it satisfies them."""
+            if (day_start != None and tm.day < day_start):
+                return False
             for stage, level in stage_level_requests.items():
                 if (stage_level[stage] < level):
                     return False
