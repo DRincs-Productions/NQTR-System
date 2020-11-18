@@ -3,7 +3,7 @@ define wait_hour = 1
 # Check if the time "pass" block has been activated
 define block_spendtime_dalogue = _("You can't do it now")
 label check_block_spendtime:
-    if(bl.get("block_spendtime")):
+    if(bl_values.get("block_spendtime")):
         "[block_spendtime_dalogue]"
         call screen room_navigation
     return

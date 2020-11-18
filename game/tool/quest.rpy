@@ -110,7 +110,7 @@ init python:
                 if (stage_level[stage] < level):
                     return False
             for item in bl_requests:
-                if (bl[item] == False):
+                if (bl_values[item] == False):
                     return False
             return True
         def completed(self):
@@ -206,12 +206,12 @@ init python:
             return (self.id in current_quest)
     def updateStageCompL():
         """Synchronize stage_level with stage_memory."""
-        # check if there are less elements than bl_list
+        # check if there are less elements than bl_memory
         # in case you add them set with False
         for x in stage_memory:
             if ((x in stage_level) == False):
                 stage_level[x] = 0
-        # check if there are more elements than bl_list
+        # check if there are more elements than bl_memory
         # in case it eliminates them
         for x in stage_level:
             if ((x in stage_memory) == False):
