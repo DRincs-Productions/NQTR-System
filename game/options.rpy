@@ -12,7 +12,7 @@
 ##
 ## The _() surrounding the string marks it as eligible for translation.
 
-define config.name = _("Navigation Commitment Time System")
+define config.name = _("Navigation Quest Time Routine System")
 
 
 ## Determines if the title given above is shown on the main menu screen. Set
@@ -37,7 +37,7 @@ define gui.about = _p("""
 ## distribution. This must be ASCII-only, and must not contain spaces, colons,
 ## or semicolons.
 
-define build.name = "NCT-toolkit"
+define build.name = "NQTR-toolkit"
 
 
 ## Sounds and music ############################################################
