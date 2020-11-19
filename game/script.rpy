@@ -15,6 +15,8 @@ label start:
     $ prev_room = rooms[5]
     $ updateBL()
     scene expression (cur_room.bg)
+    $ stage_memory["alice"].start()
+    $ stage_memory["ann"].start()
 
     call screen room_navigation
 
