@@ -1,7 +1,16 @@
 init -9 python:
     class Commitment(object):
         """Commitment and routine"""
-        def __init__(self, ch, tm_start, tm_stop, name=None, id_location=None, id_room=None, type=None, day_deadline=None):
+        def __init__(self,
+            ch,
+            tm_start,
+            tm_stop,
+            name=None,
+            id_location=None,
+            id_room=None,
+            type=None,
+            day_deadline=None):
+
             self.ch = ch
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1

@@ -1,7 +1,16 @@
 init -9 python:
     class Action(object):
         """Actions of the MC"""
-        def __init__(self, name, icon, label, sp_room=None, tm_start=0, tm_stop=25, day_start=None, day_deadline=None):
+        def __init__(self,
+            name,
+            icon,
+            label,
+            sp_room = None,
+            tm_start = 0,
+            tm_stop = 25,
+            day_start = None,
+            day_deadline = None):
+
             self.name = name
             self.icon = icon
             self.label = label
@@ -32,10 +41,10 @@ init -9 python:
         """Delete Expired Actions"""
         alist = []
         alist.clear()
-        for act in sp_actions.values():
+        for id, act in sp_actions.items():
             if (act.day_deadline != None and act.day_deadline <= tm.day):
-                alist.append(act)
-        for act in alist:
-            alist.pop(act)
+                alist.append(id)
+        for act_id in alist:
+            alist.pop(act_id)
         del alist
         return

@@ -44,7 +44,7 @@ init python:
             day_start = None,
             bl_requests = [],
             stage_level_requests = {},
-            description_request = None,
+            description_request = "",
             label_start = None,
             label_end = None,
             label_check = None):
@@ -79,7 +79,7 @@ init python:
                 label_start = self.label_start,
                 label_end = self.label_end,
                 label_check = self.label_check)
-            self.start()
+            quest_current[self.id_stageOrTask].start()
         def insertTask(self):
             """Insert the quest in the current Tasks"""
             task_current[self.id_stageOrTask] = Quest(
@@ -92,7 +92,7 @@ init python:
                 label_start = self.label_start,
                 label_end = self.label_end,
                 label_check = self.label_check)
-            self.start()
+            quest_current[self.id_stageOrTask].start()
         def start(self):
             """If you have reached all the objectives then activate the Quest."""
             if (self.request_check() == False):
@@ -147,6 +147,7 @@ init python:
             id,
             title,
             icon = None,
+            bg = None,
             quest_list = [],
             category = None,
             development = False):
@@ -154,6 +155,7 @@ init python:
             self.id = id
             self.title = title
             self.icon = icon
+            self.bg = bg
             self.quest_list = quest_list
             self.category = category
             self.development = development
