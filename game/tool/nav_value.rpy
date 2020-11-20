@@ -12,3 +12,8 @@ define ch_icons = {
         "alice"     : "icon/Alice.webp",
         "ann"       : "icon/Ann.webp",
     }
+
+# Id of the task selected in the menu
+default cur_task_menu = ""
+# quest level based on the task selected in the menu
+default cur_quest_menu = ""

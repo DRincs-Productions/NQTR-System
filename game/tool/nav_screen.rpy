@@ -49,6 +49,12 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+    transform close_zoom:
+        xanchor 25
+        size (75, 25)
+    transform close_zoom_mobile:
+        xanchor 35
+        size (105, 35)
 
 screen room_navigation():
     modal True
@@ -246,3 +252,88 @@ screen room_navigation():
                 size 18 
                 drop_shadow [(2, 2)] 
                 outlines [(2, "#000", 0, 1)]
+
+screen menu_memo():
+    style_prefix "game_menu"
+    # Synchronize stage_level with stage_memory
+    $ updateStageCompL()
+
+    add '/gui/overlay/game_menu.png'
+
+    # button for closure
+    imagebutton:
+        pos (1740, 100)
+        idle '/interface/button/close_idle.webp'
+        hover '/interface/button/close_hover.webp'
+        action [Hide('menu_memo')]
+        if renpy.variant("pc"):
+            focus_mask True
+            at close_zoom
+        else:
+            at close_zoom_mobile
+
+    hbox pos (150, 150) spacing 30:
+        frame ypos 25 xsize 400 ysize 850 background None:
+            has hbox
+            # task title list
+            viewport mousewheel 'change' draggable True id 'vp1':
+                has vbox spacing 5
+                for id_task in quest_current.keys():
+                    button:
+                        xsize 390
+                        background None
+                        action [SetVariable('cur_task_menu', id_task), SetVariable('cur_quest_menu', stage_level[id_task])]
+                        xpadding 0 ypadding 0 xmargin 0 ymargin 0
+                        textbutton stage_memory[id_task].title:
+                            action [SetVariable('cur_task_menu', id_task), SetVariable('cur_quest_menu', stage_level[id_task])]
+                            selected cur_task_menu == id_task
+            # scroll bar
+            vbar value YScrollValue('vp1') style 'menu_vscroll'
+
+        # Information on the current quest
+        if cur_task_menu != '':
+            $ quest_menu = quest_memory[stage_memory[cur_task_menu].quest_list[cur_quest_menu]]
+            frame area (0, 30, 1190, 850) background None:
+                has vbox spacing 20
+                # Image
+                frame xsize 800 ysize 400 pos (195, 0) background None:
+                    if quest_menu.bg != '':
+                        add quest_menu.bg
+                    elif stage_memory[cur_task_menu].bg != '':
+                        add stage_memory[cur_task_menu].bg
+                frame xsize 1180 xalign 0.5 background None:
+                    text quest_menu.title size 30 font 'DejaVuSans.ttf' xalign 0.5
+                frame area (0, 0, 1190, 400) background None:
+                    has hbox
+                    viewport mousewheel 'change' draggable True id 'vp2':
+                        has vbox spacing 30
+                        text stage_memory[cur_task_menu].description size 24 color gui.accent_color
+                        if (quest_current[cur_task_menu].active):
+                            text quest_menu.description size 24
+                            text quest_menu.advice size 28
+                            for item in quest_menu.goals:
+                                text item.description size 28
+                            if quest_current[cur_task_menu] and (cur_quest_menu+1) == len(stage_memory[cur_task_menu].quest_list):
+                                if stage_memory[cur_task_menu].development:
+                                    text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size 28
+                                else:
+                                    text _("You have completed all the quests.") size 28
+                        else:
+                            text quest_menu.description_request size 24 color gui.accent_color
+                    vbar value YScrollValue('vp2') style 'menu_vscroll'
+    if (cur_task_menu != '' and stage_level[cur_task_menu] > 0):
+        # increases and decreases cur_quest menu
+        imagebutton pos (690, 360):
+            idle '/interface/button/prev_idle.webp'
+            hover '/interface/button/prev_hover.webp'
+            insensitive '/interface/button/prev_insensitive.webp'
+            focus_mask True
+            sensitive (cur_quest_menu > 0)
+            action [SetVariable('cur_quest_menu', cur_quest_menu-1)]
+        imagebutton pos (1570, 360):
+            idle '/interface/button/next_idle.webp'
+            hover '/interface/button/next_hover.webp'
+            insensitive '/interface/button/next_insensitive.webp'
+            focus_mask True
+            sensitive (cur_quest_menu < stage_level[cur_task_menu])
+            action [SetVariable('cur_quest_menu', cur_quest_menu+1)]
