@@ -1,6 +1,28 @@
+# Explanation of the operation of the Quests that are in task_current
+# to simplify I call:
+#   - stage_memory[x]: Stage
+#   - quest_memory[x]: Qmemory
+#   - quest_current[x]: Quest
+#
+# First phase (Initialize a Stage):
+# Stage.start():                    # It is done manually
+#   Qmemory.insertQuest()
+#   Quest.start():                  # it is done until it becomes active with TODO: ... 
+#       Quest.request_check():
+#           Quest.active = True
+#--------------------------------------------------------------------------
+# Quest.completed_try():            # It is done manually
+#   is_completed():
+#       completed = True
+#   if (completed):
+#       Stage.next_quest():
+#           if it's not the last quest:
+#               Stage.start(next)   # Start the cycle again
+
 init python:
     class Goal(object):
-        """Goal class, it has been designed to be included in the Quest class"""
+        """Goal class, it has been designed to be included in the Quest class.
+        To complete the goals use find()"""
         def __init__(self,
             id,
             description,
@@ -15,7 +37,8 @@ init python:
             self.have = 0
 
         def find(self, value=1):
-            """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed"""
+            """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
+            It is used to complete the Goals."""
             if (need == None):
                 self.complete = True
             self.have += value
@@ -33,15 +56,16 @@ init python:
             return self.need <= self.have
 
     class Quest(object):
-        """Quest class: using external variables quest_current, task_current, stage_memory and bl."""
+        """Quest class: using external variables quest_current, task_current, stage_memory, tm.day and bl.
+        You can go to the next quest with completed_try(), forcibly with connext_quest()."""
         def __init__(self,
             id_stageOrTask,
             goals = [],
             title = None,
             description = None,
-            advice = None,
+            advice = "",
             bg = None,
-            day_start = None,
+            days_late = None,
             bl_requests = [],
             stage_level_requests = {},
             description_request = "",
@@ -55,9 +79,11 @@ init python:
             self.title = title
             self.description = description
             self.advice = advice
+            self.completed = False
             self.bg = bg
             # These are the requirements to start the quest
-            self.day_start = day_start
+            self.days_late = days_late
+            self.day_start = None
             self.bl_requests = bl_requests
             self.stage_level_requests = stage_level_requests
             self.description_request = description_request
@@ -72,34 +98,35 @@ init python:
             quest_current[self.id_stageOrTask] = Quest(
                 id_stageOrTask = self.id_stageOrTask,
                 goals = self.goals,
-                day_start = self.day_start,
                 bl_requests = self.bl_requests,
                 stage_level_requests = self.stage_level_requests,
                 description_request = self.description_request,
                 label_start = self.label_start,
                 label_end = self.label_end,
                 label_check = self.label_check)
-            quest_current[self.id_stageOrTask].start()
+            quest_current[self.id_stageOrTask].setDay(self.days_late)
         def insertTask(self):
             """Insert the quest in the current Tasks"""
             task_current[self.id_stageOrTask] = Quest(
                 id_stageOrTask = self.id_stageOrTask,
                 goals = self.goals,
-                day_start = self.day_start,
                 bl_requests = self.bl_requests,
                 stage_level_requests = self.stage_level_requests,
                 description_request = self.description_request,
                 label_start = self.label_start,
                 label_end = self.label_end,
                 label_check = self.label_check)
-            quest_current[self.id_stageOrTask].start()
+            quest_current[self.id_stageOrTask].setDay(self.days_late)
         def start(self):
-            """If you have reached all the objectives then activate the Quest."""
+            """If you have reached all the objectives then activate the Quest.
+            start () is used until the quest becomes active"""
+            if (self.active):
+                return self.active
             if (self.request_check() == False):
                 return False
             # if (label_start != None)
                 # TODO: Execute label_start
-            self.active == True
+            self.active = True
             # TODO: notify
             return True
         def request_check(self):
@@ -113,17 +140,28 @@ init python:
                 if (bl_values[item] == False):
                     return False
             return True
-        def completed(self):
-            """Check completed and if it is complete -> next_quest()"""
+        def completed_try(self):
+            """Check completed and if it is complete -> next_quest()
+            set complete = True if it can actually go ahead completed"""
+            if (self.is_completed() == False):
+                return False
+            self.next_quest()
+            return True
+        def is_completed(self):
+            """Check if the quest can be complete."""
             # if (label_check != None)
                 # TODO: Execute label_check
-            if not goals:
-                self.next_quest()
+            if (self.completed):
                 return True
-            for x in goals:
-                if (x.complete_check() == False):
+            if (self.active == False):
+                if (self.start() == False):
                     return False
-            self.next_quest()
+            if self.goals:
+                for x in self.goals:
+                    if (x.complete_check() == False):
+                        return False
+            self.completed = True
+            # self.completed_try()
             return True
         def next_quest(self):
             """If it is a quest is replaced by the next quest, and if it is a Task is deleted."""
@@ -132,7 +170,7 @@ init python:
             if (self.id_stageOrTask in task_current):
                 del task_current[id_stageOrTask]
                 return
-            stage_memory[id_stageOrTask].next_quest()
+            stage_memory[self.id_stageOrTask].next_quest()
         def find(self, quest_id, value=1):
             """Execute find() in Goal with id == quest_id"""
             for x in goals:
@@ -140,12 +178,18 @@ init python:
                     x.find(value)
                     return True
             return False
+        def setDay(self, days_late):
+            """Execute find() in Goal with id == quest_id"""
+            if (days_late != None):
+                self.day_start = (tm.day + days_late)
 
     class Stage(object):
-        """Internship a short story of Quest that follow each other between. This class makes use of: quest_list, stage_level"""
+        """Internship a short story of Quest that follow each other between. This class makes use of: quest_list, stage_level.
+        Must be initialized manually with start()"""
         def __init__(self,
             id,
             title,
+            description = "",
             icon = None,
             bg = None,
             quest_list = [],
@@ -154,6 +198,7 @@ init python:
 
             self.id = id
             self.title = title
+            self.description = description
             self.icon = icon
             self.bg = bg
             self.quest_list = quest_list
@@ -164,8 +209,8 @@ init python:
             if ((self.id in stage_level) == False):
                 updateStageCompL()
                 return False
-            if len(self.quest_list) == stage_level[self.id]:
-                return True
+            if len(self.quest_list)-1 == stage_level[self.id]:
+                return current_quest[self.id].completed
             else:
                 return False
         def current_quest(self):
@@ -184,24 +229,38 @@ init python:
                 self.update()
             return stage_level[id]/len(self.quest_list)*100
         def update(self):
-            """Function to update the various values"""
-            if ((self.id in stage_level) == False):
-                self.update()
-            if (self.is_completed() or stage_level[id] == 0):
+            """Function to update the various values,
+            If it is a completed stage and a quest has been added in a new update, the new quest begins.
+            Prevent errors like blocked stages."""
+            if (self.is_completed()):
                 return
+            if ((self.id in current_quest) == False and stage_level[self.id] == 0):
+                return
+            # if the stage has been started, but there is no current_quest, it restarts the Stage from 0
             if ((self.id in current_quest) == False):
+                self.start()
+                return
+            # if you have somehow exceeded the number of quests
+            if len(self.quest_list)-1 < stage_level[self.id]:
+                stage_level[self.id] = len(self.quest_list)-1
+                return
+            # if it is a completed stage and a quest has been added in a new update
+            if self.is_completed() == False and current_quest[self.id].completed:
                 self.next_quest()
+                return
         def start(self, n_quest=0):
             """Insert the quest number n_quest in the current quests"""
             quest_memory[self.quest_list[n_quest]].insertQuest()
+            quest_current[self.id].start()
+            stage_level[self.id] = n_quest
         def next_quest(self):
             """Go to the next quest"""
             if ((self.id in stage_level) == False):
                 self.update()
-            if self.is_completed():
+            if len(self.quest_list)-1 == stage_level[self.id]:
                 return
-            stage_level[id] +=1
-            self.start(stage_level[id])
+            stage_level[self.id] +=1
+            self.start(stage_level[self.id])
         def is_started(self):
             if ((self.id in stage_level) == False):
                 self.update()

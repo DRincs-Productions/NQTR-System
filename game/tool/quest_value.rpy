@@ -23,5 +23,14 @@ default stage_level = {}
 default quest_current = {}
 default task_current = {}
 
-define stage_memory = {}
-define quest_memory = {}
+define stage_memory = {
+    "alice"     :   Stage(id = "alice", title = _("Help [a]"), quest_list = ["talk alice", "order products", "take products", "talk alice"], description = _("Per sapere di più come funziona la repo, Parla con Alice, lei ha molte cose da fare.")),
+    "ann"       :   Stage(id = "ann", title = _("Help [an]"), quest_list = ["talk al about ann"], development = True),
+}
+define quest_memory = {
+    "talk alice"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
+    "order products"        :   Quest(id_stageOrTask = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
+    "take products"         :   Quest(id_stageOrTask = "alice", title = _("Take products"), description = _("Get products on the Terrace."), description_request = _("Wait for the products you ordered to arrive"), days_late = 2),
+    "talk al about ann"     :   Quest(id_stageOrTask = "ann", title = _("Talk [a]"), description = _("Talk [a].")),
+    "visit ann"             :   Quest(id_stageOrTask = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
+}
