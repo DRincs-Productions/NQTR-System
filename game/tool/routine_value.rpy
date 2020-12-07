@@ -6,8 +6,8 @@ default sp_routine = {}
 # default routine of the NCP
 # do not have a deadline
 define df_routine = {
-        "alice_sleep"       :   Commitment("alice", 20, 10, id_location="house", id_room="alice_room"),
-        "alice_lounge"      :   Commitment("alice", 10, 14, id_location="house", id_room="lounge"),
-        "alice_go_school"   :   Commitment("alice", 10, 14, name="school", type="no_week"),
-        "alice_take_sun"    :   Commitment("alice", 14, 20, id_location="house", id_room="terrace"),
+        "alice_sleep"       :   Commitment(chs={"alice" : TalkObject()}, tm_start=20, tm_stop=10, id_location="house", id_room="alice_room"),
+        "alice_lounge"      :   Commitment(chs={"alice" : TalkObject()}, tm_start=10, tm_stop=14, id_location="house", id_room="lounge"),
+        "alice_go_school"   :   Commitment(chs={"alice" : TalkObject()}, tm_start=10, tm_stop=14, name="school", type="no_week"),
+        "alice_take_sun"    :   Commitment(chs={"alice" : TalkObject()}, tm_start=14, tm_stop=20, id_location="house", id_room="terrace"),
     }

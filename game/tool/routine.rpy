@@ -2,22 +2,46 @@ init -9 python:
     class Commitment(object):
         """Commitment and routine"""
         def __init__(self,
-            ch,
             tm_start,
             tm_stop,
+            chs = {},
             name=None,
             id_location=None,
             id_room=None,
             type=None,
             day_deadline=None):
 
-            self.ch = ch
+            self.chs = chs
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
             self.id_location = id_location
             self.id_room = id_room
             self.type = type
             self.day_deadline = day_deadline
+
+        def getChIcons(self):
+            icons = []
+            for ch in self.chs.keys():
+                icons.append(ch_icons.get(ch))
+            return icons
+
+        def talk(self, ch):
+            ch_talk = ch
+            Jump('talk')
+
+    class TalkObject(object):
+        def __init__(self,
+            ch_secondary = [],
+            image_non_talk=None,
+            label_non_talk=None,
+            image_talk=None,
+            label_talk=None):
+
+            self.ch_secondary = ch_secondary
+            self.image_non_talk = image_non_talk
+            self.label_non_talk = label_non_talk
+            self.image_talk = image_talk
+            self.label_talk = label_talk
 
     def clearExpiredSPRoutine():
         """removes expired Commitments"""
@@ -31,37 +55,31 @@ init -9 python:
         del rlist
         return
 
-    def checkValidRoutineType(rt):
-        """Check through a custom code if the rt is valid in vase to type"""
-        # Custom code
-        if (rt.type == "no_week"): #TODO: Checkweekend
-            return True
-        return False
-
     def checkChLocation(id_location):
         """Returns the commitments of the NCPs in that Location at that time"""
-        chs = []
-        for ch_pos in df_routine.values():
+        routines = {}
+        for routine in df_routine.values():
             # Check Time and Location
-            if (ch_pos.id_location == id_location and tm.now_is_between(ch_pos.tm_start, ch_pos.tm_stop)):
+            if (routine.id_location == id_location and tm.now_is_between(routine.tm_start, routine.tm_stop)):
                 # Full verification
-                if (whereIsLocation(ch_pos.ch) == id_location):
-                    chs.append(ch_pos)
-        return chs
+                chs = routine.chs
+                for chKey in chs.keys():
+                    routines[chKey] = routine
+        return routines
 
     def whereIsLocation(ch):
         """returns the Location where a ch is located at that time"""
         # special routine
-        for ch_pos in sp_routine.values():
-            if tm.now_is_between(ch_pos.tm_start, ch_pos.tm_stop):
-                return ch_pos.id_location
-                if checkValidRoutineType(ch_pos):
-                    return ch_pos.id_location
+        for routine in sp_routine.values():
+            if tm.now_is_between(routine.tm_start, routine.tm_stop):
+                return routine.id_location
+                if checkValidRoutineType(routine):
+                    return routine.id_location
         # default routine
         location = None
-        for ch_pos in df_routine.values():
-            if tm.now_is_between(ch_pos.tm_start, ch_pos.tm_stop):
-                location = ch_pos.id_location
-                if checkValidRoutineType(ch_pos):
-                    return ch_pos.id_location
+        for routine in df_routine.values():
+            if tm.now_is_between(routine.tm_start, routine.tm_stop):
+                location = routine.id_location
+                if checkValidRoutineType(routine):
+                    return routine.id_location
         return location

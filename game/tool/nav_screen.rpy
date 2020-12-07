@@ -59,8 +59,8 @@ init:
 screen room_navigation():
     modal True
     $ i = 0
-    # ch in that Location 
-    $ chs = checkChLocation(cur_location)
+    # routine in that Location 
+    $ routines = checkChLocation(cur_location)
     # More information by hovering the mouse
     $ (x,y) = renpy.get_mouse_pos()
 
@@ -88,20 +88,20 @@ screen room_navigation():
 
                         # Check the presence of ch in that room
                         $ there_are_ch = False
-                        for ch in chs:
+                        for routine in routines.values():
                             # If it is the selected room
-                            if room.id == ch.id_room:
+                            if room.id == routine.id_room:
                                 # I insert hbox only if they are sure that someone is there
                                 $ there_are_ch = True
 
                         if there_are_ch:
                             hbox ypos 73 xalign 0.5 spacing - 30:
-                                for ch in chs:
+                                for routine in routines.values():
                                     # If it is the selected room
-                                    if room.id == ch.id_room:
-                                        $ ch_icon = ch_icons.get(ch.ch)
-                                        imagebutton idle ch_icon focus_mask True at small_face:
-                                            action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
+                                    if room.id == routine.id_room:
+                                        for ch_icon in routine.getChIcons():
+                                            imagebutton idle "icon/Alice.webp" focus_mask True at small_face:
+                                                action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
 
                     # Room name
                     text room.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
@@ -125,23 +125,25 @@ screen room_navigation():
 
             # Add talks for each NPC present.
             # TODO: there is no possibility of group talk
-            for ch in chs:
-                if (room.id == ch.id_room and room == cur_room):
-                    frame xysize (110, 110) background None:
-                        imagebutton:
-                            idle '/interface/action-talk.webp'
-                            focus_mask True
-                            action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')]
-                            at middle_action
-                        # inserts the icon of the character who is currently in that room
-                        $ ch_icon = ch_icons.get(ch.ch)
-                        imagebutton:
-                            idle ch_icon
-                            focus_mask True
-                            at small_face
-                            action [Hide('wait_navigation'), SetVariable('ch_talk', ch.ch), Jump('talk')]
-                        if renpy.variant("pc"):
-                            tooltip _("Talk")
+            for routine in routines.values():
+                if (room.id == routine.id_room and room == cur_room):
+                    for ch in routine.chs.keys():
+                        frame xysize (110, 110) background None:
+                            imagebutton:
+                                idle '/interface/action-talk.webp'
+                                # align (0.5, 0.0)
+                                focus_mask True
+                                action [Hide('wait_navigation'), routine.talk(ch)]
+                                at middle_action
+                            # inserts the icon of the character who is currently in that room
+                            # TODO
+                            imagebutton:
+                                idle '/icon/Alice.webp' ######TODO
+                                focus_mask True
+                                at small_face
+                                action [Hide('wait_navigation'), routine.talk(ch)]
+                            if renpy.variant("pc"):
+                                tooltip _("Talk")
 
         # Fixed button to wait
         imagebutton:
