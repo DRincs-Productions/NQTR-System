@@ -265,6 +265,11 @@ init python:
             if ((self.id in stage_level) == False):
                 self.update()
             return (self.id in current_quest)
+        # TODO: add: def delete(self):
+            # removes it from quest_current
+            # removes it from stage_level
+
+    # TODO: Use it when: Load Menu
     def updateStageCompL():
         """Synchronize stage_level with stage_memory."""
         # check if there are less elements than bl_memory
@@ -278,3 +283,9 @@ init python:
             if ((x in stage_memory) == False):
                 stage_level.remove(x)
         return
+
+# TODO: Add the following functions
+    # check quest_current if they are inactive start (): Daily
+    # check if quest_current.key is in stage_memory, if not there delete it: Load Game
+    # for is_completed()
+    # compare quest_current task_current if in quest_current ce an extra quest is deleted

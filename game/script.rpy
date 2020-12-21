@@ -12,13 +12,14 @@ define an = Character("Ann")
 label start:
 
     $ cur_location = "house"
+    $ cur_routines_location = getChsInThisLocation(cur_location)
     $ cur_room = rooms[0]
     $ prev_room = rooms[5]
     $ updateBL()
-    scene expression (cur_room.bg)
     $ stage_memory["alice"].start()
     $ stage_memory["ann"].start()
 
-    call screen room_navigation
+    ## call screen room_navigation
+    call change_room
 
     return

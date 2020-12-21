@@ -24,7 +24,7 @@ default quest_current = {}
 default task_current = {}
 
 define stage_memory = {
-    "alice"     :   Stage(id = "alice", title = _("Help [a]"), quest_list = ["talk alice", "order products", "take products", "talk alice"], description = _("Per sapere di più come funziona la repo, Parla con Alice, lei ha molte cose da fare.")),
+    "alice"     :   Stage(id = "alice", title = _("Help [a]"), quest_list = ["talk alice", "order products", "take products", "talk alice"], description = _("To learn more about how the repo works, Talk to Alice, she has many things to do.")),
     "ann"       :   Stage(id = "ann", title = _("Help [an]"), quest_list = ["talk al about ann"], development = True),
 }
 define quest_memory = {

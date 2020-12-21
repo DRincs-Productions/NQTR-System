@@ -10,6 +10,8 @@ init -9 python:
             tm_stop = 25,
             day_start = None,
             day_deadline = None):
+            # TODO: add the type as in routine
+            # TODO: add the active value which is a value linked to bl_values, by default active = True
 
             self.name = name
             self.icon = icon
@@ -48,3 +50,5 @@ init -9 python:
             alist.pop(act_id)
         del alist
         return
+
+# TODO: Add a function that updates Actions after a load

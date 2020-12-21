@@ -11,6 +11,9 @@ init -9 python:
             type=None,
             day_deadline=None):
 
+            # TODO: add a function that checks if it is available to talk (maybe with bl_values)
+            # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
+            # TODO: add event: in case it is nothing then when MC enter in that room starts a label
             self.chs = chs
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
@@ -20,28 +23,85 @@ init -9 python:
             self.day_deadline = day_deadline
 
         def getChIcons(self):
+            """returns a list of ch icons (not secondary ch)"""
             icons = []
             for ch in self.chs.keys():
                 icons.append(ch_icons.get(ch))
             return icons
 
         def talk(self, ch):
-            ch_talk = ch
-            Jump('talk')
+            """Start talk() of TalkObject() of ch."""
+
+            # TODO: it doesn't matter i don't know why
+            talk_ch = ch
+            # TODO: use this:
+            # action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('end_talk_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+
+            if self.chs[ch].talk() == False:
+                for ch in self.chs.values():
+                    if ch.insertBgImage():
+                        return
+
+            # TODO: otherwise insert the bg of the current room
+
+        def getTalkImage(self, ch):
+            "Returns the image during a conversation"
+            return self.chs[ch].getTalkImage()
+
+        def getBeforeTalkImage(self):
+            "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
+            for ch in self.chs.values():
+                if ch.getAfterTalkImage() != None:
+                    return ch.getAfterTalkImage()
+            return None
+
+        def getAfterTalkImage(self, ch):
+            "Returns the AfterTalk image of the ch or the first that has it. Otherwise None"
+            if self.chs[ch].getAfterTalkImage() != None:
+                return self.chs[ch].getAfterTalkImage()
+            else:
+                return self.getBeforeTalkImage()
 
     class TalkObject(object):
+        """At the inside of the class there are the values used for the talk() function, 
+        (all this could be done in Commitment(), but I preferred not to use a dictionary)"""
         def __init__(self,
             ch_secondary = [],
-            image_non_talk=None,
-            label_non_talk=None,
-            image_talk=None,
+            bg_before_after=None,
+            after_event_label=None,
+            bg_talk=None,
             label_talk=None):
 
             self.ch_secondary = ch_secondary
-            self.image_non_talk = image_non_talk
-            self.label_non_talk = label_non_talk
-            self.image_talk = image_talk
+            self.bg_before_after = bg_before_after
+            self.bg_talk = bg_talk
+            self.after_event_label = after_event_label
             self.label_talk = label_talk
+
+        def talk(self):
+            """Inside you can find the labels and images to start talk()"""
+            # if label_talk == None does the default procedure
+            if self.label_talk == None:
+                renpy.jump('talk')
+            else:
+                renpy.jump(self.label_talk)
+
+        def getTalkImage(self):
+            """Returns the image during a conversation"""
+            return self.bg_talk
+
+        def getBeforeTalkImage(self):
+            """Returns the background image used when someone is in the same room. It can be None"""
+            return self.bg_before_after
+
+        def getAfterTalkImage(self):
+            """Returns the background image used after a conversation, 
+            but if after_event_label is not null it passes to after_event_label. 
+            ((the latter can be used in case the room is no longer accessible and thus takes you to another room))"""
+            if self.after_event_label != None:
+                renpy.jump(after_event_label)
+            else:
+                return self.bg_before_after
 
     def clearExpiredSPRoutine():
         """removes expired Commitments"""
@@ -55,31 +115,71 @@ init -9 python:
         del rlist
         return
 
-    def checkChLocation(id_location):
-        """Returns the commitments of the NCPs in that Location at that time"""
+    def getChsInThisLocation(id_location):
+        """Returns the commitments of the ch (NCPs) in that Location at that time.
+        Give priority to special routine, and routine with a valid type."""
+        # Create a list of ch who have a routine in that place at that time
+        # It does not do enough checks, they will be done later with getChLocation()
         routines = {}
+        for routine in sp_routine.values():
+            # Check Time and Location
+            if (routine.id_location == id_location and tm.now_is_between(routine.tm_start, routine.tm_stop)):
+                # Full verification
+                for chKey in routine.chs.keys():
+                    routines[chKey] = None
         for routine in df_routine.values():
             # Check Time and Location
             if (routine.id_location == id_location and tm.now_is_between(routine.tm_start, routine.tm_stop)):
                 # Full verification
                 chs = routine.chs
                 for chKey in chs.keys():
-                    routines[chKey] = routine
+                    routines[chKey] = None
+        # Check I enter the current routines of the ch.
+        # In case the routine is not in the place I want to go or they are null and void I delete the ch.
+        for ch in routine.chs.keys():
+            routines[ch] = getChLocation(ch)
+            if routines[ch] == None:
+                del routines[ch]
+            elif routines[ch].id_location != id_location:
+                del routines[ch]
         return routines
 
-    def whereIsLocation(ch):
-        """returns the Location where a ch is located at that time"""
+    def getChLocation(ch):
+        """Returns the current routine of the ch.
+        Give priority to special routine, and routine with a valid type."""
+        ret_routine = None
         # special routine
         for routine in sp_routine.values():
             if tm.now_is_between(routine.tm_start, routine.tm_stop):
-                return routine.id_location
-                if checkValidRoutineType(routine):
-                    return routine.id_location
+                if ch in routine.chs:
+                    ret_routine = routine
+                    if checkValidType(routine):
+                        return routine
+        if ret_routine != None:
+            return ret_routine
         # default routine
-        location = None
         for routine in df_routine.values():
             if tm.now_is_between(routine.tm_start, routine.tm_stop):
-                location = routine.id_location
-                if checkValidRoutineType(routine):
-                    return routine.id_location
-        return location
+                if ch in routine.chs:
+                    ret_routine = routine
+                    if checkValidType(routine.type):
+                        return routine
+        return ret_routine
+
+    # TODO: Is not used in Routine so move, maybe it is better in boolean_value
+    def checkValidType(type):
+        """Check according to its type, if it is True or False"""
+        # Custom code
+        if (type == None):
+            return False
+        if (type == "no_week"):
+            # TODO: Checkweekend
+            return True
+        return False
+
+    def getBgRoomRoutine(routines, room_id):
+        """Returns the first background image of the routines based on the current room. if there are no returns None"""
+        for item in routines.values():
+            if item.id_room == room_id:
+                return item.getBeforeTalkImage()
+        return None

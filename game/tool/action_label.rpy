@@ -1,35 +1,16 @@
-define ch_talk = None
-define wait_hour = 1
-# Check if the time "pass" block has been activated
-define block_spendtime_dalogue = _("You can't do it now")
-label check_block_spendtime:
-    if(bl_values.get("block_spendtime")):
-        "[block_spendtime_dalogue]"
-        call screen room_navigation
-    return
+define talk_ch = None
+default talk_image = None
+default end_talk_image = None
+
+## Actions they do are meant to pass time
 
 label wait_onehour:
     $ wait_hour = 1
     jump wait
 
-label wait:
+label nap:
     call check_block_spendtime
 
-    if(tm.new_hour(wait_hour)):
-        call check_event
-    else:
-        "(It's late, you have to go to bed)"
-    call screen room_navigation
-
-label error_label:
-    "ERROR"
-    return
-
-label change_room:
-    scene expression (cur_room.bg)
-    call screen room_navigation
-
-label nap:
     menu:
         "Nap for 3 hour":
             $ wait_hour = 3
@@ -60,18 +41,39 @@ label sleep:
             pass
     call screen room_navigation
 
+## Error and warming Label
+
+label error_label:
+    "ERROR"
+    return
+
+label development:
+    "In development"
+    call screen room_navigation
+
+## Various actions
+
 label talk:
-    if(ch_talk == None):
+    if (talk_image != None):
+        scene expression (talk_image)
+
+    if(talk_ch == None):
         call error_label
         call screen room_navigation
-    if(ch_talk == "alice"):
+    if(talk_ch == "alice"):
         a "hi, I'm [a]"
+    else:
+        "Now is busy test later."
+
+    if (end_talk_image != None):
+        scene expression (end_talk_image)
+
     call screen room_navigation
 
 label take_object:
     $ removeSpAction("take_object")
     call screen room_navigation
 
-label development:
-    "In development"
+label talk_sleep:
+    "zZz zZz ..."
     call screen room_navigation

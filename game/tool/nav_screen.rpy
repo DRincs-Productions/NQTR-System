@@ -56,11 +56,13 @@ init:
         xanchor 35
         size (105, 35)
 
+style menu_vscroll is vscrollbar:
+    xsize 7
+    unscrollable 'hide'
+
 screen room_navigation():
     modal True
     $ i = 0
-    # routine in that Location 
-    $ routines = checkChLocation(cur_location)
     # More information by hovering the mouse
     $ (x,y) = renpy.get_mouse_pos()
 
@@ -74,7 +76,7 @@ screen room_navigation():
 
             # If the Locations where I am is the same as the Locations where the room is located
             if (room.id_location == cur_location):
-                button xysize (126, 190) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]:
+                button xysize (126, 190) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]:
                     has vbox xsize 126 spacing 0
                     frame xysize (126, 140) background None:
                         # Room icon
@@ -84,28 +86,28 @@ screen room_navigation():
                             selected_idle room.icon + ' a'
                             selected_hover room.icon + ' a'
                             selected room == cur_room focus_mask True at middle_room
-                            action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
+                            action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
 
                         # Check the presence of ch in that room
                         $ there_are_ch = False
-                        for routine in routines.values():
+                        for routine in cur_routines_location.values():
                             # If it is the selected room
-                            if room.id == routine.id_room:
+                            if routine != None and room.id == routine.id_room:
                                 # I insert hbox only if they are sure that someone is there
                                 $ there_are_ch = True
 
                         if there_are_ch:
                             hbox ypos 73 xalign 0.5 spacing - 30:
-                                for routine in routines.values():
+                                for routine in cur_routines_location.values():
                                     # If it is the selected room
                                     if room.id == routine.id_room:
                                         for ch_icon in routine.getChIcons():
                                             imagebutton idle "icon/Alice.webp" focus_mask True at small_face:
-                                                action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
+                                                action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
 
                     # Room name
                     text room.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
-                key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), Jump('change_room')]
+                key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
 
     # Actions
     vbox:
@@ -123,25 +125,25 @@ screen room_navigation():
                             tooltip act.name
                         at middle_action
 
-            # Add talks for each NPC present.
+            # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
             # TODO: there is no possibility of group talk
-            for routine in routines.values():
-                if (room.id == routine.id_room and room == cur_room):
+            for routine in cur_routines_location.values():
+                if (routine != None and room.id == routine.id_room and room == cur_room):
+                    # Insert in talk for every ch, main in that room
                     for ch in routine.chs.keys():
                         frame xysize (110, 110) background None:
                             imagebutton:
                                 idle '/interface/action-talk.webp'
-                                # align (0.5, 0.0)
                                 focus_mask True
-                                action [Hide('wait_navigation'), routine.talk(ch)]
+                                action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('end_talk_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
                                 at middle_action
                             # inserts the icon of the character who is currently in that room
-                            # TODO
+                            # TODO: for now insert only the icon of the main ch, I have to insert also the icon of the other secondary ch
                             imagebutton:
-                                idle '/icon/Alice.webp' ######TODO
+                                idle ch_icons.get(ch)
                                 focus_mask True
                                 at small_face
-                                action [Hide('wait_navigation'), routine.talk(ch)]
+                                action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('end_talk_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
                             if renpy.variant("pc"):
                                 tooltip _("Talk")
 
@@ -315,7 +317,7 @@ screen menu_memo():
                             text quest_menu.advice size 28
                             for item in quest_menu.goals:
                                 text item.description size 28
-                            if quest_current[cur_task_menu] and (cur_quest_menu+1) == len(stage_memory[cur_task_menu].quest_list):
+                            if quest_current[cur_task_menu].completed and (cur_quest_menu+1) == len(stage_memory[cur_task_menu].quest_list):
                                 if stage_memory[cur_task_menu].development:
                                     text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size 28
                                 else:
