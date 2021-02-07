@@ -238,7 +238,7 @@ screen room_navigation():
         imagebutton:
             idle '/interface/menu-map.webp'
             focus_mask True
-            action [Hide('wait_navigation'), Jump('development')]
+            action [Hide('wait_navigation'), Jump('open_map')]
             if renpy.variant("pc"):
                 at small_menu
                 tooltip _("Map")

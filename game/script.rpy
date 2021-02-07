@@ -10,6 +10,7 @@ define an = Character("Ann")
 # The game starts here.
 
 label start:
+    $ block_goout_dialogue = _("To get out you have to take the car keys, (talk to Alice)")
 
     $ cur_location = "house"
     $ cur_routines_location = getChsInThisLocation(cur_location)
