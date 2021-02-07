@@ -14,8 +14,8 @@ label talk:
         call error_label
         call screen room_navigation
     if(talk_ch == "alice"):
-        mc "Ciao [a]"
-        a "Ciao, mi dire qualcosa?"
+        mc "Hi [a]"
+        a "Hi, can you tell me something?"
     else:
         "Now is busy test later."
     call talk_menu
