@@ -35,7 +35,7 @@ init -9 python:
             # TODO: it doesn't matter i don't know why
             talk_ch = ch
             # TODO: use this:
-            # action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('end_talk_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+            # action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
 
             if self.chs[ch].talk() == False:
                 for ch in self.chs.values():
