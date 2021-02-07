@@ -1,7 +1,3 @@
-define talk_ch = None
-default talk_image = None
-default end_talk_image = None
-
 ## Actions they do are meant to pass time
 
 label wait_onehour:
@@ -52,23 +48,6 @@ label development:
     call screen room_navigation
 
 ## Various actions
-
-label talk:
-    if (talk_image != None):
-        scene expression (talk_image)
-
-    if(talk_ch == None):
-        call error_label
-        call screen room_navigation
-    if(talk_ch == "alice"):
-        a "hi, I'm [a]"
-    else:
-        "Now is busy test later."
-
-    if (end_talk_image != None):
-        scene expression (end_talk_image)
-
-    call screen room_navigation
 
 label take_object:
     $ removeSpAction("take_object")
