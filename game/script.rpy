@@ -14,8 +14,6 @@ label start:
     $ block_goout_dialogue = _("To get out you have to take the car keys, (talk to Alice)")
 
     $ cur_location = "house"
-    $ cur_routines_location = getChsInThisLocation(cur_location)
-    $ cur_events_location = getEventsInThisLocation(cur_location)
     $ cur_room = rooms[0]
     $ prev_room = rooms[5]
     $ updateBL()
@@ -23,6 +21,6 @@ label start:
     $ stage_memory["ann"].start()
 
     ## call screen room_navigation
-    call change_room
+    call after_wait
 
     return
