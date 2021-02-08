@@ -24,13 +24,29 @@ default quest_current = {}
 default task_current = {}
 
 define stage_memory = {
-    "alice"     :   Stage(id = "alice", title = _("Help [a]"), quest_list = ["talk alice", "order products", "take products", "talk alice"], description = _("To learn more about how the repo works, Talk to Alice, she has many things to do.")),
+    "alice"     :   Stage(id = "alice", title = _("Help [a]"), quest_list = ["talk alice1", "order products", "take products", "talk alice2"], description = _("To learn more about how the repo works, Talk to Alice, she has many things to do.")),
     "ann"       :   Stage(id = "ann", title = _("Help [an]"), quest_list = ["talk al about ann"], development = True),
 }
 define quest_memory = {
-    "talk alice"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
+    # stage "alice"
+    "talk alice1"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a]."), label_start="queststart_talkalice"),
     "order products"        :   Quest(id_stageOrTask = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
     "take products"         :   Quest(id_stageOrTask = "alice", title = _("Take products"), description = _("Get products on the Terrace."), description_request = _("Wait for the products you ordered to arrive"), days_late = 2),
+    "talk alice2"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
+    # stage "ann"
     "talk al about ann"     :   Quest(id_stageOrTask = "ann", title = _("Talk [a]"), description = _("Talk [a].")),
     "visit ann"             :   Quest(id_stageOrTask = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
 }
+
+# stage "alice"
+label queststart_talkalice:
+    $ sp_routine["stagealice1"] = Commitment(chs={"alice" : TalkObject()}, tm_start=14, tm_stop=20, id_location="house", id_room="terrace", label_event="quest_talkalice")
+    return
+        
+label quest_talkalice:
+    if (stage_level["alice"] == 0):
+        show bg alice terrace talk
+        a "Hi can you order me a new book from pc?"
+        mc "Ok"
+        a "Thanks"
+    return

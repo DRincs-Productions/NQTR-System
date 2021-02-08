@@ -1,6 +1,6 @@
 init -9 python:
     class Commitment(object):
-        """Commitment and routine"""
+        """Commitment, routine and event"""
         def __init__(self,
             tm_start,
             tm_stop,
@@ -9,7 +9,8 @@ init -9 python:
             id_location=None,
             id_room=None,
             type=None,
-            day_deadline=None):
+            day_deadline=None,
+            label_event=None):
 
             # TODO: add a function that checks if it is available to talk (maybe with bl_values)
             # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
@@ -21,6 +22,18 @@ init -9 python:
             self.id_room = id_room
             self.type = type
             self.day_deadline = day_deadline
+            # ATTENTION: in change_room if the mc has not moved, delete the event (resolves any loops)
+            # if you want the event to be started only once and then deleted
+            # at the end of the label insert:
+                # return
+            # if you want the event to be repeated every time you go to that room
+            # at the end of the label insert:
+                # call screen room_navigation
+            # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing id_location
+            # at the end of the label insert:
+                # $ cur_events_location.pop(cur_room.id)    # cur_room.id: cioè l'id della stanza dove viene aviato l'evento
+                # call change_room
+            self.label_event = label_event
 
         def getChIcons(self):
             """returns a list of ch icons (not secondary ch)"""
@@ -62,20 +75,30 @@ init -9 python:
             else:
                 return self.getBeforeTalkImage()
 
+        def is_event(self):
+            "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
+            return (self.label_event is not None)
+
+        # doesn't seem to work
+        # use something like this: renpy.call(cur_events_location[cur_room.id].label_event)
+        # def start_event(self):
+        #     if self.label_event == None:
+        #         renpy.call(self.label_event)
+
     class TalkObject(object):
         """At the inside of the class there are the values used for the talk() function, 
         (all this could be done in Commitment(), but I preferred not to use a dictionary)"""
         def __init__(self,
             ch_secondary = [],
             bg_before_after=None,
-            after_event_label=None,
+            after_label_event=None,
             bg_talk=None,
             label_talk=None):
 
             self.ch_secondary = ch_secondary
             self.bg_before_after = bg_before_after
             self.bg_talk = bg_talk
-            self.after_event_label = after_event_label
+            self.after_label_event = after_label_event
             self.label_talk = label_talk
 
         def talk(self):
@@ -96,10 +119,10 @@ init -9 python:
 
         def getAfterTalkImage(self):
             """Returns the background image used after a conversation, 
-            but if after_event_label is not null it passes to after_event_label. 
+            but if after_label_event is not null it passes to after_label_event. 
             ((the latter can be used in case the room is no longer accessible and thus takes you to another room))"""
-            if self.after_event_label != None:
-                renpy.jump(after_event_label)
+            if self.after_label_event != None:
+                renpy.jump(after_label_event)
             else:
                 return self.bg_before_after
 
@@ -107,7 +130,7 @@ init -9 python:
         """removes expired Commitments"""
         rlist = []
         rlist.clear()
-        for r in sp_routine:
+        for r in sp_routine.values():
             if (r.day_deadline != None and r.day_deadline <= tm.day):
                 rlist.append(r)
         for r in rlist:
@@ -116,6 +139,7 @@ init -9 python:
         return
 
     def getChsInThisLocation(id_location):
+        # TODO: to add when I change id_location
         """Returns the commitments of the ch (NCPs) in that Location at that time.
         Give priority to special routine, and routine with a valid type."""
         # Create a list of ch who have a routine in that place at that time
@@ -143,6 +167,19 @@ init -9 python:
             elif routines[ch].id_location != id_location:
                 del routines[ch]
         return routines
+
+    def getEventsInThisLocation(id_location):
+        # TODO: to add when I change id_location
+        """Returns events at that location at that time.
+        Checks only in sp_routine."""
+        # Create a list of ch who have a routine in that place at that time
+        # It does not do enough checks, they will be done later with getChLocation()
+        events = {}
+        for routine in sp_routine.values():
+            # Check Time and Location and is event
+            if (routine.id_location == id_location and tm.now_is_between(routine.tm_start, routine.tm_stop) and routine.is_event() == True):
+                events[routine.id_room] = routine
+        return events
 
     def getChLocation(ch):
         """Returns the current routine of the ch.

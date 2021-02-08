@@ -29,6 +29,7 @@ label wait:
 label after_wait:
     # this step is to change the background based on the presence of a ch
     $ cur_routines_location = getChsInThisLocation(cur_location)
+    $ cur_events_location = getEventsInThisLocation(cur_location)
     $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
     # start an event if it exists
     call check_event
@@ -37,6 +38,10 @@ label after_wait:
 
 # Check if there are any events to start at that time
 # inserted it when you go to sleep but you can put it wherever you want
+# Warning: this has nothing to do with change_room events, 
+    # change_room events (Commitment): they are triggered by entering a certain room, and can be deleted.
+    # these are triggered based on time (or even location), and cannot be deleted.
+# the best use is to start fixed events.
 label check_event:
     # Custom code
     return

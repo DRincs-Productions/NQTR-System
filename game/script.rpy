@@ -15,6 +15,7 @@ label start:
 
     $ cur_location = "house"
     $ cur_routines_location = getChsInThisLocation(cur_location)
+    $ cur_events_location = getEventsInThisLocation(cur_location)
     $ cur_room = rooms[0]
     $ prev_room = rooms[5]
     $ updateBL()

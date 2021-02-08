@@ -124,8 +124,8 @@ init python:
                 return self.active
             if (self.request_check() == False):
                 return False
-            # if (label_start != None)
-                # TODO: Execute label_start
+            if (self.label_start != None):
+                renpy.call(self.label_start)
             self.active = True
             # TODO: notify
             return True
