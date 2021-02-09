@@ -24,13 +24,17 @@ label talk:
 
 # Opens the choice menu, with the various dialogs you can currently do with a ch
 label talk_menu:
-    if (talk_ch in talkch_choices.keys()): 
+    # check if there is already a list of menu choices for talk_ch
+    # if it does not exist it creates it
+    if (talk_ch in talkch_choices.keys()):
         $ talk_choices = talkch_choices[talk_ch]
     else:
         $ talk_choices = []
 
     $ talk_choices.append((_("Back"), "talk_back"))
     $ menu_result = menu(talk_choices)
+    # remove the item because otherwise every time I talk to a character more "Back" will be added (even if I have not understood why)
+    $ talk_choices.remove((_("Back"), "talk_back"))
     $ del talk_choices
     jump expression menu_result
     return

@@ -119,12 +119,15 @@ init python:
             quest_current[self.id_stageOrTask].setDay(self.days_late)
         def start(self):
             """If you have reached all the objectives then activate the Quest.
-            start () is used until the quest becomes active"""
+            start () is used until the quest becomes active.
+            TODO: WARNING: there is an error because after "call expression self.label_start" it doesn't go on, so:
+            the only thing that happens is that it doesn't return anything. (for now I don't know how serious is this error)"""
             if (self.active):
                 return self.active
             if (self.request_check() == False):
                 return False
             if (self.label_start != None):
+                self.active = True
                 renpy.call(self.label_start)
             self.active = True
             # TODO: notify

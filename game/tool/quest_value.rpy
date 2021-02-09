@@ -24,12 +24,12 @@ default quest_current = {}
 default task_current = {}
 
 define stage_memory = {
-    "alice"     :   Stage(id = "alice", title = _("Help [a]"), bg="bg alice terrace talk", quest_list = ["talk alice1", "order products", "take products", "talk alice2"], description = _("To learn more about how the repo works, Talk to Alice, she has many things to do.")),
+    "alice"     :   Stage(id = "alice", title = _("Help [a]"), bg="bg alice terrace talk", quest_list = ["talk alice1", "order products", "take products", "talk alice2"], description = _("To learn more about how the repo works, Talk to [a]. \nGoing when she is there will automatically start an \"Event\" (see routine*.rpy to learn more). \nAfter that an action (action*.rpy) will be added to open the pc, in MC room. \n\n(during the quest you can talk to [a] and you will see her talking during the quests of the same stage)")),
     "ann"       :   Stage(id = "ann", title = _("Help [an]"), quest_list = ["talk al about ann"], development = True),
 }
 define quest_memory = {
     # stage "alice"
-    "talk alice1"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a]."), label_start="queststart_talkalice"),
+    "talk alice1"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="queststart_talkalice"),
     "order products"        :   Quest(id_stageOrTask = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
     "take products"         :   Quest(id_stageOrTask = "alice", title = _("Take products"), description = _("Get products on the Terrace."), description_request = _("Wait for the products you ordered to arrive"), days_late = 2),
     "talk alice2"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
@@ -42,14 +42,27 @@ define quest_memory = {
 label queststart_talkalice:
     $ sp_routine["stagealice1"] = Commitment(chs={"alice" : TalkObject()}, tm_start=14, tm_stop=20, id_location="house", id_room="terrace", label_event="quest_talkalice")
     return
-        
+
 label quest_talkalice:
     if (stage_level["alice"] == 0):
         show bg alice terrace talk
         a "Hi can you order me a new book from pc?"
         mc "Ok"
         a "Thanks"
-        # $ talk_choices.append((_("Back"), "talk_back"))
+
+        if ("alice" in talkch_choices.keys()): 
+            $ talk_choices = talkch_choices["alice"]
+        else:
+            $ talk_choices = []
+        $ talk_choices.append((_("About the book"), "quest_talkalice"))
+        $ talkch_choices["alice"] = talk_choices
+        $ del talk_choices
+
+        $ sp_actions["order_product"] = Action(_("Order product"), "/interface/action-pc.webp", label = "order_product", sp_room='my_room')
+
+        $ stage_memory["alice"].next_quest()
     elif (stage_level["alice"] == 1):
-        ""
+        mc "What book do you want me to order?"
+        a "For me it is the same."
+        jump talk_menu
     return

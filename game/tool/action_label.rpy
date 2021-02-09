@@ -56,3 +56,10 @@ label take_object:
 label talk_sleep:
     "zZz zZz ..."
     call screen room_navigation
+
+label order_product:
+    mc "OK! Let's see, let's look for a book...."
+    mc "Here's R****, for $1. Just the thing for me."
+    $ sp_actions.pop('order_product')
+    $ stage_memory["alice"].next_quest()
+    call screen room_navigation

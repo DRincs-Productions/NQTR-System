@@ -5,10 +5,10 @@ label check_event:
 label check_event_sp:
     # I check if there is an event in this room, if so I start the event and then delete it
     if (cur_room.id in cur_events_location.keys()):
-        # if I put python: here renpy.call() doesn't work
+        # if I put python: here "call expression" doesn't work
         $ event_room = cur_room.id
         $ ev = cur_events_location[cur_room.id]
-        $ renpy.call(ev.label_event)
+        call expression ev.label_event
         if (event_room == cur_room.id):
             # delete the event in cur_events_location
             $ cur_events_location.pop(cur_room.id)
