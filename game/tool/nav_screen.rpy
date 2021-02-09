@@ -300,11 +300,16 @@ screen menu_memo():
             frame area (0, 30, 1190, 850) background None:
                 has vbox spacing 20
                 # Image
-                frame xsize 800 ysize 400 pos (195, 0) background None:
-                    if quest_menu.bg != '':
-                        add quest_menu.bg
-                    elif stage_memory[cur_task_menu].bg != '':
-                        add stage_memory[cur_task_menu].bg
+                if quest_menu.bg != '' and quest_menu.bg != None:
+                    add Frame(quest_menu.bg, Borders(0,0,0,0)):
+                        xsize 800
+                        ysize 400
+                        pos (195,0)
+                elif stage_memory[cur_task_menu].bg != '' and stage_memory[cur_task_menu].bg != None:
+                    add Frame(stage_memory[cur_task_menu].bg, Borders(0,0,0,0)):
+                        xsize 800
+                        ysize 400
+                        pos (195,0)
                 frame xsize 1180 xalign 0.5 background None:
                     text quest_menu.title size 30 font 'DejaVuSans.ttf' xalign 0.5
                 frame area (0, 0, 1190, 400) background None:

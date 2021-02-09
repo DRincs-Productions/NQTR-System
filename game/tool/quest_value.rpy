@@ -24,7 +24,7 @@ default quest_current = {}
 default task_current = {}
 
 define stage_memory = {
-    "alice"     :   Stage(id = "alice", title = _("Help [a]"), quest_list = ["talk alice1", "order products", "take products", "talk alice2"], description = _("To learn more about how the repo works, Talk to Alice, she has many things to do.")),
+    "alice"     :   Stage(id = "alice", title = _("Help [a]"), bg="bg alice terrace talk", quest_list = ["talk alice1", "order products", "take products", "talk alice2"], description = _("To learn more about how the repo works, Talk to Alice, she has many things to do.")),
     "ann"       :   Stage(id = "ann", title = _("Help [an]"), quest_list = ["talk al about ann"], development = True),
 }
 define quest_memory = {
@@ -49,4 +49,7 @@ label quest_talkalice:
         a "Hi can you order me a new book from pc?"
         mc "Ok"
         a "Thanks"
+        # $ talk_choices.append((_("Back"), "talk_back"))
+    elif (stage_level["alice"] == 1):
+        ""
     return
