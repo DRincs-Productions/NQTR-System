@@ -14,6 +14,7 @@ label new_day:
     # removes expired Commitments
     $ clearExpiredSPRoutine()
     $ clearExpiredSPActions()
+    $ checkInactiveQuest()
     jump after_wait
     return
 

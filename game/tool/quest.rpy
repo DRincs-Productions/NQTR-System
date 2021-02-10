@@ -287,8 +287,16 @@ init python:
                 stage_level.remove(x)
         return
 
+    # this function is done in the transition from one day to another
+    def checkInactiveQuest():
+            """Check if the inactive quests have the requirements to be activated, if so, activate them."""
+            for k in quest_current.keys():
+                quest_current[k].start()
+            for k in task_current.keys():
+                task_current[k].start()
+            return
+
 # TODO: Add the following functions
-    # check quest_current if they are inactive start (): Daily
     # check if quest_current.key is in stage_memory, if not there delete it: Load Game
     # for is_completed()
     # compare quest_current task_current if in quest_current ce an extra quest is deleted

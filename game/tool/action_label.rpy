@@ -49,17 +49,22 @@ label development:
 
 ## Various actions
 
-label take_object:
-    $ removeSpAction("take_object")
-    call screen room_navigation
-
-label talk_sleep:
-    "zZz zZz ..."
-    call screen room_navigation
-
 label order_product:
     mc "OK! Let's see, let's look for a book...."
     mc "Here's R****, for $1. Just the thing for me."
     $ sp_actions.pop('order_product')
     $ stage_memory["alice"].next_quest()
+    call screen room_navigation
+
+label add_product:
+    $ sp_actions["take_product"] = Action(_("Take product"), "/interface/action-box.webp", label = "take_product", sp_room='terrace')
+    call screen room_navigation
+
+label take_product:
+    $ sp_actions.pop('take_product')
+    $ stage_memory["alice"].next_quest()
+    call screen room_navigation
+
+label talk_sleep:
+    "zZz zZz ..."
     call screen room_navigation

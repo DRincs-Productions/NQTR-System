@@ -29,10 +29,10 @@ define stage_memory = {
 }
 define quest_memory = {
     # stage "alice"
-    "talk alice1"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="queststart_talkalice"),
+    "talk alice1"           :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="queststart_talkalice"),
     "order products"        :   Quest(id_stageOrTask = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
-    "take products"         :   Quest(id_stageOrTask = "alice", title = _("Take products"), description = _("Get products on the Terrace."), description_request = _("Wait for the products you ordered to arrive"), days_late = 2),
-    "talk alice2"            :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
+    "take products"         :   Quest(id_stageOrTask = "alice", title = _("Take products"), description = _("Take products on the Terrace."), description_request = _("Wait for the products you ordered to arrive (2 day)"), days_late = 2, label_start="add_product"),
+    "talk alice2"           :   Quest(id_stageOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
     # stage "ann"
     "talk al about ann"     :   Quest(id_stageOrTask = "ann", title = _("Talk [a]"), description = _("Talk [a].")),
     "visit ann"             :   Quest(id_stageOrTask = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
@@ -65,4 +65,13 @@ label quest_talkalice:
         mc "What book do you want me to order?"
         a "For me it is the same."
         jump talk_menu
+    elif (stage_level["alice"] == 2):
+        mc "I ordered the Book, hope you enjoy it."
+        a "Great, when it arrives remember to bring it to me."
+        jump talk_menu
+    elif (stage_level["alice"] == 3):
+        mc "Here's your book."
+        a "Thank you, I can finally read something new."
+        $ stage_memory["alice"].next_quest()
+        $ talkch_choices["alice"].pop()
     return
