@@ -171,7 +171,7 @@ init python:
             # if (label_end != None)
                 # TODO: Execute label_end
             if (self.id_stageOrTask in task_current):
-                del task_current[id_stageOrTask]
+                del task_current[self.id_stageOrTask]
                 return
             stage_memory[self.id_stageOrTask].next_quest()
         def find(self, quest_id, value=1):
@@ -257,10 +257,11 @@ init python:
             quest_current[self.id].start()
             stage_level[self.id] = n_quest
         def next_quest(self):
-            """Go to the next quest"""
+            """Go to the next quest, in case it is the last, it does not go on but the sect as complete."""
             if ((self.id in stage_level) == False):
                 self.update()
             if len(self.quest_list)-1 == stage_level[self.id]:
+                quest_current[self.id].completed = True
                 return
             stage_level[self.id] +=1
             self.start(stage_level[self.id])
