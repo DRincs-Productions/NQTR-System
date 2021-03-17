@@ -17,8 +17,8 @@ label start:
     $ cur_room = rooms[0]
     $ prev_room = rooms[5]
     $ updateBL()
-    $ stage_memory["alice"].start()
-    $ stage_memory["ann"].start()
+    $ quests["alice"].start()
+    $ quests["ann"].start()
 
     ## call screen room_navigation
     call after_wait
