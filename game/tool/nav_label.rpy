@@ -20,9 +20,22 @@ label check_goout:
         call screen room_navigation
     return
 
-## Open the map
+## Open the map or close the map
 label open_map:
     call check_goout
 
-    call development
-    return
+    $ cur_location = locations[cur_room.id_location]
+    scene expression map_images[cur_location.id_map]
+
+    if (map_looking == False):
+        $ map_looking = True
+        call screen room_navigation
+## Close the map
+label close_map:
+    python:
+        for room in rooms:
+            if(room.id == cur_location.id_externalroom):
+                cur_room = room
+        map_looking = False
+    scene expression (cur_room.bg)
+    jump change_room

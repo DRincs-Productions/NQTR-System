@@ -21,7 +21,8 @@ label new_day:
 label wait:
     call check_block_spendtime
     if(tm.new_hour(wait_hour)):
-        jump after_wait
+        if (map_looking == False):
+            jump after_wait
     else:
         "(It's late, you have to go to bed)"
     call screen room_navigation
@@ -29,8 +30,8 @@ label wait:
 # it is always started after a delay of
 label after_wait:
     # this step is to change the background based on the presence of a ch
-    $ cur_routines_location = getChsInThisLocation(cur_location)
-    $ cur_events_location = getEventsInThisLocation(cur_location)
+    $ cur_routines_location = getChsInThisLocation(cur_location.id)
+    $ cur_events_location = getEventsInThisLocation(cur_location.id)
     $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
     # move to change_room is the best way to move to room_navigation
     jump change_room

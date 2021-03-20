@@ -14,8 +14,14 @@ image icon lounge a = im.MatrixColor("location/lounge-icon.webp", im.matrix.brig
 image icon terrace a = im.MatrixColor("location/terrace-icon.webp", im.matrix.brightness(-0.5))
 image icon courtyard a = im.MatrixColor("location/courtyard-icon.webp", im.matrix.brightness(-0.5))
 
+image icon map home = "/interface/map-home.webp"
+
+image icon map home a = im.MatrixColor("/interface/map-home.webp", im.matrix.brightness(-0.5))
+
 image icon alice = "Alice/icon.webp"
 image icon ann = "Ann/icon.webp"
+
+image bg map = "location/map-[tm.image_time].webp"
 
 image bg myroom = "location/myroom-[tm.image_time].webp"
 image bg aliceroom = "location/aliceroom-[tm.image_time].webp"

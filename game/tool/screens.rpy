@@ -9,6 +9,16 @@ init:
             yanchor 1 alpha 0.9
         on selected_hover:
             yanchor 1 alpha 0.9
+    transform small_map:
+        size (80, 80)
+        on selected_idle:
+            yanchor 0 alpha 0.9
+        on idle:
+            yanchor 0 alpha 0.9
+        on hover:
+            yanchor 1 alpha 0.9
+        on selected_hover:
+            yanchor 1 alpha 0.9
     transform middle_action:
         size (120, 120)
         on selected_idle:
@@ -66,101 +76,131 @@ screen room_navigation():
     # More information by hovering the mouse
     $ (x,y) = renpy.get_mouse_pos()
 
-    hbox:
-        yalign 0.99
-        xalign 0.01
-        spacing 2
-
-        for room in rooms:
-            $ i += 1
-
-            # If the Locations where I am is the same as the Locations where the room is located
-            if (room.id_location == cur_location):
-                button xysize (126, 190) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]:
-                    has vbox xsize 126 spacing 0
-                    frame xysize (126, 140) background None:
-                        # Room icon
-                        imagebutton:
-                            align (0.5, 0.0)
-                            idle room.icon
-                            selected_idle room.icon + ' a'
-                            selected_hover room.icon + ' a'
-                            selected room == cur_room focus_mask True at middle_room
-                            action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
-
-                        # Check the presence of ch in that room
-                        $ there_are_ch = False
-                        for routine in cur_routines_location.values():
-                            # If it is the selected room
-                            if routine != None and room.id == routine.id_room:
-                                # I insert hbox only if they are sure that someone is there
-                                $ there_are_ch = True
-
-                        if there_are_ch:
-                            hbox ypos 73 xalign 0.5 spacing - 30:
-                                for routine in cur_routines_location.values():
-                                    # If it is the selected room
-                                    if room.id == routine.id_room:
-                                        for ch_icon in routine.getChIcons():
-                                            imagebutton idle "icon/Alice.webp" focus_mask True at small_face:
-                                                action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
-
-                    # Room name
-                    text room.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
-                key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
-
-    # Actions
-    vbox:
-        yalign 0.95
-        xalign 0.99
-        for room in rooms:
-            # Adds the button list of possible actions in that room
-            if (room == cur_room):
-                for act in getActions(room):
+    if (map_looking):
+        for location in locations.values():
+            # If the Map where I am is the same as the Map where the room is located
+            if (location.id_map == cur_location.id_map):
+                vbox:
+                    align (location.yalign, location.xalign)
                     imagebutton:
-                        idle act.icon
-                        focus_mask True
-                        action [Hide('wait_navigation'), Jump(act.label)]
-                        if renpy.variant("pc"):
-                            tooltip act.name
-                        at middle_action
+                        idle location.icon
+                        selected_idle location.icon + ' a'
+                        selected_hover location.icon + ' a'
+                        selected location == cur_location focus_mask True at small_map
+                        action [Hide('wait_navigation'), SetVariable('cur_location', location), Jump('close_map')]
 
-            # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
-            # TODO: there is no possibility of group talk
-            for routine in cur_routines_location.values():
-                if (routine != None and room.id == routine.id_room and room == cur_room):
-                    # Insert in talk for every ch, main in that room
-                    for ch in routine.chs.keys():
-                        frame xysize (110, 110) background None:
+                    # Locations name
+                    text location.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+
+    else:
+        hbox:
+            yalign 0.99
+            xalign 0.01
+            spacing 2
+
+            for room in rooms:
+                $ i += 1
+
+                # If the Locations where I am is the same as the Locations where the room is located
+                if (room.id_location == cur_location.id):
+                    button xysize (126, 190) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]:
+                        has vbox xsize 126 spacing 0
+                        frame xysize (126, 140) background None:
+                            # Room icon
                             imagebutton:
-                                idle '/interface/action-talk.webp'
-                                focus_mask True
-                                action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
-                                at middle_action
-                            # inserts the icon of the character who is currently in that room
-                            # TODO: for now insert only the icon of the main ch, I have to insert also the icon of the other secondary ch
-                            imagebutton:
-                                idle ch_icons.get(ch)
-                                focus_mask True
-                                at small_face
-                                action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+                                align (0.5, 0.0)
+                                idle room.icon
+                                selected_idle room.icon + ' a'
+                                selected_hover room.icon + ' a'
+                                selected room == cur_room focus_mask True at middle_room
+                                action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+
+                            # Check the presence of ch in that room
+                            $ there_are_ch = False
+                            for routine in cur_routines_location.values():
+                                # If it is the selected room
+                                if routine != None and room.id == routine.id_room:
+                                    # I insert hbox only if they are sure that someone is there
+                                    $ there_are_ch = True
+
+                            if there_are_ch:
+                                hbox ypos 73 xalign 0.5 spacing - 30:
+                                    for routine in cur_routines_location.values():
+                                        # If it is the selected room
+                                        if room.id == routine.id_room:
+                                            for ch_icon in routine.getChIcons():
+                                                imagebutton idle "icon/Alice.webp" focus_mask True at small_face:
+                                                    action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+
+                        # Room name
+                        text room.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+                    key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+
+        # Actions
+        vbox:
+            yalign 0.95
+            xalign 0.99
+            for room in rooms:
+                # Adds the button list of possible actions in that room
+                if (room == cur_room):
+                    for act in getActions(room):
+                        imagebutton:
+                            idle act.icon
+                            focus_mask True
+                            action [Hide('wait_navigation'), Jump(act.label)]
                             if renpy.variant("pc"):
-                                tooltip _("Talk")
+                                tooltip act.name
+                            at middle_action
 
-        # Fixed button to wait
-        imagebutton:
-            idle '/interface/action-wait.webp'
-            focus_mask True
-            action [Hide('wait_navigation'), Jump('wait_onehour')]
-            if renpy.variant("pc"):
-                tooltip _("Wait")
-            at middle_action
+                # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
+                # TODO: there is no possibility of group talk
+                for routine in cur_routines_location.values():
+                    if (routine != None and room.id == routine.id_room and room == cur_room):
+                        # Insert in talk for every ch, main in that room
+                        for ch in routine.chs.keys():
+                            frame xysize (110, 110) background None:
+                                imagebutton:
+                                    idle '/interface/action-talk.webp'
+                                    focus_mask True
+                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+                                    at middle_action
+                                # inserts the icon of the character who is currently in that room
+                                # TODO: for now insert only the icon of the main ch, I have to insert also the icon of the other secondary ch
+                                imagebutton:
+                                    idle ch_icons.get(ch)
+                                    focus_mask True
+                                    at small_face
+                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+                                if renpy.variant("pc"):
+                                    tooltip _("Talk")
+
+            # Fixed button to wait
+            imagebutton:
+                idle '/interface/action-wait.webp'
+                focus_mask True
+                action [Hide('wait_navigation'), Jump('wait_onehour')]
+                if renpy.variant("pc"):
+                    tooltip _("Wait")
+                at middle_action
 
     # Time
-    vbox:
+    hbox:
         align (0.5, 0.01)
-        text "[tm.hour]:00" xalign (0.5) font 'DejaVuSans.ttf' size 60 drop_shadow [(2, 2)]
-        text tm.get_weekday_name() xalign (0.5) font 'DejaVuSans.ttf' size 24 drop_shadow [(2, 2)] line_leading -16
+        vbox:
+            align (0.5, 0.01)
+            text "[tm.hour]:00" xalign (0.5) font 'DejaVuSans.ttf' size 60 drop_shadow [(2, 2)]
+            text tm.get_weekday_name() xalign (0.5) font 'DejaVuSans.ttf' size 24 drop_shadow [(2, 2)] line_leading -16
+
+        if (map_looking):
+            # Fixed button to wait
+            imagebutton:
+                xysize (300, 300)
+                idle '/interface/action-wait.webp'
+                focus_mask True
+                action [Hide('wait_navigation'), Jump('wait_onehour')]
+                if renpy.variant("pc"):
+                    tooltip _("Wait")
+                at middle_action
 
     # Tools
     hbox:
