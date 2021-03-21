@@ -16,6 +16,7 @@ For the time being, a good part of the screens and images are not of my creation
 ## Documentation
 
 ### Navigation and Map
+![alt text](https://github.com/DonRP/NQTR-toolkit/blob/master/images/Navigation.webp "Navigation")
 
 To create the navigation you only need to fill in the following variables correctly.
 
@@ -53,6 +54,7 @@ define locations = {
 ```
 
 ###### Map
+![alt text](https://github.com/DonRP/NQTR-toolkit/blob/master/images/Map.webp "Map")
 
 I preferred not to create a map class. the reason why I preferred to create a list of maps is to give the possibility to create more maps to travel in.
 ```renpy
@@ -72,6 +74,8 @@ label check_goout:
 ```
 
 ### Quest system
+![alt text](https://github.com/DonRP/NQTR-toolkit/blob/master/images/Quest.webp "Quest")
+
 The system of quests is a bit more complicated, it consists of Quests containing one or more Stages which in turn may contain one or more Goals. The stage can belong to the Quest or Stage dictionary.
 To create Quests you just have to enter the right values in Quests and Quest_stages.
 
@@ -159,6 +163,8 @@ define quest_stages = {
 ###### Goal (in process)
 
 ### Routine system
+![alt text](https://github.com/DonRP/NQTR-toolkit/blob/master/images/Routine.webp "Routine")
+
 To skim the routines, simply compile df_routine and correctly add Commitment to sp_routine (the difference is explained later).
 The Commitment() class has the following parameters:
 
