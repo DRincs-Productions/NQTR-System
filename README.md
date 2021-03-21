@@ -70,3 +70,42 @@ label check_goout:
         call screen room_navigation
     return
 ```
+
+### Quest system
+The system of quests is a bit more complicated, it consists of Quests containing one or more Stages which in turn may contain one or more Goals. The stage can belong to the Quest or Stage dictionary.
+To create Quests you just have to enter the right values in Quests and Quest_stages.
+
+##### Quest
+The Quest() class is a set of stages, which follow each other in an orderly fashion. It is mandatory to define id and title.
+as well as description and stages_id the other parameters:
+
+bg: in the information you see the image inserted in bg
+
+development = True: when the quest is completed a text will be displayed explaining that this is the temporary end of the quest.
+
+icon & category: have not been implemented yet.
+
+```renpy
+define quests = {
+    "alice"     :   Quest(id = "alice", title = _("Help [a]"), bg="bg alice terrace talk", 
+    stages_id = ["talk alice1", "order products", "take products", "talk alice2"], 
+    description = _("To learn more about how the repo works, Talk to [a]. \nGoing when she is there will automatically start an \"Event\" (see routine*.rpy to learn more). \nAfter that an action (action*.rpy) will be added to open the pc, in MC room. \n\n(during the quest you can talk to [a] and you will see her talking during the quests of the same Quest)")),
+
+    "ann"       :   Quest(id = "ann", title = _("Help [an]"), stages_id = ["talk al about ann"], development = True),
+}
+```
+
+To start a Quest:
+```renpy
+$ quests["alice"].start()
+$ quests["ann"].start()
+```
+Move on to the next Stage, only if the Stage has been completed
+```renpy
+$ quests["alice"].next_stage()
+```
+To check which stage number a Quest has arrived at:
+```renpy
+if (quests_levels["alice"] == 2):
+    # ...
+```
