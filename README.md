@@ -75,7 +75,7 @@ label check_goout:
 The system of quests is a bit more complicated, it consists of Quests containing one or more Stages which in turn may contain one or more Goals. The stage can belong to the Quest or Stage dictionary.
 To create Quests you just have to enter the right values in Quests and Quest_stages.
 
-##### Quest
+###### Quest
 The Quest() class is a set of stages, which follow each other in an orderly fashion. It is mandatory to define id and title.
 In addition as description and stages_id the other parameters:
 
@@ -110,7 +110,7 @@ if (quests_levels["alice"] == 2):
     # ...
 ```
 
-##### Stage
+###### Stage
 The Stage() class is the necle of the Quest system. It is mandatory to define idQuestOrTask: it is the id of the quest it belongs to, or it is the id of the [Task]() (explained later).
 In addition as title, description, description_request and advice the other parameters:
 
@@ -153,3 +153,53 @@ define quest_stages = {
     description = _("Go to the house of [an].")),
 }
 ```
+
+###### Task (in process)
+
+###### Goal (in process)
+
+### Routine system
+To skim the routines, simply compile df_routine and correctly add Commitment to sp_routine (the difference is explained later).
+The Commitment() class has the following parameters:
+
+tm_start (required): start time
+
+tm_stop (required): end time
+
+chs={"alice" : TalkObject(bg_before_after="bg alice roomsleep", label_talk="talk_sleep")
+
+chs = {} (mandatory): list of characters (with whom you can [talk]()) participating in the routine, 
+
+[id_location & id_room]()
+
+day_deadline: day on which it is deleted (only for sp_routine)
+
+label_event: a scene that starts as soon as the MC is in that room at that time (only for sp_routine)
+
+name & type: have not been implemented
+
+For character icons you have to compile [ch_icons]().
+
+###### Default routine
+```renpy
+define df_routine = {
+        "alice_sleep"       :   Commitment(chs={"alice" : TalkObject(bg_before_after="bg alice roomsleep", label_talk="talk_sleep")}, tm_start=20, tm_stop=10, id_location="house", id_room="alice_room"),
+        "alice_lounge"      :   Commitment(chs={"alice" : TalkObject(bg_before_after=None, bg_talk=None)}, tm_start=10, tm_stop=14, id_location="house", id_room="lounge"),
+        "alice_go_school"   :   Commitment(chs={"alice" : TalkObject(bg_before_after=None, bg_talk=None)}, tm_start=10, tm_stop=14, name="school", type="no_week"),
+        "alice_read"        :   Commitment(chs={"alice" : TalkObject(bg_before_after="bg alice terrace", bg_talk="bg alice terrace talk")}, tm_start=14, tm_stop=20, id_location="house", id_room="terrace"),
+    }
+```
+These are the fixed routines in case there are no sp_routines for NCP at the current time, then the NCP will have to perform df_routines.
+Do not have a deadline.
+
+ATTENTION cannot be an event (a scene that starts as soon as the MC is in that room at that time), only sp_routines can be events.
+
+###### Special routine
+```renpy
+default sp_routine = {}
+```
+Initially it will be voting and during the game routines will be added to change the position of the characters.
+
+They are added after completing missions or for some other reason.
+
+If there is another commitment in the default routine at the same time, it will be "overwritten"
