@@ -25,7 +25,7 @@ label open_map:
     call check_goout
 
     $ cur_location = locations[cur_room.id_location]
-    scene expression map_images[cur_location.id_map]
+    scene expression map_images[cur_location.key_map]
 
     if (map_looking == False):
         $ map_looking = True

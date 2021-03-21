@@ -7,29 +7,28 @@ init -9 python:
             name=None,
             icon=None,
             bg=None,
-            actions=[]):
+           id_actions=[]):
 
             self.id = id
             self.id_location = id_location
             self.name = name
             self.icon = icon
             self.bg = bg
-            self.actions = actions
+            self.id_actions = id_actions
 
     class Location:
         """Class of a Location"""
         def __init__(self,
             id,
-            id_map,
+            key_map,
             id_externalroom,
             name=None,
             icon=None,
             xalign=0,
-            yalign=0,
-            active=True):
+            yalign=0):
 
             self.id = id
-            self.id_map = id_map
+            self.key_map = key_map
             self.name = name
             self.id_externalroom = id_externalroom
             self.icon = icon

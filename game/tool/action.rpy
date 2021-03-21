@@ -31,7 +31,7 @@ init -9 python:
             if room.id == act.sp_room:
                 if (tm.now_is_between(act.tm_start, act.tm_stop) and tm.day >= act.day_start):
                     acts.append(act)
-        for act_id in room.actions:
+        for act_id in room.id_actions:
             if act_id in df_actions:
                 act = df_actions.get(act_id)
                 if (tm.now_is_between(act.tm_start, act.tm_stop) and tm.day >= act.day_start):

@@ -79,7 +79,7 @@ screen room_navigation():
     if (map_looking):
         for location in locations.values():
             # If the Map where I am is the same as the Map where the room is located
-            if (location.id_map == cur_location.id_map):
+            if (location.key_map == cur_location.key_map):
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
