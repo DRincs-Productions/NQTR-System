@@ -77,7 +77,7 @@ To create Quests you just have to enter the right values in Quests and Quest_sta
 
 ##### Quest
 The Quest() class is a set of stages, which follow each other in an orderly fashion. It is mandatory to define id and title.
-as well as description and stages_id the other parameters:
+In addition as description and stages_id the other parameters:
 
 bg: in the information you can see the image inserted in bg, in case it is not defined in Stage
 
