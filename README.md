@@ -13,6 +13,22 @@ In order to simplify the update work and avoid errors in saving I created functi
 
 For the time being, a good part of the screens and images are not of my creation and terminology, and the comments need to be revised.
 
+## Instructions to insert Toolkit in your repo 
+I recommend the following ways to include it in your project:
+- [**Pull branch**](https://github.com/DonRP/NQTR-toolkit#pull-branch) (to **insert** it into your game and **update** it easily)
+- **Fork** (to improve the repo or create a Toolkit based on mine)
+
+### Pull branch (in process)
+To **insert** or **update** the Toolkit in your repo with Pull branch I recommend the following procedure:
+
+(only if you want to insert the repo) Create a new empty branch, in the example I'll use **NQTR-toolkit**
+
+`git checkout NQTR-toolkit`
+
+`git pull https://github.com/DonRP/NQTR-toolkit.git tool-only --allow-unrelated-histories`
+
+At the end make a merge inside the arm of the project.
+
 ## Documentation
 
 ### Navigation and Map
@@ -209,3 +225,4 @@ Initially it will be voting and during the game routines will be added to change
 They are added after completing missions or for some other reason.
 
 If there is another commitment in the default routine at the same time, it will be "overwritten"
+
