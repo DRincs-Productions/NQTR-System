@@ -109,3 +109,47 @@ To check which stage number a Quest has arrived at:
 if (quests_levels["alice"] == 2):
     # ...
 ```
+
+##### Stage
+The Stage() class is the necle of the Quest system. It is mandatory to define idQuestOrTask: it is the id of the quest it belongs to, or it is the id of the [Task]() (explained later).
+In addition as title, description, description_request and advice the other parameters:
+
+bg: in the information you can see the image inserted in bg
+
+goals = []: the [Goals]() to be passed (explained later)
+
+days_late: days_late must pass since we "reached" the stage to start it
+
+bl_requests = []: the [bl_values]() (explained later) must be set to True to start the quest
+
+```renpy
+quests_levels_requests = {
+    "quest id"  :   level,
+}
+```
+quests_levels_requests: to start the stage: quests_levels[quest] < level
+
+label_start: label which will be started at the beginning of the quest
+
+label_end: label which will be started at the end of the stage
+
+label_check: (has not been implemented yet)
+
+```renpy
+define quest_stages = {
+    # Quest "alice"
+    "talk alice1"           :   Stage(idQuestOrTask = "alice", title = _("Talk [a]"), 
+    description = _("Talk [a] on the terrace."), label_start="stagestart_talkalice"),
+    "order products"        :   Stage(idQuestOrTask = "alice", title = _("Order products"), 
+    description = _("Order the products with your PC.")),
+    "take products"         :   Stage(idQuestOrTask = "alice", title = _("Take products"), 
+    description = _("Take products on the Terrace."), 
+    description_request = _("Wait for the products you ordered to arrive (2 day)"), 
+    days_late = 2, label_start="add_product"),
+    "talk alice2"           :   Stage(idQuestOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
+    # Quest "ann"
+    "talk al about ann"     :   Stage(idQuestOrTask = "ann", title = _("Talk [a]"), description = _("Talk [a].")),
+    "visit ann"             :   Stage(idQuestOrTask = "ann", title = _("Visit [an]"), 
+    description = _("Go to the house of [an].")),
+}
+```
