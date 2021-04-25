@@ -24,18 +24,8 @@ default current_quest_stages = {}
 default current_task_stages = {}
 
 define quests = {
-    "alice"     :   Quest(id = "alice", title = _("Help [a]"), bg="bg alice terrace talk", stages_id = ["talk alice1", "order products", "take products", "talk alice2"], description = _("To learn more about how the repo works, Talk to [a]. \nGoing when she is there will automatically start an \"Event\" (see routine*.rpy to learn more). \nAfter that an action (action*.rpy) will be added to open the pc, in MC room. \n\n(during the quest you can talk to [a] and you will see her talking during the quests of the same Quest)")),
-    "ann"       :   Quest(id = "ann", title = _("Help [an]"), stages_id = ["talk al about ann"], development = True),
 }
 define quest_stages = {
-    # Quest "alice"
-    "talk alice1"           :   Stage(idQuestOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="stagestart_talkalice"),
-    "order products"        :   Stage(idQuestOrTask = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
-    "take products"         :   Stage(idQuestOrTask = "alice", title = _("Take products"), description = _("Take products on the Terrace."), description_request = _("Wait for the products you ordered to arrive (2 day)"), days_late = 2, label_start="add_product"),
-    "talk alice2"           :   Stage(idQuestOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
-    # Quest "ann"
-    "talk al about ann"     :   Stage(idQuestOrTask = "ann", title = _("Talk [a]"), description = _("Talk [a].")),
-    "visit ann"             :   Stage(idQuestOrTask = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
 }
 
 # Quest "alice"

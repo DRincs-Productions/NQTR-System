@@ -46,34 +46,3 @@ label error_label:
 label development:
     "In development"
     call screen room_navigation
-
-## Various actions
-
-label order_product:
-    mc "OK! Let's see, let's look for a book...."
-    mc "Here's R****, for $1. Just the thing for me."
-    $ sp_actions.pop('order_product')
-    $ quests["alice"].next_stage()
-    call screen room_navigation
-
-label add_product:
-    $ sp_actions["take_product"] = Action(_("Take product"), "/interface/action-box.webp", label = "take_product", sp_room='terrace')
-    call screen room_navigation
-
-label take_product:
-    $ sp_actions.pop('take_product')
-    $ quests["alice"].next_stage()
-    call screen room_navigation
-
-label talk_sleep:
-    "zZz zZz ..."
-    menu:
-        "Try waking up":
-            # will lock the room
-            a "[mc]!!!! What are you doing?!!"
-            a "Get out of here! Now!"
-            $ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
-            jump after_wait
-        "Leave her alone":
-            pass
-    call screen room_navigation
