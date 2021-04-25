@@ -3,6 +3,18 @@ default sp_bg_change_room = None
 
 # Change the background image to the current room image. In case sp_bg_change_room is not null use that.
 label change_room:
+    # Check if the room is closed
+    if (cur_room.id in closed_rooms and (closed_rooms[cur_room.id] == None or tm.now_is_between(closed_rooms[cur_room.id].tm_start, closed_rooms[cur_room.id].tm_stop))):
+        if (closed_rooms[cur_room.id].chs == None):
+            jump closed_room_event
+        else:
+            $ chs1 = closed_rooms[cur_room.id].chs
+            $ chs2 = getChsInThisLocation(cur_room.id)
+            $ res = not bool(chs2)
+            # TODO: check if all keys of chs1 are in chs2, in this case res = True
+            if (res == True):
+                jump closed_room_event
+
     # start an event if it exists
     call check_event
 
@@ -39,3 +51,14 @@ label close_map:
         map_looking = False
     scene expression (cur_room.bg)
     jump change_room
+
+# Image of a closed door
+define bg_loc = "location/loc-[tm.image_time].webp"
+# Is opened in change_room when a room id is in closed rooms
+label closed_room_event:
+    # Custom code
+    # if (cur_room == ...):
+        # ...
+    scene expression (bg_loc)
+    call screen room_navigation
+    return

@@ -34,3 +34,15 @@ init -9 python:
             self.icon = icon
             self.xalign = xalign
             self.yalign = yalign
+
+# list of closed rooms is checked change_room
+# is composed of id = room_id and Commitment()
+# expired elements are checked in after_wait, if you don't want an expiration: tm_stop = None
+default closed_rooms = {}
+init -9 python:
+    def clearClosedRooms():
+        "Deletes expired locked rooms. you want to add a room with no expiry date: tm_stop = None"
+        for id, item in closed_rooms.items():
+            if (item.tm_stop != None and tm.now_is_between(item.tm_start, item.tm_stop) == False):
+                closed_rooms.pop(id)
+        return

@@ -67,4 +67,13 @@ label take_product:
 
 label talk_sleep:
     "zZz zZz ..."
+    menu:
+        "Try waking up":
+            # will lock the room
+            a "[mc]!!!! What are you doing?!!"
+            a "Get out of here! Now!"
+            $ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
+            jump after_wait
+        "Leave her alone":
+            pass
     call screen room_navigation

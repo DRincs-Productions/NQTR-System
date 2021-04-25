@@ -61,6 +61,30 @@ label start:
     $ cur_location = locations[cur_room.id_location]
 ```
 
+###### Closed Room
+It is possible to make a room closed: ... is a dictionary of closed rooms (id=room_id : Commitment()), it is used in change_room and in after_wait closed rooms are deleted (every hour). the expiration time is .tm_stop, if you don't want a deadline: .tm_stop = None.
+The room will remain closed from tm_start to tm_stop, only if at least one NPC is present in it, if you want the room always closed: .chs = None.
+
+Examples of how to add them:
+```renpy
+$ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
+jump after_wait
+```
+```renpy
+$ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
+# does not expire
+$ closed_rooms[cur_room.id].tm_stop = None
+# will remain closed even if there are no NPCs inside.
+$ closed_rooms[cur_room.id].chs = None
+jump after_wait
+```
+```renpy
+$ closed_rooms[cur_room.id] = Commitment(chs={"alice" : None}, tm_start=14, tm_stop=20)
+jump after_wait
+```
+
+Where to change the image of the closed door or customise the event? in closed_room_event.
+
 ###### Location
 
 In the Location() class it is mandatory to define id , key_map & id_externalroom (id of the room which will be opened when moving from one location to another across the map).

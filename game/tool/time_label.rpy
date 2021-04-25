@@ -33,5 +33,7 @@ label after_wait:
     $ cur_routines_location = getChsInThisLocation(cur_location.id)
     $ cur_events_location = getEventsInThisLocation(cur_location.id)
     $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
+    # removes expired locked rooms
+    $ clearClosedRooms()
     # move to change_room is the best way to move to room_navigation
     jump change_room
