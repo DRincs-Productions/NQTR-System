@@ -9,7 +9,10 @@ init -9 python:
             tm_start = 0,
             tm_stop = 25,
             day_start = None,
-            day_deadline = None):
+            day_deadline = None,
+            is_a_object = False,
+            xalign = 0,
+            yalign = 0):
             # TODO: add the type as in routine
             # TODO: add the active value which is a value linked to bl_values, by default active = True
 
@@ -22,6 +25,11 @@ init -9 python:
             self.day_start = day_start
             # it is used only in sp_actions
             self.sp_room = sp_room
+            # Object with which one can interact in a room.
+            # TODO: to be implemented in screen
+            self.is_a_object = is_a_object
+            self.xalign = xalign
+            self.yalign = yalign
 
     def getActions(room):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
