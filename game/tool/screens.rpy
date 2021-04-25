@@ -70,6 +70,11 @@ style menu_vscroll is vscrollbar:
     xsize 7
     unscrollable 'hide'
 
+# Id of the task selected in the menu
+default cur_task_menu = ""
+# quest level based on the task selected in the menu
+default cur_quest_menu = ""
+
 screen room_navigation():
     modal True
     $ i = 0

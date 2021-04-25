@@ -18,6 +18,7 @@ init -9 python:
 
     class Location:
         """Class of a Location"""
+        # TODO: undiscovered locations
         def __init__(self,
             id,
             key_map,

@@ -25,8 +25,3 @@ default cur_room = rooms[0]
 default cur_location = locations[cur_room.id_location]
 # Variable to check the map screen: if it is True then the player is viewing the map.
 default map_looking = False
-
-# Id of the task selected in the menu
-default cur_task_menu = ""
-# quest level based on the task selected in the menu
-default cur_quest_menu = ""
