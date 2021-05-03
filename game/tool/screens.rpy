@@ -134,7 +134,7 @@ screen room_navigation():
                                         # If it is the selected room
                                         if room.id == routine.id_room:
                                             for ch_icon in routine.getChIcons():
-                                                imagebutton idle "icon/Alice.webp" focus_mask True at small_face:
+                                                imagebutton idle ch_icon focus_mask True at small_face:
                                                     action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
 
                         # Room name
