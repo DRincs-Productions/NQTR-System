@@ -23,6 +23,10 @@ default quests_levels = {}
 default current_quest_stages = {}
 default current_task_stages = {}
 
+# TODO: to be included in the documentation
+# if you need a description of the quest that true over time this dictionary seemed to me the best way to do it
+default quests_descriptions = {}
+
 define quests = {
 }
 define quest_stages = {
