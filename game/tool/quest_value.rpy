@@ -23,6 +23,10 @@ default quests_levels = {}
 default current_quest_stages = {}
 default current_task_stages = {}
 
+# TODO: to be included in the documentation
+# if you need a description of the quest that true over time this dictionary seemed to me the best way to do it
+default quests_descriptions = {}
+
 define quests = {
     "alice"     :   Quest(id = "alice", title = _("Help [a]"), bg="bg alice terrace talk", stages_id = ["talk alice1", "order products", "take products", "talk alice2"], description = _("To learn more about how the repo works, Talk to [a]. \nGoing when she is there will automatically start an \"Event\" (see routine*.rpy to learn more). \nAfter that an action (action*.rpy) will be added to open the pc, in MC room. \n\n(during the quest you can talk to [a] and you will see her talking during the quests of the same Quest)")),
     "ann"       :   Quest(id = "ann", title = _("Help [an]"), stages_id = ["talk al about ann"], development = True),
