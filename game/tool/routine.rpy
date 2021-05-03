@@ -40,7 +40,7 @@ init -9 python:
             """returns a list of ch icons (not secondary ch)"""
             icons = []
             for ch in self.chs.keys():
-                icons.append(ch_icons.get(ch))
+                icons.append(ch_icons[ch])
             return icons
 
         def talk(self, ch):
