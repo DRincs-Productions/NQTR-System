@@ -4,7 +4,7 @@ default sp_bg_change_room = None
 # Change the background image to the current room image. In case sp_bg_change_room is not null use that.
 label change_room:
     # Check if the room is closed
-    if (cur_room.id in closed_rooms and (closed_rooms[cur_room.id] == None or tm.now_is_between(closed_rooms[cur_room.id].tm_start, closed_rooms[cur_room.id].tm_stop))):
+    if (cur_room.id in closed_rooms and (closed_rooms[cur_room.id] == None or tm.now_is_between(start=closed_rooms[cur_room.id].tm_start, end=closed_rooms[cur_room.id].tm_stop))):
         if (closed_rooms[cur_room.id].chs == None):
             jump closed_room_event
         else:

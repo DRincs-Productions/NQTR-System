@@ -102,9 +102,7 @@ init python:
             self.day += 1
             self.update_image_time()
 
-        def now_is_between (self, start=None, end):
-            if (start == None):
-                start = 0
+        def now_is_between (self, end, start=0):
             return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
 
         # TODO: is weekend

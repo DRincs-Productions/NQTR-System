@@ -148,13 +148,13 @@ init -9 python:
         routines = {}
         for routine in sp_routine.values():
             # Check Time and Location
-            if (routine.id_location == id_location and tm.now_is_between(routine.tm_start, routine.tm_stop)):
+            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
                 # Full verification
                 for chKey in routine.chs.keys():
                     routines[chKey] = None
         for routine in df_routine.values():
             # Check Time and Location
-            if (routine.id_location == id_location and tm.now_is_between(routine.tm_start, routine.tm_stop)):
+            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
                 # Full verification
                 chs = routine.chs
                 for chKey in chs.keys():
@@ -178,7 +178,7 @@ init -9 python:
         events = {}
         for routine in sp_routine.values():
             # Check Time and Location and is event
-            if (routine.id_location == id_location and tm.now_is_between(routine.tm_start, routine.tm_stop) and routine.is_event() == True):
+            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.is_event() == True):
                 events[routine.id_room] = routine
         return events
 
@@ -188,7 +188,7 @@ init -9 python:
         ret_routine = None
         # special routine
         for routine in sp_routine.values():
-            if tm.now_is_between(routine.tm_start, routine.tm_stop):
+            if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
                 if ch in routine.chs:
                     ret_routine = routine
                     if checkValidType(routine):
@@ -197,7 +197,7 @@ init -9 python:
             return ret_routine
         # default routine
         for routine in df_routine.values():
-            if tm.now_is_between(routine.tm_start, routine.tm_stop):
+            if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
                 if ch in routine.chs:
                     ret_routine = routine
                     if checkValidType(routine.type):
