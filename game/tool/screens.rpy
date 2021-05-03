@@ -361,7 +361,10 @@ screen menu_memo():
                     has hbox
                     viewport mousewheel 'change' draggable True id 'vp2':
                         has vbox spacing 30
-                        text quests[cur_task_menu].description size 24 color gui.accent_color
+                        if cur_task_menu in quests_descriptions:
+                            text quests_descriptions[cur_task_menu] size 24 color gui.accent_color
+                        else:
+                            text quests[cur_task_menu].description size 24 color gui.accent_color
                         if (current_quest_stages[cur_task_menu].active):
                             text quest_menu.description size 24
                             text quest_menu.advice size 28
