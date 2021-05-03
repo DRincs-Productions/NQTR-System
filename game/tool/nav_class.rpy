@@ -44,6 +44,6 @@ init -9 python:
     def clearClosedRooms():
         "Deletes expired locked rooms. you want to add a room with no expiry date: tm_stop = None"
         for id, item in closed_rooms.items():
-            if (item.tm_stop != None and tm.now_is_between(item.tm_start, item.tm_stop) == False):
+            if (item.tm_stop != None and tm.now_is_between(start=item.tm_start, end=item.tm_stop) == False):
                 closed_rooms.pop(id)
         return
