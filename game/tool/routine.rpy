@@ -161,7 +161,7 @@ init -9 python:
                     routines[chKey] = None
         # Check I enter the current routines of the ch.
         # In case the routine is not in the place I want to go or they are null and void I delete the ch.
-        for ch in routine.chs.keys():
+        for ch in routines.keys():
             routines[ch] = getChLocation(ch)
             if routines[ch] == None:
                 del routines[ch]
