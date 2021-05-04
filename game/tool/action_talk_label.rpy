@@ -8,7 +8,7 @@ default talkch_choices = {}
 
 label talk:
     if (talk_image != None):
-        scene expression (talk_image)
+        scene expression (talk_image) as bg
 
     if(talk_ch == None):
         call error_label
@@ -42,7 +42,7 @@ label talk_menu:
 # Best way to exit a dialogue
 label talk_end:
     if (talk_end_image != None):
-        scene expression (talk_end_image)
+        scene expression (talk_end_image) as bg
 
     call screen room_navigation
 
