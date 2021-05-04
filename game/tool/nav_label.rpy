@@ -19,9 +19,9 @@ label change_room:
     call check_event
 
     if (sp_bg_change_room != None):
-        scene expression (sp_bg_change_room)
+        scene expression (sp_bg_change_room) as bg
     else:
-        scene expression (cur_room.bg)
+        scene expression (cur_room.bg) as bg
     call screen room_navigation
 
 ## Check if mc can come out
@@ -37,7 +37,7 @@ label open_map:
     call check_goout
 
     $ cur_location = locations[cur_room.id_location]
-    scene expression map_images[cur_location.key_map]
+    scene expression map_images[cur_location.key_map] as bg
 
     if (map_looking == False):
         $ map_looking = True
@@ -49,7 +49,7 @@ label close_map:
             if(room.id == cur_location.id_externalroom):
                 cur_room = room
         map_looking = False
-    scene expression (cur_room.bg)
+    scene expression (cur_room.bg) as bg
     jump change_room
 
 # Image of a closed door
@@ -59,6 +59,6 @@ label closed_room_event:
     # Custom code
     # if (cur_room == ...):
         # ...
-    scene expression (bg_loc)
+    scene expression (bg_loc) as bg
     call screen room_navigation
     return
