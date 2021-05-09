@@ -131,11 +131,11 @@ init -9 python:
         """removes expired Commitments"""
         rlist = []
         rlist.clear()
-        for r in sp_routine.values():
-            if (r.day_deadline != None and r.day_deadline <= tm.day):
-                rlist.append(r)
+        for key, val in sp_routine.iteritems():
+            if (val.day_deadline != None and val.day_deadline <= tm.day):
+                rlist.append(key)
         for r in rlist:
-            sp_routine.remove(r)
+            del sp_routine[r]
         del rlist
         return
 
