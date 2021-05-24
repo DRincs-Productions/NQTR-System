@@ -35,7 +35,7 @@ label sleep:
             $ tm.new_hour(9-tm.hour_new_day)
         "Return":
             pass
-    call screen room_navigation
+    jump after_wait
 
 ## Error and warming Label
 

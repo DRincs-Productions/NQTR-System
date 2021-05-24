@@ -15,7 +15,6 @@ label new_day:
     $ clearExpiredSPRoutine()
     $ clearExpiredSPActions()
     $ checkInactiveStage()
-    jump after_wait
     return
 
 label wait:
