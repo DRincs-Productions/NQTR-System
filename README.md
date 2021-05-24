@@ -21,7 +21,7 @@ I recommend the following ways to include it in your project:
 - [**Pull branch**](https://github.com/DonRP/NQTR-toolkit#pull-branch) (to **insert** it into your game and **update** it easily)
 - **Fork** (to improve the repo or create a Toolkit based on mine)
 
-### Pull branch (in process)
+### Pull branch
 To **insert** or **update** the Toolkit in your repo with Pull branch I recommend the following procedure:
 
 (only if you want to insert the repo) Create a new empty branch, in the example I'll use **NQTR-toolkit**
