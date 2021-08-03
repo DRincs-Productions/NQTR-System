@@ -81,7 +81,8 @@ screen room_navigation():
     # More information by hovering the mouse
     $ (x,y) = renpy.get_mouse_pos()
 
-    if (map_looking):
+    # Map
+    if (map_open):
         for location in locations.values():
             # If the Map where I am is the same as the Map where the room is located
             if (location.key_map == cur_location.key_map):
@@ -91,13 +92,16 @@ screen room_navigation():
                         idle location.icon
                         selected_idle location.icon + ' a'
                         selected_hover location.icon + ' a'
-                        selected location == cur_location focus_mask True at small_map
+                        selected location == cur_location
+                        focus_mask True
                         action [Hide('wait_navigation'), SetVariable('cur_location', location), Jump('close_map')]
+                        at small_map
 
                     # Locations name
                     text location.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
 
     else:
+        # Rooms
         hbox:
             yalign 0.99
             xalign 0.01
@@ -117,8 +121,10 @@ screen room_navigation():
                                 idle room.icon
                                 selected_idle room.icon + ' a'
                                 selected_hover room.icon + ' a'
-                                selected room == cur_room focus_mask True at middle_room
+                                selected room == cur_room
+                                focus_mask True
                                 action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+                                at middle_room
 
                             # Check the presence of ch in that room
                             $ there_are_ch = False
@@ -178,6 +184,7 @@ screen room_navigation():
                                 tooltip act.name
                             at middle_action
 
+                # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
                 # TODO: there is no possibility of group talk
                 for routine in cur_routines_location.values():
@@ -217,7 +224,7 @@ screen room_navigation():
             text "[tm.hour]:00" xalign (0.5) font 'DejaVuSans.ttf' size 60 drop_shadow [(2, 2)]
             text tm.get_weekday_name() xalign (0.5) font 'DejaVuSans.ttf' size 24 drop_shadow [(2, 2)] line_leading -16
 
-        if (map_looking):
+        if (map_open):
             # Fixed button to wait
             imagebutton:
                 xysize (300, 300)

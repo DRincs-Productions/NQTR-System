@@ -1,3 +1,8 @@
+# idle:
+# image icon myroom = "location/myroom-icon.webp"
+# selected_idle & selected_hover:
+# image icon myroom a = im.MatrixColor("location/myroom-icon.webp", im.matrix.brightness(-0.5))
+
 image icon myroom = "location/myroom-icon.webp"
 image icon aliceroom = "location/aliceroom-icon.webp"
 image icon annroom = "location/annroom-icon.webp"
