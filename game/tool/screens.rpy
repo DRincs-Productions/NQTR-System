@@ -141,7 +141,24 @@ screen room_navigation():
                         text room.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
                     key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
 
-        # Actions
+        # Actions image in the screen
+        for room in rooms:
+            # Adds the button list of possible actions in that room
+            if (room == cur_room):
+                for act in getActions(room):
+                    if (act.is_in_room == True):
+                        imagebutton:
+                            align (act.yalign, act.xalign)
+                            idle act.icon
+                            if not icon_selected == None:
+                                selected_idle icon_selected
+                                selected_hover icon_selected
+                            focus_mask True
+                            action [Hide('wait_navigation'), Jump(act.label)]
+                            if renpy.variant("pc"):
+                                tooltip act.name
+                            at middle_action
+        # Actions with button
         vbox:
             yalign 0.95
             xalign 0.99
@@ -149,8 +166,12 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (room == cur_room):
                     for act in getActions(room):
+                        if (act.is_in_room == False):
                         imagebutton:
                             idle act.icon
+                                if not icon_selected == None:
+                                    selected_idle icon_selected
+                                    selected_hover icon_selected
                             focus_mask True
                             action [Hide('wait_navigation'), Jump(act.label)]
                             if renpy.variant("pc"):

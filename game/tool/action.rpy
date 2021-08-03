@@ -5,12 +5,13 @@ init -9 python:
             name,
             icon,
             label,
+            icon_selected = None,
             sp_room = None,
             tm_start = 0,
             tm_stop = 25,
             day_start = None,
             day_deadline = None,
-            is_a_object = False,
+            is_in_room = False,
             xalign = 0,
             yalign = 0):
             # TODO: add the type as in routine
@@ -19,15 +20,15 @@ init -9 python:
             self.name = name
             self.icon = icon
             self.label = label
+            self.icon_selected = icon_selected
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
             # it is used only in sp_actions
             self.sp_room = sp_room
-            # Object with which one can interact in a room.
-            # TODO: to be implemented in screen
-            self.is_a_object = is_a_object
+            # Is an action that is started by clicking on an image in the room.
+            self.is_in_room = is_in_room
             self.xalign = xalign
             self.yalign = yalign
 
