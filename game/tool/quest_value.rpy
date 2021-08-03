@@ -55,12 +55,12 @@ label stage_talkalice:
         a "Thanks"
 
         if ("alice" in talkch_choices.keys()): 
-            $ talk_choices = talkch_choices["alice"]
+            $ talkch_choices["alice"].append((_("About the book"), "stage_talkalice"))
         else:
             $ talk_choices = []
-        $ talk_choices.append((_("About the book"), "stage_talkalice"))
-        $ talkch_choices["alice"] = talk_choices
-        $ del talk_choices
+            $ talk_choices.append((_("About the book"), "stage_talkalice"))
+            $ talkch_choices["alice"] = talk_choices
+            $ del talk_choices
 
         $ sp_actions["order_product"] = Action(_("Order product"), "/interface/action-pc.webp", label = "order_product", sp_room='my_room')
 
@@ -77,5 +77,5 @@ label stage_talkalice:
         mc "Here's your book."
         a "Thank you, I can finally read something new."
         $ quests["alice"].next_stage()
-        $ talkch_choices["alice"].pop()
+        $ delTalkChoice("alice", _("About the book"))
     return

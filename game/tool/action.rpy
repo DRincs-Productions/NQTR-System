@@ -60,3 +60,16 @@ init -9 python:
         return
 
 # TODO: Add a function that updates Actions after a load
+
+    def delTalkChoice(ch, choice):
+        """Deletes the "choice" in the character's talkch_choices."""
+        val = 0
+        for cur_choice in talkch_choices[ch]:
+            if cur_choice[0] == choice:
+                talkch_choices[ch].pop(val)
+                del val
+                return
+            else:
+                val = val+1
+        del val
+        return
