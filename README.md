@@ -330,4 +330,4 @@ Habitual Actions are the actions that are usually performed. as explained before
 ```renpy
 default sp_actions = {}
 ```
-#### Talk
+### Talk system
