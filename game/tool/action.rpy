@@ -61,26 +61,3 @@ init -9 python:
         return
 
 # TODO: Add a function that updates Actions after a load
-    def addTalkChoice(ch, choice_text, label):
-        """Add the "choice" in the character's talkch_choices."""
-        if (ch in talkch_choices.keys()):
-            talkch_choices[ch].append((choice_text, label))
-        else:
-            talk_choices = []
-            talk_choices.append((choice_text, label))
-            talkch_choices[ch] = talk_choices
-            del talk_choices
-        return
-
-    def delTalkChoice(ch, choice_text):
-        """Deletes the "choice" in the character's talkch_choices."""
-        val = 0
-        for cur_choice in talkch_choices[ch]:
-            if cur_choice[0] == choice_text:
-                talkch_choices[ch].pop(val)
-                del val
-                return
-            else:
-                val = val+1
-        del val
-        return

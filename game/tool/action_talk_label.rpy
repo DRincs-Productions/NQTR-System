@@ -6,22 +6,6 @@ default talk_end_image = None
 # 'alice'   :   [("Choice 1", "label_one"), ("Choice 2", "label_two")]
 default talkch_choices = {}
 
-label talk:
-    if (talk_image != None):
-        scene expression (talk_image) as bg
-
-    if(talk_ch == None):
-        call error_label
-        call screen room_navigation
-    if(talk_ch == "alice"):
-        mc "Hi [a]"
-        a "Hi, can you tell me something?"
-    else:
-        "Now is busy test later."
-    call talk_menu
-
-    jump talk_end
-
 # Opens the choice menu, with the various dialogs you can currently do with a ch
 label talk_menu:
     # check if there is already a list of menu choices for talk_ch
@@ -45,6 +29,24 @@ label talk_end:
         scene expression (talk_end_image) as bg
 
     call screen room_navigation
+
+label talk:
+    if (talk_image != None):
+        scene expression (talk_image) as bg
+
+    if(talk_ch == None):
+        call error_label
+        call screen room_navigation
+
+    # Custom code.......
+    if(talk_ch == "alice"):
+        mc "Hi [a]"
+        a "Hi, can you tell me something?"
+    else:
+        "Now is busy test later."
+
+    call talk_menu
+    jump talk_end
 
 # Display a random phrase and then end the conversation
 label talk_back:
