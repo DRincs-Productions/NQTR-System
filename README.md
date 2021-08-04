@@ -54,6 +54,14 @@ define rooms = [
     ]
 ```
 
+ATTENTION: for the icon you have to create the idle image with a name of your choice ("icon myroom"), and for selected_idle & selected_hover with the previous name + " a" ("icon myroom a"). if you want to modify this condition you have to change it in [screens.rpy](/tootl/screens.rpy).
+I recommend the following way:
+```renpy
+image icon myroom = "location/myroom-icon.webp"
+
+image icon myroom a = im.MatrixColor("location/myroom-icon.webp", im.matrix.brightness(-0.5))
+```
+
 To select the room the player will be in at the beginning:
 ```renpy
 label start:
