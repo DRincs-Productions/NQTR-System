@@ -275,7 +275,7 @@ Label example:
 ```renpy
 label order_product:
     # Costume Code
-    # Importante: deve sempre teminare con "call screen room_navigation"
+    # Important: must always end with "call screen room_navigation"
     call screen room_navigation
 ```
 
