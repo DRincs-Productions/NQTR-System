@@ -171,12 +171,12 @@ if (quests_levels["alice"] == 2):
 ```
 
 ###### Stage
-The Stage() class is the necle of the Quest system. It is mandatory to define idQuestOrTask: it is the id of the quest it belongs to, or it is the id of the [Task]() (explained later).
+The Stage() class is the necle of the Quest system. It is mandatory to define idQuestOrTask: it is the id of the quest it belongs to, or it is the id of the [Task](#Task) (explained later).
 In addition as title, description, description_request and advice the other parameters:
 
 bg: in the information you can see the image inserted in bg
 
-goals = []: the [Goals]() to be passed (explained later)
+goals = []: the [Goals](#Goal) to be passed (explained later)
 
 days_late: days_late must pass since we "reached" the stage to start it
 
@@ -214,9 +214,11 @@ define quest_stages = {
 }
 ```
 
-###### Task (in process)
+###### Task
+(in process)
 
-###### Goal (in process)
+###### Goal
+(in process)
 
 ### Routine system
 ![alt text](https://github.com/DonRP/NQTR-toolkit/blob/master/images/Routine.webp "Routine")
@@ -224,15 +226,13 @@ define quest_stages = {
 To skim the routines, simply compile df_routine and correctly add Commitment to sp_routine (the difference is explained later).
 The Commitment() class has the following parameters:
 
-tm_start (required): start time
-
-tm_stop (required): end time
+tm_start & tm_stop (required): start time & end time
 
 chs={"alice" : TalkObject(bg_before_after="bg alice roomsleep", label_talk="talk_sleep")
 
 chs = {} (mandatory): list of characters (with whom you can [talk]()) participating in the routine, 
 
-[id_location & id_room]()
+id_location & id_room: Id della [Location](#Location) & [Room](#Room)
 
 day_deadline: day on which it is deleted (only for sp_routine)
 
