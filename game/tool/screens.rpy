@@ -29,6 +29,15 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+    transform middle_action_is_in_room:
+        on selected_idle:
+            yanchor 0 alpha 0.9
+        on idle:
+            yanchor 0 alpha 0.9
+        on hover:
+            yanchor 0 alpha 1.5
+        on selected_hover:
+            yanchor 0 alpha 1.5
     transform small_face:
         size (60, 60)
         on selected_idle:
@@ -154,16 +163,16 @@ screen room_navigation():
                 for act in getActions(room):
                     if (act.is_in_room == True):
                         imagebutton:
-                            align (act.yalign, act.xalign)
+                            align (act.xalign, act.yalign)
                             idle act.icon
-                            if not icon_selected == None:
-                                selected_idle icon_selected
-                                selected_hover icon_selected
+                            if not act.icon_selected == None:
+                                selected_idle act.icon_selected
+                                selected_hover act.icon_selected
                             focus_mask True
                             action [Hide('wait_navigation'), Jump(act.label)]
                             if renpy.variant("pc"):
                                 tooltip act.name
-                            at middle_action
+                            at middle_action_is_in_room
         # Actions with button
         vbox:
             yalign 0.95
@@ -175,9 +184,9 @@ screen room_navigation():
                         if (act.is_in_room == False):
                         imagebutton:
                             idle act.icon
-                                if not icon_selected == None:
-                                    selected_idle icon_selected
-                                    selected_hover icon_selected
+                                if not act.icon_selected == None:
+                                    selected_idle act.icon_selected
+                                    selected_hover act.icon_selected
                             focus_mask True
                             action [Hide('wait_navigation'), Jump(act.label)]
                             if renpy.variant("pc"):
