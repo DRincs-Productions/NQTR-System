@@ -124,6 +124,11 @@ label check_goout:
     return
 ```
 
+Unlock the map:
+```renpy
+bl_values.get("goout") == True
+```
+
 ### Quest system
 ![alt text](https://github.com/DonRP/NQTR-toolkit/blob/master/images/Quest.webp "Quest")
 
