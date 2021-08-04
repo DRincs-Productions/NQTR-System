@@ -54,7 +54,7 @@ define rooms = [
     ]
 ```
 
-ATTENTION: for the icon you have to create the idle image with a name of your choice ("icon myroom"), and for selected_idle & selected_hover with the previous name + " a" ("icon myroom a"). if you want to modify this condition you have to change it in [screens.rpy](/tootl/screens.rpy).
+ATTENTION: for the icon you have to create the idle image with a name of your choice ("icon myroom"), and for selected_idle & selected_hover with the previous name + " a" ("icon myroom a"). if you want to modify this condition you have to change it in [tool/screens.rpy](/game/tool/screens.rpy).
 I recommend the following way:
 ```renpy
 image icon myroom = "location/myroom-icon.webp"
