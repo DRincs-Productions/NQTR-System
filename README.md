@@ -330,4 +330,7 @@ Habitual Actions are the actions that are usually performed. as explained before
 ```renpy
 default sp_actions = {}
 ```
+The Special Actions are the actions that are not usual. I used default, so they can be removed and added during the execution of the game.
+IMPORTANT: specify in sp_room the id of the room where the action will take place
+
 ### Talk system
