@@ -182,16 +182,16 @@ screen room_navigation():
                 if (room == cur_room):
                     for act in getActions(room):
                         if (act.is_in_room == False):
-                        imagebutton:
-                            idle act.icon
+                            imagebutton:
+                                idle act.icon
                                 if not act.icon_selected == None:
                                     selected_idle act.icon_selected
                                     selected_hover act.icon_selected
-                            focus_mask True
-                            action [Hide('wait_navigation'), Jump(act.label)]
-                            if renpy.variant("pc"):
-                                tooltip act.name
-                            at middle_action
+                                focus_mask True
+                                action [Hide('wait_navigation'), Jump(act.label)]
+                                if renpy.variant("pc"):
+                                    tooltip act.name
+                                at middle_action
 
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
