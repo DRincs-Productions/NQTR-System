@@ -126,7 +126,7 @@ label check_goout:
 
 Unlock the map:
 ```renpy
-bl_values.get("goout") == True
+$ bl_values["goout"] = True
 ```
 
 ### Quest system
