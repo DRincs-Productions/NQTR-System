@@ -21,9 +21,10 @@ init python:
         """Class to manage time, and also related to the constant event_duration. I strongly recommend to modify it according to the use."""
         def __init__(self, hour_new_day=5, hour=8, weekend_day=6, day=0):
             self.hour_new_day = hour_new_day
-            self.weekend_day = weekend_day
             self.hour = hour
             self.day = day
+            # TODO:
+            self.weekend_day = weekend_day
             # this variable is used to update images that change according to time.
             # es image = "sky-[image_time]"
             self.image_time = 0
@@ -110,7 +111,6 @@ init python:
 
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function
-# SO: if you don't use the default values, you must also change them in updateTimeHandler ()
 default tm = TimeHandler()
 
 init -9 python:
