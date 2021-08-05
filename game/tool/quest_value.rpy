@@ -29,7 +29,7 @@ default quests_descriptions = {}
 
 define quests = {
     "alice"     :   Quest(id = "alice", title = _("Help [a]"), bg="bg alice terrace talk", stages_id = ["talk alice1", "order products", "take products", "talk alice2"], description = _("To learn more about how the repo works, Talk to [a]. \nGoing when she is there will automatically start an \"Event\" (see routine*.rpy to learn more). \nAfter that an action (action*.rpy) will be added to open the pc, in MC room. \n\n(during the quest you can talk to [a] and you will see her talking during the quests of the same Quest)")),
-    "ann"       :   Quest(id = "ann", title = _("Help [an]"), stages_id = ["talk al about ann"], development = True),
+    "ann"       :   Quest(id = "ann", title = _("Help [an]"), stages_id = ["talk al about ann", "take the key", "visit ann"], development = True),
 }
 define quest_stages = {
     # Quest "alice"
@@ -38,7 +38,8 @@ define quest_stages = {
     "take products"         :   Stage(idQuestOrTask = "alice", title = _("Take products"), description = _("Take products on the Terrace."), description_request = _("Wait for the products you ordered to arrive (2 day)"), days_late = 2, label_start="add_product"),
     "talk alice2"           :   Stage(idQuestOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
     # Quest "ann"
-    "talk al about ann"     :   Stage(idQuestOrTask = "ann", title = _("Talk [a]"), description = _("Talk [a].")),
+    "talk al about ann"     :   Stage(idQuestOrTask = "ann", title = _("Talk [a]"), description = _("Talk [a]."), label_start="stagestart_talkalice_aboutann"),
+    "take the key"          :   Stage(idQuestOrTask = "ann", title = _("take the key"), description = _("take the key.")),
     "visit ann"             :   Stage(idQuestOrTask = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
 }
 
@@ -47,30 +48,7 @@ label stagestart_talkalice:
     $ sp_routine["stagealice1"] = Commitment(chs={"alice" : TalkObject()}, tm_start=14, tm_stop=20, id_location="house", id_room="terrace", label_event="stage_talkalice")
     return
 
-label stage_talkalice:
-    if (quests_levels["alice"] == 0):
-        show bg alice terrace talk
-        a "Hi can you order me a new book from pc?"
-        mc "Ok"
-        a "Thanks"
-
-        $ addTalkChoice(ch = "alice", choice_text = _("About the book"), label = "stage_talkalice")
-
-        $ sp_actions["order_product"] = Action(_("Order product"), "/interface/action-pc.webp", label = "order_product", sp_room='my_room')
-
-        $ quests["alice"].next_stage()
-    elif (quests_levels["alice"] == 1):
-        mc "What book do you want me to order?"
-        a "For me it is the same."
-        jump talk_menu
-    elif (quests_levels["alice"] == 2):
-        mc "I ordered the Book, hope you enjoy it."
-        a "Great, when it arrives remember to bring it to me."
-        jump talk_menu
-    elif (quests_levels["alice"] == 3):
-        mc "Here's your book."
-        a "Thank you, I can finally read something new."
-        $ quests["alice"].next_stage()
-        $ delTalkChoice(ch = "alice", choice_text = _("About the book"))
-    return
+# Quest "ann"
+label stagestart_talkalice_aboutann:
+    $ addTalkChoice(ch = "alice", choice_text = _("About the Ann"), label = "stage_talkalice_aboutann")
     return

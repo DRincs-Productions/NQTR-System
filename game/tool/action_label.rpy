@@ -65,6 +65,13 @@ label take_product:
     $ quests["alice"].next_stage()
     call screen room_navigation
 
+label take_key:
+    mc "Are these the car keys?! Well... I should try to access the car!"
+    $ bl_values["goout"] = True
+    $ sp_actions.pop('take_key')
+    $ quests["ann"].next_stage()
+    call screen room_navigation
+
 label talk_sleep:
     "zZz zZz ..."
     menu:

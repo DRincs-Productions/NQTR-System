@@ -1,7 +1,7 @@
 define talk_ch = None
 default talk_image = None
 default talk_end_image = None
-# used in talk_menu, alliniterno there are the possible choices that you can make in a dialog with a certain ch
+# used in talk_menu, internally there are the possible choices that you can make in a dialog with a certain ch
 # is structured like this:
 # 'alice'   :   [("Choice 1", "label_one"), ("Choice 2", "label_two")]
 default talkch_choices = {}
