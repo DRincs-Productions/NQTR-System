@@ -108,7 +108,7 @@ label stage_talkalice_aboutann:
     mc "Thanks!"
     a "Don't ruin it..."
     $ sp_actions["take_key"] = Action(_("KEY"), "/action-key.webp", label = "take_key", sp_room='lounge',
-        is_in_room = True, xalign = 0.3, yalign = 0.62)
+        is_in_room = True, xpos = 608, ypos = 667)
 
     $ quests["ann"].next_stage()
     $ delTalkChoice(ch = "alice", choice_text = _("About the Ann"))

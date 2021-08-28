@@ -190,11 +190,10 @@ screen room_navigation():
                 for act in getActions(room):
                     if (act.is_in_room == True):
                         imagebutton:
-                            align (act.xalign, act.yalign)
+                            pos (act.xpos, act.ypos)
                             idle act.icon
                             if not act.icon_selected == None:
-                                selected_idle act.icon_selected
-                                selected_hover act.icon_selected
+                                hover act.icon_selected
                             focus_mask True
                             action [Hide('wait_navigation'), Jump(act.label)]
                             if renpy.variant("pc"):
@@ -212,8 +211,7 @@ screen room_navigation():
                             imagebutton:
                                 idle act.icon
                                 if not act.icon_selected == None:
-                                    selected_idle act.icon_selected
-                                    selected_hover act.icon_selected
+                                    hover act.icon_selected
                                 focus_mask True
                                 action [Hide('wait_navigation'), Jump(act.label)]
                                 if renpy.variant("pc"):
