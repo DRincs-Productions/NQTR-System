@@ -12,8 +12,8 @@ init -9 python:
             day_start = None,
             day_deadline = None,
             is_in_room = False,
-            xpos = 0,
-            ypos = 0):
+            xalign = 0,
+            yalign = 0):
             # TODO: add the type as in routine
             # TODO: add the active value which is a value linked to bl_values, by default active = True
 
@@ -29,8 +29,8 @@ init -9 python:
             self.sp_room = sp_room
             # Is an action that is started by clicking on an image in the room.
             self.is_in_room = is_in_room
-            self.xpos = xpos
-            self.ypos = ypos
+            self.xalign = xalign
+            self.yalign = yalign
 
     def getActions(room):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
