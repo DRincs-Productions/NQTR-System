@@ -21,5 +21,5 @@ init python:
         # in case it eliminates them
         for x in bl_values:
             if ((x in bl_memory) == False):
-                bl_values.remove(x)
+                del bl_values[x]
         return
