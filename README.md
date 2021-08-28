@@ -290,7 +290,7 @@ tm_start & tm_stop: time when the event can be executed
 
 day_start & day_deadline: day when the event will start. and the day when it will end, if it is in sp_actions it will be deleted
 
-is_in_room & xalign & yalign: if is_in_room=True then the action will not be in the buttons at the side, but is an image with xalign yalign position.
+is_in_room & xpos & ypos: if is_in_room=True then the action will not be in the buttons at the side, but is an image with xalign yalign position.
 
 Attention: for the icon you have to create the idle image with a name of your choice ("icon myroom"), and for selected_idle & selected_hover with the previous name + " a" ("icon myroom"). if you want to change this condition you have to change it in screens. I recommend the following way:
 ```renpy
