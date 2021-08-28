@@ -15,13 +15,12 @@ label new_day:
     $ clearExpiredSPRoutine()
     $ clearExpiredSPActions()
     $ checkInactiveStage()
-    jump after_wait
     return
 
 label wait:
     call check_block_spendtime
     if(tm.new_hour(wait_hour)):
-        if (map_looking == False):
+        if (map_open == False):
             jump after_wait
     else:
         "(It's late, you have to go to bed)"

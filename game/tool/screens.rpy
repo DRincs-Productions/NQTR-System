@@ -29,6 +29,15 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+    transform middle_action_is_in_room:
+        on selected_idle:
+            yanchor 0 alpha 0.9
+        on idle:
+            yanchor 0 alpha 0.9
+        on hover:
+            yanchor 0 alpha 1.5
+        on selected_hover:
+            yanchor 0 alpha 1.5
     transform small_face:
         size (60, 60)
         on selected_idle:
@@ -81,7 +90,8 @@ screen room_navigation():
     # More information by hovering the mouse
     $ (x,y) = renpy.get_mouse_pos()
 
-    if (map_looking):
+    # Map
+    if (map_open):
         for location in locations.values():
             # If the Map where I am is the same as the Map where the room is located
             if (location.key_map == cur_location.key_map):
@@ -91,13 +101,23 @@ screen room_navigation():
                         idle location.icon
                         selected_idle location.icon + ' a'
                         selected_hover location.icon + ' a'
-                        selected location == cur_location focus_mask True at small_map
+                        selected location == cur_location
+                        focus_mask True
                         action [Hide('wait_navigation'), SetVariable('cur_location', location), Jump('close_map')]
+                        at small_map
 
                     # Locations name
-                    text location.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+                    text location.name:
+                        font 'DejaVuSans.ttf'
+                        size 18
+                        drop_shadow [(2, 2)]
+                        xalign 0.5
+                        text_align 0.5
+                        line_leading 0
+                        line_spacing -2
 
     else:
+        # Rooms
         hbox:
             yalign 0.99
             xalign 0.01
@@ -108,17 +128,25 @@ screen room_navigation():
 
                 # If the Locations where I am is the same as the Locations where the room is located
                 if (room.id_location == cur_location.id):
-                    button xysize (126, 190) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]:
+                    button:
+                        xysize (126, 190)
+                        action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
                         has vbox xsize 126 spacing 0
-                        frame xysize (126, 140) background None:
+
+                        frame:
+                            xysize (126, 140)
+                            background None
+
                             # Room icon
                             imagebutton:
                                 align (0.5, 0.0)
                                 idle room.icon
                                 selected_idle room.icon + ' a'
                                 selected_hover room.icon + ' a'
-                                selected room == cur_room focus_mask True at middle_room
+                                selected room == cur_room
+                                focus_mask True
                                 action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+                                at middle_room
 
                             # Check the presence of ch in that room
                             $ there_are_ch = False
@@ -129,19 +157,50 @@ screen room_navigation():
                                     $ there_are_ch = True
 
                             if there_are_ch:
-                                hbox ypos 73 xalign 0.5 spacing - 30:
+                                hbox:
+                                    ypos 73
+                                    xalign 0.5
+                                    spacing - 30
+
                                     for routine in cur_routines_location.values():
                                         # If it is the selected room
                                         if room.id == routine.id_room:
                                             for ch_icon in routine.getChIcons():
-                                                imagebutton idle ch_icon focus_mask True at small_face:
+                                                imagebutton:
+                                                    idle ch_icon
+                                                    focus_mask True
                                                     action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+                                                    at small_face
 
                         # Room name
-                        text room.name font 'DejaVuSans.ttf' size 18 drop_shadow [(2, 2)] xalign 0.5 text_align 0.5 line_leading 0 line_spacing -2
+                        text room.name:
+                            font 'DejaVuSans.ttf'
+                            size 18
+                            drop_shadow [(2, 2)]
+                            xalign 0.5
+                            text_align 0.5
+                            line_leading 0
+                            line_spacing -2
                     key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
 
-        # Actions
+        # Actions image in the screen
+        for room in rooms:
+            # Adds the button list of possible actions in that room
+            if (room == cur_room):
+                for act in getActions(room):
+                    if (act.is_in_room == True):
+                        imagebutton:
+                            align (act.xalign, act.yalign)
+                            idle act.icon
+                            if not act.icon_selected == None:
+                                selected_idle act.icon_selected
+                                selected_hover act.icon_selected
+                            focus_mask True
+                            action [Hide('wait_navigation'), Jump(act.label)]
+                            if renpy.variant("pc"):
+                                tooltip act.name
+                            at middle_action_is_in_room
+        # Actions with button
         vbox:
             yalign 0.95
             xalign 0.99
@@ -149,21 +208,29 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (room == cur_room):
                     for act in getActions(room):
-                        imagebutton:
-                            idle act.icon
-                            focus_mask True
-                            action [Hide('wait_navigation'), Jump(act.label)]
-                            if renpy.variant("pc"):
-                                tooltip act.name
-                            at middle_action
+                        if (act.is_in_room == False):
+                            imagebutton:
+                                idle act.icon
+                                if not act.icon_selected == None:
+                                    selected_idle act.icon_selected
+                                    selected_hover act.icon_selected
+                                focus_mask True
+                                action [Hide('wait_navigation'), Jump(act.label)]
+                                if renpy.variant("pc"):
+                                    tooltip act.name
+                                at middle_action
 
+                # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
                 # TODO: there is no possibility of group talk
                 for routine in cur_routines_location.values():
                     if (routine != None and room.id == routine.id_room and room == cur_room):
                         # Insert in talk for every ch, main in that room
                         for ch in routine.chs.keys():
-                            frame xysize (120, 120) background None:
+                            frame:
+                                xysize (120, 120)
+                                background None
+
                                 imagebutton:
                                     idle '/interface/action-talk.webp'
                                     focus_mask True
@@ -193,10 +260,19 @@ screen room_navigation():
         align (0.5, 0.01)
         vbox:
             align (0.5, 0.01)
-            text "[tm.hour]:00" xalign (0.5) font 'DejaVuSans.ttf' size 60 drop_shadow [(2, 2)]
-            text tm.get_weekday_name() xalign (0.5) font 'DejaVuSans.ttf' size 24 drop_shadow [(2, 2)] line_leading -16
+            text "[tm.hour]:00":
+                xalign (0.5)
+                font 'DejaVuSans.ttf'
+                size 60
+                drop_shadow [(2, 2)]
+            text tm.get_weekday_name():
+                xalign (0.5)
+                font 'DejaVuSans.ttf'
+                size 24
+                drop_shadow [(2, 2)]
+                line_leading -16
 
-        if (map_looking):
+        if (map_open):
             # Fixed button to wait
             imagebutton:
                 xysize (300, 300)
@@ -258,7 +334,11 @@ screen room_navigation():
         spacing 2
 
         # Money
-        text "$20" xalign (1.0) font 'DejaVuSans.ttf' size 30 drop_shadow [(2, 2)]
+        text "$20":
+            xalign (1.0)
+            font 'DejaVuSans.ttf'
+            size 30
+            drop_shadow [(2, 2)]
 
         imagebutton:
             idle '/interface/menu-inventory.webp'
@@ -322,7 +402,11 @@ screen menu_memo():
             at close_zoom_mobile
 
     hbox pos (150, 150) spacing 30:
-        frame ypos 25 xsize 400 ysize 850 background None:
+        frame:
+            ypos 25
+            xsize 400
+            ysize 850
+            background None
             has hbox
             # task title list
             viewport mousewheel 'change' draggable True id 'vp1':
@@ -332,7 +416,10 @@ screen menu_memo():
                         xsize 390
                         background None
                         action [SetVariable('cur_task_menu', id_task), SetVariable('cur_quest_menu', quests_levels[id_task])]
-                        xpadding 0 ypadding 0 xmargin 0 ymargin 0
+                        xpadding 0
+                        ypadding 0
+                        xmargin 0
+                        ymargin 0
                         textbutton quests[id_task].title:
                             action [SetVariable('cur_task_menu', id_task), SetVariable('cur_quest_menu', quests_levels[id_task])]
                             selected cur_task_menu == id_task
@@ -342,7 +429,9 @@ screen menu_memo():
         # Information on the current quest
         if cur_task_menu != '':
             $ quest_menu = quest_stages[quests[cur_task_menu].stages_id[cur_quest_menu]]
-            frame area (0, 30, 1190, 850) background None:
+            frame:
+                area (0, 30, 1190, 850)
+                background None
                 has vbox spacing 20
                 # Image
                 if quest_menu.bg != '' and quest_menu.bg != None:
@@ -355,9 +444,20 @@ screen menu_memo():
                         xsize 800
                         ysize 400
                         pos (195,0)
-                frame xsize 1180 xalign 0.5 background None:
-                    text quest_menu.title size 30 font 'DejaVuSans.ttf' xalign 0.5
-                frame area (0, 0, 1190, 400) background None:
+                frame:
+                    xsize 1180
+                    xalign 0.5
+                    background None
+
+                    text quest_menu.title:
+                        size 30
+                        font 'DejaVuSans.ttf'
+                        xalign 0.5
+
+                frame: 
+                    area (0, 0, 1190, 400)
+                    background None
+
                     has hbox
                     viewport mousewheel 'change' draggable True id 'vp2':
                         has vbox spacing 30

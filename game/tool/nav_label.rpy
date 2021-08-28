@@ -39,8 +39,8 @@ label open_map:
     $ cur_location = locations[cur_room.id_location]
     scene expression map_images[cur_location.key_map] as bg
 
-    if (map_looking == False):
-        $ map_looking = True
+    if (map_open == False):
+        $ map_open = True
         call screen room_navigation
 ## Close the map
 label close_map:
@@ -48,7 +48,7 @@ label close_map:
         for room in rooms:
             if(room.id == cur_location.id_externalroom):
                 cur_room = room
-        map_looking = False
+        map_open = False
     scene expression (cur_room.bg) as bg
     jump change_room
 
