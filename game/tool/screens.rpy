@@ -127,7 +127,7 @@ screen room_navigation():
                 $ i += 1
 
                 # If the Locations where I am is the same as the Locations where the room is located
-                if (room.id_location == cur_location.id):
+                if (room.id_location == cur_location.id and room.icon != None):
                     button:
                         xysize (126, 190)
                         action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
