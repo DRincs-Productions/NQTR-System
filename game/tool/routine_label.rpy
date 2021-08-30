@@ -15,7 +15,7 @@ label check_event_sp:
             # delete the event in sp_routine
             python:
                 for k, v in sp_routine.items():
-                    if (v.id_room == ev.id_room):
+                    if (v.id_room == ev.id_room and v.is_event()):
                         sp_routine.pop(k)
         $ del event_room
         $ del ev
