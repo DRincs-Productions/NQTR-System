@@ -186,7 +186,7 @@ screen room_navigation():
         # Actions image in the screen
         for room in rooms:
             # Adds the button list of possible actions in that room
-            if (room == cur_room):
+            if (room == cur_room and not room.id in closed_rooms):
                 for act in getActions(room):
                     if (act.is_in_room == True):
                         imagebutton:
