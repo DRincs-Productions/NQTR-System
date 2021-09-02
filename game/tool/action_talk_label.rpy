@@ -64,8 +64,8 @@ label talk_back:
     elif num == 6:
         mc "I won't keep you any longer. Bye."
     elif num == 7:
-        mc "I was supposed to tell you something else.... But I don't remember."
-        mc "Patience when it comes back to me I'll let you know, bye."
+        mc "I was supposed to tell you something else.... But I can't remember."
+        mc "When it comes back to me I'll let you know, bye."
 
     $ del num
     jump talk_end

@@ -434,7 +434,7 @@ define wait_hour = 1
 
 I have also inserted a time block, which is unlocked by default: bl_values.get("block_spendtime") (guarda [bl_values]()). If it is active it displays the following text of the variable "block_spendtime_dialogue" which is in [tool/time_label.rpy](/game/tool/time_label.rpy)
 ```renpy
-define block_spendtime_dialogue = _("You can't do it now")
+define block_spendtime_dialogue = _("You can't do that now")
 ```
 
 ###### Time Label
