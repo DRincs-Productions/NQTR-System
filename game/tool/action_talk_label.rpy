@@ -39,11 +39,11 @@ label talk:
         call screen room_navigation
 
     # Costume Code
-    if(talk_ch == "alice"):
-        mc "Hi [a]"
-        a "Hi, can you tell me something?"
-    else:
-        "Now is busy test later."
+    # if(talk_ch == "alice"):
+    #     mc "Hi [a]"
+    #     a "Hi, can you tell me something?"
+    # else:
+    #     "Now is busy test later."
 
     call talk_menu
     jump talk_end
@@ -64,8 +64,8 @@ label talk_back:
     elif num == 6:
         mc "I won't keep you any longer. Bye."
     elif num == 7:
-        mc "I was supposed to tell you something else.... But I don't remember."
-        mc "Patience when it comes back to me I'll let you know, bye."
+        mc "I was supposed to tell you something else.... But I can't remember."
+        mc "When it comes back to me I'll let you know, bye."
 
     $ del num
     jump talk_end

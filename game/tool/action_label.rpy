@@ -8,7 +8,7 @@ label nap:
     call check_block_spendtime
 
     menu:
-        "Nap for 3 hour":
+        "Nap for 3 hours":
             $ wait_hour = 3
             jump wait
         "Sleep":
