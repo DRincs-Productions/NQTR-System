@@ -5,9 +5,6 @@
 <span class="discord">
 <a href="https://discord.gg/5UFPjP9" title="Discord"><img src="https://img.shields.io/discord/688162156151439536" alt="Discord" /></a>
 </span>
-<span class="badge-buymeacoffee">
-<a href="https://www.buymeacoffee.com/p/506924" title="Donate to this project using Buy Me A Coffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg" alt="Buy Me A Coffee donate button" /></a>
-</span>
 
 This repo is a complete set of tools to create a game where you can explore and relate to characters. 
 
