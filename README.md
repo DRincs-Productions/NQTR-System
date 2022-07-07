@@ -24,6 +24,7 @@ To **insert** or **update** the Toolkit in your repo with Pull branch I recommen
 (only if you want to insert the repo) Create a new empty branch, in the example I'll use **NQTR-toolkit**
 
 ```shell
+git checkout -b NQTR-toolkit
 git checkout NQTR-toolkit
 git pull https://github.com/DonRP/NQTR-toolkit.git tool-only --allow-unrelated-histories
 ```
