@@ -121,12 +121,16 @@ init -9 python:
                     routines[chKey] = None
         # Check I enter the current routines of the ch.
         # In case the routine is not in the place I want to go or they are null and void I delete the ch.
+        routines_key_to_delete = []
         for ch in routines.keys():
             routines[ch] = getChLocation(ch)
             if routines[ch] == None:
-                del routines[ch]
+                routines_key_to_delete.append(ch)
             elif routines[ch].id_location != id_location:
-                del routines[ch]
+                routines_key_to_delete.append(ch)
+        for ch in routines_key_to_delete:
+            del routines[ch]
+        del routines_key_to_delete
         return routines
 
     def getEventsInThisLocation(id_location):
