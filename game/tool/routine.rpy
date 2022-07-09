@@ -1,4 +1,4 @@
-init -9 python:
+init -10 python:
     class Commitment(object):
         """Commitment, routine and event"""
         def __init__(self,
