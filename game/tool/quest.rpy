@@ -43,7 +43,7 @@ init python:
                 self.need = 0
                 renpy.log("Warn: You have set need < 0, so it will be set to 0.")
 
-        def find(self, value=1):
+        def find(self, value: int = 1):
             """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
             It is used to complete the Goals."""
             if (self.need == 0):

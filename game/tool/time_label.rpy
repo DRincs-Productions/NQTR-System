@@ -12,7 +12,7 @@ label new_day:
     call check_block_spendtime
     $ tm.new_day()
     # removes expired Commitments
-    $ clearExpiredSPRoutine()
+    $ clearExpiredSPRoutine(sp_routine, tm)
     $ sp_actions = clearExpiredSPActions(sp_actions, tm)
     $ checkInactiveStage()
     return
@@ -30,7 +30,7 @@ label wait:
 label after_wait:
     # this step is to change the background based on the presence of a ch
     $ cur_routines_location = getChsInThisLocation(cur_location.id)
-    $ cur_events_location = getEventsInThisLocation(cur_location.id)
+    $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
     $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
     # removes expired locked rooms
     $ closed_rooms = clearClosedRooms(closed_rooms)

@@ -165,7 +165,7 @@ screen room_navigation():
                                     for routine in cur_routines_location.values():
                                         # If it is the selected room
                                         if room.id == routine.id_room:
-                                            for ch_icon in routine.getChIcons():
+                                            for ch_icon in routine.getChIcons(ch_icons):
                                                 imagebutton:
                                                     idle ch_icon
                                                     focus_mask True
