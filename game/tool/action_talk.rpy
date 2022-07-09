@@ -57,12 +57,14 @@ init -9 python:
     def delTalkChoice(ch, choice_text):
         """Deletes the "choice" in the character's talkch_choices."""
         val = 0
+        ch_to_del = ch
         for cur_choice in talkch_choices[ch]:
             if cur_choice[0] == choice_text:
-                talkch_choices[ch].pop(val)
-                del val
-                return
+                ch_to_del = ch
+                break
             else:
                 val = val+1
+        talkch_choices[ch].pop(val)
         del val
+        del ch_to_del
         return

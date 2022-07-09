@@ -11,7 +11,7 @@ label check_event_sp:
         call expression ev.label_event
         if (event_room == cur_room.id):
             # delete the event in cur_events_location
-            $ cur_events_location.pop(cur_room.id)
+            $ del cur_events_location[cur_room.id]
             # delete the event in sp_routine
             python:
                 for k, v in sp_routine.items():
