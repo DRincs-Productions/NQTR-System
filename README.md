@@ -38,7 +38,7 @@ At the end make a merge inside the arm of the project.
 
 ## Documentation
 
-[Wiki]([DRincs-Productions/NQTR-toolkit/wiki](https://github.com/DRincs-Productions/NQTR-toolkit/wiki))
+[Wiki](https://github.com/DRincs-Productions/NQTR-toolkit/wiki)
 
 ## Preview
 
