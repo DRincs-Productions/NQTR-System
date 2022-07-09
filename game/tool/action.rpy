@@ -43,7 +43,6 @@ init -5 python:
     def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
         acts: list[Action] = []
-        acts.clear()
         for act_id, act in actions.items():
             if room.id == act.room:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
@@ -51,7 +50,6 @@ init -5 python:
             elif act_id in room.id_actions:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
-            del act
         return acts
 
 
