@@ -16,7 +16,7 @@ label start:
     $ cur_room = rooms[0]
     $ cur_location = locations[cur_room.id_location]
     $ prev_room = rooms[5]
-    $ updateBL()
+    $ flags = updateFlags(flags, flag_keys)
     $ quests["alice"].start()
     $ quests["ann"].start()
 
