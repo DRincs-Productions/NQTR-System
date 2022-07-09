@@ -415,13 +415,15 @@ init python:
 
     ## This increases the size of the quick buttons to make them easier to touch
     ## on tablets and phones.
-    if renpy.variant("touch"):
+    @gui.variant
+    def touch():
 
         gui.quick_button_borders = Borders(60, 21, 60, 0)
 
     ## This changes the size and spacing of various GUI elements to ensure they
     ## are easily visible on phones.
-    if renpy.variant("small"):
+    @gui.variant
+    def small():
 
         ## Font sizes.
         gui.text_size = 45
@@ -434,13 +436,14 @@ init python:
         ## Adjust the location of the textbox.
         gui.textbox_height = 360
         gui.name_xpos = 120
-        gui.text_xpos = 135
-        gui.text_width = 1650
+        gui.dialogue_xpos = 135
+        gui.dialogue_width = 1650
 
         ## Change the size and spacing of various things.
         gui.slider_size = 54
 
         gui.choice_button_width = 1860
+        gui.choice_button_text_size = 45
 
         gui.navigation_spacing = 30
         gui.pref_button_spacing = 15
@@ -469,6 +472,3 @@ init python:
 
         gui.nvl_button_width = 1860
         gui.nvl_button_xpos = 30
-
-
-
