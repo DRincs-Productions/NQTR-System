@@ -8,7 +8,7 @@ init -5 python:
                     icon: str,
                     label: str,
                     icon_selected: str = None,
-                    sp_room: str = None,
+                    room: str = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
@@ -28,7 +28,7 @@ init -5 python:
             self.day_deadline = day_deadline
             self.day_start = day_start
             # it is used only in sp_actions
-            self.sp_room = sp_room
+            self.room = room
             # Is an action that is started by clicking on an image in the room.
             self.is_in_room = is_in_room
             self.xpos = xpos
@@ -46,7 +46,7 @@ init -5 python:
         acts.clear()
         for act_id in actions.keys():
             act = actions[act_id]
-            if room.id == act.sp_room:
+            if room.id == act.room:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
             elif act_id in room.id_actions:
