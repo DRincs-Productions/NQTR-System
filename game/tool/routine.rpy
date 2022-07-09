@@ -91,17 +91,17 @@ init -10 python:
         #         renpy.call(self.label_event)
 
 
-    def clearExpiredSPRoutine(sp_routine: dict[str, Commitment], tm: TimeHandler):
+    def clearExpiredRoutine(routine: dict[str, Commitment], tm: TimeHandler):
         """removes expired Commitments"""
         rlist = []
         rlist.clear()
-        for key, val in sp_routine.iteritems():
+        for key, val in routine.iteritems():
             if (val.day_deadline != None and val.day_deadline <= tm.day):
                 rlist.append(key)
         for r in rlist:
-            del sp_routine[r]
+            del routine[r]
         del rlist
-        return sp_routine
+        return routine
 
 
     def getChsInThisLocation(id_location: str):
