@@ -40,20 +40,19 @@ init -5 python:
                     "Warn: You have set day_deadline < 0, so it will be ignored")
 
 
-    def getActions(room: Room, sp_actions: dict[str, Action], df_actions: dict[str, Action], tm: TimeHandler):
+    def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
         acts: list[Action] = []
         acts.clear()
-        for act in sp_actions.values():
+        for act_id in actions.keys():
+            act = actions[act_id]
             if room.id == act.sp_room:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
-        for act_id in room.id_actions:
-            if act_id in df_actions:
-                act = df_actions.get(act_id)
+            elif act_id in room.id_actions:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
-                del act
+            del act
         return acts
 
 

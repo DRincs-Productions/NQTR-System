@@ -2,12 +2,13 @@ init -9 python:
     class TalkObject(object):
         """At the inside of the class there are the values used for the talk() function, 
         (all this could be done in Commitment(), but I preferred not to use a dictionary)"""
+
         def __init__(self,
-            ch_secondary = [],
-            bg_before_after=None,
-            after_label_event=None,
-            bg_talk=None,
-            label_talk=None):
+                    ch_secondary=[],
+                    bg_before_after=None,
+                    after_label_event=None,
+                    bg_talk=None,
+                    label_talk=None):
 
             self.ch_secondary = ch_secondary
             self.bg_before_after = bg_before_after
@@ -40,6 +41,7 @@ init -9 python:
             else:
                 return self.bg_before_after
 
+
     def addTalkChoice(ch, choice_text, label):
         """Add the "choice" in the character's talkch_choices."""
         if (ch in talkch_choices.keys()):
@@ -50,6 +52,7 @@ init -9 python:
             talkch_choices[ch] = talk_choices
             del talk_choices
         return
+
 
     def delTalkChoice(ch, choice_text):
         """Deletes the "choice" in the character's talkch_choices."""
