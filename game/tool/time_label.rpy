@@ -13,7 +13,7 @@ label new_day:
     $ tm.new_day()
     # removes expired Commitments
     $ clearExpiredSPRoutine()
-    $ df_actions = clearExpiredSPActions(df_actions, tm)
+    $ sp_actions = clearExpiredSPActions(sp_actions, tm)
     $ checkInactiveStage()
     return
 

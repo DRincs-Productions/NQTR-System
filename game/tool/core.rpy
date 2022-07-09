@@ -1,6 +1,6 @@
 label after_load:
-    $ updateTimeHandler()
-    $ df_actions = clearExpiredSPActions(df_actions, tm)
+    $ tm = updateTimeHandler(tm)
+    $ sp_actions = clearExpiredSPActions(sp_actions, tm)
     $ clearExpiredSPRoutine()
     $ updateBL()
     return

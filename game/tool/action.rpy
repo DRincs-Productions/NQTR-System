@@ -40,8 +40,7 @@ init -5 python:
                     "Warn: You have set day_deadline < 0, so it will be ignored")
 
 
-    # TODO: add the type a sp_actions & df_actions
-    def getActions(room: Room, sp_actions: dict, df_actions: dict, tm: TimeHandler):
+    def getActions(room: Room, sp_actions: dict[str, Action], df_actions: dict[str, Action], tm: TimeHandler):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
         acts: list[Action] = []
         acts.clear()
@@ -58,16 +57,15 @@ init -5 python:
         return acts
 
 
-    # TODO: add the type a sp_actions & df_actions
-    def clearExpiredSPActions(sp_actions: dict, tm: TimeHandler):
+    def clearExpiredSPActions(sp_actions: dict[str, Action], tm: TimeHandler):
         """Delete Expired Actions"""
         alist = []
         alist.clear()
         for id, act in sp_actions.items():
-            if (act.day_deadline != None and act.day_deadline <= tm.day):
+            if (act.day_deadline and act.day_deadline <= tm.day):
                 alist.append(id)
         for act_id in alist:
-            alist.pop(act_id)
+            sp_actions.pop(act_id)
         del alist
         return sp_actions
 
