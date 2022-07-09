@@ -59,7 +59,7 @@ init -5 python:
 
 
     # TODO: add the type a sp_actions & df_actions
-    def clearExpiredSPActions(sp_actions: dict):
+    def clearExpiredSPActions(sp_actions: dict, tm: TimeHandler):
         """Delete Expired Actions"""
         alist = []
         alist.clear()
@@ -69,6 +69,6 @@ init -5 python:
         for act_id in alist:
             alist.pop(act_id)
         del alist
-        return
+        return sp_actions
 
 # TODO: Add a function that updates Actions after a load
