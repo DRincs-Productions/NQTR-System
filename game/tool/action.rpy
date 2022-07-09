@@ -17,7 +17,7 @@ init -5 python:
                     xpos: int = 0,
                     ypos: int = 0):
             # TODO: add the type as in routine
-            # TODO: add the active value which is a value linked to bl_values, by default active = True
+            # TODO: add the active value which is a value linked to flags, by default active = True
 
             self.name = name
             self.icon = icon

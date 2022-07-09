@@ -3,7 +3,7 @@ define wait_hour = 1
 # Check if the time "pass" block has been activated
 define block_spendtime_dialogue = _("You can't do that now")
 label check_block_spendtime:
-    if(bl_values.get("block_spendtime")):
+    if(flags.get("block_spendtime")):
         "[block_spendtime_dialogue]"
         call screen room_navigation
     return

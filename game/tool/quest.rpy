@@ -153,7 +153,7 @@ init python:
                 if (quests_levels[quest] < level):
                     return False
             for item in self.bl_requests:
-                if (bl_values[item] == False):
+                if (flags[item] == False):
                     return False
             return True
 
@@ -307,12 +307,12 @@ init python:
     def updateQuestsLevels():
         """Synchronize quests_levels with quests.
         After this function I suggest to use checkInactiveStage()."""
-        # check if there are less elements than bl_memory
+        # check if there are less elements than flag_keys
         # in case you add them set with False
         for x in quests.keys():
             if ((x in quests_levels) == False):
                 quests_levels[x] = 0
-        # check if there are more elements than bl_memory
+        # check if there are more elements than flag_keys
         # in case it eliminates them
         for x in quests_levels.keys():
             if ((x in quests) == False):

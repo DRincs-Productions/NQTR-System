@@ -67,7 +67,7 @@ label take_product:
 
 label take_key:
     mc "Are these the car keys?! Well... I should try to access the car!"
-    $ bl_values["goout"] = True
+    $ flags["goout"] = True
     $ del sp_actions['take_key']
     $ quests["ann"].next_stage()
     call screen room_navigation

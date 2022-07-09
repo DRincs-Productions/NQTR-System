@@ -27,7 +27,7 @@ label change_room:
 ## Check if mc can come out
 define block_goout_dialogue = _("Now is not the time to go outside")
 label check_goout:
-    if(bl_values.get("goout") == False):
+    if(flags.get("goout") == False):
         "[block_goout_dialogue]"
         call screen room_navigation
     return

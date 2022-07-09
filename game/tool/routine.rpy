@@ -13,7 +13,7 @@ init -10 python:
                     day_deadline: int = None,
                     label_event: str = None):
 
-            # TODO: add a function that checks if it is available to talk (maybe with bl_values)
+            # TODO: add a function that checks if it is available to talk (maybe with flags)
             # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
             # TODO: add event: in case it is nothing then when MC enter in that room starts a label
             self.chs = chs
