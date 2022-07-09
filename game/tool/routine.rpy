@@ -32,7 +32,7 @@ init -9 python:
                 # call change_room
             # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing id_location
             # at the end of the label insert:
-                # $ cur_events_location.pop(cur_room.id)    # cur_room.id: i.e. the id of the room where the event is triggered
+                # $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
                 # call change_room
             self.label_event = label_event
 
