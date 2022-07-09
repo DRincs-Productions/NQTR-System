@@ -52,7 +52,7 @@ label development:
 label order_product:
     mc "OK! Let's see, let's look for a book...."
     mc "Here's R****, for $1. Just the thing for me."
-    $ sp_actions.pop('order_product')
+    $ del sp_actions['order_product']
     $ quests["alice"].next_stage()
     call screen room_navigation
 
@@ -61,14 +61,14 @@ label add_product:
     call screen room_navigation
 
 label take_product:
-    $ sp_actions.pop('take_product')
+    $ del sp_actions.pop['take_product']
     $ quests["alice"].next_stage()
     call screen room_navigation
 
 label take_key:
     mc "Are these the car keys?! Well... I should try to access the car!"
     $ bl_values["goout"] = True
-    $ sp_actions.pop('take_key')
+    $ del sp_actions['take_key']
     $ quests["ann"].next_stage()
     call screen room_navigation
 
