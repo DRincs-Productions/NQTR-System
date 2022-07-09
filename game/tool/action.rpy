@@ -8,7 +8,7 @@ init -5 python:
                     icon: str,
                     label: str,
                     icon_selected: str = None,
-                    sp_room: str = None,
+                    room: str = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
@@ -28,7 +28,7 @@ init -5 python:
             self.day_deadline = day_deadline
             self.day_start = day_start
             # it is used only in sp_actions
-            self.sp_room = sp_room
+            self.room = room
             # Is an action that is started by clicking on an image in the room.
             self.is_in_room = is_in_room
             self.xpos = xpos
@@ -40,35 +40,28 @@ init -5 python:
                     "Warn: You have set day_deadline < 0, so it will be ignored")
 
 
-    # TODO: add the type a sp_actions & df_actions
-    def getActions(room: Room, sp_actions: dict, df_actions: dict, tm: TimeHandler):
+    def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
         acts: list[Action] = []
-        acts.clear()
-        for act in sp_actions.values():
-            if room.id == act.sp_room:
+        for act_id, act in actions.items():
+            if room.id == act.room:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
-        for act_id in room.id_actions:
-            if act_id in df_actions:
-                act = df_actions.get(act_id)
+            elif act_id in room.id_actions:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
-                del act
         return acts
 
 
-    # TODO: add the type a sp_actions & df_actions
-    def clearExpiredSPActions(sp_actions: dict):
+    def clearExpiredSPActions(sp_actions: dict[str, Action], tm: TimeHandler):
         """Delete Expired Actions"""
-        alist = []
-        alist.clear()
+        actions_to_del = []
         for id, act in sp_actions.items():
-            if (act.day_deadline != None and act.day_deadline <= tm.day):
-                alist.append(id)
-        for act_id in alist:
-            alist.pop(act_id)
-        del alist
-        return
+            if (act.day_deadline and act.day_deadline <= tm.day):
+                actions_to_del.append(id)
+        for act_id in actions_to_del:
+            del sp_actions[act_id]
+        del actions_to_del
+        return sp_actions
 
 # TODO: Add a function that updates Actions after a load

@@ -1,35 +1,55 @@
-init -9 python:
+init -11 python:
     event_duration = 6
 
-    hour_names = ( (2, _("Night")),
-                   (8, _("Morning")),
-                   (14, _("Afternoon")),
-                   (20, _("Evening")),
-                 )
-    weekday_names = ( _("{#weekday}Monday"),
-                      _("{#weekday}Tuesday"),
-                      _("{#weekday}Wednesday"),
-                      _("{#weekday}Thursday"),
-                      _("{#weekday}Friday"),
-                      _("{#weekday}Saturday"),
-                      _("{#weekday}Sunday")
+    hour_names = ((2, _("Night")),
+                (8, _("Morning")),
+                (14, _("Afternoon")),
+                (20, _("Evening")),
+                )
+    weekday_names = (_("{#weekday}Monday"),
+                    _("{#weekday}Tuesday"),
+                    _("{#weekday}Wednesday"),
+                    _("{#weekday}Thursday"),
+                    _("{#weekday}Friday"),
+                    _("{#weekday}Saturday"),
+                    _("{#weekday}Sunday")
                     )
     # month_names = ( ( _("November"), range(1,31)),
     #                 ( _("December"), range(1,32))
     #               )
 
+
     class TimeHandler(object):
         """Class to manage time, and also related to the constant event_duration. I strongly recommend to modify it according to the use."""
-        def __init__(self, hour_new_day=5, hour=8, weekend_day=6, day=0):
+
+        def __init__(self,
+                    hour_new_day: int = 5,
+                    hour: int = 8,
+                    weekend_day: int = 6,
+                    day: int = 0):
             self.hour_new_day = hour_new_day
             self.hour = hour
             self.day = day
-            # TODO:
+            # TODO: manage weekends (function...)
             self.weekend_day = weekend_day
             # this variable is used to update images that change according to time.
             # es image = "sky-[image_time]"
             self.image_time = 0
             self.update_image_time()
+            if self.hour_new_day < 0:
+                renpy.log(
+                    "Warn: You have set hour_new_day < 0, so it will be set to 0.")
+                self.hour_new_day = 0
+            if self.hour < 0:
+                renpy.log("Warn: You have set hour < 0, so it will be set to 0.")
+                self.hour = 0
+            if self.day < 0:
+                renpy.log("Warn: You have set day < 0, so it will be set to 0.")
+                self.day = 0
+            if self.weekend_day < 0:
+                renpy.log(
+                    "Warn: You have set weekend_day < 0, so it will be set to 6.")
+                self.weekend_day = 6
 
         def get_hour_name(self):
             if self.hour >= 22:
@@ -51,7 +71,7 @@ init -9 python:
             return self.day % 7
 
         def get_weekday_name(self):
-            return weekday_names[ self.get_weekday_number() ]
+            return weekday_names[self.get_weekday_number()]
 
         # def get_day_of_month(self, hour=None):
         #     hour = self.get_hour(hour)
@@ -78,7 +98,7 @@ init -9 python:
         #         day -= len(month[1])
         #     return month_number
 
-        def new_hour(self, amt=event_duration):
+        def new_hour(self, amt: int = event_duration):
             # if it is too late you have to use new_day()
             if (self.hour < self.hour_new_day):
                 return False
@@ -104,25 +124,27 @@ init -9 python:
             self.day += 1
             self.update_image_time()
 
-        def now_is_between (self, end, start=0):
+        def now_is_between(self, end: int, start: int = 0):
             return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
 
         # TODO: is weekend
         # TODO: skip weekend
 
+
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function
 default tm = TimeHandler()
 
-init -9 python:
-    def updateTimeHandler():
+init -8 python:
+    def updateTimeHandler(tm: TimeHandler):
         hour_new_day = tm.hour_new_day
         hour = tm.hour
         weekend_day = tm.weekend_day
         day = tm.day
-        store.tm = TimeHandler(hour_new_day = hour_new_day, hour = hour, weekend_day = weekend_day, day = day)
+        tm = TimeHandler(hour_new_day=hour_new_day,
+                        hour=hour, weekend_day=weekend_day, day=day)
         del hour_new_day
         del hour
         del weekend_day
         del day
-        return
+        return tm

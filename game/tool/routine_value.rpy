@@ -19,4 +19,4 @@ define df_routine = {
         "alice_lounge"      :   Commitment(chs={"alice" : TalkObject(bg_before_after=None, bg_talk=None)}, tm_start=10, tm_stop=14, id_location="house", id_room="lounge"),
         "alice_go_school"   :   Commitment(chs={"alice" : TalkObject(bg_before_after=None, bg_talk=None)}, tm_start=10, tm_stop=14, name="school", type="no_week"),
         "alice_read"        :   Commitment(chs={"alice" : TalkObject(bg_before_after="bg alice terrace", bg_talk="bg alice terrace talk")}, tm_start=14, tm_stop=20, id_location="house", id_room="terrace"),
-    }
+}
