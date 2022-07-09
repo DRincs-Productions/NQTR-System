@@ -1,4 +1,4 @@
-init -9 python:
+init -11 python:
     event_duration = 6
 
     hour_names = ((2, _("Night")),

@@ -1,6 +1,6 @@
 define DEFAULT_LABEL_TALK = "talk"
 
-init -9 python:
+init -11 python:
     class TalkObject(object):
         """At the inside of the class there are the values used for the talk() function, 
         (all this could be done in Commitment(), but I preferred not to use a dictionary)"""
