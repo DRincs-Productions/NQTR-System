@@ -45,7 +45,7 @@ init -11 python:
                 return self.bg_before_after
 
 
-    def addTalkChoice(ch, choice_text, label, talkch_choices: dict[str, list]): # TODO: add a type for list
+    def addTalkChoice(ch: str, choice_text: str, label: str, talkch_choices: dict[str, list]): # TODO: add a type for list
         """Add the "choice" in the character's talkch_choices."""
         if (ch in talkch_choices.keys()):
             talkch_choices[ch].append((choice_text, label))
@@ -57,7 +57,7 @@ init -11 python:
         return
 
 
-    def delTalkChoice(ch, choice_text, talkch_choices: dict[str, list]): # TODO: add a type for list
+    def delTalkChoice(ch: str, choice_text: str, talkch_choices: dict[str, list]): # TODO: add a type for list
         """Deletes the "choice" in the character's talkch_choices."""
         val = 0
         ch_to_del = ch

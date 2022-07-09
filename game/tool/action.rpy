@@ -27,7 +27,6 @@ init -5 python:
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
-            # it is used only in sp_actions
             self.room = room
             # Is an action that is started by clicking on an image in the room.
             self.is_in_room = is_in_room
@@ -53,15 +52,15 @@ init -5 python:
         return acts
 
 
-    def clearExpiredSPActions(sp_actions: dict[str, Action], tm: TimeHandler):
+    def clearExpiredActions(actions: dict[str, Action], tm: TimeHandler):
         """Delete Expired Actions"""
         actions_to_del = []
-        for id, act in sp_actions.items():
+        for id, act in actions.items():
             if (act.day_deadline and act.day_deadline <= tm.day):
                 actions_to_del.append(id)
         for act_id in actions_to_del:
-            del sp_actions[act_id]
+            del actions[act_id]
         del actions_to_del
-        return sp_actions
+        return actions
 
 # TODO: Add a function that updates Actions after a load
