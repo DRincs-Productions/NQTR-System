@@ -1,6 +1,7 @@
-init -9 python:
+init -5 python:
     class Action(object):
-        """Actions of the MC"""
+        """Actions of the MC,
+        day_deadline & day_start must be >0, if not the value will be ignored"""
 
         def __init__(self,
                     name: str,
@@ -32,11 +33,17 @@ init -9 python:
             self.is_in_room = is_in_room
             self.xpos = xpos
             self.ypos = ypos
+            if self.day_start < 0:
+                renpy.log("Warn: You have set day_start < 0, so it will be ignored")
+            if self.day_deadline < 0:
+                renpy.log(
+                    "Warn: You have set day_deadline < 0, so it will be ignored")
 
 
-    def getActions(room):
+    # TODO: add the type a sp_actions & df_actions
+    def getActions(room: Room, sp_actions: dict, df_actions: dict, tm: TimeHandler):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
-        acts = []
+        acts: list[Action] = []
         acts.clear()
         for act in sp_actions.values():
             if room.id == act.sp_room:
@@ -51,7 +58,8 @@ init -9 python:
         return acts
 
 
-    def clearExpiredSPActions():
+    # TODO: add the type a sp_actions & df_actions
+    def clearExpiredSPActions(sp_actions: dict):
         """Delete Expired Actions"""
         alist = []
         alist.clear()

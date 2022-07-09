@@ -1,5 +1,6 @@
-define event_duration = 6
-init python:
+init -9 python:
+    event_duration = 6
+
     hour_names = ( (2, _("Night")),
                    (8, _("Morning")),
                    (14, _("Afternoon")),
