@@ -37,7 +37,9 @@ At the end make a merge inside the arm of the project.
 
 ## Documentation
 
-[wiki](DRincs-Productions/NQTR-toolkit/wiki)
+[Wiki]([DRincs-Productions/NQTR-toolkit/wiki](https://github.com/DRincs-Productions/NQTR-toolkit/wiki))
+
+## Preview
 
 ### Quest system
 
