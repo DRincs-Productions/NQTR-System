@@ -7,10 +7,10 @@
 # First phase (Initialize a Stage):
 # Quest.start():                    # It is done manually
 #   Stage.addInQuest()
-#   currentStage.start():                  # it is done until it becomes active with TODO: ... 
+#   currentStage.start():                  # it is done until it becomes active with TODO: ...
 #       currentStage.request_check():
 #           currentStage.active = True
-#--------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 # currentStage.completed_try():            # It is done manually
 #   is_completed():
 #       completed = True
@@ -23,23 +23,30 @@ init python:
     class Goal(object):
         """Goal class, it has been designed to be included in the Stage class.
         To complete the goals use find()"""
+
         def __init__(self,
-            id,
-            description,
-            complete = False,
-            need = None,
-            have = 0):
+                    id: str,
+                    description: str,
+                    complete: bool = False,
+                    need: int = 0,
+                    have: int = 0):
 
             self.id = id
             self.description = description
             self.complete = complete
             self.need = need
             self.have = 0
+            if (self.have < 0):
+                self.have = 0
+                renpy.log("Warn: You have set have < 0, so it will be set to 0.")
+            if (self.need < 0):
+                self.need = 0
+                renpy.log("Warn: You have set need < 0, so it will be set to 0.")
 
         def find(self, value=1):
             """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
             It is used to complete the Goals."""
-            if (need == None):
+            if (self.need == 0):
                 self.complete = True
             self.have += value
             if (self.complete_check()):
@@ -47,31 +54,34 @@ init python:
                 # Todo: notify description
                 return True
             return False
+
         def complete_check(self):
             """Checks the status of completion. returns True if the mission has been completed"""
-            if (complete == True):
+            if (self.complete == True):
                 return True
-            if (need == None):
+            if (self.need == 0):
                 return False
             return self.need <= self.have
+
 
     class Stage(object):
         """Stage class: using external variables current_quest_stages, current_task_stages, quests, tm.day and bl.
         You can go to the next Stage with Stage.completed_try(), forcibly with Stage.next_stage()."""
+
         def __init__(self,
-            idQuestOrTask,
-            goals = [],
-            title = None,
-            description = None,
-            advice = "",
-            bg = None,
-            days_late = None,
-            bl_requests = [],
-            quests_levels_requests = {},
-            description_request = "",
-            label_start = None,
-            label_end = None,
-            label_check = None):
+                    idQuestOrTask,
+                    goals=[],
+                    title=None,
+                    description=None,
+                    advice="",
+                    bg=None,
+                    days_late=None,
+                    bl_requests=[],
+                    quests_levels_requests={},
+                    description_request="",
+                    label_start=None,
+                    label_end=None,
+                    label_check=None):
 
             self.idQuestOrTask = idQuestOrTask
             self.goals = goals
@@ -96,27 +106,29 @@ init python:
         def addInQuest(self):
             """Add the Stage in the current_quest_stages"""
             current_quest_stages[self.idQuestOrTask] = Stage(
-                idQuestOrTask = self.idQuestOrTask,
-                goals = self.goals,
-                bl_requests = self.bl_requests,
-                quests_levels_requests = self.quests_levels_requests,
-                description_request = self.description_request,
-                label_start = self.label_start,
-                label_end = self.label_end,
-                label_check = self.label_check)
+                idQuestOrTask=self.idQuestOrTask,
+                goals=self.goals,
+                bl_requests=self.bl_requests,
+                quests_levels_requests=self.quests_levels_requests,
+                description_request=self.description_request,
+                label_start=self.label_start,
+                label_end=self.label_end,
+                label_check=self.label_check)
             current_quest_stages[self.idQuestOrTask].setDay(self.days_late)
+
         def addInTask(self):
             """Add the Stage in the current_task_stages"""
             current_task_stages[self.idQuestOrTask] = Stage(
-                idQuestOrTask = self.idQuestOrTask,
-                goals = self.goals,
-                bl_requests = self.bl_requests,
-                quests_levels_requests = self.quests_levels_requests,
-                description_request = self.description_request,
-                label_start = self.label_start,
-                label_end = self.label_end,
-                label_check = self.label_check)
+                idQuestOrTask=self.idQuestOrTask,
+                goals=self.goals,
+                bl_requests=self.bl_requests,
+                quests_levels_requests=self.quests_levels_requests,
+                description_request=self.description_request,
+                label_start=self.label_start,
+                label_end=self.label_end,
+                label_check=self.label_check)
             current_task_stages[self.idQuestOrTask].setDay(self.days_late)
+
         def start(self):
             """If you have reached all the objectives then activate the Stage.
             start() is used until the Stage becomes active.
@@ -132,6 +144,7 @@ init python:
             self.active = True
             # TODO: notify
             return True
+
         def request_check(self):
             """Checks the requests, returns True if it satisfies them."""
             if (self.day_start != None and tm.day < self.day_start):
@@ -143,6 +156,7 @@ init python:
                 if (bl_values[item] == False):
                     return False
             return True
+
         def completed_try(self):
             """Check completed and if it is complete -> next_stage()
             set complete = True if it can actually go ahead completed"""
@@ -150,10 +164,11 @@ init python:
                 return False
             self.next_stage()
             return True
+
         def is_completed(self):
             """Check if the Stage can be complete."""
             # if (label_check != None)
-                # TODO: Execute label_check
+            # TODO: Execute label_check
             if (self.completed):
                 return True
             if (self.active == False):
@@ -166,14 +181,16 @@ init python:
             self.completed = True
             # self.completed_try()
             return True
+
         def next_stage(self):
             """If it is a Quest is replaced by the next Quest, and if it is a Task is deleted."""
             # if (label_end != None)
-                # TODO: Execute label_end
+            # TODO: Execute label_end
             if (self.idQuestOrTask in current_task_stages):
                 del current_task_stages[self.idQuestOrTask]
                 return
             quests[self.idQuestOrTask].next_stage()
+
         def find(self, goals_id, value=1):
             # TODO: To comment and test
             for item in self.goals:
@@ -181,23 +198,26 @@ init python:
                     item.find(value)
                     return True
             return False
+
         def setDay(self, days_late):
             # TODO: To comment
             if (days_late != None):
                 self.day_start = (tm.day + days_late)
 
+
     class Quest(object):
         """Internship a short story of Quest that follow each other between. This class makes use of: stages, quests_levels.
         Must be initialized manually with start()"""
+
         def __init__(self,
-            id,
-            title,
-            description = "",
-            icon = None,
-            bg = None,
-            stages_id = [],
-            category = None,
-            development = False):
+                    id: str,
+                    title: str,
+                    description: str = "",
+                    icon: str = None,
+                    bg: str = None,
+                    stages_id: list[str] = [],
+                    category: str = None,
+                    development: bool = False):
 
             self.id = id
             self.title = title
@@ -207,6 +227,7 @@ init python:
             self.stages_id = stages_id
             self.category = category
             self.development = development
+
         def is_completed(self):
             """Check if all stages have been completed."""
             if ((self.id in quests_levels) == False):
@@ -216,21 +237,25 @@ init python:
                 return current_quest_stages[self.id].completed
             else:
                 return False
+
         def current_quest_id(self):
             """Return the id of this current"""
             if ((self.id in quests_levels) == False):
                 self.update()
             return self.stages_id[quests_levels[id]]
+
         def complete_stages_number(self):
             """Returns the number of completed stages"""
             if ((self.id in quests_levels) == False):
                 self.update()
             return quests_levels[id]
+
         def get_percentage_completion(self):
             """Returns the percentage of completion"""
             if ((self.id in quests_levels) == False):
                 self.update()
             return quests_levels[id]/len(self.stages_id)*100
+
         def update(self):
             """Function to update the various values,
             If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
@@ -251,11 +276,13 @@ init python:
             if self.is_completed() == False and current_quest_stages[self.id].completed:
                 self.next_stage()
                 return
+
         def start(self, n_stage=0):
             """Insert the Stage number n_stage in the current quests"""
             quest_stages[self.stages_id[n_stage]].addInQuest()
             current_quest_stages[self.id].start()
             quests_levels[self.id] = n_stage
+
         def next_stage(self):
             """Go to the next Stage, in case it is the last, it does not go on but the sect as complete."""
             if ((self.id in quests_levels) == False):
@@ -263,8 +290,9 @@ init python:
             if len(self.stages_id)-1 == quests_levels[self.id]:
                 current_quest_stages[self.id].completed = True
                 return
-            quests_levels[self.id] +=1
+            quests_levels[self.id] += 1
             self.start(quests_levels[self.id])
+
         def is_started(self):
             if ((self.id in quests_levels) == False):
                 self.update()
@@ -274,6 +302,8 @@ init python:
             # removes it from quests_levels
 
     # TODO: Use it when: Load Menu
+
+
     def updateQuestsLevels():
         """Synchronize quests_levels with quests.
         After this function I suggest to use checkInactiveStage()."""
@@ -290,13 +320,15 @@ init python:
         return
 
     # this function is done in the transition from one day to another
+
+
     def checkInactiveStage():
-            """Check if the inactive Stage have the requirements to be activated, if so, activate them."""
-            for k in current_quest_stages.keys():
-                current_quest_stages[k].start()
-            for k in current_task_stages.keys():
-                current_task_stages[k].start()
-            return
+        """Check if the inactive Stage have the requirements to be activated, if so, activate them."""
+        for k in current_quest_stages.keys():
+            current_quest_stages[k].start()
+        for k in current_task_stages.keys():
+            current_task_stages[k].start()
+        return
 
 # TODO: Add the following functions
     # check if current_quest_stages.key is in quests, if not there delete it: Load Game
