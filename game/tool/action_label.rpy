@@ -61,7 +61,7 @@ label add_product:
     call screen room_navigation
 
 label take_product:
-    $ del sp_actions.pop['take_product']
+    $ del sp_actions['take_product']
     $ quests["alice"].next_stage()
     call screen room_navigation
 
