@@ -11,12 +11,16 @@ label check_event_sp:
         call expression ev.label_event
         if (event_room == cur_room.id):
             # delete the event in cur_events_location
-            $ cur_events_location.pop(cur_room.id)
+            $ del cur_events_location[cur_room.id]
             # delete the event in sp_routine
             python:
+                sp_routine_to_del = []
                 for k, v in sp_routine.items():
                     if (v.id_room == ev.id_room and v.is_event()):
-                        sp_routine.pop(k)
+                        sp_routine_to_del.append(k)
+                for k in sp_routine_to_del:
+                    del sp_routine[k]
+                del sp_routine_to_del
         $ del event_room
         $ del ev
         $ renpy.jump("after_wait")

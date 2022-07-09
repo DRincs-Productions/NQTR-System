@@ -1,14 +1,14 @@
 define rooms = [
-    ]
+]
 
 define locations = {
-    }
+}
 
 define map_images = {
-    }
+}
 
 define ch_icons = {
-    }
+}
 
 default cur_room = rooms[0]
 default cur_location = locations[cur_room.id_location]

@@ -1,18 +1,19 @@
-init -9 python:
+init -10 python:
     class Commitment(object):
         """Commitment, routine and event"""
-        def __init__(self,
-            tm_start,
-            tm_stop,
-            chs = {},
-            name=None,
-            id_location=None,
-            id_room=None,
-            type=None,
-            day_deadline=None,
-            label_event=None):
 
-            # TODO: add a function that checks if it is available to talk (maybe with bl_values)
+        def __init__(self,
+                    tm_start: int,
+                    tm_stop: int,
+                    chs: dict[str, TalkObject] = {},
+                    name: str = None,
+                    id_location: str = None,
+                    id_room: str = None,
+                    type: str = None,
+                    day_deadline: int = None,
+                    label_event: str = None):
+
+            # TODO: add a function that checks if it is available to talk (maybe with flags)
             # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
             # TODO: add event: in case it is nothing then when MC enter in that room starts a label
             self.chs = chs
@@ -26,17 +27,17 @@ init -9 python:
             # se si vuole degli eventi fissi usare check_event_df
             # if you want the event to be started only once and then deleted
             # at the end of the label insert:
-                # return
+            # return
             # if you want the event to be repeated every time you go to that room
             # at the end of the label insert:
-                # call change_room
+            # call change_room
             # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing id_location
             # at the end of the label insert:
-                # $ cur_events_location.pop(cur_room.id)    # cur_room.id: i.e. the id of the room where the event is triggered
-                # call change_room
+            # $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
+            # call change_room
             self.label_event = label_event
 
-        def getChIcons(self):
+        def getChIcons(self, ch_icons: dict[str, str]):
             """returns a list of ch icons (not secondary ch)"""
             icons = []
             for ch in self.chs.keys():
@@ -44,7 +45,7 @@ init -9 python:
                     icons.append(ch_icons[ch])
             return icons
 
-        def talk(self, ch):
+        def talk(self, ch: str):
             """Start talk() of TalkObject() of ch."""
 
             # TODO: it doesn't matter i don't know why
@@ -52,10 +53,12 @@ init -9 python:
             # TODO: use this:
             # action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
 
+            # TODO: insertBgImage doesn't exist, but I can't remember what it's for
             if self.chs[ch].talk() == False:
                 for ch in self.chs.values():
                     if ch.insertBgImage():
                         return
+            return
 
             # TODO: otherwise insert the bg of the current room
 
@@ -87,7 +90,8 @@ init -9 python:
         #     if self.label_event == None:
         #         renpy.call(self.label_event)
 
-    def clearExpiredSPRoutine():
+
+    def clearExpiredSPRoutine(sp_routine: dict[str, Commitment], tm: TimeHandler):
         """removes expired Commitments"""
         rlist = []
         rlist.clear()
@@ -97,9 +101,10 @@ init -9 python:
         for r in rlist:
             del sp_routine[r]
         del rlist
-        return
+        return sp_routine
 
-    def getChsInThisLocation(id_location):
+
+    def getChsInThisLocation(id_location: str):
         # TODO: to add when I change id_location
         """Returns the commitments of the ch (NCPs) in that Location at that time.
         Give priority to special routine, and routine with a valid type."""
@@ -121,15 +126,20 @@ init -9 python:
                     routines[chKey] = None
         # Check I enter the current routines of the ch.
         # In case the routine is not in the place I want to go or they are null and void I delete the ch.
+        routines_key_to_del = []
         for ch in routines.keys():
             routines[ch] = getChLocation(ch)
             if routines[ch] == None:
-                del routines[ch]
+                routines_key_to_del.append(ch)
             elif routines[ch].id_location != id_location:
-                del routines[ch]
+                routines_key_to_del.append(ch)
+        for ch in routines_key_to_del:
+            del routines[ch]
+        del routines_key_to_del
         return routines
 
-    def getEventsInThisLocation(id_location):
+
+    def getEventsInThisLocation(id_location: str, sp_routine: dict[str, Commitment]):
         # TODO: to add when I change id_location
         """Returns events at that location at that time.
         Checks only in sp_routine."""
@@ -142,7 +152,8 @@ init -9 python:
                 events[routine.id_room] = routine
         return events
 
-    def getChLocation(ch):
+
+    def getChLocation(ch: str):
         """Returns the current routine of the ch.
         Give priority to special routine, and routine with a valid type."""
         ret_routine = None
@@ -164,6 +175,7 @@ init -9 python:
                         return routine
         return ret_routine
 
+
     # TODO: Is not used in Routine so move, maybe it is better in boolean_value
     def checkValidType(type):
         """Check according to its type, if it is True or False"""
@@ -174,6 +186,7 @@ init -9 python:
             # TODO: Checkweekend
             return True
         return False
+
 
     def getBgRoomRoutine(routines, room_id):
         """Returns the first background image of the routines based on the current room. if there are no returns None"""
