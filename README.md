@@ -12,6 +12,8 @@ In order to simplify the update work and avoid errors in saving I created functi
 
 For the time being, a good part of the screens and images are not of my creation and terminology, and the comments need to be revised.
 
+Feel free to contribute, fork this and send a pull request. 😄
+
 ## Instructions to insert Toolkit in your repo
 
 I recommend the following ways to include it in your project:
