@@ -5,6 +5,6 @@ default sp_actions = {}
 
 # habitual actions
 define df_actions = {
-    "nap"       :   Action(_("Nap"), "/interface/action-sleep.webp", label = "nap", tm_start=5, tm_stop=23), 
-    "sleep"     :   Action(_("Sleep"), "/interface/action-alarm.webp", label = "sleep", tm_start=23, tm_stop=5), 
+    "nap"       :   Action(_("Nap"), "/interface/action-sleep.webp", label_name = "nap", tm_start=5, tm_stop=23), 
+    "sleep"     :   Action(_("Sleep"), "/interface/action-alarm.webp", label_name = "sleep", tm_start=23, tm_stop=5), 
 }

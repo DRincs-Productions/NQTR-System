@@ -35,7 +35,7 @@ init -11 python:
             talk_choices.append((choice_text, label_name))
             dict_choices[id_choice] = talk_choices
             del talk_choices
-        return talk_choices
+        return #talk_choices
 
 
     def delTalkChoice(choice_text: str, id_choice: str, dict_choices: dict[str, list]):
@@ -51,4 +51,4 @@ init -11 python:
         dict_choices[id_choice].pop(val)
         del val
         del ch_to_del
-        return dict_choices
+        return #dict_choices

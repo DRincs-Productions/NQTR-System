@@ -57,7 +57,7 @@ label order_product:
     call screen room_navigation
 
 label add_product:
-    $ sp_actions["take_product"] = Action(_("Take product"), "/interface/action-box.webp", label = "take_product", room='terrace')
+    $ sp_actions["take_product"] = Action(_("Take product"), "/interface/action-box.webp", label_name = "take_product", room='terrace')
     call screen room_navigation
 
 label take_product:

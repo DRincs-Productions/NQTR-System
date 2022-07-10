@@ -188,14 +188,14 @@ screen room_navigation():
             # Adds the button list of possible actions in that room
             if (room == cur_room and not room.id in closed_rooms):
                 for act in getActions(sp_actions | df_actions, room, tm):
-                    if (act.is_in_room == True):
+                    if (act.isButton() == False):
                         imagebutton:
                             pos (act.xpos, act.ypos)
                             idle act.icon
                             if not act.icon_selected == None:
                                 hover act.icon_selected
                             focus_mask True
-                            action [Hide('wait_navigation'), Jump(act.label)]
+                            action [Hide('wait_navigation'), Jump(act.label_name)]
                             if renpy.variant("pc"):
                                 tooltip act.name
                             at middle_action_is_in_room
@@ -207,13 +207,13 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (room == cur_room):
                     for act in getActions(sp_actions | df_actions, room, tm):
-                        if (act.is_in_room == False):
+                        if (act.isButton() == True):
                             imagebutton:
                                 idle act.icon
                                 if not act.icon_selected == None:
                                     hover act.icon_selected
                                 focus_mask True
-                                action [Hide('wait_navigation'), Jump(act.label)]
+                                action [Hide('wait_navigation'), Jump(act.label_name)]
                                 if renpy.variant("pc"):
                                     tooltip act.name
                                 at middle_action

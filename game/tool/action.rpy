@@ -6,22 +6,21 @@ init -5 python:
         def __init__(self,
                     name: str,
                     icon: str,
-                    label: str,
+                    label_name: str,
                     icon_selected: str = None,
                     room: str = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
                     day_deadline: int = -1,
-                    is_in_room: bool = False,
-                    xpos: int = 0,
-                    ypos: int = 0):
+                    xpos: int = None,
+                    ypos: int = None):
             # TODO: add the type as in routine
             # TODO: add the active value which is a value linked to flags, by default active = True
 
             self.name = name
             self.icon = icon
-            self.label = label
+            self.label_name = label_name
             self.icon_selected = icon_selected
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
@@ -29,7 +28,6 @@ init -5 python:
             self.day_start = day_start
             self.room = room
             # Is an action that is started by clicking on an image in the room.
-            self.is_in_room = is_in_room
             self.xpos = xpos
             self.ypos = ypos
             if self.day_start < 0:
@@ -37,6 +35,16 @@ init -5 python:
             if self.day_deadline < 0:
                 renpy.log(
                     "Warn: You have set day_deadline < 0, so it will be ignored")
+            if (self.xpos != None and self.ypos == None):
+                renpy.log(
+                    "Warn: xpos is set but ypos is not, so it will be ignored and this will be considered a button")
+            if (self.xpos == None and self.ypos != None):
+                renpy.log(
+                    "Warn: ypos is set but xpos is not, so it will be ignored and this will be considered a button")
+
+        def isButton(self):
+            """This is a button?"""
+            return not (self.xpos != None and self.ypos != None)
 
 
     def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):
