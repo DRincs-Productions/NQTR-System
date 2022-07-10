@@ -32,6 +32,7 @@ To **insert** or **update** the Toolkit in your repo with Pull branch I recommen
 git checkout -b NQTR-toolkit
 git checkout NQTR-toolkit
 git pull https://github.com/DonRP/NQTR-toolkit.git tool-only --allow-unrelated-histories
+
 ```
 
 At the end make a merge inside the arm of the project.
