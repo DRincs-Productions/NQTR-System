@@ -1,4 +1,4 @@
-# are the routines of the ch_talkobj_dict in the current place
+# are the routines of the CHs in the current place
 # it is changed after waiting for some time or when moving from one location to another
 default cur_routines_location = None
 
