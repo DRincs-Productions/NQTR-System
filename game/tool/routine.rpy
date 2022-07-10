@@ -5,18 +5,21 @@ init -10 python:
         def __init__(self,
                     tm_start: int,
                     tm_stop: int,
-                    chs: dict[str, TalkObject] = {},
+                    ch_talkobj_dict: dict[str, TalkObject] = {},
+                    bg: str  = None,
                     name: str = None,
                     id_location: str = None,
                     id_room: str = None,
                     type: str = None,
                     day_deadline: int = None,
-                    label_event: str = None):
+                    event_label_name: str = None
+                    ):
 
             # TODO: add a function that checks if it is available to talk (maybe with flags)
             # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
             # TODO: add event: in case it is nothing then when MC enter in that room starts a label
-            self.chs = chs
+            self.bg = bg
+            self.ch_talkobj_dict = ch_talkobj_dict
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
             self.id_location = id_location
@@ -35,73 +38,50 @@ init -10 python:
             # at the end of the label insert:
             # $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
             # call change_room
-            self.label_event = label_event
+            self.event_label_name = event_label_name
 
         def getChIcons(self, ch_icons: dict[str, str]):
             """returns a list of ch icons (not secondary ch)"""
             icons = []
-            for ch in self.chs.keys():
+            for ch in self.ch_talkobj_dict.keys():
                 if (ch in ch_icons):
                     icons.append(ch_icons[ch])
             return icons
 
-        def talk(self, ch: str):
-            """Start talk() of TalkObject() of ch."""
-
-            # TODO: it doesn't matter i don't know why
-            talk_ch = ch
-            # TODO: use this:
-            # action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
-
-            # TODO: insertBgImage doesn't exist, but I can't remember what it's for
-            if self.chs[ch].talk() == False:
-                for ch in self.chs.values():
-                    if ch.insertBgImage():
-                        return
-            return
-
-            # TODO: otherwise insert the bg of the current room
-
-        def getTalkImage(self, ch):
+        def getTalkBackground(self, ch):
             "Returns the image during a conversation"
-            return self.chs[ch].getTalkImage()
+            return self.ch_talkobj_dict[ch].getBackground()
 
-        def getBeforeTalkImage(self):
+        def getBackground(self):
             "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
-            for ch in self.chs.values():
-                if ch.getAfterTalkImage() != None:
-                    return ch.getAfterTalkImage()
-            return None
+            return self.bg
 
-        def getAfterTalkImage(self, ch):
+        def getBackgroundAfter(self):
             "Returns the AfterTalk image of the ch or the first that has it. Otherwise None"
-            if self.chs[ch].getAfterTalkImage() != None:
-                return self.chs[ch].getAfterTalkImage()
-            else:
-                return self.getBeforeTalkImage()
+            return self.bg
 
-        def is_event(self):
+        def isEvent(self):
             "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
-            return (self.label_event is not None)
+            return (self.event_label_name is not None)
 
         # doesn't seem to work
-        # use something like this: renpy.call(cur_events_location[cur_room.id].label_event)
+        # use something like this: renpy.call(cur_events_location[cur_room.id].event_label_name)
         # def start_event(self):
-        #     if self.label_event == None:
-        #         renpy.call(self.label_event)
+        #     if self.event_label_name == None:
+        #         renpy.call(self.event_label_name)
 
 
-    def clearExpiredSPRoutine(sp_routine: dict[str, Commitment], tm: TimeHandler):
+    def clearExpiredRoutine(routine: dict[str, Commitment], tm: TimeHandler):
         """removes expired Commitments"""
         rlist = []
         rlist.clear()
-        for key, val in sp_routine.iteritems():
+        for key, val in routine.iteritems():
             if (val.day_deadline != None and val.day_deadline <= tm.day):
                 rlist.append(key)
         for r in rlist:
-            del sp_routine[r]
+            del routine[r]
         del rlist
-        return sp_routine
+        return routine
 
 
     def getChsInThisLocation(id_location: str):
@@ -115,14 +95,14 @@ init -10 python:
             # Check Time and Location
             if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
                 # Full verification
-                for chKey in routine.chs.keys():
+                for chKey in routine.ch_talkobj_dict.keys():
                     routines[chKey] = None
         for routine in df_routine.values():
             # Check Time and Location
             if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
                 # Full verification
-                chs = routine.chs
-                for chKey in chs.keys():
+                ch_talkobj_dict = routine.ch_talkobj_dict
+                for chKey in ch_talkobj_dict.keys():
                     routines[chKey] = None
         # Check I enter the current routines of the ch.
         # In case the routine is not in the place I want to go or they are null and void I delete the ch.
@@ -148,7 +128,7 @@ init -10 python:
         events = {}
         for routine in sp_routine.values():
             # Check Time and Location and is event
-            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.is_event() == True):
+            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.isEvent() == True):
                 events[routine.id_room] = routine
         return events
 
@@ -160,7 +140,7 @@ init -10 python:
         # special routine
         for routine in sp_routine.values():
             if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
-                if ch in routine.chs:
+                if ch in routine.ch_talkobj_dict:
                     ret_routine = routine
                     if checkValidType(routine):
                         return routine
@@ -169,7 +149,7 @@ init -10 python:
         # default routine
         for routine in df_routine.values():
             if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
-                if ch in routine.chs:
+                if ch in routine.ch_talkobj_dict:
                     ret_routine = routine
                     if checkValidType(routine.type):
                         return routine
@@ -192,5 +172,5 @@ init -10 python:
         """Returns the first background image of the routines based on the current room. if there are no returns None"""
         for item in routines.values():
             if item.id_room == room_id:
-                return item.getBeforeTalkImage()
+                return item.getBackground()
         return None

@@ -29,7 +29,7 @@ init -9 python:
 
         def __init__(self,
                     id: str,
-                    key_map: str,
+                    id_map: str,
                     id_externalroom: str,
                     name: str = None,
                     icon: str = None,
@@ -37,7 +37,7 @@ init -9 python:
                     yalign: int = 0):
 
             self.id = id
-            self.key_map = key_map
+            self.id_map = id_map
             self.name = name
             self.id_externalroom = id_externalroom
             self.icon = icon

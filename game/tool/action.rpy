@@ -1,36 +1,37 @@
 init -5 python:
-    class Action(object):
+    class Action:
         """Actions of the MC,
         day_deadline & day_start must be >0, if not the value will be ignored"""
 
         def __init__(self,
                     name: str,
-                    icon: str,
-                    label: str,
-                    icon_selected: str = None,
+                    label_name: str,
                     room: str = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
                     day_deadline: int = -1,
-                    is_in_room: bool = False,
-                    xpos: int = 0,
-                    ypos: int = 0):
+                    button_icon: str = None,
+                    button_icon_selected: str = None,
+                    picture_in_background: str = None,
+                    picture_in_background_selected: str = None,
+                    xpos: int = None,
+                    ypos: int = None):
             # TODO: add the type as in routine
             # TODO: add the active value which is a value linked to flags, by default active = True
 
             self.name = name
-            self.icon = icon
-            self.label = label
-            self.icon_selected = icon_selected
+            self.label_name = label_name
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
-            # it is used only in sp_actions
             self.room = room
+            self.button_icon = button_icon
+            self.button_icon_selected = button_icon_selected
             # Is an action that is started by clicking on an image in the room.
-            self.is_in_room = is_in_room
+            self.picture_in_background = picture_in_background
+            self.picture_in_background_selected = picture_in_background_selected
             self.xpos = xpos
             self.ypos = ypos
             if self.day_start < 0:
@@ -38,6 +39,25 @@ init -5 python:
             if self.day_deadline < 0:
                 renpy.log(
                     "Warn: You have set day_deadline < 0, so it will be ignored")
+            if (self.xpos != None and self.ypos == None):
+                renpy.log(
+                    "Warn: xpos is set but ypos is not, so ypos set to 0")
+                self.ypos = 0
+            if (self.xpos == None and self.ypos != None):
+                renpy.log(
+                    "Warn: ypos is set but xpos is not, so xpos set to 0")
+                self.xpos = 0
+            if (self.button_icon == None and self.picture_in_background == None):
+                renpy.log(
+                    "Error: You have set button_icon and picture_in_background to None, this action will be ignored")
+
+        def isButton(self):
+            """This is a button?"""
+            return self.button_icon != None
+
+        def isPictureInBackground(self):
+            """This is a button?"""
+            return self.button_icon != None
 
 
     def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):
@@ -53,15 +73,15 @@ init -5 python:
         return acts
 
 
-    def clearExpiredSPActions(sp_actions: dict[str, Action], tm: TimeHandler):
+    def clearExpiredActions(actions: dict[str, Action], tm: TimeHandler):
         """Delete Expired Actions"""
         actions_to_del = []
-        for id, act in sp_actions.items():
+        for id, act in actions.items():
             if (act.day_deadline and act.day_deadline <= tm.day):
                 actions_to_del.append(id)
         for act_id in actions_to_del:
-            del sp_actions[act_id]
+            del actions[act_id]
         del actions_to_del
-        return sp_actions
+        return actions
 
 # TODO: Add a function that updates Actions after a load

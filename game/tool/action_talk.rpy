@@ -1,73 +1,83 @@
 define DEFAULT_LABEL_TALK = "talk"
+define DEFAULT_TALK_BUTTON_ICON = "/interface/action-talk.webp"
 
 init -11 python:
-    class TalkObject(object):
+    class TalkObject:
         """At the inside of the class there are the values used for the talk() function, 
         (all this could be done in Commitment(), but I preferred not to use a dictionary)"""
 
         def __init__(self,
-                    ch_secondary: list[str] = [],
-                    bg_before_after: str  = None,
-                    after_label_event: str  = None,
-                    bg_talk: str  = None,
-                    label_talk: str  = None):
+                    bg: str = None,
+                    label_name: str = None,
+                    button_icon: str = None,
+                    picture_in_background: str = None,
+                    xpos: int = None,
+                    ypos: int = None):
 
-            self.ch_secondary = ch_secondary
-            self.bg_before_after = bg_before_after
-            self.bg_talk = bg_talk
-            self.after_label_event = after_label_event
-            self.label_talk = label_talk
+            self.bg = bg
+            self.label_name = label_name
+            # Is an action that is started by clicking on an image in the room.
+            self.button_icon = button_icon
+            self.picture_in_background = picture_in_background
+            self.xpos = xpos
+            self.ypos = ypos
+            if (self.xpos != None and self.ypos == None):
+                renpy.log(
+                    "Warn: xpos is set but ypos is not, so ypos set to 0")
+                self.ypos = 0
+            if (self.xpos == None and self.ypos != None):
+                renpy.log(
+                    "Warn: ypos is set but xpos is not, so xpos set to 0")
+                self.xpos = 0
+
+        def isPictureInBackground(self):
+            """This is a button?"""
+            return button_icon != None
 
         def talk(self):
             """Inside you can find the labels and images to start talk()"""
-            # if label_talk == None does the default procedure
-            if not isNullOrEmpty(self.label_talk):
-                renpy.jump(self.label_talk)
+            # if label_name == None does the default procedure
+            if not isNullOrEmpty(self.label_name):
+                renpy.jump(self.label_name)
             elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
                 renpy.jump(DEFAULT_LABEL_TALK)
             return
 
-        def getTalkImage(self):
+        def getBackground(self):
             """Returns the image during a conversation"""
-            return self.bg_talk
+            return self.bg
 
-        def getBeforeTalkImage(self):
-            """Returns the background image used when someone is in the same room. It can be None"""
-            return self.bg_before_after
-
-        def getAfterTalkImage(self):
-            """Returns the background image used after a conversation, 
-            but if after_label_event is not null it passes to after_label_event. 
-            ((the latter can be used in case the room is no longer accessible and thus takes you to another room))"""
-            if not isNullOrEmpty(self.after_label_event):
-                renpy.jump(self.after_label_event)
+        def getButtonIcon(self):
+            if(self.button_icon != None):
+                return button_icon
             else:
-                return self.bg_before_after
+                return DEFAULT_TALK_BUTTON_ICON
+            return self.bg
 
 
-    def addTalkChoice(ch, choice_text, label, talkch_choices: dict[str, list]): # TODO: add a type for list
-        """Add the "choice" in the character's talkch_choices."""
-        if (ch in talkch_choices.keys()):
-            talkch_choices[ch].append((choice_text, label))
+    def addTalkChoice(choice_text: str, label_name: str, id_choice: str, dict_choices: dict[str, list]):
+        """Add the "choice" in the character's dict_choices."""
+        if (id_choice in dict_choices.keys()):
+            dict_choices[id_choice].append((choice_text, label_name))
         else:
             talk_choices = []
-            talk_choices.append((choice_text, label))
-            talkch_choices[ch] = talk_choices
+            talk_choices.append((choice_text, label_name))
+            dict_choices[id_choice] = talk_choices
             del talk_choices
-        return
+        return #talk_choices
 
 
-    def delTalkChoice(ch, choice_text, talkch_choices: dict[str, list]): # TODO: add a type for list
-        """Deletes the "choice" in the character's talkch_choices."""
+    def delTalkChoice(choice_text: str, id_choice: str, dict_choices: dict[str, list]):
+        """Deletes the "choice" in the character's dict_choices."""
         val = 0
-        ch_to_del = ch
-        for cur_choice in talkch_choices[ch]:
+        ch_to_del = id_choice
+        for cur_choice in dict_choices[id_choice]:
             if cur_choice[0] == choice_text:
-                ch_to_del = ch
+                ch_to_del = id_choice
                 break
             else:
                 val = val+1
-        talkch_choices[ch].pop(val)
+        dict_choices[id_choice].pop(val)
         del val
         del ch_to_del
-        return
+        return #dict_choices

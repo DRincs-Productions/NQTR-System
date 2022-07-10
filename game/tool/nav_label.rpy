@@ -5,10 +5,10 @@ default sp_bg_change_room = None
 label change_room:
     # Check if the room is closed
     if (cur_room.id in closed_rooms and (closed_rooms[cur_room.id] == None or tm.now_is_between(start=closed_rooms[cur_room.id].tm_start, end=closed_rooms[cur_room.id].tm_stop))):
-        if (closed_rooms[cur_room.id].chs == None):
+        if (closed_rooms[cur_room.id].ch_talkobj_dict == None):
             jump closed_room_event
         else:
-            $ chs1 = closed_rooms[cur_room.id].chs
+            $ chs1 = closed_rooms[cur_room.id].ch_talkobj_dict
             $ chs2 = getChsInThisLocation(cur_room.id)
             $ res = not bool(chs2)
             # TODO: check if all keys of chs1 are in chs2, in this case res = True
@@ -37,7 +37,7 @@ label open_map:
     call check_goout
 
     $ cur_location = locations[cur_room.id_location]
-    scene expression map_images[cur_location.key_map] as bg
+    scene expression map_images[cur_location.id_map] as bg
 
     if (map_open == False):
         $ map_open = True

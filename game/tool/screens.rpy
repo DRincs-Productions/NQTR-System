@@ -94,7 +94,7 @@ screen room_navigation():
     if (map_open):
         for location in locations.values():
             # If the Map where I am is the same as the Map where the room is located
-            if (location.key_map == cur_location.key_map):
+            if (location.id_map == cur_location.id_map):
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
@@ -188,14 +188,14 @@ screen room_navigation():
             # Adds the button list of possible actions in that room
             if (room == cur_room and not room.id in closed_rooms):
                 for act in getActions(sp_actions | df_actions, room, tm):
-                    if (act.is_in_room == True):
+                    if (act.isButton() == False):
                         imagebutton:
                             pos (act.xpos, act.ypos)
-                            idle act.icon
-                            if not act.icon_selected == None:
-                                hover act.icon_selected
+                            idle act.button_icon
+                            if not act.button_icon_selected == None:
+                                hover act.button_icon_selected
                             focus_mask True
-                            action [Hide('wait_navigation'), Jump(act.label)]
+                            action [Hide('wait_navigation'), Jump(act.label_name)]
                             if renpy.variant("pc"):
                                 tooltip act.name
                             at middle_action_is_in_room
@@ -207,13 +207,13 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (room == cur_room):
                     for act in getActions(sp_actions | df_actions, room, tm):
-                        if (act.is_in_room == False):
+                        if (act.isButton() == True):
                             imagebutton:
-                                idle act.icon
-                                if not act.icon_selected == None:
-                                    hover act.icon_selected
+                                idle act.button_icon
+                                if not act.button_icon_selected == None:
+                                    hover act.button_icon_selected
                                 focus_mask True
-                                action [Hide('wait_navigation'), Jump(act.label)]
+                                action [Hide('wait_navigation'), Jump(act.label_name)]
                                 if renpy.variant("pc"):
                                     tooltip act.name
                                 at middle_action
@@ -224,24 +224,24 @@ screen room_navigation():
                 for routine in cur_routines_location.values():
                     if (routine != None and room.id == routine.id_room and room == cur_room):
                         # Insert in talk for every ch, main in that room
-                        for ch in routine.chs.keys():
+                        for ch_id, talk_obj in routine.ch_talkobj_dict.items():
                             frame:
                                 xysize (120, 120)
                                 background None
 
                                 imagebutton:
-                                    idle '/interface/action-talk.webp'
+                                    idle talk_obj.getButtonIcon()
                                     focus_mask True
-                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch_id), SetVariable('talk_image', routine.getTalkBackground(ch_id)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(talk_obj.talk)]
                                     at middle_action
                                 # inserts the icon of the character who is currently in that room
-                                # TODO: for now insert only the icon of the main ch, I have to insert also the icon of the other secondary ch
-                                if (ch in ch_icons):
+                                # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
+                                if (ch_id in ch_icons):
                                     imagebutton:
-                                        idle ch_icons.get(ch)
+                                        idle ch_icons.get(ch_id)
                                         focus_mask True
                                         at small_face
-                                        action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+                                        action [Hide('wait_navigation'), SetVariable('talk_ch', ch_id), SetVariable('talk_image', routine.getTalkBackground(ch_id)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(talk_obj.talk)]
                                 if renpy.variant("pc"):
                                     tooltip _("Talk")
 
