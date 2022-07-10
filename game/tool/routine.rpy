@@ -6,16 +6,19 @@ init -10 python:
                     tm_start: int,
                     tm_stop: int,
                     chs: dict[str, TalkObject] = {},
+                    bg: str  = None,
                     name: str = None,
                     id_location: str = None,
                     id_room: str = None,
                     type: str = None,
                     day_deadline: int = None,
-                    label_event: str = None):
+                    label_event: str = None
+                    ):
 
             # TODO: add a function that checks if it is available to talk (maybe with flags)
             # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
             # TODO: add event: in case it is nothing then when MC enter in that room starts a label
+            self.bg = bg
             self.chs = chs
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
@@ -51,7 +54,7 @@ init -10 python:
             # TODO: it doesn't matter i don't know why
             talk_ch = ch
             # TODO: use this:
-            # action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+            # action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(routine.talk, ch)]
 
             # TODO: insertBgImage doesn't exist, but I can't remember what it's for
             if self.chs[ch].talk() == False:
@@ -66,19 +69,13 @@ init -10 python:
             "Returns the image during a conversation"
             return self.chs[ch].getTalkImage()
 
-        def getBeforeTalkImage(self):
+        def getBackground(self):
             "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
-            for ch in self.chs.values():
-                if ch.getAfterTalkImage() != None:
-                    return ch.getAfterTalkImage()
-            return None
+            return self.bg
 
-        def getAfterTalkImage(self, ch):
+        def getBackgroundAfter(self):
             "Returns the AfterTalk image of the ch or the first that has it. Otherwise None"
-            if self.chs[ch].getAfterTalkImage() != None:
-                return self.chs[ch].getAfterTalkImage()
-            else:
-                return self.getBeforeTalkImage()
+            return self.bg
 
         def is_event(self):
             "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
@@ -192,5 +189,5 @@ init -10 python:
         """Returns the first background image of the routines based on the current room. if there are no returns None"""
         for item in routines.values():
             if item.id_room == room_id:
-                return item.getBeforeTalkImage()
+                return item.getBackground()
         return None

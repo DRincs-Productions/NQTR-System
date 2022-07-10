@@ -232,7 +232,7 @@ screen room_navigation():
                                 imagebutton:
                                     idle '/interface/action-talk.webp'
                                     focus_mask True
-                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(routine.talk, ch)]
                                     at middle_action
                                 # inserts the icon of the character who is currently in that room
                                 # TODO: for now insert only the icon of the main ch, I have to insert also the icon of the other secondary ch
@@ -241,7 +241,7 @@ screen room_navigation():
                                         idle ch_icons.get(ch)
                                         focus_mask True
                                         at small_face
-                                        action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getAfterTalkImage(ch)), Function(routine.talk, ch)]
+                                        action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkImage(ch)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(routine.talk, ch)]
                                 if renpy.variant("pc"):
                                     tooltip _("Talk")
 
