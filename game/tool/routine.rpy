@@ -5,7 +5,7 @@ init -10 python:
         def __init__(self,
                     tm_start: int,
                     tm_stop: int,
-                    chs: dict[str, TalkObject] = {},
+                    ch_talkobj_dict: dict[str, TalkObject] = {},
                     bg: str  = None,
                     name: str = None,
                     id_location: str = None,
@@ -19,7 +19,7 @@ init -10 python:
             # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
             # TODO: add event: in case it is nothing then when MC enter in that room starts a label
             self.bg = bg
-            self.chs = chs
+            self.ch_talkobj_dict = ch_talkobj_dict
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
             self.id_location = id_location
@@ -43,14 +43,14 @@ init -10 python:
         def getChIcons(self, ch_icons: dict[str, str]):
             """returns a list of ch icons (not secondary ch)"""
             icons = []
-            for ch in self.chs.keys():
+            for ch in self.ch_talkobj_dict.keys():
                 if (ch in ch_icons):
                     icons.append(ch_icons[ch])
             return icons
 
         def getTalkBackground(self, ch):
             "Returns the image during a conversation"
-            return self.chs[ch].getBackground()
+            return self.ch_talkobj_dict[ch].getBackground()
 
         def getBackground(self):
             "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
@@ -95,14 +95,14 @@ init -10 python:
             # Check Time and Location
             if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
                 # Full verification
-                for chKey in routine.chs.keys():
+                for chKey in routine.ch_talkobj_dict.keys():
                     routines[chKey] = None
         for routine in df_routine.values():
             # Check Time and Location
             if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
                 # Full verification
-                chs = routine.chs
-                for chKey in chs.keys():
+                ch_talkobj_dict = routine.ch_talkobj_dict
+                for chKey in ch_talkobj_dict.keys():
                     routines[chKey] = None
         # Check I enter the current routines of the ch.
         # In case the routine is not in the place I want to go or they are null and void I delete the ch.
@@ -140,7 +140,7 @@ init -10 python:
         # special routine
         for routine in sp_routine.values():
             if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
-                if ch in routine.chs:
+                if ch in routine.ch_talkobj_dict:
                     ret_routine = routine
                     if checkValidType(routine):
                         return routine
@@ -149,7 +149,7 @@ init -10 python:
         # default routine
         for routine in df_routine.values():
             if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
-                if ch in routine.chs:
+                if ch in routine.ch_talkobj_dict:
                     ret_routine = routine
                     if checkValidType(routine.type):
                         return routine
