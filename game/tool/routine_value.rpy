@@ -15,8 +15,8 @@ default sp_routine = {}
 # ATTENTION I for I have excluded the search of events in df_routine (because it does not see a their practical use here)
 # events are only in sp_routine
 define df_routine = {
-        "alice_sleep"       :   Commitment(chs={"alice" : TalkObject(label_talk="talk_sleep")}, tm_start=20, tm_stop=10, id_location="house", id_room="alice_room", bg="bg alice roomsleep"),
-        "alice_lounge"      :   Commitment(chs={"alice" : TalkObject(bg_talk=None)}, tm_start=10, tm_stop=14, id_location="house", id_room="lounge", bg=None),
-        "alice_go_school"   :   Commitment(chs={"alice" : TalkObject(bg_talk=None)}, tm_start=10, tm_stop=14, name="school", type="no_week", bg=None),
-        "alice_read"        :   Commitment(chs={"alice" : TalkObject(bg_talk="bg alice terrace talk")}, tm_start=14, tm_stop=20, id_location="house", id_room="terrace", bg="bg alice terrace"),
+        "alice_sleep"       :   Commitment(chs={"alice" : TalkObject(label_name="talk_sleep")}, tm_start=20, tm_stop=10, id_location="house", id_room="alice_room", bg="bg alice roomsleep"),
+        "alice_lounge"      :   Commitment(chs={"alice" : TalkObject(bg=None)}, tm_start=10, tm_stop=14, id_location="house", id_room="lounge", bg=None),
+        "alice_go_school"   :   Commitment(chs={"alice" : TalkObject(bg=None)}, tm_start=10, tm_stop=14, name="school", type="no_week", bg=None),
+        "alice_read"        :   Commitment(chs={"alice" : TalkObject(bg="bg alice terrace talk")}, tm_start=14, tm_stop=20, id_location="house", id_room="terrace", bg="bg alice terrace"),
 }

@@ -6,26 +6,24 @@ init -11 python:
         (all this could be done in Commitment(), but I preferred not to use a dictionary)"""
 
         def __init__(self,
-                    after_label_event: str  = None,
-                    bg_talk: str  = None,
-                    label_talk: str  = None):
+                    bg: str  = None,
+                    label_name: str  = None):
 
-            self.bg_talk = bg_talk
-            # self.after_label_event = after_label_event
-            self.label_talk = label_talk
+            self.bg = bg
+            self.label_name = label_name
 
         def talk(self):
             """Inside you can find the labels and images to start talk()"""
-            # if label_talk == None does the default procedure
-            if not isNullOrEmpty(self.label_talk):
-                renpy.jump(self.label_talk)
+            # if label_name == None does the default procedure
+            if not isNullOrEmpty(self.label_name):
+                renpy.jump(self.label_name)
             elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
                 renpy.jump(DEFAULT_LABEL_TALK)
             return
 
-        def getTalkImage(self):
+        def getBackground(self):
             """Returns the image during a conversation"""
-            return self.bg_talk
+            return self.bg
 
 
     def addTalkChoice(ch: str, choice_text: str, label: str, talkch_choices: dict[str, list]): # TODO: add a type for list
