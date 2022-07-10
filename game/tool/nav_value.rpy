@@ -9,7 +9,7 @@ define rooms = [
 ]
 
 define locations = {
-        "house"     :   Location(id = "house", key_map="map", id_externalroom="terrace", name=_("MC house"), icon="icon map home", xalign=0.3, yalign=0.2), 
+        "house"     :   Location(id = "house", id_map="map", id_externalroom="terrace", name=_("MC house"), icon="icon map home", xalign=0.3, yalign=0.2), 
 }
 
 define map_images = {

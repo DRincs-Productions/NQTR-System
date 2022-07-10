@@ -69,21 +69,21 @@ init python:
         You can go to the next Stage with Stage.completed_try(), forcibly with Stage.next_stage()."""
 
         def __init__(self,
-                    idQuestOrTask,
+                    id_quest_or_task,
                     goals=[],
                     title=None,
                     description=None,
                     advice="",
                     bg=None,
-                    days_late=None,
-                    bl_requests=[],
+                    waiting_days_before_start=None,
+                    flags_requests=[],
                     quests_levels_requests={},
                     description_request="",
                     label_start=None,
                     label_end=None,
                     label_check=None):
 
-            self.idQuestOrTask = idQuestOrTask
+            self.id_quest_or_task = id_quest_or_task
             self.goals = goals
             self.active = False
             self.title = title
@@ -92,9 +92,9 @@ init python:
             self.completed = False
             self.bg = bg
             # These are the requirements to start the Stage
-            self.days_late = days_late
+            self.waiting_days_before_start = waiting_days_before_start
             self.day_start = None
-            self.bl_requests = bl_requests
+            self.flags_requests = flags_requests
             self.quests_levels_requests = quests_levels_requests
             self.description_request = description_request
             # these labels will be started automatically at the appropriate time.
@@ -105,29 +105,29 @@ init python:
 
         def addInQuest(self):
             """Add the Stage in the current_quest_stages"""
-            current_quest_stages[self.idQuestOrTask] = Stage(
-                idQuestOrTask=self.idQuestOrTask,
+            current_quest_stages[self.id_quest_or_task] = Stage(
+                id_quest_or_task=self.id_quest_or_task,
                 goals=self.goals,
-                bl_requests=self.bl_requests,
+                flags_requests=self.flags_requests,
                 quests_levels_requests=self.quests_levels_requests,
                 description_request=self.description_request,
                 label_start=self.label_start,
                 label_end=self.label_end,
                 label_check=self.label_check)
-            current_quest_stages[self.idQuestOrTask].setDay(self.days_late)
+            current_quest_stages[self.id_quest_or_task].setDay(self.waiting_days_before_start)
 
         def addInTask(self):
             """Add the Stage in the current_task_stages"""
-            current_task_stages[self.idQuestOrTask] = Stage(
-                idQuestOrTask=self.idQuestOrTask,
+            current_task_stages[self.id_quest_or_task] = Stage(
+                id_quest_or_task=self.id_quest_or_task,
                 goals=self.goals,
-                bl_requests=self.bl_requests,
+                flags_requests=self.flags_requests,
                 quests_levels_requests=self.quests_levels_requests,
                 description_request=self.description_request,
                 label_start=self.label_start,
                 label_end=self.label_end,
                 label_check=self.label_check)
-            current_task_stages[self.idQuestOrTask].setDay(self.days_late)
+            current_task_stages[self.id_quest_or_task].setDay(self.waiting_days_before_start)
 
         def start(self):
             """If you have reached all the objectives then activate the Stage.
@@ -152,7 +152,7 @@ init python:
             for quest, level in self.quests_levels_requests.items():
                 if (quests_levels[quest] < level):
                     return False
-            for item in self.bl_requests:
+            for item in self.flags_requests:
                 if (flags[item] == False):
                     return False
             return True
@@ -186,10 +186,10 @@ init python:
             """If it is a Quest is replaced by the next Quest, and if it is a Task is deleted."""
             # if (label_end != None)
             # TODO: Execute label_end
-            if (self.idQuestOrTask in current_task_stages):
-                del current_task_stages[self.idQuestOrTask]
+            if (self.id_quest_or_task in current_task_stages):
+                del current_task_stages[self.id_quest_or_task]
                 return
-            quests[self.idQuestOrTask].next_stage()
+            quests[self.id_quest_or_task].next_stage()
 
         def find(self, goals_id, value=1):
             # TODO: To comment and test
@@ -199,10 +199,10 @@ init python:
                     return True
             return False
 
-        def setDay(self, days_late):
+        def setDay(self, waiting_days_before_start):
             # TODO: To comment
-            if (days_late != None):
-                self.day_start = (tm.day + days_late)
+            if (waiting_days_before_start != None):
+                self.day_start = (tm.day + waiting_days_before_start)
 
 
     class Quest(object):

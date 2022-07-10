@@ -33,14 +33,14 @@ define quests = {
 }
 define quest_stages = {
     # Quest "alice"
-    "talk alice1"           :   Stage(idQuestOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="stagestart_talkalice"),
-    "order products"        :   Stage(idQuestOrTask = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
-    "take products"         :   Stage(idQuestOrTask = "alice", title = _("Take products"), description = _("Take products on the Terrace."), description_request = _("Wait for the products you ordered to arrive (2 day)"), days_late = 2, label_start="add_product"),
-    "talk alice2"           :   Stage(idQuestOrTask = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
+    "talk alice1"           :   Stage(id_quest_or_task = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="stagestart_talkalice"),
+    "order products"        :   Stage(id_quest_or_task = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
+    "take products"         :   Stage(id_quest_or_task = "alice", title = _("Take products"), description = _("Take products on the Terrace."), description_request = _("Wait for the products you ordered to arrive (2 day)"), waiting_days_before_start = 2, label_start="add_product"),
+    "talk alice2"           :   Stage(id_quest_or_task = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
     # Quest "ann"
-    "talk al about ann"     :   Stage(idQuestOrTask = "ann", title = _("Talk [a]"), description = _("Talk [a]."), label_start="stagestart_talkalice_aboutann"),
-    "take the key"          :   Stage(idQuestOrTask = "ann", title = _("take the key"), description = _("take the key.")),
-    "visit ann"             :   Stage(idQuestOrTask = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
+    "talk al about ann"     :   Stage(id_quest_or_task = "ann", title = _("Talk [a]"), description = _("Talk [a]."), label_start="stagestart_talkalice_aboutann"),
+    "take the key"          :   Stage(id_quest_or_task = "ann", title = _("take the key"), description = _("take the key.")),
+    "visit ann"             :   Stage(id_quest_or_task = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
 }
 
 # Quest "alice"
