@@ -191,7 +191,7 @@ screen room_navigation():
                     if (act.isButton() == False):
                         imagebutton:
                             pos (act.xpos, act.ypos)
-                            idle act.icon
+                            idle act.button_icon
                             if not act.icon_selected == None:
                                 hover act.icon_selected
                             focus_mask True
@@ -209,7 +209,7 @@ screen room_navigation():
                     for act in getActions(sp_actions | df_actions, room, tm):
                         if (act.isButton() == True):
                             imagebutton:
-                                idle act.icon
+                                idle act.button_icon
                                 if not act.icon_selected == None:
                                     hover act.icon_selected
                                 focus_mask True
