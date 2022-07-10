@@ -6,8 +6,8 @@ init -11 python:
         (all this could be done in Commitment(), but I preferred not to use a dictionary)"""
 
         def __init__(self,
-                    bg: str  = None,
-                    label_name: str  = None):
+                    bg: str = None,
+                    label_name: str = None):
 
             self.bg = bg
             self.label_name = label_name
@@ -26,19 +26,19 @@ init -11 python:
             return self.bg
 
 
-    def addTalkChoice(ch: str, choice_text: str, label: str, talkch_choices: dict[str, list]): # TODO: add a type for list
-        """Add the "choice" in the character's talkch_choices."""
-        if (ch in talkch_choices.keys()):
-            talkch_choices[ch].append((choice_text, label))
+    def addTalkChoice(choice_text: str, label_name: str, id_choice: str, dict_choices: dict[str]):
+        """Add the "choice" in the character's dict_choices."""
+        if (id_choice in dict_choices.keys()):
+            dict_choices[id_choice].append((choice_text, label_name))
         else:
             talk_choices = []
-            talk_choices.append((choice_text, label))
-            talkch_choices[ch] = talk_choices
+            talk_choices.append((choice_text, label_name))
+            dict_choices[id_choice] = talk_choices
             del talk_choices
-        return
+        return talk_choices
 
 
-    def delTalkChoice(ch: str, choice_text: str, talkch_choices: dict[str, list]): # TODO: add a type for list
+    def delTalkChoice(ch: str, choice_text: str, talkch_choices: dict[str]):
         """Deletes the "choice" in the character's talkch_choices."""
         val = 0
         ch_to_del = ch
@@ -51,4 +51,4 @@ init -11 python:
         talkch_choices[ch].pop(val)
         del val
         del ch_to_del
-        return
+        return talkch_choices

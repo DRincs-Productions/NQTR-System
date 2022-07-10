@@ -79,7 +79,7 @@ label stage_talkalice:
         mc "Ok"
         a "Thanks"
 
-        $ addTalkChoice(ch = "alice", choice_text = _("About the book"), label = "stage_talkalice", talkch_choices = talkch_choices)
+        $ addTalkChoice(id_choice = "alice", choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
 
         $ sp_actions["order_product"] = Action(_("Order product"), "/interface/action-pc.webp", label = "order_product", room='my_room')
 
