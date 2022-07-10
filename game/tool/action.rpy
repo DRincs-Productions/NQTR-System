@@ -28,7 +28,7 @@ init -5 python:
             self.day_start = day_start
             self.room = room
             self.button_icon = button_icon
-            self. = 
+            self.button_icon_selected = button_icon_selected
             # Is an action that is started by clicking on an image in the room.
             self.picture_in_background = picture_in_background
             self.picture_in_background_selected = picture_in_background_selected
