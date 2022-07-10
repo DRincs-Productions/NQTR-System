@@ -1,4 +1,5 @@
 define DEFAULT_LABEL_TALK = "talk"
+define DEFAULT_TALK_BUTTON_ICON = "/interface/action-talk.webp"
 
 init -11 python:
     class TalkObject:
@@ -44,6 +45,13 @@ init -11 python:
 
         def getBackground(self):
             """Returns the image during a conversation"""
+            return self.bg
+
+        def getButtonIcon(self):
+            if(self.button_icon != None):
+                return button_icon
+            else:
+                return DEFAULT_TALK_BUTTON_ICON
             return self.bg
 
 

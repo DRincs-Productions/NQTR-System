@@ -48,23 +48,6 @@ init -10 python:
                     icons.append(ch_icons[ch])
             return icons
 
-        def talk(self, ch: str):
-            """Start talk() of TalkObject() of ch."""
-
-            # TODO: it doesn't matter i don't know why
-            talk_ch = ch
-            # TODO: use this:
-            # action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getBackground(ch)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(routine.talk, ch)]
-
-            # TODO: insertBgImage doesn't exist, but I can't remember what it's for
-            if self.chs[ch].talk() == False:
-                for ch in self.chs.values():
-                    if ch.insertBgImage():
-                        return
-            return
-
-            # TODO: otherwise insert the bg of the current room
-
         def getTalkBackground(self, ch):
             "Returns the image during a conversation"
             return self.chs[ch].getBackground()

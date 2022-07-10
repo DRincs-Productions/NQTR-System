@@ -224,24 +224,24 @@ screen room_navigation():
                 for routine in cur_routines_location.values():
                     if (routine != None and room.id == routine.id_room and room == cur_room):
                         # Insert in talk for every ch, main in that room
-                        for ch in routine.chs.keys():
+                        for ch_id, talk_obj in routine.chs.items():
                             frame:
                                 xysize (120, 120)
                                 background None
 
                                 imagebutton:
-                                    idle '/interface/action-talk.webp'
+                                    idle talk_obj.getButtonIcon()
                                     focus_mask True
-                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkBackground(ch)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(routine.talk, ch)]
+                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch_id), SetVariable('talk_image', routine.getTalkBackground(ch_id)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(talk_obj.talk)]
                                     at middle_action
                                 # inserts the icon of the character who is currently in that room
-                                # TODO: for now insert only the icon of the main ch, I have to insert also the icon of the other secondary ch
-                                if (ch in ch_icons):
+                                # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
+                                if (ch_id in ch_icons):
                                     imagebutton:
-                                        idle ch_icons.get(ch)
+                                        idle ch_icons.get(ch_id)
                                         focus_mask True
                                         at small_face
-                                        action [Hide('wait_navigation'), SetVariable('talk_ch', ch), SetVariable('talk_image', routine.getTalkBackground(ch)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(routine.talk, ch)]
+                                        action [Hide('wait_navigation'), SetVariable('talk_ch', ch_id), SetVariable('talk_image', routine.getTalkBackground(ch_id)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(talk_obj.talk)]
                                 if renpy.variant("pc"):
                                     tooltip _("Talk")
 
