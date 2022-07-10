@@ -12,7 +12,7 @@ init -10 python:
                     id_room: str = None,
                     type: str = None,
                     day_deadline: int = None,
-                    label_event: str = None
+                    event_label_name: str = None
                     ):
 
             # TODO: add a function that checks if it is available to talk (maybe with flags)
@@ -38,7 +38,7 @@ init -10 python:
             # at the end of the label insert:
             # $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
             # call change_room
-            self.label_event = label_event
+            self.event_label_name = event_label_name
 
         def getChIcons(self, ch_icons: dict[str, str]):
             """returns a list of ch icons (not secondary ch)"""
@@ -60,15 +60,15 @@ init -10 python:
             "Returns the AfterTalk image of the ch or the first that has it. Otherwise None"
             return self.bg
 
-        def is_event(self):
+        def isEvent(self):
             "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
-            return (self.label_event is not None)
+            return (self.event_label_name is not None)
 
         # doesn't seem to work
-        # use something like this: renpy.call(cur_events_location[cur_room.id].label_event)
+        # use something like this: renpy.call(cur_events_location[cur_room.id].event_label_name)
         # def start_event(self):
-        #     if self.label_event == None:
-        #         renpy.call(self.label_event)
+        #     if self.event_label_name == None:
+        #         renpy.call(self.event_label_name)
 
 
     def clearExpiredRoutine(routine: dict[str, Commitment], tm: TimeHandler):
@@ -128,7 +128,7 @@ init -10 python:
         events = {}
         for routine in sp_routine.values():
             # Check Time and Location and is event
-            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.is_event() == True):
+            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.isEvent() == True):
                 events[routine.id_room] = routine
         return events
 

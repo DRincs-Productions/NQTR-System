@@ -6,30 +6,32 @@ init -5 python:
         def __init__(self,
                     name: str,
                     label_name: str,
-                    icon_selected: str = None,
                     room: str = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
                     day_deadline: int = -1,
                     button_icon: str = None,
+                    button_icon_selected: str = None,
                     picture_in_background: str = None,
+                    picture_in_background_selected: str = None,
                     xpos: int = None,
                     ypos: int = None):
             # TODO: add the type as in routine
             # TODO: add the active value which is a value linked to flags, by default active = True
 
             self.name = name
-            self.button_icon = button_icon
             self.label_name = label_name
-            self.icon_selected = icon_selected
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
             self.room = room
+            self.button_icon = button_icon
+            self. = 
             # Is an action that is started by clicking on an image in the room.
             self.picture_in_background = picture_in_background
+            self.picture_in_background_selected = picture_in_background_selected
             self.xpos = xpos
             self.ypos = ypos
             if self.day_start < 0:

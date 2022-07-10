@@ -22,17 +22,17 @@ label sleep:
 
     menu:
         "What time do you want to set the alarm?"
-        "[tm.hour_new_day]:00":
+        "[tm.hour_of_new_day]:00":
             call new_day
             call check_event
         "7:00":
             call new_day
             call check_event
-            $ tm.new_hour(7-tm.hour_new_day)
+            $ tm.new_hour(7-tm.hour_of_new_day)
         "9:00":
             call new_day
             call check_event
-            $ tm.new_hour(9-tm.hour_new_day)
+            $ tm.new_hour(9-tm.hour_of_new_day)
         "Return":
             pass
     jump after_wait

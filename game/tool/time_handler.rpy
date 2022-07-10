@@ -23,11 +23,11 @@ init -11 python:
         """Class to manage time, and also related to the constant event_duration. I strongly recommend to modify it according to the use."""
 
         def __init__(self,
-                    hour_new_day: int = 5,
+                    hour_of_new_day: int = 5,
                     hour: int = 8,
                     weekend_day: int = 6,
                     day: int = 0):
-            self.hour_new_day = hour_new_day
+            self.hour_of_new_day = hour_of_new_day
             self.hour = hour
             self.day = day
             # TODO: manage weekends (function...)
@@ -36,10 +36,10 @@ init -11 python:
             # es image = "sky-[image_time]"
             self.image_time = 0
             self.update_image_time()
-            if self.hour_new_day < 0:
+            if self.hour_of_new_day < 0:
                 renpy.log(
-                    "Warn: You have set hour_new_day < 0, so it will be set to 0.")
-                self.hour_new_day = 0
+                    "Warn: You have set hour_of_new_day < 0, so it will be set to 0.")
+                self.hour_of_new_day = 0
             if self.hour < 0:
                 renpy.log("Warn: You have set hour < 0, so it will be set to 0.")
                 self.hour = 0
@@ -58,7 +58,7 @@ init -11 python:
                 return hour_names[3][1]
             if self.hour >= 12:
                 return hour_names[2][1]
-            if self.hour >= self.hour_new_day:
+            if self.hour >= self.hour_of_new_day:
                 return hour_names[1][1]
             if self.hour >= 0:
                 return hour_names[0][1]
@@ -100,7 +100,7 @@ init -11 python:
 
         def new_hour(self, amt: int = event_duration):
             # if it is too late you have to use new_day()
-            if (self.hour < self.hour_new_day):
+            if (self.hour < self.hour_of_new_day):
                 return False
 
             self.hour += amt
@@ -120,7 +120,7 @@ init -11 python:
                 self.image_time = 1
 
         def new_day(self):
-            self.hour = self.hour_new_day
+            self.hour = self.hour_of_new_day
             self.day += 1
             self.update_image_time()
 
@@ -137,13 +137,13 @@ default tm = TimeHandler()
 
 init -8 python:
     def updateTimeHandler(tm: TimeHandler):
-        hour_new_day = tm.hour_new_day
+        hour_of_new_day = tm.hour_of_new_day
         hour = tm.hour
         weekend_day = tm.weekend_day
         day = tm.day
-        tm = TimeHandler(hour_new_day=hour_new_day,
+        tm = TimeHandler(hour_of_new_day=hour_of_new_day,
                         hour=hour, weekend_day=weekend_day, day=day)
-        del hour_new_day
+        del hour_of_new_day
         del hour
         del weekend_day
         del day

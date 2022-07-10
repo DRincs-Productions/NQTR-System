@@ -192,8 +192,8 @@ screen room_navigation():
                         imagebutton:
                             pos (act.xpos, act.ypos)
                             idle act.button_icon
-                            if not act.icon_selected == None:
-                                hover act.icon_selected
+                            if not act. == None:
+                                hover act.
                             focus_mask True
                             action [Hide('wait_navigation'), Jump(act.label_name)]
                             if renpy.variant("pc"):
@@ -210,8 +210,8 @@ screen room_navigation():
                         if (act.isButton() == True):
                             imagebutton:
                                 idle act.button_icon
-                                if not act.icon_selected == None:
-                                    hover act.icon_selected
+                                if not act. == None:
+                                    hover act.
                                 focus_mask True
                                 action [Hide('wait_navigation'), Jump(act.label_name)]
                                 if renpy.variant("pc"):
