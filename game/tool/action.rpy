@@ -1,7 +1,6 @@
 init -5 python:
     class Action:
-        """Actions of the MC,
-        day_deadline & day_start must be >0, if not the value will be ignored"""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
 
         def __init__(self,
                     name: str,
@@ -47,17 +46,17 @@ init -5 python:
                 renpy.log(
                     "Warn: ypos is set but xpos is not, so xpos set to 0")
                 self.xpos = 0
-            if (self.button_icon == None and self.picture_in_background == None):
+            if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
                 renpy.log(
                     "Error: You have set button_icon and picture_in_background to None, this action will be ignored")
 
         def isButton(self):
             """This is a button?"""
-            return self.button_icon != None
+            return not isNullOrEmpty(self.button_icon)
 
         def isPictureInBackground(self):
-            """This is a button?"""
-            return self.button_icon != None
+            """This is a is picture in background?"""
+            return not isNullOrEmpty(self.picture_in_background)
 
 
     def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):

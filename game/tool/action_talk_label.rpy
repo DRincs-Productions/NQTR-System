@@ -107,7 +107,7 @@ label stage_talkalice_aboutann:
     a "Yes, of course. You can find the keys on the keyhole in the hall."
     mc "Thanks!"
     a "Don't ruin it..."
-    $ actions["take_key"] = Action(name = _("KEY"),  button_icon = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
+    $ actions["take_key"] = Action(name = _("KEY"),  picture_in_background = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
         xpos = 608, ypos = 667)
 
     $ quests["ann"].next_stage()
