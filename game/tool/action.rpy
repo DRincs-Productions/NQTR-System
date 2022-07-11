@@ -6,7 +6,7 @@ init -5 python:
         def __init__(self,
                     name: str,
                     label_name: str,
-                    room: str = None,
+                    rooms: list[str] = [],
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
@@ -26,7 +26,7 @@ init -5 python:
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
-            self.room = room
+            self.rooms = rooms
             self.button_icon = button_icon
             self.button_icon_selected = button_icon_selected
             # Is an action that is started by clicking on an image in the room.
@@ -64,7 +64,7 @@ init -5 python:
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
         acts: list[Action] = []
         for act_id, act in actions.items():
-            if room.id == act.room:
+            if room.id in act.rooms:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
             elif act_id in room.id_actions:

@@ -187,7 +187,7 @@ screen room_navigation():
         for room in rooms:
             # Adds the button list of possible actions in that room
             if (room == cur_room and not room.id in closed_rooms):
-                for act in getActions(sp_actions | df_actions, room, tm):
+                for act in getActions(actions | df_actions, room, tm):
                     if (act.isButton() == False):
                         imagebutton:
                             pos (act.xpos, act.ypos)
@@ -206,7 +206,7 @@ screen room_navigation():
             for room in rooms:
                 # Adds the button list of possible actions in that room
                 if (room == cur_room):
-                    for act in getActions(sp_actions | df_actions, room, tm):
+                    for act in getActions(actions | df_actions, room, tm):
                         if (act.isButton() == True):
                             imagebutton:
                                 idle act.button_icon

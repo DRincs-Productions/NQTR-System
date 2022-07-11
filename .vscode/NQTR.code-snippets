@@ -1,0 +1,18 @@
+{
+    "DRincs Add Action": {
+        "scope": "renpy",
+        "prefix": "DR_ActionNew",
+        "body": [
+            "$ actions[\"${1:id_action}\"] = Action(name = _(\"${2:Name}\"),  button_icon = \"${3:/icon_url.webp}\", label_name = \"${4:label_be_started}\", rooms=[\"${5:room_id_1\", \"room_id_2}\"], tm_start=${6:0}, tm_stop=${7:24})",
+        ],
+        "description": "Add a new action"
+    },
+    "DRincs Add Action in dictionary": {
+        "scope": "renpy",
+        "prefix": "DR_ActionNew_in_dict",
+        "body": [
+            "\"${1:id_action}\" : Action(name = _(\"${2:Name}\"),  button_icon = \"${3:/icon_url.webp}\", label_name = \"${4:label_be_started}\", rooms=[\"${5:room_id_1\", \"room_id_2}\"], tm_start=${6:0}, tm_stop=${7:24})",
+        ],
+        "description": "Add a new action"
+    },
+}

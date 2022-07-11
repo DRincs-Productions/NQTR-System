@@ -81,7 +81,7 @@ label stage_talkalice:
 
         $ addTalkChoice(id_choice = "alice", choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
 
-        $ sp_actions["order_product"] = Action(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", room='my_room')
+        $ actions["order_product"] = Action(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", rooms=["my_room"])
 
         $ quests["alice"].next_stage()
     elif (quests_levels["alice"] == 1):
@@ -107,7 +107,7 @@ label stage_talkalice_aboutann:
     a "Yes, of course. You can find the keys on the keyhole in the hall."
     mc "Thanks!"
     a "Don't ruin it..."
-    $ sp_actions["take_key"] = Action(name = _("KEY"),  button_icon = "/action-key.webp", label_name = "take_key", room='lounge',
+    $ actions["take_key"] = Action(name = _("KEY"),  button_icon = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
         xpos = 608, ypos = 667)
 
     $ quests["ann"].next_stage()
