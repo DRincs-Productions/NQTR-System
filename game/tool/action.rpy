@@ -4,8 +4,8 @@ init -5 python:
         day_deadline & day_start must be >0, if not the value will be ignored"""
 
         def __init__(self,
-                    name: str,
-                    label_name: str,
+                    name: str, # requirement
+                    label_name: str, # requirement
                     room: str = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
