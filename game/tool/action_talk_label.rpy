@@ -30,6 +30,7 @@ label talk_end:
 
     call screen room_navigation
 
+# label talk: is a label used to give the possibility to customize the dialog even more.
 label talk:
     if (talk_image != None):
         scene expression (talk_image) as bg
