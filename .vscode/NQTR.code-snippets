@@ -5,7 +5,7 @@
         "body": [
             "$ actions[\"${1:id_action}\"] = Action(name = _(\"${2:Name}\"),  button_icon = \"${3:/icon_url.webp}\", label_name = \"${4:label_be_started}\", rooms=[\"${5:room_id_1\", \"room_id_2}\"], tm_start=${6:0}, tm_stop=${7:24})",
         ],
-        "description": "Add a new action"
+        "description": "Add an Action"
     },
     "DRincs Add an Action in dictionary": {
         "scope": "renpy",
@@ -13,6 +13,14 @@
         "body": [
             "\"${1:id_action}\" : Action(name = _(\"${2:Name}\"),  button_icon = \"${3:/icon_url.webp}\", label_name = \"${4:label_be_started}\", rooms=[\"${5:room_id_1\", \"room_id_2}\"], tm_start=${6:0}, tm_stop=${7:24}),",
         ],
-        "description": "Add a new action"
+        "description": "Add an Action in dictionary"
+    },
+    "DRincs Remove an Action": {
+        "scope": "renpy",
+        "prefix": "DR_ActionRemove",
+        "body": [
+            "actions.pop(\"${1:id_action}\")",
+        ],
+        "description": "Remove an Action"
     },
 }
