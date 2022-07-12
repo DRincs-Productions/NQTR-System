@@ -1,0 +1,10 @@
+{
+    "DRincs Add an Room in list": {
+        "scope": "renpy",
+        "prefix": "DR_RoomAdd_in_list",
+        "body": [
+            "Room(id=\"${1:id_room}\", id_location=\"${2:house}\", name=_(\"${3:My room}\"), icon=\"icon ${4:myroom}\", bg=\"bg ${4:myroom}\", id_actions = []),",
+        ],
+        "description": "Add an Room in dictionary"
+    },
+}
