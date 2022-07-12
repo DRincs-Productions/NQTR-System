@@ -20,6 +20,8 @@
 #               Quest.start(next)   # Start the cycle again
 
 init python:
+    from typing import Optional
+
     class Goal(object):
         """Goal class, it has been designed to be included in the Stage class.
         To complete the goals use find()"""
@@ -215,7 +217,7 @@ init python:
                     description: str = "",
                     icon: str = None,
                     bg: str = None,
-                    stages_id: list[str] = [],
+                    stages_id: Optional[list[str]] = None,
                     category: str = None,
                     development: bool = False):
 
@@ -224,7 +226,7 @@ init python:
             self.description = description
             self.icon = icon
             self.bg = bg
-            self.stages_id = stages_id
+            self.stages_id = self.stages_id = stages_id if stages_id else []
             self.category = category
             self.development = development
 

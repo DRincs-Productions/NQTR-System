@@ -1,11 +1,13 @@
 init -5 python:
-    class Action:
+    from typing import Optional
+    
+    class Act:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
 
         def __init__(self,
                     name: str, # requirement
                     label_name: str, # requirement
-                    rooms: list[str] = [],
+                    rooms: Optional[list[str]] = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
@@ -25,7 +27,7 @@ init -5 python:
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
-            self.rooms = rooms
+            self.rooms = self.rooms = rooms if rooms else []
             self.button_icon = button_icon
             self.button_icon_selected = button_icon_selected
             # Is an action that is started by clicking on an image in the room.
