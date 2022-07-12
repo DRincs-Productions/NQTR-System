@@ -3,19 +3,17 @@ init -99 python:
         """Wiki: ... """
 
         def __init__(self,
-                    name: str,
-                    label_name: str,
+                    name: str, # requirement
+                    label_name: str, # requirement
                     button_icon: str = None,
                     button_icon_selected: str = None,
                     picture_in_background: str = None,
                     picture_in_background_selected: str = None,
                     xpos: int = None,
                     ypos: int = None):
-            # TODO: add the active value which is a value linked to flags, by default active = True
 
             self.name = name
             self.label_name = label_name
-            self.rooms = rooms
             self.button_icon = button_icon
             self.button_icon_selected = button_icon_selected
             # Is an action that is started by clicking on an image in the room.
