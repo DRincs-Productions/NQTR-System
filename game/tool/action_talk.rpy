@@ -3,8 +3,7 @@ define DEFAULT_TALK_BUTTON_ICON = "/interface/action-talk.webp"
 
 init -11 python:
     class TalkObject:
-        """At the inside of the class there are the values used for the talk() function, 
-        (all this could be done in Commitment(), but I preferred not to use a dictionary)"""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system """
 
         def __init__(self,
                     bg: str = None,
@@ -56,7 +55,7 @@ init -11 python:
 
 
     def addTalkChoice(choice_text: str, label_name: str, id_choice: str, dict_choices: dict[str, list]):
-        """Add the "choice" in the character's dict_choices."""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#add-an-talk-choice """
         if (id_choice in dict_choices.keys()):
             dict_choices[id_choice].append((choice_text, label_name))
         else:
@@ -68,7 +67,7 @@ init -11 python:
 
 
     def delTalkChoice(choice_text: str, id_choice: str, dict_choices: dict[str, list]):
-        """Deletes the "choice" in the character's dict_choices."""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#delete-an-action """
         val = 0
         ch_to_del = id_choice
         for cur_choice in dict_choices[id_choice]:

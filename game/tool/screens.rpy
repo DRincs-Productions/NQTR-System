@@ -183,30 +183,30 @@ screen room_navigation():
                             line_spacing -2
                     key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
 
-        # Actions image in the screen
+        # Action wich Picture in background
         for room in rooms:
             # Adds the button list of possible actions in that room
             if (room == cur_room and not room.id in closed_rooms):
-                for act in getActions(sp_actions | df_actions, room, tm):
+                for act in getActions(actions | df_actions, room, tm):
                     if (act.isButton() == False):
                         imagebutton:
                             pos (act.xpos, act.ypos)
-                            idle act.button_icon
-                            if not act.button_icon_selected == None:
-                                hover act.button_icon_selected
+                            idle act.picture_in_background
+                            if not act.picture_in_background_selected == None:
+                                hover act.picture_in_background_selected
                             focus_mask True
                             action [Hide('wait_navigation'), Jump(act.label_name)]
                             if renpy.variant("pc"):
                                 tooltip act.name
                             at middle_action_is_in_room
-        # Actions with button
+        # Normal Actions (with side button)
         vbox:
             yalign 0.95
             xalign 0.99
             for room in rooms:
                 # Adds the button list of possible actions in that room
                 if (room == cur_room):
-                    for act in getActions(sp_actions | df_actions, room, tm):
+                    for act in getActions(actions | df_actions, room, tm):
                         if (act.isButton() == True):
                             imagebutton:
                                 idle act.button_icon

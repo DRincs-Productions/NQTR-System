@@ -52,23 +52,23 @@ label development:
 label order_product:
     mc "OK! Let's see, let's look for a book...."
     mc "Here's R****, for $1. Just the thing for me."
-    $ del sp_actions['order_product']
+    $ del actions['order_product']
     $ quests["alice"].next_stage()
     call screen room_navigation
 
 label add_product:
-    $ sp_actions["take_product"] = Action(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", room='terrace')
+    $ actions["take_product"] = Action(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", rooms=['terrace'])
     call screen room_navigation
 
 label take_product:
-    $ del sp_actions['take_product']
+    $ del actions['take_product']
     $ quests["alice"].next_stage()
     call screen room_navigation
 
 label take_key:
     mc "Are these the car keys?! Well... I should try to access the car!"
     $ flags["goout"] = True
-    $ del sp_actions['take_key']
+    $ del actions['take_key']
     $ quests["ann"].next_stage()
     call screen room_navigation
 

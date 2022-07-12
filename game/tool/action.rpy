@@ -1,12 +1,11 @@
 init -5 python:
     class Action:
-        """Actions of the MC,
-        day_deadline & day_start must be >0, if not the value will be ignored"""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
 
         def __init__(self,
                     name: str, # requirement
                     label_name: str, # requirement
-                    room: str = None,
+                    rooms: list[str] = [],
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
@@ -26,7 +25,7 @@ init -5 python:
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
-            self.room = room
+            self.rooms = rooms
             self.button_icon = button_icon
             self.button_icon_selected = button_icon_selected
             # Is an action that is started by clicking on an image in the room.
@@ -47,24 +46,24 @@ init -5 python:
                 renpy.log(
                     "Warn: ypos is set but xpos is not, so xpos set to 0")
                 self.xpos = 0
-            if (self.button_icon == None and self.picture_in_background == None):
+            if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
                 renpy.log(
                     "Error: You have set button_icon and picture_in_background to None, this action will be ignored")
 
         def isButton(self):
             """This is a button?"""
-            return self.button_icon != None
+            return not isNullOrEmpty(self.button_icon)
 
         def isPictureInBackground(self):
-            """This is a button?"""
-            return self.button_icon != None
+            """This is a is picture in background?"""
+            return not isNullOrEmpty(self.picture_in_background)
 
 
     def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
         acts: list[Action] = []
         for act_id, act in actions.items():
-            if room.id == act.room:
+            if room.id in act.rooms:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
             elif act_id in room.id_actions:
