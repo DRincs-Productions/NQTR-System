@@ -4,7 +4,7 @@ init -99 python:
 
         def __init__(self,
                     name: str, # requirement
-                    label_name: str, # requirement
+                    label_name: str = None, # requirement
                     button_icon: str = None,
                     button_icon_selected: str = None,
                     picture_in_background: str = None,
