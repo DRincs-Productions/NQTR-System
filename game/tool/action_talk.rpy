@@ -67,7 +67,7 @@ init -11 python:
 
 
     def delTalkChoice(choice_text: str, id_choice: str, dict_choices: dict[str, list]):
-        """Deletes the "choice" in the character's dict_choices."""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#delete-an-action """
         val = 0
         ch_to_del = id_choice
         for cur_choice in dict_choices[id_choice]:

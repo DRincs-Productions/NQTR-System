@@ -7,4 +7,12 @@
         ],
         "description": "Add an Action"
     },
+    "DRincs Delete an Talk Choice": {
+        "scope": "renpy",
+        "prefix": "DR_TalkChoiceDel",
+        "body": [
+            "$ delTalkChoice(id_choice = \"${1:character_name}\", choice_text = _(\"${2:Name}\"), dict_choices = talkch_choices)",
+        ],
+        "description": "Delete an Action"
+    },
 }
