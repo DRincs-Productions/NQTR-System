@@ -1,9 +1,9 @@
 init -5 python:
-    class Action(Button):
+    class Act(Button):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
 
         def __init__(self,
-                    rooms: list[str] = [],
+                    rooms: Optional[list[str]] = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
@@ -14,7 +14,7 @@ init -5 python:
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
-            self.rooms = rooms
+            self.rooms = self.rooms = rooms if rooms else []
             if self.day_start < 0:
                 renpy.log("Warn: You have set day_start < 0, so it will be ignored")
             if self.day_deadline < 0:

@@ -4,6 +4,8 @@
 default closed_rooms = {}
 
 init -9 python:
+    from typing import Optional
+
     class Room:
         """Class of a Room"""
 
@@ -13,14 +15,14 @@ init -9 python:
                     name: str = None,
                     icon: str = None,
                     bg: str = None,
-                    id_actions: list[str] = []):
+                    id_actions: Optional[list[str]] = None):
 
             self.id = id
             self.id_location = id_location
             self.name = name
             self.icon = icon
             self.bg = bg
-            self.id_actions = id_actions
+            self.id_actions = self.id_actions = id_actions if id_actions else []
 
 
     class Location:
