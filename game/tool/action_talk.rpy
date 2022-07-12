@@ -55,7 +55,7 @@ init -11 python:
 
 
     def addTalkChoice(choice_text: str, label_name: str, id_choice: str, dict_choices: dict[str, list]):
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#add-an-talk-choice """
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#add-an-talk-choice-in-default_label_talk """
         if (id_choice in dict_choices.keys()):
             dict_choices[id_choice].append((choice_text, label_name))
         else:
@@ -67,7 +67,7 @@ init -11 python:
 
 
     def delTalkChoice(choice_text: str, id_choice: str, dict_choices: dict[str, list]):
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#delete-an-action """
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#delete-an-action-in-default_label_talk """
         val = 0
         ch_to_del = id_choice
         for cur_choice in dict_choices[id_choice]:

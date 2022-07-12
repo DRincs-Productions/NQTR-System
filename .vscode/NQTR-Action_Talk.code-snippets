@@ -1,18 +1,18 @@
 {
-    "DRincs Add an Talk Choice": {
+    "DRincs Add an Talk Choice in DEFAULT_LABEL_TALK": {
         "scope": "renpy",
         "prefix": "DR_TalkChoiceAdd",
         "body": [
             "$ addTalkChoice(id_choice = \"${1:character_name}\", choice_text = _(\"${2:Name}\"), label_name = \"${3:label_be_started}\", dict_choices = talkch_choices)",
         ],
-        "description": "Add an Action"
+        "description": "Add an Action in DEFAULT_LABEL_TALK"
     },
-    "DRincs Delete an Talk Choice": {
+    "DRincs Delete an Talk Choice in DEFAULT_LABEL_TALK": {
         "scope": "renpy",
         "prefix": "DR_TalkChoiceDel",
         "body": [
             "$ delTalkChoice(id_choice = \"${1:character_name}\", choice_text = _(\"${2:Name}\"), dict_choices = talkch_choices)",
         ],
-        "description": "Delete an Action"
+        "description": "Delete an Action in DEFAULT_LABEL_TALK"
     },
 }
