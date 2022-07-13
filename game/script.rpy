@@ -13,7 +13,7 @@ define an = Character("Ann")
 label start:
     $ block_goout_dialogue = _("To get out you have to take the car keys, (talk to Alice)")
 
-    $ changeRoom("my_room", rooms, locations)
+    $ changeRoom(room_id = "my_room", rooms = rooms, locations = locations)
     $ prev_room = rooms[5]
     $ flags = updateFlags(flags, flag_keys)
     $ quests["alice"].start()

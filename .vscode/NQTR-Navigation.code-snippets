@@ -7,4 +7,12 @@
         ],
         "description": "Add a Room in dictionary"
     },
+    "DRincs Change Room": {
+        "scope": "renpy",
+        "prefix": "DR_ChangeRoom",
+        "body": [
+            "$ changeRoom(room_id = \"${1:room_id}\", rooms = rooms, locations = locations",
+        ],
+        "description": "Change Room"
+    },
 }
