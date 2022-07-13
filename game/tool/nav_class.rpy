@@ -45,7 +45,7 @@ init -9 python:
             self.yalign = yalign
 
 
-    def clearClosedRooms(closed_rooms: dict[str, Commitment]):
+    def clearClosedRooms(closed_rooms: dict[str, Commitment], tm: TimeHandler):
         "Deletes expired locked rooms. you want to add a room with no expiry date: tm_stop = None"
         closed_rooms_to_del = []
         for id, item in closed_rooms.items():
@@ -55,3 +55,12 @@ init -9 python:
             del closed_rooms[id]
         del closed_rooms_to_del
         return closed_rooms
+
+
+    def changeRoom(room_id: str, rooms: list[Room], locations: list[Room]):
+        for room in rooms:
+            if room.id == room_id:
+                cur_room = room
+        for location in locations:
+            if location.id == cur_room.location_id:
+                cur_location = location
