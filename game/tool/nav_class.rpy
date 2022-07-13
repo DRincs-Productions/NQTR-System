@@ -56,11 +56,31 @@ init -9 python:
         del closed_rooms_to_del
         return closed_rooms
 
-
     def changeRoom(room_id: str, rooms: list[Room], locations: list[Room]):
+        new_room = None
+        if not room_id:
+            renpy.log("Warning: room_id is None")
+            del new_room
+            return
         for room in rooms:
-            if room.id == room_id:
-                cur_room = room
+            if room.id is str and room.id == room_id:
+                new_room = room
+        if new_room:
+            cur_room = new_room
+        else:
+            renpy.log("Error: cur_room is None")
+            del new_room
+            return
+        del new_room
+        changeLocation(cur_room.location_id, locations)
+        return
+
+
+    def changeLocation(location_id: str, locations: list[Room]):
+        if not location_id:
+            renpy.log("Error: location_id is None")
+            return
         for location in locations:
-            if location.id == cur_room.location_id:
+            if location.id is str and location.id == location_id:
                 cur_location = location
+        return

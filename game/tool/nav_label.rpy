@@ -36,7 +36,7 @@ label check_goout:
 label open_map:
     call check_goout
 
-    $ cur_location = locations[cur_room.location_id]
+    $ if not cur_location: changeRoom(cur_room.location_id, rooms, locations)
     scene expression map_images[cur_location.map_id] as bg
 
     if (map_open == False):
