@@ -36,8 +36,8 @@ label check_goout:
 label open_map:
     call check_goout
 
-    $ cur_location = locations[cur_room.id_location]
-    scene expression map_images[cur_location.id_map] as bg
+    $ cur_location = locations[cur_room.location_id]
+    scene expression map_images[cur_location.map_id] as bg
 
     if (map_open == False):
         $ map_open = True
@@ -46,7 +46,7 @@ label open_map:
 label close_map:
     python:
         for room in rooms:
-            if(room.id == cur_location.id_externalroom):
+            if(room.id == cur_location.external_room_id):
                 cur_room = room
         map_open = False
     scene expression (cur_room.bg) as bg

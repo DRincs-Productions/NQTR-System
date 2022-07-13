@@ -16,7 +16,7 @@ label check_event_sp:
             python:
                 sp_routine_to_del = []
                 for k, v in sp_routine.items():
-                    if (v.id_room == ev.id_room and v.isEvent()):
+                    if (v.room_id == ev.room_id and v.isEvent()):
                         sp_routine_to_del.append(k)
                 for k in sp_routine_to_del:
                     del sp_routine[k]

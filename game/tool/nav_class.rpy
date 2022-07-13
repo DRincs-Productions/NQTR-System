@@ -9,18 +9,18 @@ init -9 python:
 
         def __init__(self,
                     id: str,
-                    id_location: str,
+                    location_id: str,
                     name: str = None,
                     icon: str = None,
                     bg: str = None,
-                    id_actions: list[str] = []):
+                    action_ids: list[str] = []):
 
             self.id = id
-            self.id_location = id_location
+            self.location_id = location_id
             self.name = name
             self.icon = icon
             self.bg = bg
-            self.id_actions = id_actions
+            self.action_ids = action_ids
 
 
     class Location:
@@ -29,17 +29,17 @@ init -9 python:
 
         def __init__(self,
                     id: str,
-                    id_map: str,
-                    id_externalroom: str,
+                    map_id: str,
+                    external_room_id: str,
                     name: str = None,
                     icon: str = None,
                     xalign: int = 0,
                     yalign: int = 0):
 
             self.id = id
-            self.id_map = id_map
+            self.map_id = map_id
             self.name = name
-            self.id_externalroom = id_externalroom
+            self.external_room_id = external_room_id
             self.icon = icon
             self.xalign = xalign
             self.yalign = yalign

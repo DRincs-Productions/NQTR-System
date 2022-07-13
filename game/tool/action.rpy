@@ -66,7 +66,7 @@ init -5 python:
             if room.id in act.rooms:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
-            elif act_id in room.id_actions:
+            elif act_id in room.action_ids:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
         return acts

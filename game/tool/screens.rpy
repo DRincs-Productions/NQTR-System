@@ -94,7 +94,7 @@ screen room_navigation():
     if (map_open):
         for location in locations.values():
             # If the Map where I am is the same as the Map where the room is located
-            if (location.id_map == cur_location.id_map):
+            if (location.map_id == cur_location.map_id):
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
@@ -127,7 +127,7 @@ screen room_navigation():
                 $ i += 1
 
                 # If the Locations where I am is the same as the Locations where the room is located
-                if (room.id_location == cur_location.id and room.icon != None):
+                if (room.location_id == cur_location.id and room.icon != None):
                     button:
                         xysize (126, 190)
                         action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
@@ -152,7 +152,7 @@ screen room_navigation():
                             $ there_are_ch = False
                             for routine in cur_routines_location.values():
                                 # If it is the selected room
-                                if routine != None and room.id == routine.id_room:
+                                if routine != None and room.id == routine.room_id:
                                     # I insert hbox only if they are sure that someone is there
                                     $ there_are_ch = True
 
@@ -164,7 +164,7 @@ screen room_navigation():
 
                                     for routine in cur_routines_location.values():
                                         # If it is the selected room
-                                        if room.id == routine.id_room:
+                                        if room.id == routine.room_id:
                                             for ch_icon in routine.getChIcons(ch_icons):
                                                 imagebutton:
                                                     idle ch_icon
@@ -222,7 +222,7 @@ screen room_navigation():
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
                 # TODO: there is no possibility of group talk
                 for routine in cur_routines_location.values():
-                    if (routine != None and room.id == routine.id_room and room == cur_room):
+                    if (routine != None and room.id == routine.room_id and room == cur_room):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in routine.ch_talkobj_dict.items():
                             frame:

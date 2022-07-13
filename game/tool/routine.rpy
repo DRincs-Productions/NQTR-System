@@ -8,8 +8,8 @@ init -10 python:
                     ch_talkobj_dict: dict[str, TalkObject] = {},
                     bg: str  = None,
                     name: str = None,
-                    id_location: str = None,
-                    id_room: str = None,
+                    location_id: str = None,
+                    room_id: str = None,
                     type: str = None,
                     day_deadline: int = None,
                     event_label_name: str = None
@@ -22,8 +22,8 @@ init -10 python:
             self.ch_talkobj_dict = ch_talkobj_dict
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
-            self.id_location = id_location
-            self.id_room = id_room
+            self.location_id = location_id
+            self.room_id = room_id
             self.type = type
             self.day_deadline = day_deadline
             # ATTENTION: in check_event_sp if the mc has not moved, delete the event (resolves any loops)
@@ -34,7 +34,7 @@ init -10 python:
             # if you want the event to be repeated every time you go to that room
             # at the end of the label insert:
             # call change_room
-            # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing id_location
+            # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing location_id
             # at the end of the label insert:
             # $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
             # call change_room
@@ -84,8 +84,8 @@ init -10 python:
         return routine
 
 
-    def getChsInThisLocation(id_location: str):
-        # TODO: to add when I change id_location
+    def getChsInThisLocation(location_id: str):
+        # TODO: to add when I change location_id
         """Returns the commitments of the ch (NCPs) in that Location at that time.
         Give priority to special routine, and routine with a valid type."""
         # Create a list of ch who have a routine in that place at that time
@@ -93,13 +93,13 @@ init -10 python:
         routines = {}
         for routine in sp_routine.values():
             # Check Time and Location
-            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
+            if (routine.location_id == location_id and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
                 # Full verification
                 for chKey in routine.ch_talkobj_dict.keys():
                     routines[chKey] = None
         for routine in df_routine.values():
             # Check Time and Location
-            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
+            if (routine.location_id == location_id and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
                 # Full verification
                 ch_talkobj_dict = routine.ch_talkobj_dict
                 for chKey in ch_talkobj_dict.keys():
@@ -111,7 +111,7 @@ init -10 python:
             routines[ch] = getChLocation(ch)
             if routines[ch] == None:
                 routines_key_to_del.append(ch)
-            elif routines[ch].id_location != id_location:
+            elif routines[ch].location_id != location_id:
                 routines_key_to_del.append(ch)
         for ch in routines_key_to_del:
             del routines[ch]
@@ -119,8 +119,8 @@ init -10 python:
         return routines
 
 
-    def getEventsInThisLocation(id_location: str, sp_routine: dict[str, Commitment]):
-        # TODO: to add when I change id_location
+    def getEventsInThisLocation(location_id: str, sp_routine: dict[str, Commitment]):
+        # TODO: to add when I change location_id
         """Returns events at that location at that time.
         Checks only in sp_routine."""
         # Create a list of ch who have a routine in that place at that time
@@ -128,8 +128,8 @@ init -10 python:
         events = {}
         for routine in sp_routine.values():
             # Check Time and Location and is event
-            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.isEvent() == True):
-                events[routine.id_room] = routine
+            if (routine.location_id == location_id and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.isEvent() == True):
+                events[routine.room_id] = routine
         return events
 
 
@@ -171,6 +171,6 @@ init -10 python:
     def getBgRoomRoutine(routines, room_id):
         """Returns the first background image of the routines based on the current room. if there are no returns None"""
         for item in routines.values():
-            if item.id_room == room_id:
+            if item.room_id == room_id:
                 return item.getBackground()
         return None
