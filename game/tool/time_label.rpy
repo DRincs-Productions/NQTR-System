@@ -13,7 +13,7 @@ label new_day:
     $ tm.new_day()
     # removes expired Commitments
     $ sp_routine = clearExpiredRoutine(sp_routine, tm)
-    $ actions = clearExpiredActions(actions, tm)
+    $ actions = clearExpiredActions(actions, tm.day)
     $ checkInactiveStage()
     return
 

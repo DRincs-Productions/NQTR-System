@@ -72,11 +72,11 @@ init -5 python:
         return acts
 
 
-    def clearExpiredActions(actions: dict[str, Action], tm: TimeHandler):
+    def clearExpiredActions(actions: dict[str, Action], cur_day: int):
         """Delete Expired Actions"""
         actions_to_del = []
         for id, act in actions.items():
-            if (act.day_deadline and act.day_deadline <= tm.day):
+            if (act.day_deadline and act.day_deadline <= cur_day):
                 actions_to_del.append(id)
         for act_id in actions_to_del:
             del actions[act_id]
