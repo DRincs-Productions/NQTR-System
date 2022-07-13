@@ -24,7 +24,7 @@ init -9 python:
 
 
     class Location:
-        """Class of a Location"""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location """
         # TODO: undiscovered locations
 
         def __init__(self,
@@ -78,6 +78,7 @@ init -9 python:
 
 
     def changeLocation(location_id: str, locations: list[Room]):
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
         if not location_id:
             renpy.log("Error: location_id is None")
             return
