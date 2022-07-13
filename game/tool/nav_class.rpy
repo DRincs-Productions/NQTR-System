@@ -5,7 +5,7 @@ default closed_rooms = {}
 
 init -9 python:
     class Room:
-        """Class of a Room"""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room """
 
         def __init__(self,
                     id: str,
@@ -46,7 +46,7 @@ init -9 python:
 
 
     def clearClosedRooms(closed_rooms: dict[str, Commitment], tm: TimeHandler):
-        "Deletes expired locked rooms. you want to add a room with no expiry date: tm_stop = None"
+        """Deletes expired locked rooms. you want to add a room with no expiry date: tm_stop = None"""
         closed_rooms_to_del = []
         for id, item in closed_rooms.items():
             if (item.tm_stop != None and tm.now_is_between(start=item.tm_start, end=item.tm_stop) == False):
@@ -57,6 +57,7 @@ init -9 python:
         return closed_rooms
 
     def changeRoom(room_id: str, rooms: list[Room], locations: list[Room]):
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
         new_room = None
         if not room_id:
             renpy.log("Warning: room_id is None")
