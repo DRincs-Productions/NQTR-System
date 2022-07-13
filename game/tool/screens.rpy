@@ -410,18 +410,18 @@ screen menu_memo():
             # task title list
             viewport mousewheel 'change' draggable True id 'vp1':
                 has vbox spacing 5
-                for id_task in current_quest_stages.keys():
+                for task_id in current_quest_stages.keys():
                     button:
                         xsize 390
                         background None
-                        action [SetVariable('cur_task_menu', id_task), SetVariable('cur_quest_menu', quests_levels[id_task])]
+                        action [SetVariable('cur_task_menu', task_id), SetVariable('cur_quest_menu', quests_levels[task_id])]
                         xpadding 0
                         ypadding 0
                         xmargin 0
                         ymargin 0
-                        textbutton quests[id_task].title:
-                            action [SetVariable('cur_task_menu', id_task), SetVariable('cur_quest_menu', quests_levels[id_task])]
-                            selected cur_task_menu == id_task
+                        textbutton quests[task_id].title:
+                            action [SetVariable('cur_task_menu', task_id), SetVariable('cur_quest_menu', quests_levels[task_id])]
+                            selected cur_task_menu == task_id
             # scroll bar
             vbar value YScrollValue('vp1') style 'menu_vscroll'
 
