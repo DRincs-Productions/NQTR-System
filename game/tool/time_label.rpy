@@ -5,6 +5,7 @@ define def_hour_of_new_day = 1
 define block_spendtime_dialogue = _("You can't do that now")
 
 label new_day(time_of_new_day = def_hour_of_new_day, close=True, is_check_event=False):
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day """
     if(not flags["not_can_spend_time"]):
         python:
             tm.new_day()
@@ -22,6 +23,7 @@ label new_day(time_of_new_day = def_hour_of_new_day, close=True, is_check_event=
     return
 
 label wait(wait_hour=def_wait_hour, close=True, is_check_event=False):
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#wait """
     if(not flags["not_can_spend_time"]):
         if(tm.new_hour(wait_hour)):
             if (map_open == False):
@@ -37,6 +39,7 @@ label wait(wait_hour=def_wait_hour, close=True, is_check_event=False):
 
 # it is always started after a delay of
 label after_spending_time(close=True):
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#after-spending-time """
     # this step is to change the background based on the presence of a ch
     $ cur_routines_location = getChsInThisLocation(cur_location.id)
     $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
