@@ -133,7 +133,12 @@ init -11 python:
 
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function
-default tm = TimeHandler()
+default tm = TimeHandler(
+                    hour_of_new_day: int = 5,
+                    hour: int = 8,
+                    weekend_day: int = 6,
+                    day: int = 0
+)
 
 init -8 python:
     def updateTimeHandler(tm: TimeHandler):
