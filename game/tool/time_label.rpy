@@ -1,10 +1,10 @@
-define def_wait_hour = 1
-define def_hour_of_new_day = 1
+define DEFAULT_WAIT_HOUR = 1
+define DEFAULT_HOUR_OF_NEW_DAY = 1
 
 # Check if the time "pass" block has been activated
 define block_spendtime_dialogue = _("You can't do that now")
 
-label new_day(time_of_new_day = def_hour_of_new_day, close=True, is_check_event=True):
+label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, close=True, is_check_event=True):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day """
     if(not flags["not_can_spend_time"]):
         python:
@@ -22,7 +22,7 @@ label new_day(time_of_new_day = def_hour_of_new_day, close=True, is_check_event=
         return
     return
 
-label wait(wait_hour=def_wait_hour, close=True, is_check_event=False):
+label wait(wait_hour=DEFAULT_WAIT_HOUR, close=True, is_check_event=False):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#wait """
     if(not flags["not_can_spend_time"]):
         if(tm.new_hour(wait_hour)):
