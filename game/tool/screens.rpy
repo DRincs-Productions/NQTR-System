@@ -130,7 +130,7 @@ screen room_navigation():
                 if (room.location_id == cur_location.id and room.icon != None):
                     button:
                         xysize (126, 190)
-                        action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+                        action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump("after_spending_time")]
                         has vbox xsize 126 spacing 0
 
                         frame:
@@ -145,7 +145,7 @@ screen room_navigation():
                                 selected_hover room.icon + ' a'
                                 selected room == cur_room
                                 focus_mask True
-                                action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+                                action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump("after_spending_time")]
                                 at middle_room
 
                             # Check the presence of ch in that room
@@ -169,7 +169,7 @@ screen room_navigation():
                                                 imagebutton:
                                                     idle ch_icon
                                                     focus_mask True
-                                                    action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+                                                    action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump("after_spending_time")]
                                                     at small_face
 
                         # Room name
@@ -181,7 +181,7 @@ screen room_navigation():
                             text_align 0.5
                             line_leading 0
                             line_spacing -2
-                    key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump('change_room')]
+                    key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump("after_spending_time")]
 
         # Action wich Picture in background
         for room in rooms:

@@ -2,30 +2,32 @@
 default sp_bg_change_room = None
 
 # Change the background image to the current room image. In case sp_bg_change_room is not null use that.
-label change_room(close=True):
+label check_closed_room:
     # Check if the room is closed
     if (cur_room.id in closed_rooms and (closed_rooms[cur_room.id] == None or tm.now_is_between(start=closed_rooms[cur_room.id].tm_start, end=closed_rooms[cur_room.id].tm_stop))):
         if (closed_rooms[cur_room.id].ch_talkobj_dict == None):
-            jump closed_room_event
+            call closed_room_event
         else:
             $ chs1 = closed_rooms[cur_room.id].ch_talkobj_dict
             $ chs2 = getChsInThisLocation(cur_room.id)
             $ res = not bool(chs2)
             # TODO: check if all keys of chs1 are in chs2, in this case res = True
             if (res == True):
-                jump closed_room_event
+                call closed_room_event
+    return
 
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room
+label change_room(room_id = None, close=False):
     # start an event if it exists
+    if room_id:
+        $ changeRoom(room_id = room_id, rooms = rooms, locations = locations)
+    call check_closed_room
     call check_event
-
     if (sp_bg_change_room != None):
         scene expression (sp_bg_change_room) as bg
     else:
         scene expression (cur_room.bg) as bg
-    if (close):
-        call screen room_navigation
-    else:
-        return
+    return
 
 ## Check if mc can come out
 define block_goout_dialogue = _("Now is not the time to go outside")
@@ -39,7 +41,8 @@ label check_goout:
 label open_map:
     call check_goout
 
-    $ if not cur_location: changeRoom(cur_room.location_id, rooms, locations)
+    if not cur_location:
+        call change_room(room_id = cur_room.location_id)
     scene expression map_images[cur_location.map_id] as bg
 
     if (map_open == False):
@@ -63,5 +66,4 @@ label closed_room_event:
     # if (cur_room == ...):
         # ...
     scene expression (bg_loc) as bg
-    call screen room_navigation
     return
