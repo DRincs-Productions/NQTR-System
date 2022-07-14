@@ -35,15 +35,15 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, close=True, is_check_event=False):
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#after-spending-time
 label after_spending_time(close=True, is_check_event=False):
-    # # this step is to change the background based on the presence of a ch
-    # $ cur_routines_location = getChsInThisLocation(cur_location.id)
-    # $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
-    # $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
-    # # removes expired locked rooms
-    # $ closed_rooms = clearClosedRooms(closed_rooms, tm)
-    # # move to change_room is the best way to move to room_navigation
+    # this step is to change the background based on the presence of a ch
+    $ cur_routines_location = getChsInThisLocation(cur_location.id)
+    $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
+    # removes expired locked rooms
+    $ closed_rooms = clearClosedRooms(closed_rooms, tm)
+    # check event
     call check_closed_room
     if (is_check_event):
+        $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
         call check_event
     if (close):
         call screen room_navigation
