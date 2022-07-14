@@ -20,6 +20,6 @@ label start:
     $ quests["ann"].start()
 
     ## call screen room_navigation
-    call after_wait
+    call after_spending_time
 
     return

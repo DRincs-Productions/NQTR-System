@@ -14,7 +14,7 @@ label new_day(time_of_new_day = def_hour_of_new_day, close=True, is_check_event=
             checkInactiveStage()
         if (is_check_event):
             call check_event
-        call after_wait(close = close)
+        call after_spending_time(close = close)
     if (close):
         call screen room_navigation
     else:
@@ -25,7 +25,7 @@ label wait(wait_hour=def_wait_hour, close=True, is_check_event=False):
     if(not flags["not_can_spend_time"]):
         if(tm.new_hour(wait_hour)):
             if (map_open == False):
-                call after_wait(close = close)
+                call after_spending_time(close = close)
         else:
             "(It's late, you have to go to bed)"
         if (is_check_event):
@@ -36,7 +36,7 @@ label wait(wait_hour=def_wait_hour, close=True, is_check_event=False):
         return
 
 # it is always started after a delay of
-label after_wait(close=True):
+label after_spending_time(close=True):
     # this step is to change the background based on the presence of a ch
     $ cur_routines_location = getChsInThisLocation(cur_location.id)
     $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)

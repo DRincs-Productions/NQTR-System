@@ -23,7 +23,7 @@ label check_event_sp:
                 del sp_routine_to_del
         $ del event_room
         $ del ev
-        jump after_wait
+        jump after_spending_time
 
 # Check if there are any events to start at that time
 # inserted it when you go to sleep but you can put it wherever you want

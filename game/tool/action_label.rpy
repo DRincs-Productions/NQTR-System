@@ -21,7 +21,7 @@ label sleep:
             call new_day(time_of_new_day = 9, is_check_event=True)
         "Return":
             pass
-    jump after_wait
+    jump after_spending_time
 
 ## Error and warming Label
 
@@ -66,7 +66,7 @@ label talk_sleep:
             a "[mc]!!!! What are you doing?!!"
             a "Get out of here! Now!"
             $ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
-            jump after_wait
+            jump after_spending_time
         "Leave her alone":
             pass
     call screen room_navigation
