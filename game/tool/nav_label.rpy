@@ -2,7 +2,7 @@
 default sp_bg_change_room = None
 
 # Change the background image to the current room image. In case sp_bg_change_room is not null use that.
-label change_room:
+label change_room(close=True):
     # Check if the room is closed
     if (cur_room.id in closed_rooms and (closed_rooms[cur_room.id] == None or tm.now_is_between(start=closed_rooms[cur_room.id].tm_start, end=closed_rooms[cur_room.id].tm_stop))):
         if (closed_rooms[cur_room.id].ch_talkobj_dict == None):
@@ -22,7 +22,10 @@ label change_room:
         scene expression (sp_bg_change_room) as bg
     else:
         scene expression (cur_room.bg) as bg
-    call screen room_navigation
+    if (close):
+        call screen room_navigation
+    else:
+        return
 
 ## Check if mc can come out
 define block_goout_dialogue = _("Now is not the time to go outside")

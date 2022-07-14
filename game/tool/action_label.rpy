@@ -1,11 +1,9 @@
 ## Actions they do are meant to pass time
 
 label nap:
-    call check_block_spendtime
-
     menu:
         "Nap for 3 hours":
-            call wait_and_close(3)
+            call wait(3)
         "Sleep":
             jump sleep
         "Return":
@@ -13,21 +11,14 @@ label nap:
     call screen room_navigation
 
 label sleep:
-    call check_block_spendtime
-
     menu:
         "What time do you want to set the alarm?"
         "[tm.hour_of_new_day]:00":
-            call new_day
-            call check_event
+            call new_day(close=False, is_check_event=True)
         "7:00":
-            call new_day
-            call check_event
-            $ tm.new_hour(7-tm.hour_of_new_day)
+            call new_day(new_day_hour = 7, is_check_event=True)
         "9:00":
-            call new_day
-            call check_event
-            $ tm.new_hour(9-tm.hour_of_new_day)
+            call new_day(new_day_hour = 9, is_check_event=True)
         "Return":
             pass
     jump after_wait

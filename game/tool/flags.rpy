@@ -4,8 +4,8 @@
 # I suggest to leave it empty and add the elements only if it is an initial value and set as True
 default flags = {}
 define flag_keys = [
-    # Block all actions with check_block_spendtime
-    "block_spendtime",
+    # Block all spend_time
+    "not_can_spend_time",
     "goout",
 ]
 
