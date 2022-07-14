@@ -9,11 +9,11 @@ label check_event_sp:
         $ event_room = cur_room.id
         $ ev = cur_events_location[cur_room.id]
         call expression ev.event_label_name
-        if (event_room == cur_room.id):
-            # delete the event in cur_events_location
-            $ del cur_events_location[cur_room.id]
-            # delete the event in sp_routine
-            python:
+        python:
+            if (event_room == cur_room.id):
+                # delete the event in cur_events_location
+                del cur_events_location[cur_room.id]
+                # delete the event in sp_routine
                 sp_routine_to_del = []
                 for k, v in sp_routine.items():
                     if (v.room_id == ev.room_id and v.isEvent()):
@@ -23,7 +23,7 @@ label check_event_sp:
                 del sp_routine_to_del
         $ del event_room
         $ del ev
-        $ renpy.jump("after_wait")
+        jump after_wait
 
 # Check if there are any events to start at that time
 # inserted it when you go to sleep but you can put it wherever you want

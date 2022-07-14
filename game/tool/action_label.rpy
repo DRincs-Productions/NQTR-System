@@ -1,16 +1,11 @@
 ## Actions they do are meant to pass time
 
-label wait_onehour:
-    $ wait_hour = 1
-    jump wait
-
 label nap:
     call check_block_spendtime
 
     menu:
         "Nap for 3 hours":
-            $ wait_hour = 3
-            jump wait
+            call wait_and_close(3)
         "Sleep":
             jump sleep
         "Return":

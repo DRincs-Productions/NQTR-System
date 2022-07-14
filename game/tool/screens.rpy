@@ -249,7 +249,7 @@ screen room_navigation():
             imagebutton:
                 idle '/interface/action-wait.webp'
                 focus_mask True
-                action [Hide('wait_navigation'), Jump('wait_onehour')]
+                action [Hide('wait_navigation'), Jump('wait_and_close')]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
                 at middle_action
@@ -277,7 +277,7 @@ screen room_navigation():
                 xysize (300, 300)
                 idle '/interface/action-wait.webp'
                 focus_mask True
-                action [Hide('wait_navigation'), Jump('wait_onehour')]
+                action [Hide('wait_navigation'), Jump('wait_and_close')]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
                 at middle_action

@@ -1,4 +1,4 @@
-define wait_hour = 1
+define def_wait_hour = 1
 
 # Check if the time "pass" block has been activated
 define block_spendtime_dialogue = _("You can't do that now")
@@ -17,7 +17,7 @@ label new_day:
     $ checkInactiveStage()
     return
 
-label wait:
+label wait_and_close(wait_hour=def_wait_hour):
     call check_block_spendtime
     if(tm.new_hour(wait_hour)):
         if (map_open == False):
