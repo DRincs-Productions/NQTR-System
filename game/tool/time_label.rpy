@@ -4,7 +4,7 @@ define def_hour_of_new_day = 1
 # Check if the time "pass" block has been activated
 define block_spendtime_dialogue = _("You can't do that now")
 
-label new_day(new_day_hour = def_hour_of_new_day, close=True, is_check_event=False):
+label new_day(time_of_new_day = def_hour_of_new_day, close=True, is_check_event=False):
     if(not flags["not_can_spend_time"]):
         python:
             tm.new_day()
@@ -14,6 +14,7 @@ label new_day(new_day_hour = def_hour_of_new_day, close=True, is_check_event=Fal
             checkInactiveStage()
         if (is_check_event):
             call check_event
+        call after_wait(close = close)
     if (close):
         call screen room_navigation
     else:

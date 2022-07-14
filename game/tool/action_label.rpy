@@ -16,9 +16,9 @@ label sleep:
         "[tm.hour_of_new_day]:00":
             call new_day(close=False, is_check_event=True)
         "7:00":
-            call new_day(new_day_hour = 7, is_check_event=True)
+            call new_day(time_of_new_day = 7, is_check_event=True)
         "9:00":
-            call new_day(new_day_hour = 9, is_check_event=True)
+            call new_day(time_of_new_day = 9, is_check_event=True)
         "Return":
             pass
     jump after_wait
