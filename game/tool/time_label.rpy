@@ -1,9 +1,7 @@
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#defalut-value
 define DEFAULT_WAIT_HOUR = 1
 define DEFAULT_HOUR_OF_NEW_DAY = 5
-
-# Check if the time "pass" block has been activated
-define block_spendtime_dialogue = _("You can't do that now")
+define DEFAULT_BLOCK_SPENDTIME_DIALOGUE = _("You can't do that now")
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day
 label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, close=True, is_check_event=True):
@@ -17,6 +15,8 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, close=True, is_check_ev
         if (is_check_event):
             call check_event
         call after_spending_time(close = close)
+    else:
+        "[DEFAULT_BLOCK_SPENDTIME_DIALOGUE]"
     if (close):
         call screen room_navigation
     else:
@@ -33,6 +33,8 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, close=True, is_check_event=False):
             "(It's late, you have to go to bed)"
         if (is_check_event):
             call check_event
+    else:
+        "[DEFAULT_BLOCK_SPENDTIME_DIALOGUE]"
     if (close):
         call screen room_navigation
     else:
