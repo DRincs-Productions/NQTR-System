@@ -4,7 +4,7 @@ define def_hour_of_new_day = 1
 # Check if the time "pass" block has been activated
 define block_spendtime_dialogue = _("You can't do that now")
 
-label new_day(time_of_new_day = def_hour_of_new_day, close=True, is_check_event=False):
+label new_day(time_of_new_day = def_hour_of_new_day, close=True, is_check_event=True):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day """
     if(not flags["not_can_spend_time"]):
         python:
