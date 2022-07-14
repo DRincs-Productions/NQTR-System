@@ -1,11 +1,12 @@
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#defalut-value
 define DEFAULT_WAIT_HOUR = 1
-define DEFAULT_HOUR_OF_NEW_DAY = 1
+define DEFAULT_HOUR_OF_NEW_DAY = 5
 
 # Check if the time "pass" block has been activated
 define block_spendtime_dialogue = _("You can't do that now")
 
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day
 label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, close=True, is_check_event=True):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day """
     if(not flags["not_can_spend_time"]):
         python:
             tm.new_day()
@@ -22,8 +23,8 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, close=True, is_check_ev
         return
     return
 
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#wait
 label wait(wait_hour=DEFAULT_WAIT_HOUR, close=True, is_check_event=False):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#wait """
     if(not flags["not_can_spend_time"]):
         if(tm.new_hour(wait_hour)):
             if (map_open == False):
@@ -37,9 +38,8 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, close=True, is_check_event=False):
     else:
         return
 
-# it is always started after a delay of
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#after-spending-time
 label after_spending_time(close=True):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#after-spending-time """
     # this step is to change the background based on the presence of a ch
     $ cur_routines_location = getChsInThisLocation(cur_location.id)
     $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
