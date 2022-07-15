@@ -138,8 +138,6 @@ screen room_navigation():
                             Hide('wait_navigation'), 
                             SetVariable('prev_room', cur_room), 
                             SetVariable('cur_room', room), 
-                            SetVariable('sp_bg_change_room', 
-                            getBgRoomRoutine(cur_routines_location, room.id)), 
                             Call("change_room", room_id = None, close=True)
                         ]
                         has vbox xsize 126 spacing 0
@@ -160,8 +158,6 @@ screen room_navigation():
                                     Hide('wait_navigation'), 
                                     SetVariable('prev_room', cur_room), 
                                     SetVariable('cur_room', room), 
-                                    SetVariable('sp_bg_change_room', 
-                                    getBgRoomRoutine(cur_routines_location, room.id)), 
                                     Call("change_room", room_id = None, close=True)
                                 ]
                                 at middle_room
@@ -191,8 +187,6 @@ screen room_navigation():
                                                         Hide('wait_navigation'), 
                                                         SetVariable('prev_room', cur_room), 
                                                         SetVariable('cur_room', room), 
-                                                        SetVariable('sp_bg_change_room', 
-                                                        getBgRoomRoutine(cur_routines_location, room.id)), 
                                                         Call("change_room", room_id = None, close=True)
                                                     ]
                                                     at small_face
@@ -210,8 +204,6 @@ screen room_navigation():
                         Hide('wait_navigation'), 
                         SetVariable('prev_room', cur_room), 
                         SetVariable('cur_room', room), 
-                        SetVariable('sp_bg_change_room', 
-                        getBgRoomRoutine(cur_routines_location, room.id)), 
                         Call("after_spending_time", room_id = None, close=True)
                     ]
 

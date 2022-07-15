@@ -21,6 +21,7 @@ label change_room(room_id = None, close=False):
     # start an event if it exists
     if room_id:
         $ changeRoom(room_id = room_id, rooms = rooms, locations = locations)
+    $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
     if (sp_bg_change_room != None):
         scene expression (sp_bg_change_room) as bg
     else:
