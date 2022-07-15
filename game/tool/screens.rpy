@@ -104,8 +104,8 @@ screen room_navigation():
                         selected location == cur_location
                         focus_mask True
                         action [
-                            Hide('wait_navigation'), 
-                            SetVariable('cur_location', location), 
+                            Hide('wait_navigation'),
+                            SetVariable('cur_location', location),
                             Jump('close_map'),
                         ]
                         at small_map
@@ -135,10 +135,10 @@ screen room_navigation():
                     button:
                         xysize (126, 190)
                         action [
-                            Hide('wait_navigation'), 
-                            SetVariable('prev_room', cur_room), 
-                            SetVariable('cur_room', room), 
-                            Call("change_room", room_id = None, close=True)
+                            Hide('wait_navigation'),
+                            SetVariable('prev_room', cur_room),
+                            SetVariable('cur_room', room),
+                            Call("change_room", room_id = None, close=True),
                         ]
                         has vbox xsize 126 spacing 0
 
@@ -155,10 +155,10 @@ screen room_navigation():
                                 selected room == cur_room
                                 focus_mask True
                                 action [
-                                    Hide('wait_navigation'), 
-                                    SetVariable('prev_room', cur_room), 
-                                    SetVariable('cur_room', room), 
-                                    Call("change_room", room_id = None, close=True)
+                                    Hide('wait_navigation'),
+                                    SetVariable('prev_room', cur_room),
+                                    SetVariable('cur_room', room),
+                                    Call("change_room", room_id = None, close=True),
                                 ]
                                 at middle_room
 
@@ -184,10 +184,10 @@ screen room_navigation():
                                                     idle ch_icon
                                                     focus_mask True
                                                     action [
-                                                        Hide('wait_navigation'), 
-                                                        SetVariable('prev_room', cur_room), 
-                                                        SetVariable('cur_room', room), 
-                                                        Call("change_room", room_id = None, close=True)
+                                                        Hide('wait_navigation'),
+                                                        SetVariable('prev_room', cur_room),
+                                                        SetVariable('cur_room', room),
+                                                        Call("change_room", room_id = None, close=True),
                                                     ]
                                                     at small_face
 
@@ -201,10 +201,10 @@ screen room_navigation():
                             line_leading 0
                             line_spacing -2
                     key str(i) action [
-                        Hide('wait_navigation'), 
-                        SetVariable('prev_room', cur_room), 
-                        SetVariable('cur_room', room), 
-                        Call("change_room", room_id = None, close=True)
+                        Hide('wait_navigation'),
+                        SetVariable('prev_room', cur_room),
+                        SetVariable('cur_room', room),
+                        Call("change_room", room_id = None, close=True),
                     ]
 
         # Action wich Picture in background
@@ -220,8 +220,8 @@ screen room_navigation():
                                 hover act.picture_in_background_selected
                             focus_mask True
                             action [
-                                Hide('wait_navigation'), 
-                                Jump(act.label_name)
+                                Hide('wait_navigation'),
+                                Jump(act.label_name),
                             ]
                             if renpy.variant("pc"):
                                 tooltip act.name
@@ -241,8 +241,8 @@ screen room_navigation():
                                     hover act.button_icon_selected
                                 focus_mask True
                                 action [
-                                    Hide('wait_navigation'), 
-                                    Jump(act.label_name)
+                                    Hide('wait_navigation'),
+                                    Jump(act.label_name),
                                 ]
                                 if renpy.variant("pc"):
                                     tooltip act.name
@@ -263,9 +263,9 @@ screen room_navigation():
                                     idle talk_obj.getButtonIcon()
                                     focus_mask True
                                     action [
-                                        Hide('wait_navigation'), 
-                                        SetVariable('talk_ch', ch_id), 
-                                        SetVariable('talk_image', routine.getTalkBackground(ch_id)), 
+                                        Hide('wait_navigation'),
+                                        SetVariable('talk_ch', ch_id),
+                                        SetVariable('talk_image', routine.getTalkBackground(ch_id)),
                                         Function(talk_obj.talk),
                                     ]
                                     at middle_action
@@ -277,9 +277,9 @@ screen room_navigation():
                                         focus_mask True
                                         at small_face
                                         action [
-                                            Hide('wait_navigation'), 
-                                            SetVariable('talk_ch', ch_id), 
-                                            SetVariable('talk_image', routine.getTalkBackground(ch_id)), 
+                                            Hide('wait_navigation'),
+                                            SetVariable('talk_ch', ch_id),
+                                            SetVariable('talk_image', routine.getTalkBackground(ch_id)),
                                             Function(talk_obj.talk),
                                         ]
                                 if renpy.variant("pc"):
@@ -347,8 +347,8 @@ screen room_navigation():
             idle '/interface/menu-user.webp'
             focus_mask True
             action [
-                Hide('wait_navigation'), 
-                Jump('development')
+                Hide('wait_navigation'),
+                Jump('development'),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -361,8 +361,8 @@ screen room_navigation():
             focus_mask True
             if len(current_quest_stages) > 0 :
                 action [
-                    Hide('wait_navigation'), 
-                    Show('menu_memo')
+                    Hide('wait_navigation'),
+                    Show('menu_memo'),
                 ]
             if renpy.variant("pc"):
                 at small_menu
@@ -395,8 +395,8 @@ screen room_navigation():
             idle '/interface/menu-inventory.webp'
             focus_mask True
             action [
-                Hide('wait_navigation'), 
-                Jump('development')
+                Hide('wait_navigation'),
+                Jump('development'),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -408,8 +408,8 @@ screen room_navigation():
             idle '/interface/menu-phone.webp'
             focus_mask True
             action [
-                Hide('wait_navigation'), 
-                Jump('development')
+                Hide('wait_navigation'),
+                Jump('development'),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -421,8 +421,8 @@ screen room_navigation():
             idle '/interface/menu-map.webp'
             focus_mask True
             action [
-                Hide('wait_navigation'), 
-                Jump('open_map')
+                Hide('wait_navigation'),
+                Jump('open_map'),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -455,7 +455,7 @@ screen menu_memo():
         idle '/interface/button/close_idle.webp'
         hover '/interface/button/close_hover.webp'
         action [
-            Hide('menu_memo')
+            Hide('menu_memo'),
         ]
         if renpy.variant("pc"):
             focus_mask True
@@ -479,8 +479,7 @@ screen menu_memo():
                         background None
                         action [
                             SetVariable('cur_task_menu', task_id), 
-                            SetVariable('cur_quest_menu', 
-                            quests_levels[task_id])
+                            SetVariable('cur_quest_menu', quests_levels[task_id])
                         ]
                         xpadding 0
                         ypadding 0
@@ -488,9 +487,8 @@ screen menu_memo():
                         ymargin 0
                         textbutton quests[task_id].title:
                             action [
-                                SetVariable('cur_task_menu', task_id), 
-                                SetVariable('cur_quest_menu', 
-                                quests_levels[task_id])
+                                SetVariable('cur_task_menu', task_id),
+                                SetVariable('cur_quest_menu', quests_levels[task_id]),
                             ]
                             selected cur_task_menu == task_id
             # scroll bar
@@ -557,7 +555,7 @@ screen menu_memo():
             focus_mask True
             sensitive (cur_quest_menu > 0)
             action [
-                SetVariable('cur_quest_menu', cur_quest_menu-1)
+                SetVariable('cur_quest_menu', cur_quest_menu-1),
             ]
         imagebutton pos (1570, 360):
             idle '/interface/button/next_idle.webp'
@@ -566,5 +564,5 @@ screen menu_memo():
             focus_mask True
             sensitive (cur_quest_menu < quests_levels[cur_task_menu])
             action [
-                SetVariable('cur_quest_menu', cur_quest_menu+1)
+                SetVariable('cur_quest_menu', cur_quest_menu+1),
             ]
