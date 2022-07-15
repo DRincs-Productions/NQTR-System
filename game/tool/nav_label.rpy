@@ -21,12 +21,11 @@ label change_room(room_id = None, close=False):
     # start an event if it exists
     if room_id:
         $ changeRoom(room_id = room_id, rooms = rooms, locations = locations)
-    call check_closed_room
-    call check_event
     if (sp_bg_change_room != None):
         scene expression (sp_bg_change_room) as bg
     else:
         scene expression (cur_room.bg) as bg
+    call after_spending_time(close = close)
     return
 
 ## Check if mc can come out

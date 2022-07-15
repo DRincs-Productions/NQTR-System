@@ -40,8 +40,8 @@ label after_spending_time(close=True, is_check_event=False):
     $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
     # removes expired locked rooms
     $ closed_rooms = clearClosedRooms(closed_rooms, tm)
-    # check event
     call check_closed_room
+    # check event
     if (is_check_event):
         $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
         call check_event

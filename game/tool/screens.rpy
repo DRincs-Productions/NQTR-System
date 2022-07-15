@@ -103,7 +103,11 @@ screen room_navigation():
                         selected_hover location.icon + ' a'
                         selected location == cur_location
                         focus_mask True
-                        action [Hide('wait_navigation'), SetVariable('cur_location', location), Jump('close_map')]
+                        action [
+                            Hide('wait_navigation'), 
+                            SetVariable('cur_location', location), 
+                            Jump('close_map'),
+                        ]
                         at small_map
 
                     # Locations name
@@ -130,7 +134,14 @@ screen room_navigation():
                 if (room.location_id == cur_location.id and room.icon != None):
                     button:
                         xysize (126, 190)
-                        action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump("after_spending_time")]
+                        action [
+                            Hide('wait_navigation'), 
+                            SetVariable('prev_room', cur_room), 
+                            SetVariable('cur_room', room), 
+                            SetVariable('sp_bg_change_room', 
+                            getBgRoomRoutine(cur_routines_location, room.id)), 
+                            Call("change_room", room_id = None, close=True)
+                        ]
                         has vbox xsize 126 spacing 0
 
                         frame:
@@ -145,7 +156,14 @@ screen room_navigation():
                                 selected_hover room.icon + ' a'
                                 selected room == cur_room
                                 focus_mask True
-                                action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump("after_spending_time")]
+                                action [
+                                    Hide('wait_navigation'), 
+                                    SetVariable('prev_room', cur_room), 
+                                    SetVariable('cur_room', room), 
+                                    SetVariable('sp_bg_change_room', 
+                                    getBgRoomRoutine(cur_routines_location, room.id)), 
+                                    Call("change_room", room_id = None, close=True)
+                                ]
                                 at middle_room
 
                             # Check the presence of ch in that room
@@ -169,7 +187,14 @@ screen room_navigation():
                                                 imagebutton:
                                                     idle ch_icon
                                                     focus_mask True
-                                                    action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump("after_spending_time")]
+                                                    action [
+                                                        Hide('wait_navigation'), 
+                                                        SetVariable('prev_room', cur_room), 
+                                                        SetVariable('cur_room', room), 
+                                                        SetVariable('sp_bg_change_room', 
+                                                        getBgRoomRoutine(cur_routines_location, room.id)), 
+                                                        Call("change_room", room_id = None, close=True)
+                                                    ]
                                                     at small_face
 
                         # Room name
@@ -181,7 +206,14 @@ screen room_navigation():
                             text_align 0.5
                             line_leading 0
                             line_spacing -2
-                    key str(i) action [Hide('wait_navigation'), SetVariable('prev_room', cur_room), SetVariable('cur_room', room), SetVariable('sp_bg_change_room', getBgRoomRoutine(cur_routines_location, room.id)), Jump("after_spending_time")]
+                    key str(i) action [
+                        Hide('wait_navigation'), 
+                        SetVariable('prev_room', cur_room), 
+                        SetVariable('cur_room', room), 
+                        SetVariable('sp_bg_change_room', 
+                        getBgRoomRoutine(cur_routines_location, room.id)), 
+                        Call("after_spending_time", room_id = None, close=True)
+                    ]
 
         # Action wich Picture in background
         for room in rooms:
@@ -195,7 +227,10 @@ screen room_navigation():
                             if not act.picture_in_background_selected == None:
                                 hover act.picture_in_background_selected
                             focus_mask True
-                            action [Hide('wait_navigation'), Jump(act.label_name)]
+                            action [
+                                Hide('wait_navigation'), 
+                                Jump(act.label_name)
+                            ]
                             if renpy.variant("pc"):
                                 tooltip act.name
                             at middle_action_is_in_room
@@ -213,7 +248,10 @@ screen room_navigation():
                                 if not act.button_icon_selected == None:
                                     hover act.button_icon_selected
                                 focus_mask True
-                                action [Hide('wait_navigation'), Jump(act.label_name)]
+                                action [
+                                    Hide('wait_navigation'), 
+                                    Jump(act.label_name)
+                                ]
                                 if renpy.variant("pc"):
                                     tooltip act.name
                                 at middle_action
@@ -232,7 +270,14 @@ screen room_navigation():
                                 imagebutton:
                                     idle talk_obj.getButtonIcon()
                                     focus_mask True
-                                    action [Hide('wait_navigation'), SetVariable('talk_ch', ch_id), SetVariable('talk_image', routine.getTalkBackground(ch_id)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(talk_obj.talk)]
+                                    action [
+                                        Hide('wait_navigation'), 
+                                        SetVariable('talk_ch', ch_id), 
+                                        SetVariable('talk_image', 
+                                        routine.getTalkBackground(ch_id)), 
+                                        SetVariable('talk_end_image', routine.getBackgroundAfter()), 
+                                        Function(talk_obj.talk)
+                                    ]
                                     at middle_action
                                 # inserts the icon of the character who is currently in that room
                                 # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
@@ -241,7 +286,14 @@ screen room_navigation():
                                         idle ch_icons.get(ch_id)
                                         focus_mask True
                                         at small_face
-                                        action [Hide('wait_navigation'), SetVariable('talk_ch', ch_id), SetVariable('talk_image', routine.getTalkBackground(ch_id)), SetVariable('talk_end_image', routine.getBackgroundAfter()), Function(talk_obj.talk)]
+                                        action [
+                                            Hide('wait_navigation'), 
+                                            SetVariable('talk_ch', ch_id), 
+                                            SetVariable('talk_image', 
+                                            routine.getTalkBackground(ch_id)), 
+                                            SetVariable('talk_end_image', routine.getBackgroundAfter()), 
+                                            Function(talk_obj.talk)
+                                        ]
                                 if renpy.variant("pc"):
                                     tooltip _("Talk")
 
@@ -249,7 +301,10 @@ screen room_navigation():
             imagebutton:
                 idle '/interface/action-wait.webp'
                 focus_mask True
-                action [Hide('wait_navigation'), Jump('wait')]
+                action [
+                    Hide('wait_navigation'), 
+                    Jump('wait')
+                ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
                 at middle_action
@@ -277,7 +332,10 @@ screen room_navigation():
                 xysize (300, 300)
                 idle '/interface/action-wait.webp'
                 focus_mask True
-                action [Hide('wait_navigation'), Jump('wait')]
+                action [
+                    Hide('wait_navigation'), 
+                    Jump('wait')
+                ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
                 at middle_action
@@ -300,7 +358,10 @@ screen room_navigation():
         imagebutton:
             idle '/interface/menu-user.webp'
             focus_mask True
-            action [Hide('wait_navigation'), Jump('development')]
+            action [
+                Hide('wait_navigation'), 
+                Jump('development')
+            ]
             if renpy.variant("pc"):
                 at small_menu
                 tooltip _("Characters info")
@@ -311,7 +372,10 @@ screen room_navigation():
             idle '/interface/menu-memo.webp'
             focus_mask True
             if len(current_quest_stages) > 0 :
-                action [Hide('wait_navigation'), Show('menu_memo')]
+                action [
+                    Hide('wait_navigation'), 
+                    Show('menu_memo')
+                ]
             if renpy.variant("pc"):
                 at small_menu
                 tooltip _("Memo")
@@ -342,7 +406,10 @@ screen room_navigation():
         imagebutton:
             idle '/interface/menu-inventory.webp'
             focus_mask True
-            action [Hide('wait_navigation'), Jump('development')]
+            action [
+                Hide('wait_navigation'), 
+                Jump('development')
+            ]
             if renpy.variant("pc"):
                 at small_menu
                 tooltip _("Backpack")
@@ -352,7 +419,10 @@ screen room_navigation():
         imagebutton:
             idle '/interface/menu-phone.webp'
             focus_mask True
-            action [Hide('wait_navigation'), Jump('development')]
+            action [
+                Hide('wait_navigation'), 
+                Jump('development')
+            ]
             if renpy.variant("pc"):
                 at small_menu
                 tooltip _("Smartphone")
@@ -362,7 +432,10 @@ screen room_navigation():
         imagebutton:
             idle '/interface/menu-map.webp'
             focus_mask True
-            action [Hide('wait_navigation'), Jump('open_map')]
+            action [
+                Hide('wait_navigation'), 
+                Jump('open_map')
+            ]
             if renpy.variant("pc"):
                 at small_menu
                 tooltip _("Map")
@@ -393,7 +466,9 @@ screen menu_memo():
         pos (1740, 100)
         idle '/interface/button/close_idle.webp'
         hover '/interface/button/close_hover.webp'
-        action [Hide('menu_memo')]
+        action [
+            Hide('menu_memo')
+        ]
         if renpy.variant("pc"):
             focus_mask True
             at close_zoom
@@ -414,13 +489,21 @@ screen menu_memo():
                     button:
                         xsize 390
                         background None
-                        action [SetVariable('cur_task_menu', task_id), SetVariable('cur_quest_menu', quests_levels[task_id])]
+                        action [
+                            SetVariable('cur_task_menu', task_id), 
+                            SetVariable('cur_quest_menu', 
+                            quests_levels[task_id])
+                        ]
                         xpadding 0
                         ypadding 0
                         xmargin 0
                         ymargin 0
                         textbutton quests[task_id].title:
-                            action [SetVariable('cur_task_menu', task_id), SetVariable('cur_quest_menu', quests_levels[task_id])]
+                            action [
+                                SetVariable('cur_task_menu', task_id), 
+                                SetVariable('cur_quest_menu', 
+                                quests_levels[task_id])
+                            ]
                             selected cur_task_menu == task_id
             # scroll bar
             vbar value YScrollValue('vp1') style 'menu_vscroll'
@@ -485,11 +568,15 @@ screen menu_memo():
             insensitive '/interface/button/prev_insensitive.webp'
             focus_mask True
             sensitive (cur_quest_menu > 0)
-            action [SetVariable('cur_quest_menu', cur_quest_menu-1)]
+            action [
+                SetVariable('cur_quest_menu', cur_quest_menu-1)
+            ]
         imagebutton pos (1570, 360):
             idle '/interface/button/next_idle.webp'
             hover '/interface/button/next_hover.webp'
             insensitive '/interface/button/next_insensitive.webp'
             focus_mask True
             sensitive (cur_quest_menu < quests_levels[cur_task_menu])
-            action [SetVariable('cur_quest_menu', cur_quest_menu+1)]
+            action [
+                SetVariable('cur_quest_menu', cur_quest_menu+1)
+            ]
