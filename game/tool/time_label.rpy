@@ -34,9 +34,10 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, close=True, is_check_event=False):
     return
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#after-spending-time
-label after_spending_time(close=True, is_check_event=False):
-    # this step is to change the background based on the presence of a ch
-    $ cur_routines_location = getChsInThisLocation(cur_location.id)
+label after_spending_time(close=True, is_check_event=False, is_check_routines=True):
+    if(is_check_routines):
+        # this step is to change the background based on the presence of a ch
+        $ cur_routines_location = getChsInThisLocation(cur_location.id)
     # check event
     if (is_check_event):
         $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
