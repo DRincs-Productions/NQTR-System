@@ -1,27 +1,19 @@
 # if in a room there is a different bg (taken in routine) than usual, use this one
 default sp_bg_change_room = None
-
-# Change the background image to the current room image. In case sp_bg_change_room is not null use that.
-label check_closed_room:
-    # Check if the room is closed
-    if (cur_room.id in closed_rooms and (closed_rooms[cur_room.id] == None or tm.now_is_between(start=closed_rooms[cur_room.id].tm_start, end=closed_rooms[cur_room.id].tm_stop))):
-        if (closed_rooms[cur_room.id].ch_talkobj_dict == None):
-            call closed_room_event
-        else:
-            $ chs1 = closed_rooms[cur_room.id].ch_talkobj_dict
-            $ chs2 = getChsInThisLocation(cur_room.id)
-            $ res = not bool(chs2)
-            # TODO: check if all keys of chs1 are in chs2, in this case res = True
-            if (res == True):
-                call closed_room_event
-    return
+# Image of a closed door
+define bg_loc = "location/loc-[tm.image_time].webp"
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room
 label change_room(room_id = None, close=False):
     # start an event if it exists
     if room_id:
         $ changeRoom(room_id = room_id, rooms = rooms, locations = locations)
-    call after_spending_time(close = close)
+    call after_spending_time(close = close, is_check_event=True)
+    return
+
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#go-previous-room
+label go_previous_room(close=False):
+    $ cur_room = prev_room
     return
 
 ## Check if mc can come out
@@ -53,8 +45,6 @@ label close_map:
     scene expression (cur_room.bg) as bg
     jump change_room
 
-# Image of a closed door
-define bg_loc = "location/loc-[tm.image_time].webp"
 # Is opened in change_room when a room id is in closed rooms
 label closed_room_event:
     # Custom code

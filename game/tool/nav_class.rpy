@@ -45,16 +45,20 @@ init -9 python:
             self.yalign = yalign
 
 
-    def clearClosedRooms(closed_rooms: dict[str, Commitment], tm: TimeHandler):
-        """Deletes expired locked rooms. you want to add a room with no expiry date: tm_stop = None"""
+    def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], tm: TimeHandler):
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#is-closed-room """
+        cur_room_is_closed = False
         closed_rooms_to_del = []
         for id, item in closed_rooms.items():
-            if (item.tm_stop != None and tm.now_is_between(start=item.tm_start, end=item.tm_stop) == False):
+            if (id == room_id and tm.now_is_between(start=item.tm_start, end=item.tm_stop)):
+                cur_room_is_closed = True
+            elif (item.tm_stop != None and not tm.now_is_between(start=item.tm_start, end=item.tm_stop)):
                 closed_rooms_to_del.append(id)
         for id in closed_rooms_to_del:
             del closed_rooms[id]
         del closed_rooms_to_del
-        return closed_rooms
+        return cur_room_is_closed
+
 
     def changeRoom(room_id: str, rooms: list[Room], locations: list[Room]):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
@@ -67,6 +71,7 @@ init -9 python:
             if room.id is str and room.id == room_id:
                 new_room = room
         if new_room:
+            prev_room = cur_room
             cur_room = new_room
         else:
             renpy.log("Error: cur_room is None")
@@ -84,5 +89,6 @@ init -9 python:
             return
         for location in locations:
             if location.id is str and location.id == location_id:
+                prev_location = cur_location
                 cur_location = location
         return

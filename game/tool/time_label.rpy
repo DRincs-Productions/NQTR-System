@@ -42,14 +42,15 @@ label after_spending_time(close=True, is_check_event=False, is_check_routines=Tr
     if (is_check_event):
         $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
         call check_event
-    $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
-    if (sp_bg_change_room != None):
-        scene expression (sp_bg_change_room) as bg
+    if(isClosedRoom(cur_room.id, closed_rooms, tm)):
+        # Change the background image to the current room image.
+        call closed_room_event
     else:
-        scene expression (cur_room.bg) as bg
-        # removes expired locked rooms
-    $ closed_rooms = clearClosedRooms(closed_rooms, tm)
-    call check_closed_room
+        $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
+        if (sp_bg_change_room != None):
+            scene expression (sp_bg_change_room) as bg
+        else:
+            scene expression (cur_room.bg) as bg
     if (close):
         call screen room_navigation
     return

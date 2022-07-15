@@ -21,6 +21,7 @@ define ch_icons = {
     "ann"       : "icon/Ann.webp",
 }
 
+default prev_room = None
 default cur_room = rooms[0]
 default cur_location = locations[0]
 # Variable to check the map screen: if it is True then the player is viewing the map.
