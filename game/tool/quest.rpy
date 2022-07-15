@@ -136,7 +136,7 @@ init python:
             the only thing that happens is that it doesn't return anything. (for now I don't know how serious is this error)"""
             if (self.active):
                 return self.active
-            if (self.request_check() == False):
+            if (not self.request_check()):
                 return False
             if (self.label_start != None):
                 self.active = True
@@ -153,14 +153,14 @@ init python:
                 if (quests_levels[quest] < level):
                     return False
             for item in self.flags_requests:
-                if (flags[item] == False):
+                if (not flags[item]):
                     return False
             return True
 
         def completed_try(self):
             """Check completed and if it is complete -> next_stage()
             set complete = True if it can actually go ahead completed"""
-            if (self.is_completed() == False):
+            if (not self.is_completed()):
                 return False
             self.next_stage()
             return True
@@ -171,12 +171,12 @@ init python:
             # TODO: Execute label_check
             if (self.completed):
                 return True
-            if (self.active == False):
-                if (self.start() == False):
+            if (not self.active):
+                if (not self.start()):
                     return False
             if self.goals:
                 for x in self.goals:
-                    if (x.complete_check() == False):
+                    if (not x.complete_check()):
                         return False
             self.completed = True
             # self.completed_try()
@@ -230,7 +230,7 @@ init python:
 
         def is_completed(self):
             """Check if all stages have been completed."""
-            if ((self.id in quests_levels) == False):
+            if (not (self.id in quests_levels)):
                 updateQuestsLevels()
                 return False
             if len(self.stages_id)-1 == quests_levels[self.id]:
@@ -240,19 +240,19 @@ init python:
 
         def current_quest_id(self):
             """Return the id of this current"""
-            if ((self.id in quests_levels) == False):
+            if (not (self.id in quests_levels)):
                 self.update()
             return self.stages_id[quests_levels[id]]
 
         def complete_stages_number(self):
             """Returns the number of completed stages"""
-            if ((self.id in quests_levels) == False):
+            if (not (self.id in quests_levels)):
                 self.update()
             return quests_levels[id]
 
         def get_percentage_completion(self):
             """Returns the percentage of completion"""
-            if ((self.id in quests_levels) == False):
+            if (not (self.id in quests_levels)):
                 self.update()
             return quests_levels[id]/len(self.stages_id)*100
 
@@ -262,10 +262,10 @@ init python:
             Prevent errors like blocked Quests."""
             if (self.is_completed()):
                 return
-            if ((self.id in current_quest_stages) == False and quests_levels[self.id] == 0):
+            if (not (self.id in current_quest_stages) and quests_levels[self.id] == 0):
                 return
             # if the Quest has been started, but there is no current_quest_stages, it restarts the Quest from 0
-            if ((self.id in current_quest_stages) == False):
+            if (not (self.id in current_quest_stages)):
                 self.start()
                 return
             # if you have somehow exceeded the number of stages
@@ -273,7 +273,7 @@ init python:
                 quests_levels[self.id] = len(self.stages_id)-1
                 return
             # if it is a completed Quest and a Stage has been added in a new update
-            if self.is_completed() == False and current_quest_stages[self.id].completed:
+            if (not self.is_completed()) and current_quest_stages[self.id].completed:
                 self.next_stage()
                 return
 
@@ -285,7 +285,7 @@ init python:
 
         def next_stage(self):
             """Go to the next Stage, in case it is the last, it does not go on but the sect as complete."""
-            if ((self.id in quests_levels) == False):
+            if (not (self.id in quests_levels)):
                 self.update()
             if len(self.stages_id)-1 == quests_levels[self.id]:
                 current_quest_stages[self.id].completed = True
@@ -294,7 +294,7 @@ init python:
             self.start(quests_levels[self.id])
 
         def is_started(self):
-            if ((self.id in quests_levels) == False):
+            if (not (self.id in quests_levels)):
                 self.update()
             return (self.id in current_quest_stages)
         # TODO: add: def delete(self):
@@ -310,12 +310,12 @@ init python:
         # check if there are less elements than flag_keys
         # in case you add them set with False
         for x in quests.keys():
-            if ((x in quests_levels) == False):
+            if (not (x in quests_levels)):
                 quests_levels[x] = 0
         # check if there are more elements than flag_keys
         # in case it eliminates them
         for x in quests_levels.keys():
-            if ((x in quests) == False):
+            if (not (x in quests)):
                 quests_levels.remove(x)
         return
 

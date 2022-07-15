@@ -15,13 +15,13 @@ init python:
         # check if there are less elements than flag_keys
         # in case you add them set with False
         for x in flag_keys:
-            if ((x in flags) == False):
+            if (not (x in flags)):
                 flags[x] = False
         # check if there are more elements than flag_keys
         # in case it eliminates them
         flags_to_del = []
         for x in flags:
-            if ((x in flag_keys) == False):
+            if (not (x in flag_keys)):
                 flags_to_del.append(x)
         for x in flags_to_del:
             del flags[x]

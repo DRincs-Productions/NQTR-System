@@ -23,7 +23,7 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, close=True, is_check_ev
 label wait(wait_hour=DEFAULT_WAIT_HOUR, close=True, is_check_event=False):
     if(not flags["not_can_spend_time"]):
         if(tm.new_hour(wait_hour)):
-            if (map_open == False):
+            if (not map_open):
                 call after_spending_time(close = close, is_check_event = is_check_event)
         else:
             "(It's late, you have to go to bed)"

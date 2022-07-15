@@ -31,7 +31,7 @@ label change_room(room_id = None, close=False):
 ## Check if mc can come out
 define block_goout_dialogue = _("Now is not the time to go outside")
 label check_goout:
-    if(flags.get("goout") == False):
+    if(not flags.get("goout")):
         "[block_goout_dialogue]"
         call screen room_navigation
     return
@@ -44,7 +44,7 @@ label open_map:
         call change_room(room_id = cur_room.location_id)
     scene expression map_images[cur_location.map_id] as bg
 
-    if (map_open == False):
+    if (not map_open):
         $ map_open = True
         call screen room_navigation
 ## Close the map

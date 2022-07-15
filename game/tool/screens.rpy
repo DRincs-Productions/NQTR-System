@@ -220,7 +220,7 @@ screen room_navigation():
             # Adds the button list of possible actions in that room
             if (room == cur_room and not room.id in closed_rooms):
                 for act in getActions(actions | df_actions, room, tm):
-                    if (act.isButton() == False):
+                    if (not act.isButton()):
                         imagebutton:
                             pos (act.xpos, act.ypos)
                             idle act.picture_in_background
