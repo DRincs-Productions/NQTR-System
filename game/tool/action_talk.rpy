@@ -37,9 +37,9 @@ init -11 python:
             """Inside you can find the labels and images to start talk()"""
             # if label_name == None does the default procedure
             if not isNullOrEmpty(self.label_name):
-                renpy.jump(self.label_name)
+                renpy.call(self.label_name)
             elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
-                renpy.jump(DEFAULT_LABEL_TALK)
+                renpy.call(DEFAULT_LABEL_TALK)
             return
 
         def getBackground(self):

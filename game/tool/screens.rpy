@@ -204,7 +204,7 @@ screen room_navigation():
                         Hide('wait_navigation'), 
                         SetVariable('prev_room', cur_room), 
                         SetVariable('cur_room', room), 
-                        Call("after_spending_time", room_id = None, close=True)
+                        Call("change_room", room_id = None, close=True)
                     ]
 
         # Action wich Picture in background
@@ -265,10 +265,8 @@ screen room_navigation():
                                     action [
                                         Hide('wait_navigation'), 
                                         SetVariable('talk_ch', ch_id), 
-                                        SetVariable('talk_image', 
-                                        routine.getTalkBackground(ch_id)), 
-                                        SetVariable('talk_end_image', routine.getBackgroundAfter()), 
-                                        Function(talk_obj.talk)
+                                        SetVariable('talk_image', routine.getTalkBackground(ch_id)), 
+                                        Function(talk_obj.talk),
                                     ]
                                     at middle_action
                                 # inserts the icon of the character who is currently in that room
@@ -281,10 +279,8 @@ screen room_navigation():
                                         action [
                                             Hide('wait_navigation'), 
                                             SetVariable('talk_ch', ch_id), 
-                                            SetVariable('talk_image', 
-                                            routine.getTalkBackground(ch_id)), 
-                                            SetVariable('talk_end_image', routine.getBackgroundAfter()), 
-                                            Function(talk_obj.talk)
+                                            SetVariable('talk_image', routine.getTalkBackground(ch_id)), 
+                                            Function(talk_obj.talk),
                                         ]
                                 if renpy.variant("pc"):
                                     tooltip _("Talk")

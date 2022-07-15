@@ -56,10 +56,6 @@ init -10 python:
             "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
             return self.bg
 
-        def getBackgroundAfter(self):
-            "Returns the AfterTalk image of the ch or the first that has it. Otherwise None"
-            return self.bg
-
         def isEvent(self):
             "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
             return (self.event_label_name is not None)
