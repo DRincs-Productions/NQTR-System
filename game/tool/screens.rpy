@@ -290,8 +290,8 @@ screen room_navigation():
                 idle '/interface/action-wait.webp'
                 focus_mask True
                 action [
-                    Hide('wait_navigation'), 
-                    Jump('wait')
+                    Hide('wait_navigation'),
+                    Call("wait", close=True, is_check_event=True),
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
@@ -321,8 +321,8 @@ screen room_navigation():
                 idle '/interface/action-wait.webp'
                 focus_mask True
                 action [
-                    Hide('wait_navigation'), 
-                    Jump('wait')
+                    Hide('wait_navigation'),
+                    Call("wait", close=True, is_check_event=True),
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
