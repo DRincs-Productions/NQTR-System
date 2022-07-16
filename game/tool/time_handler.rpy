@@ -20,7 +20,7 @@ init -11 python:
 
 
     class TimeHandler(object):
-        """Class to manage time, and also related to the constant event_duration. I strongly recommend to modify it according to the use."""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#time-handler """
 
         def __init__(self,
                     hour_of_new_day: int = 5,
@@ -30,7 +30,6 @@ init -11 python:
             self.hour_of_new_day = hour_of_new_day
             self.hour = hour
             self.day = day
-            # TODO: manage weekends (function...)
             self.weekend_day = weekend_day
             # this variable is used to update images that change according to time.
             # es image = "sky-[image_time]"
@@ -99,6 +98,7 @@ init -11 python:
         #     return month_number
 
         def new_hour(self, amt: int = event_duration):
+            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy """
             # if it is too late you have to use new_day()
             if (self.hour < self.hour_of_new_day):
                 return False
@@ -120,24 +120,28 @@ init -11 python:
                 self.image_time = 1
 
         def new_day(self):
+            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
             self.hour = self.hour_of_new_day
             self.day += 1
             self.update_image_time()
 
         def now_is_between(self, end: int, start: int = 0):
+            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#now-is-between """
             return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
-
-        # TODO: is weekend
-        # TODO: skip weekend
 
 
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function
-default tm = TimeHandler()
+default tm = TimeHandler(
+                    hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY,
+                    hour = 8,
+                    weekend_day = 6,
+                    day = 0
+)
 
 init -8 python:
     def updateTimeHandler(tm: TimeHandler):
-        hour_of_new_day = tm.hour_of_new_day
+        hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY
         hour = tm.hour
         weekend_day = tm.weekend_day
         day = tm.day

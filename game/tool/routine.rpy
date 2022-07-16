@@ -1,6 +1,7 @@
 init -10 python:
     class Commitment(object):
-        """Commitment, routine and event"""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#commitment
+        event_label_name: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#events """
 
         def __init__(self,
                     tm_start: int,
@@ -8,23 +9,20 @@ init -10 python:
                     ch_talkobj_dict: dict[str, TalkObject] = {},
                     bg: str  = None,
                     name: str = None,
-                    id_location: str = None,
-                    id_room: str = None,
-                    type: str = None,
+                    location_id: str = None,
+                    room_id: str = None,
+                    tag: str = None,
                     day_deadline: int = None,
                     event_label_name: str = None
                     ):
 
-            # TODO: add a function that checks if it is available to talk (maybe with flags)
-            # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
-            # TODO: add event: in case it is nothing then when MC enter in that room starts a label
             self.bg = bg
             self.ch_talkobj_dict = ch_talkobj_dict
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
-            self.id_location = id_location
-            self.id_room = id_room
-            self.type = type
+            self.location_id = location_id
+            self.room_id = room_id
+            self.tag = tag
             self.day_deadline = day_deadline
             # ATTENTION: in check_event_sp if the mc has not moved, delete the event (resolves any loops)
             # se si vuole degli eventi fissi usare check_event_df
@@ -34,7 +32,7 @@ init -10 python:
             # if you want the event to be repeated every time you go to that room
             # at the end of the label insert:
             # call change_room
-            # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing id_location
+            # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing location_id
             # at the end of the label insert:
             # $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
             # call change_room
@@ -56,10 +54,6 @@ init -10 python:
             "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
             return self.bg
 
-        def getBackgroundAfter(self):
-            "Returns the AfterTalk image of the ch or the first that has it. Otherwise None"
-            return self.bg
-
         def isEvent(self):
             "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
             return (self.event_label_name is not None)
@@ -71,106 +65,101 @@ init -10 python:
         #         renpy.call(self.event_label_name)
 
 
-    def clearExpiredRoutine(routine: dict[str, Commitment], tm: TimeHandler):
+    def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler):
         """removes expired Commitments"""
         rlist = []
         rlist.clear()
-        for key, val in routine.iteritems():
+        for key, val in commitments.iteritems():
             if (val.day_deadline != None and val.day_deadline <= tm.day):
                 rlist.append(key)
         for r in rlist:
-            del routine[r]
+            del commitments[r]
         del rlist
-        return routine
+        return commitments
 
 
-    def getChsInThisLocation(id_location: str):
-        # TODO: to add when I change id_location
-        """Returns the commitments of the ch (NCPs) in that Location at that time.
-        Give priority to special routine, and routine with a valid type."""
-        # Create a list of ch who have a routine in that place at that time
+    def getChsInThisLocation(location_id: str):
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority """
+        # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
-        routines = {}
-        for routine in sp_routine.values():
+        commitments = {}
+        for comm in routine.values():
             # Check Time and Location
-            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
+            if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop)):
                 # Full verification
-                for chKey in routine.ch_talkobj_dict.keys():
-                    routines[chKey] = None
-        for routine in df_routine.values():
+                for chKey in comm.ch_talkobj_dict.keys():
+                    commitments[chKey] = None
+        for comm in df_routine.values():
             # Check Time and Location
-            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
+            if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop)):
                 # Full verification
-                ch_talkobj_dict = routine.ch_talkobj_dict
+                ch_talkobj_dict = comm.ch_talkobj_dict
                 for chKey in ch_talkobj_dict.keys():
-                    routines[chKey] = None
-        # Check I enter the current routines of the ch.
-        # In case the routine is not in the place I want to go or they are null and void I delete the ch.
-        routines_key_to_del = []
-        for ch in routines.keys():
-            routines[ch] = getChLocation(ch)
-            if routines[ch] == None:
-                routines_key_to_del.append(ch)
-            elif routines[ch].id_location != id_location:
-                routines_key_to_del.append(ch)
-        for ch in routines_key_to_del:
-            del routines[ch]
-        del routines_key_to_del
-        return routines
+                    commitments[chKey] = None
+        # Check I enter the current commitments of the ch.
+        # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
+        commitments_key_to_del = []
+        for ch in commitments.keys():
+            commitments[ch] = getChLocation(ch)
+            if commitments[ch] == None:
+                commitments_key_to_del.append(ch)
+            elif commitments[ch].location_id != location_id:
+                commitments_key_to_del.append(ch)
+        for ch in commitments_key_to_del:
+            del commitments[ch]
+        del commitments_key_to_del
+        return commitments
 
 
-    def getEventsInThisLocation(id_location: str, sp_routine: dict[str, Commitment]):
-        # TODO: to add when I change id_location
+    def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]):
         """Returns events at that location at that time.
-        Checks only in sp_routine."""
-        # Create a list of ch who have a routine in that place at that time
+        Checks only in routine."""
+        # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         events = {}
-        for routine in sp_routine.values():
+        for comm in routine.values():
             # Check Time and Location and is event
-            if (routine.id_location == id_location and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.isEvent() == True):
-                events[routine.id_room] = routine
+            if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.isEvent() == True):
+                events[comm.room_id] = comm
         return events
 
 
     def getChLocation(ch: str):
-        """Returns the current routine of the ch.
-        Give priority to special routine, and routine with a valid type."""
-        ret_routine = None
+        """Returns the current commitment of the ch.
+        Give priority to special routine, and routine with a valid tag."""
+        ret_commitment = None
         # special routine
-        for routine in sp_routine.values():
-            if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
-                if ch in routine.ch_talkobj_dict:
-                    ret_routine = routine
-                    if checkValidType(routine):
-                        return routine
-        if ret_routine != None:
-            return ret_routine
+        for id, comm in routine.items():
+            if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
+                if ch in comm.ch_talkobj_dict:
+                    ret_commitment = comm
+                    if checkIfIsActiveByTag(tag = comm.tag, id = id):
+                        return comm
+        if ret_commitment != None:
+            return ret_commitment
         # default routine
-        for routine in df_routine.values():
-            if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
-                if ch in routine.ch_talkobj_dict:
-                    ret_routine = routine
-                    if checkValidType(routine.type):
-                        return routine
-        return ret_routine
+        for id, comm in df_routine.items():
+            if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
+                if ch in comm.ch_talkobj_dict:
+                    ret_commitment = comm
+                    if checkIfIsActiveByTag(tag = comm.tag, id = id):
+                        return comm
+        return ret_commitment
 
 
-    # TODO: Is not used in Routine so move, maybe it is better in boolean_value
-    def checkValidType(type):
-        """Check according to its type, if it is True or False"""
+    def checkIfIsActiveByTag(tag: str, id = None):
+        """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
         # Custom code
-        if (type == None):
+        if (tag == None):
             return False
-        if (type == "no_week"):
-            # TODO: Checkweekend
+        if (tag == "no_week"):
             return True
         return False
 
 
-    def getBgRoomRoutine(routines, room_id):
-        """Returns the first background image of the routines based on the current room. if there are no returns None"""
-        for item in routines.values():
-            if item.id_room == room_id:
+    def getBgRoomRoutine(commitments, room_id):
+        """Returns the first background image of the commitments based on the current room. if there are no returns None"""
+        for item in commitments.values():
+            if item.room_id == room_id:
                 return item.getBackground()
         return None

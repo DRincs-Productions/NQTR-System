@@ -8,7 +8,6 @@ init -5 python:
                     tm_stop: int = 25,
                     day_start: int = -1,
                     day_deadline: int = -1):
-            # TODO: add the type as in routine
 
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
@@ -29,21 +28,19 @@ init -5 python:
             if room.id in act.rooms:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
-            elif act_id in room.id_actions:
+            elif act_id in room.action_ids:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
         return acts
 
 
-    def clearExpiredActions(actions: dict[str, Action], tm: TimeHandler):
+    def clearExpiredActions(actions: dict[str, Action], cur_day: int):
         """Delete Expired Actions"""
         actions_to_del = []
         for id, act in actions.items():
-            if (act.day_deadline and act.day_deadline <= tm.day):
+            if (act.day_deadline and act.day_deadline <= cur_day):
                 actions_to_del.append(id)
         for act_id in actions_to_del:
             del actions[act_id]
         del actions_to_del
         return actions
-
-# TODO: Add a function that updates Actions after a load

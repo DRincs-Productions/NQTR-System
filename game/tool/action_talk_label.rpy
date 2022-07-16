@@ -1,6 +1,5 @@
 define talk_ch = None
 default talk_image = None
-default talk_end_image = None
 # used in talk_menu, internally there are the possible choices that you can make in a dialog with a certain ch
 # is structured like this:
 # 'alice'   :   [("Choice 1", "label_one"), ("Choice 2", "label_two")]
@@ -25,10 +24,7 @@ label talk_menu:
 
 # Best way to exit a dialogue
 label talk_end:
-    if (talk_end_image != None):
-        scene expression (talk_end_image) as bg
-
-    call screen room_navigation
+    jump after_spending_time
 
 # label talk: is a label used to give the possibility to customize the dialog even more.
 label talk:
@@ -80,7 +76,7 @@ label stage_talkalice:
         mc "Ok"
         a "Thanks"
 
-        $ addTalkChoice(id_choice = "alice", choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
+        $ addTalkChoice(choice_id = "alice", choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
 
         $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", rooms=["my_room"])
 
@@ -97,7 +93,7 @@ label stage_talkalice:
         mc "Here's your book."
         a "Thank you, I can finally read something new."
         $ quests["alice"].next_stage()
-        $ delTalkChoice(id_choice = "alice", choice_text = _("About the book"), dict_choices = talkch_choices)
+        $ delTalkChoice(choice_id = "alice", choice_text = _("About the book"), dict_choices = talkch_choices)
     return
 
 # Quest "ann"
@@ -112,5 +108,5 @@ label stage_talkalice_aboutann:
         xpos = 608, ypos = 667)
 
     $ quests["ann"].next_stage()
-    $ delTalkChoice(id_choice = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
+    $ delTalkChoice(choice_id = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
     return
