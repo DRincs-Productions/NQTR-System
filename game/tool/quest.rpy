@@ -51,13 +51,13 @@ init python:
             if (self.need == 0):
                 self.complete = True
             self.have += value
-            if (self.complete_check()):
+            if (self.isComplete()):
                 self.complete = True
                 # Todo: notify description
                 return True
             return False
 
-        def complete_check(self):
+        def isComplete(self):
             """Checks the status of completion. returns True if the mission has been completed"""
             if (self.complete == True):
                 return True
@@ -178,7 +178,7 @@ init python:
                     return False
             if self.goals:
                 for x in self.goals:
-                    if (not x.complete_check()):
+                    if (not x.isComplete()):
                         return False
             self.completed = True
             # self.completed_try()
