@@ -17,7 +17,7 @@ label change_room(room_id = None, close=False):
     return
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#go-previous-room
-label go_previous_room(close=False):
+label go_previous_room:
     $ cur_room = prev_room
     return
 
