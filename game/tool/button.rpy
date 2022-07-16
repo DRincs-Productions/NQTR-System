@@ -3,7 +3,7 @@ init -99 python:
         """Wiki: ... """
 
         def __init__(self,
-                    name: str, # requirement
+                    name: str = None, # requirement
                     label_name: str = None, # requirement
                     button_icon: str = None,
                     button_icon_selected: str = None,
