@@ -67,89 +67,89 @@ init -10 python:
         #         renpy.call(self.event_label_name)
 
 
-    def clearExpiredRoutine(routine: dict[str, Commitment], tm: TimeHandler):
+    def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler):
         """removes expired Commitments"""
         rlist = []
         rlist.clear()
-        for key, val in routine.iteritems():
+        for key, val in commitments.iteritems():
             if (val.day_deadline != None and val.day_deadline <= tm.day):
                 rlist.append(key)
         for r in rlist:
-            del routine[r]
+            del commitments[r]
         del rlist
-        return routine
+        return commitments
 
 
     def getChsInThisLocation(location_id: str):
         # TODO: to add when I change location_id
         """Returns the commitments of the ch (NCPs) in that Location at that time.
-        Give priority to special routine, and routine with a valid type."""
-        # Create a list of ch who have a routine in that place at that time
+        Give priority to special commitment, and commitment with a valid type."""
+        # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
-        routines = {}
-        for routine in sp_routine.values():
+        commitments = {}
+        for comm in sp_routine.values():
             # Check Time and Location
-            if (routine.location_id == location_id and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
+            if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop)):
                 # Full verification
-                for chKey in routine.ch_talkobj_dict.keys():
-                    routines[chKey] = None
-        for routine in df_routine.values():
+                for chKey in comm.ch_talkobj_dict.keys():
+                    commitments[chKey] = None
+        for comm in df_routine.values():
             # Check Time and Location
-            if (routine.location_id == location_id and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop)):
+            if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop)):
                 # Full verification
-                ch_talkobj_dict = routine.ch_talkobj_dict
+                ch_talkobj_dict = comm.ch_talkobj_dict
                 for chKey in ch_talkobj_dict.keys():
-                    routines[chKey] = None
-        # Check I enter the current routines of the ch.
-        # In case the routine is not in the place I want to go or they are null and void I delete the ch.
-        routines_key_to_del = []
-        for ch in routines.keys():
-            routines[ch] = getChLocation(ch)
-            if routines[ch] == None:
-                routines_key_to_del.append(ch)
-            elif routines[ch].location_id != location_id:
-                routines_key_to_del.append(ch)
-        for ch in routines_key_to_del:
-            del routines[ch]
-        del routines_key_to_del
-        return routines
+                    commitments[chKey] = None
+        # Check I enter the current commitments of the ch.
+        # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
+        commitments_key_to_del = []
+        for ch in commitments.keys():
+            commitments[ch] = getChLocation(ch)
+            if commitments[ch] == None:
+                commitments_key_to_del.append(ch)
+            elif commitments[ch].location_id != location_id:
+                commitments_key_to_del.append(ch)
+        for ch in commitments_key_to_del:
+            del commitments[ch]
+        del commitments_key_to_del
+        return commitments
 
 
     def getEventsInThisLocation(location_id: str, sp_routine: dict[str, Commitment]):
         # TODO: to add when I change location_id
         """Returns events at that location at that time.
         Checks only in sp_routine."""
-        # Create a list of ch who have a routine in that place at that time
+        # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         events = {}
-        for routine in sp_routine.values():
+        for comm in sp_routine.values():
             # Check Time and Location and is event
-            if (routine.location_id == location_id and tm.now_is_between(start=routine.tm_start, end=routine.tm_stop) and routine.isEvent() == True):
-                events[routine.room_id] = routine
+            if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.isEvent() == True):
+                events[comm.room_id] = comm
         return events
 
 
     def getChLocation(ch: str):
-        """Returns the current routine of the ch.
+        """Returns the current commitment of the ch.
         Give priority to special routine, and routine with a valid type."""
-        ret_routine = None
+        ret_commitment = None
         # special routine
-        for routine in sp_routine.values():
-            if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
-                if ch in routine.ch_talkobj_dict:
-                    ret_routine = routine
-                    if checkValidType(routine):
-                        return routine
-        if ret_routine != None:
-            return ret_routine
+        for comm in sp_routine.values():
+            if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
+                if ch in comm.ch_talkobj_dict:
+                    ret_commitment = comm
+                    if checkValidType(comm):
+                        return comm
+        if ret_commitment != None:
+            return ret_commitment
         # default routine
-        for routine in df_routine.values():
-            if tm.now_is_between(start=routine.tm_start, end=routine.tm_stop):
-                if ch in routine.ch_talkobj_dict:
-                    ret_routine = routine
-                    if checkValidType(routine.type):
-                        return routine
-        return ret_routine
+        for comm in df_routine.values():
+            if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
+                if ch in comm.ch_talkobj_dict:
+                    ret_commitment = comm
+                    if checkValidType(comm.type):
+                        return comm
+        return ret_commitment
 
 
     # TODO: Is not used in Routine so move, maybe it is better in boolean_value
@@ -164,9 +164,9 @@ init -10 python:
         return False
 
 
-    def getBgRoomRoutine(routines, room_id):
-        """Returns the first background image of the routines based on the current room. if there are no returns None"""
-        for item in routines.values():
+    def getBgRoomRoutine(commitments, room_id):
+        """Returns the first background image of the commitments based on the current room. if there are no returns None"""
+        for item in commitments.values():
             if item.room_id == room_id:
                 return item.getBackground()
         return None

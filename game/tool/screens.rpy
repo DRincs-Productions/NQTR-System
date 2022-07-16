@@ -164,9 +164,9 @@ screen room_navigation():
 
                             # Check the presence of ch in that room
                             $ there_are_ch = False
-                            for routine in cur_routines_location.values():
+                            for comm in cur_routines_location.values():
                                 # If it is the selected room
-                                if routine != None and room.id == routine.room_id:
+                                if comm != None and room.id == comm.room_id:
                                     # I insert hbox only if they are sure that someone is there
                                     $ there_are_ch = True
 
@@ -176,10 +176,10 @@ screen room_navigation():
                                     xalign 0.5
                                     spacing - 30
 
-                                    for routine in cur_routines_location.values():
+                                    for comm in cur_routines_location.values():
                                         # If it is the selected room
-                                        if room.id == routine.room_id:
-                                            for ch_icon in routine.getChIcons(ch_icons):
+                                        if room.id == comm.room_id:
+                                            for ch_icon in comm.getChIcons(ch_icons):
                                                 imagebutton:
                                                     idle ch_icon
                                                     focus_mask True
@@ -251,10 +251,10 @@ screen room_navigation():
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
                 # TODO: there is no possibility of group talk
-                for routine in cur_routines_location.values():
-                    if (routine != None and room.id == routine.room_id and room == cur_room):
+                for comm in cur_routines_location.values():
+                    if (comm != None and room.id == comm.room_id and room == cur_room):
                         # Insert in talk for every ch, main in that room
-                        for ch_id, talk_obj in routine.ch_talkobj_dict.items():
+                        for ch_id, talk_obj in comm.ch_talkobj_dict.items():
                             frame:
                                 xysize (120, 120)
                                 background None
@@ -265,7 +265,7 @@ screen room_navigation():
                                     action [
                                         Hide('wait_navigation'),
                                         SetVariable('talk_ch', ch_id),
-                                        SetVariable('talk_image', routine.getTalkBackground(ch_id)),
+                                        SetVariable('talk_image', comm.getTalkBackground(ch_id)),
                                         Function(talk_obj.talk),
                                     ]
                                     at middle_action
@@ -279,7 +279,7 @@ screen room_navigation():
                                         action [
                                             Hide('wait_navigation'),
                                             SetVariable('talk_ch', ch_id),
-                                            SetVariable('talk_image', routine.getTalkBackground(ch_id)),
+                                            SetVariable('talk_image', comm.getTalkBackground(ch_id)),
                                             Function(talk_obj.talk),
                                         ]
                                 if renpy.variant("pc"):
