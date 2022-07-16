@@ -87,7 +87,7 @@ init -10 python:
         # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         commitments = {}
-        for comm in sp_routine.values():
+        for comm in routine.values():
             # Check Time and Location
             if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop)):
                 # Full verification
@@ -115,14 +115,14 @@ init -10 python:
         return commitments
 
 
-    def getEventsInThisLocation(location_id: str, sp_routine: dict[str, Commitment]):
+    def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]):
         # TODO: to add when I change location_id
         """Returns events at that location at that time.
-        Checks only in sp_routine."""
+        Checks only in routine."""
         # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         events = {}
-        for comm in sp_routine.values():
+        for comm in routine.values():
             # Check Time and Location and is event
             if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.isEvent() == True):
                 events[comm.room_id] = comm
@@ -134,7 +134,7 @@ init -10 python:
         Give priority to special routine, and routine with a valid type."""
         ret_commitment = None
         # special routine
-        for comm in sp_routine.values():
+        for comm in routine.values():
             if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
                 if ch in comm.ch_talkobj_dict:
                     ret_commitment = comm

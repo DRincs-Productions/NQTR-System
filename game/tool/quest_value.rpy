@@ -45,7 +45,7 @@ define quest_stages = {
 
 # Quest "alice"
 label stagestart_talkalice:
-    $ sp_routine["stagealice1"] = Commitment(ch_talkobj_dict={"alice" : TalkObject()}, tm_start=14, tm_stop=20, location_id="house", room_id="terrace", event_label_name="stage_talkalice")
+    $ routine["stagealice1"] = Commitment(ch_talkobj_dict={"alice" : TalkObject()}, tm_start=14, tm_stop=20, location_id="house", room_id="terrace", event_label_name="stage_talkalice")
     return
 
 # Quest "ann"

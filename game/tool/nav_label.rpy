@@ -12,7 +12,7 @@ label change_room(room_id = None, close=False):
         # if (cur_room and prev_room and cur_room.location_id != prev_room.location_id):
         #     # this step is to change the background based on the presence of a ch
         #     $ commitments_in_cur_location = getChsInThisLocation(cur_location.id)
-        #     $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
+        #     $ cur_events_location = getEventsInThisLocation(cur_location.id, routine)
     call after_spending_time(close = close, is_check_event=True)
     return
 

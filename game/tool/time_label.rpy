@@ -9,7 +9,7 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, close=True, is_check_ev
         python:
             tm.new_day()
             # removes expired Commitments
-            sp_routine = clearExpiredRoutine(sp_routine, tm)
+            routine = clearExpiredRoutine(routine, tm)
             actions = clearExpiredActions(actions, tm.day)
             checkInactiveStage()
         call after_spending_time(close = close, is_check_event = is_check_event)
@@ -40,7 +40,7 @@ label after_spending_time(close=True, is_check_event=False, is_check_routines=Tr
         $ commitments_in_cur_location = getChsInThisLocation(cur_location.id)
     # check event
     if (is_check_event):
-        $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
+        $ cur_events_location = getEventsInThisLocation(cur_location.id, routine)
         call check_event
     if(isClosedRoom(cur_room.id, closed_rooms, tm)):
         # Change the background image to the current room image.
