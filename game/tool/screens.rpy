@@ -92,7 +92,7 @@ screen room_navigation():
 
     # Map
     if (map_open):
-        for location in locations.values():
+        for location in locations:
             # If the Map where I am is the same as the Map where the room is located
             if (location.map_id == cur_location.map_id):
                 vbox:
