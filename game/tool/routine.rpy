@@ -153,7 +153,7 @@ init -10 python:
 
 
     def checkIfIsActiveByTag(tag: str, id = None):
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
+        """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
         # Custom code
         if (tag == None):
             return False
