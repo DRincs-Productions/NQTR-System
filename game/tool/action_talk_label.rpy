@@ -80,7 +80,7 @@ label stage_talkalice:
 
         $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", rooms=["my_room"])
 
-        $ quests["alice"].next_stage()
+        $ quests["alice"].nextStage()
     elif (quests_levels["alice"] == 1):
         mc "What book do you want me to order?"
         a "For me it is the same."
@@ -92,7 +92,7 @@ label stage_talkalice:
     elif (quests_levels["alice"] == 3):
         mc "Here's your book."
         a "Thank you, I can finally read something new."
-        $ quests["alice"].next_stage()
+        $ quests["alice"].nextStage()
         $ delTalkChoice(choice_id = "alice", choice_text = _("About the book"), dict_choices = talkch_choices)
     return
 
@@ -107,6 +107,6 @@ label stage_talkalice_aboutann:
     $ actions["take_key"] = Act(name = _("KEY"),  picture_in_background = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
         xpos = 608, ypos = 667)
 
-    $ quests["ann"].next_stage()
+    $ quests["ann"].nextStage()
     $ delTalkChoice(choice_id = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
     return
