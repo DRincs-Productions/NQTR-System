@@ -18,7 +18,11 @@ label change_room(room_id = None, close=False):
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#go-previous-room
 label go_previous_room:
-    $ cur_room = prev_room
+    python:
+        temp_room = cur_room
+        cur_room = prev_room
+        prev_room = temp_room
+        del temp_room
     return
 
 ## Check if mc can come out

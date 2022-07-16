@@ -1,3 +1,4 @@
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room
 define rooms = [
     Room(id="my_room", location_id="house", name=_("MC room"), icon="icon myroom", bg="bg myroom",action_ids = ["sleep","nap",]), 
     Room(id="alice_room", location_id="house", name=_("[a] room"), icon="icon aliceroom", bg="bg aliceroom"), 
@@ -8,14 +9,17 @@ define rooms = [
     Room(id="courtyard", location_id="house_Ann", name=_("Courtyard"), icon="icon courtyard", bg="bg courtyard"), 
 ]
 
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location
 define locations = [
     Location(id = "house", map_id="map", external_room_id="terrace", name=_("MC house"), icon="icon map home", xalign=0.3, yalign=0.2),
 ]
 
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map
 define map_images = {
     "map"       :   "bg map",
 }
 
+# TODO: Wiki
 define ch_icons = {
     "alice"     : "icon/Alice.webp",
     "ann"       : "icon/Ann.webp",
