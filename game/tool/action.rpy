@@ -18,7 +18,7 @@ init -5 python:
                     picture_in_background_selected: str = None,
                     xpos: int = None,
                     ypos: int = None):
-            # TODO: add the type as in routine
+            # TODO: add the tag as in routine
             # TODO: add the active value which is a value linked to flags, by default active = True
 
             self.name = name
@@ -68,17 +68,17 @@ init -5 python:
             if room.id in act.rooms:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
-            elif act_id in room.id_actions:
+            elif act_id in room.action_ids:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
                     acts.append(act)
         return acts
 
 
-    def clearExpiredActions(actions: dict[str, Action], tm: TimeHandler):
+    def clearExpiredActions(actions: dict[str, Action], cur_day: int):
         """Delete Expired Actions"""
         actions_to_del = []
         for id, act in actions.items():
-            if (act.day_deadline and act.day_deadline <= tm.day):
+            if (act.day_deadline and act.day_deadline <= cur_day):
                 actions_to_del.append(id)
         for act_id in actions_to_del:
             del actions[act_id]
