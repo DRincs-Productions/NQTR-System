@@ -1,0 +1,52 @@
+{
+    "DRincs Add an Routine": {
+        "scope": "renpy",
+        "prefix": "DR_RoutineAdd",
+        "body": [
+            "python:",
+            "    routine[\"${1:routine_id}\"] = Commitment(",
+            "        ch_talkobj_dict={",
+            "            \"${6:character_id}\" : TalkObject(label_name=\"${7:${6}_${1}_label}\", bg= \"${8:bg ${6} ${4} talk}\"),",
+            "            \"\": None",
+            "        },",
+            "        tm_start=${2:0}, tm_stop=${3:24}, room_id=\"${4:room_id}\", location_id=\"${5:home}\")",
+            "",
+        ],
+        "description": "Add an Routine"
+    },
+    "DRincs Add an Routine in dictionary": {
+        "scope": "renpy",
+        "prefix": "DR_RoutineAdd_in_dict",
+        "body": [
+            "\"${1:routine_id}\" : Commitment(",
+            "    ch_talkobj_dict={",
+            "        \"${6:character_id}\" : TalkObject(label_name=\"${7:${6}_${1}_label}\", bg= \"${8:bg ${6} ${4} talk}\"),",
+            "        \"\": None",
+            "    },",
+            "    tm_start=${2:0}, tm_stop=${3:24}, room_id=\"${4:room_id}\", location_id=\"${5:home}\")",
+        ],
+        "description": "Add an Routine in dictionary"
+    },
+    "DRincs Add an Event": {
+        "scope": "renpy",
+        "prefix": "DR_EventAdd",
+        "body": [
+            "python:",
+            "    routine[\"${1:routine_id}\"] = Commitment(",
+            "        event_label_name = \"${6:${1}_event_label}\"",
+            "        tm_start=${2:0}, tm_stop=${3:24}, room_id=\"${4:room_id}\", location_id=\"${5:home}\")",
+            "",
+        ],
+        "description": "Add an Event"
+    },
+    "DRincs Add an Event in dictionary": {
+        "scope": "renpy",
+        "prefix": "DR_EventAdd_in_dict",
+        "body": [
+            "\"${1:routine_id}\" : Commitment(",
+            "    event_label_name = \"${6:${1}_event_label}\"",
+            "    tm_start=${2:0}, tm_stop=${3:24}, room_id=\"${4:room_id}\", location_id=\"${5:home}\")",
+        ],
+        "description": "Add an Event in dictionary"
+    },
+}

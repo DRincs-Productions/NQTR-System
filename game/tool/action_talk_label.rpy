@@ -1,6 +1,5 @@
 define talk_ch = None
 default talk_image = None
-default talk_end_image = None
 # used in talk_menu, internally there are the possible choices that you can make in a dialog with a certain ch
 # is structured like this:
 # 'alice'   :   [("Choice 1", "label_one"), ("Choice 2", "label_two")]
@@ -25,11 +24,9 @@ label talk_menu:
 
 # Best way to exit a dialogue
 label talk_end:
-    if (talk_end_image != None):
-        scene expression (talk_end_image) as bg
+    jump after_spending_time
 
-    call screen room_navigation
-
+# label talk: is a label used to give the possibility to customize the dialog even more.
 label talk:
     if (talk_image != None):
         scene expression (talk_image) as bg

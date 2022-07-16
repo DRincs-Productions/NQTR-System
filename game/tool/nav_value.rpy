@@ -1,16 +1,21 @@
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room
 define rooms = [
 ]
 
-define locations = {
-}
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location
+define locations = [
+]
 
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map
 define map_images = {
 }
 
+# TODO: Wiki
 define ch_icons = {
 }
 
+default prev_room = None
 default cur_room = rooms[0]
-default cur_location = locations[cur_room.id_location]
+default cur_location = locations[0]
 # Variable to check the map screen: if it is True then the player is viewing the map.
 default map_open = False

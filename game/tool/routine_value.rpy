@@ -1,18 +1,14 @@
 # are the routines of the CHs in the current place
 # it is changed after waiting for some time or when moving from one location to another
-default cur_routines_location = None
+default commitments_in_cur_location = {}
 
 # possible events in the current location
-default cur_events_location = None
+default cur_events_location = {}
 
-# special routine of the NCP
-# they are added after completing missions or for some other reason.
-# if there is another commitment in the default routine at the same time, it will be "overwritten"
-default sp_routine = {}
+# dictionary editable at runtime, but it is strongly discouraged to pre-enter elements (dictionary contents are based only on saves)
+default routine = {}
 
-# default routine of the NCP
-# do not have a deadline
-# ATTENTION I for I have excluded the search of events in df_routine (because it does not see a their practical use here)
-# events are only in sp_routine
+# habitual routine
+# dictionary that cannot be modified at runtime, only by modifying the code. (content is not based on saves, but from the code)
 define df_routine = {
 }
