@@ -164,7 +164,7 @@ screen room_navigation():
 
                             # Check the presence of ch in that room
                             $ there_are_ch = False
-                            for comm in cur_routines_location.values():
+                            for comm in commitments_in_cur_location.values():
                                 # If it is the selected room
                                 if comm != None and room.id == comm.room_id:
                                     # I insert hbox only if they are sure that someone is there
@@ -176,7 +176,7 @@ screen room_navigation():
                                     xalign 0.5
                                     spacing - 30
 
-                                    for comm in cur_routines_location.values():
+                                    for comm in commitments_in_cur_location.values():
                                         # If it is the selected room
                                         if room.id == comm.room_id:
                                             for ch_icon in comm.getChIcons(ch_icons):
@@ -251,7 +251,7 @@ screen room_navigation():
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
                 # TODO: there is no possibility of group talk
-                for comm in cur_routines_location.values():
+                for comm in commitments_in_cur_location.values():
                     if (comm != None and room.id == comm.room_id and room == cur_room):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():

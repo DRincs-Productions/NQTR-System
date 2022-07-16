@@ -37,7 +37,7 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, close=True, is_check_event=False):
 label after_spending_time(close=True, is_check_event=False, is_check_routines=True):
     if(is_check_routines):
         # this step is to change the background based on the presence of a ch
-        $ cur_routines_location = getChsInThisLocation(cur_location.id)
+        $ commitments_in_cur_location = getChsInThisLocation(cur_location.id)
     # check event
     if (is_check_event):
         $ cur_events_location = getEventsInThisLocation(cur_location.id, sp_routine)
@@ -46,7 +46,7 @@ label after_spending_time(close=True, is_check_event=False, is_check_routines=Tr
         # Change the background image to the current room image.
         call closed_room_event
     else:
-        $ sp_bg_change_room = getBgRoomRoutine(cur_routines_location, cur_room.id)
+        $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
         if (sp_bg_change_room != None):
             scene expression (sp_bg_change_room) as bg
         else:
