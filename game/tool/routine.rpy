@@ -1,6 +1,7 @@
 init -10 python:
     class Commitment(object):
-        """Commitment, routine and event"""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#commitment
+        event_label_name: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#events """
 
         def __init__(self,
                     tm_start: int,
@@ -81,9 +82,8 @@ init -10 python:
 
 
     def getChsInThisLocation(location_id: str):
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority """
         # TODO: to add when I change location_id
-        """Returns the commitments of the ch (NCPs) in that Location at that time.
-        Give priority to special commitment, and commitment with a valid tag."""
         # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         commitments = {}
@@ -116,9 +116,9 @@ init -10 python:
 
 
     def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]):
-        # TODO: to add when I change location_id
         """Returns events at that location at that time.
         Checks only in routine."""
+        # TODO: to add when I change location_id
         # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         events = {}
