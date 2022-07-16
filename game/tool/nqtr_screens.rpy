@@ -138,7 +138,7 @@ screen room_navigation():
                             Hide('wait_navigation'),
                             SetVariable('prev_room', cur_room),
                             SetVariable('cur_room', room),
-                            Call("change_room", room_id = None, close=True),
+                            Call("change_room", room_id = None, after_exit=True),
                         ]
                         has vbox xsize 126 spacing 0
 
@@ -158,7 +158,7 @@ screen room_navigation():
                                     Hide('wait_navigation'),
                                     SetVariable('prev_room', cur_room),
                                     SetVariable('cur_room', room),
-                                    Call("change_room", room_id = None, close=True),
+                                    Call("change_room", room_id = None, after_exit=True),
                                 ]
                                 at middle_room
 
@@ -187,7 +187,7 @@ screen room_navigation():
                                                         Hide('wait_navigation'),
                                                         SetVariable('prev_room', cur_room),
                                                         SetVariable('cur_room', room),
-                                                        Call("change_room", room_id = None, close=True),
+                                                        Call("change_room", room_id = None, after_exit=True),
                                                     ]
                                                     at small_face
 
@@ -204,7 +204,7 @@ screen room_navigation():
                         Hide('wait_navigation'),
                         SetVariable('prev_room', cur_room),
                         SetVariable('cur_room', room),
-                        Call("change_room", room_id = None, close=True),
+                        Call("change_room", room_id = None, after_exit=True),
                     ]
 
         # Action wich Picture in background
@@ -291,7 +291,7 @@ screen room_navigation():
                 focus_mask True
                 action [
                     Hide('wait_navigation'),
-                    Call("wait", close=True, is_check_event=True),
+                    Call("wait", after_exit=True, is_check_event=True),
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
@@ -322,7 +322,7 @@ screen room_navigation():
                 focus_mask True
                 action [
                     Hide('wait_navigation'),
-                    Call("wait", close=True, is_check_event=True),
+                    Call("wait", after_exit=True, is_check_event=True),
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")

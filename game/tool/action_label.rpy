@@ -14,7 +14,7 @@ label sleep:
     menu:
         "What time do you want to set the alarm?"
         "[DEFAULT_HOUR_OF_NEW_DAY]:00":
-            call new_day(close=False, is_check_event=True)
+            call new_day(is_check_event=True)
         "7:00":
             call new_day(time_of_new_day = 7, is_check_event=True)
         "9:00":

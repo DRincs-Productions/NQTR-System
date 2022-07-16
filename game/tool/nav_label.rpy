@@ -4,7 +4,7 @@ default sp_bg_change_room = None
 define bg_loc = "location/loc-[tm.image_time].webp"
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room
-label change_room(room_id = None, close=False):
+label change_room(room_id = None, after_exit=False):
     # start an event if it exists
     if room_id:
         $ changeRoom(room_id = room_id, rooms = rooms, locations = locations)
@@ -13,7 +13,7 @@ label change_room(room_id = None, close=False):
         #     # this step is to change the background based on the presence of a ch
         #     $ commitments_in_cur_location = getChsInThisLocation(cur_location.id)
         #     $ cur_events_location = getEventsInThisLocation(cur_location.id, routine)
-    call after_spending_time(close = close, is_check_event=True)
+    call after_spending_time(after_exit = after_exit, is_check_event=True)
     return
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#go-previous-room
