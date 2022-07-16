@@ -217,7 +217,7 @@ init python:
                     icon: str = None,
                     bg: str = None,
                     stages_id: Optional[list[str]] = None,
-                    category: str = None,
+                    tag: str = None,
                     development: bool = False):
 
             self.id = id
@@ -226,7 +226,7 @@ init python:
             self.icon = icon
             self.bg = bg
             self.stages_id = self.stages_id = stages_id if stages_id else []
-            self.category = category
+            self.tag = tag
             self.development = development
 
         def isCompleted(self):
@@ -239,19 +239,19 @@ init python:
             else:
                 return False
 
-        def current_quest_id(self):
+        def currentQuestId(self):
             """Return the id of this current"""
             if (not (self.id in quests_levels)):
                 self.update()
             return self.stages_id[quests_levels[id]]
 
-        def complete_stages_number(self):
+        def completeStagesNumber(self):
             """Returns the number of completed stages"""
             if (not (self.id in quests_levels)):
                 self.update()
             return quests_levels[id]
 
-        def get_percentage_completion(self):
+        def getPercentageCompletion(self):
             """Returns the percentage of completion"""
             if (not (self.id in quests_levels)):
                 self.update()
@@ -294,7 +294,7 @@ init python:
             quests_levels[self.id] += 1
             self.start(quests_levels[self.id])
 
-        def is_started(self):
+        def isStarted(self):
             if (not (self.id in quests_levels)):
                 self.update()
             return (self.id in current_quest_stages)
@@ -302,9 +302,9 @@ init python:
             # removes it from current_quest_stages
             # removes it from quests_levels
 
+
+
     # TODO: Use it when: Load Menu
-
-
     def updateQuestsLevels():
         """Synchronize quests_levels with quests.
         After this function I suggest to use checkInactiveStage()."""
