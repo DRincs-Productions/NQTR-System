@@ -18,8 +18,6 @@ init -5 python:
                     picture_in_background_selected: str = None,
                     xpos: int = None,
                     ypos: int = None):
-            # TODO: add the tag as in routine
-            # TODO: add the active value which is a value linked to flags, by default active = True
 
             self.name = name
             self.label_name = label_name
@@ -84,5 +82,3 @@ init -5 python:
             del actions[act_id]
         del actions_to_del
         return actions
-
-# TODO: Add a function that updates Actions after a load

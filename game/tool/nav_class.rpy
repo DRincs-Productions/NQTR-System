@@ -6,6 +6,7 @@ default closed_rooms = {}
 init -9 python:
     from typing import Optional
 
+
     class Room:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room """
 
@@ -27,7 +28,6 @@ init -9 python:
 
     class Location:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location """
-        # TODO: undiscovered locations
 
         def __init__(self,
                     id: str,
