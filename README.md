@@ -14,7 +14,7 @@ For the time being, a good part of the screens and images are not of my creation
 
 Feel free to contribute, fork this and send a pull request. 😄
 
-## Insert Toolkit
+## Insert Toolkit in your project
 
 I recommend the following ways to include it in your project:
 
