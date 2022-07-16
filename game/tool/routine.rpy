@@ -16,9 +16,6 @@ init -10 python:
                     event_label_name: str = None
                     ):
 
-            # TODO: add a function that checks if it is available to talk (maybe with flags)
-            # TODO: add the case in which after an avent the ch is no longer available to speak for a certain period of time
-            # TODO: add event: in case it is nothing then when MC enter in that room starts a label
             self.bg = bg
             self.ch_talkobj_dict = ch_talkobj_dict
             self.tm_start = tm_start
@@ -83,7 +80,6 @@ init -10 python:
 
     def getChsInThisLocation(location_id: str):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority """
-        # TODO: to add when I change location_id
         # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         commitments = {}
@@ -118,7 +114,6 @@ init -10 python:
     def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]):
         """Returns events at that location at that time.
         Checks only in routine."""
-        # TODO: to add when I change location_id
         # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         events = {}

@@ -250,7 +250,6 @@ screen room_navigation():
 
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
-                # TODO: there is no possibility of group talk
                 for comm in commitments_in_cur_location.values():
                     if (comm != None and room.id == comm.room_id and room == cur_room):
                         # Insert in talk for every ch, main in that room
