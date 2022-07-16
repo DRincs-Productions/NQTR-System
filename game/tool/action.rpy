@@ -3,11 +3,32 @@ init -5 python:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
 
         def __init__(self,
+                    # only Act
                     rooms: Optional[list[str]] = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
-                    day_deadline: int = -1):
+                    day_deadline: int = -1,
+                    # Button
+                    name: str = None,
+                    label_name: str = None,
+                    button_icon: str = None,
+                    button_icon_selected: str = None,
+                    picture_in_background: str = None,
+                    picture_in_background_selected: str = None,
+                    xpos: int = None,
+                    ypos: int = None,
+                    ):
+            super().__init__(
+                name= name,
+                label_name= label_name,
+                button_icon= button_icon,
+                button_icon_selected= button_icon_selected,
+                picture_in_background= picture_in_background,
+                picture_in_background_selected= picture_in_background_selected,
+                xpos= xpos,
+                ypos= ypos,
+            )
 
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1

@@ -6,7 +6,28 @@ init -11 python:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system """
 
         def __init__(self,
-                    bg: str = None):
+                    # only TalkObject
+                    bg: str = None,
+                    # Button
+                    name: str = None,
+                    label_name: str = None,
+                    button_icon: str = None,
+                    button_icon_selected: str = None,
+                    picture_in_background: str = None,
+                    picture_in_background_selected: str = None,
+                    xpos: int = None,
+                    ypos: int = None,
+                    ):
+            super().__init__(
+                name= name,
+                label_name= label_name,
+                button_icon= button_icon,
+                button_icon_selected= button_icon_selected,
+                picture_in_background= picture_in_background,
+                picture_in_background_selected= picture_in_background_selected,
+                xpos= xpos,
+                ypos= ypos,
+            )
 
             self.bg = bg
 
