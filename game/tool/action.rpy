@@ -18,7 +18,7 @@ init -5 python:
                     picture_in_background_selected: str = None,
                     xpos: int = None,
                     ypos: int = None):
-            # TODO: add the type as in routine
+            # TODO: add the tag as in routine
             # TODO: add the active value which is a value linked to flags, by default active = True
 
             self.name = name

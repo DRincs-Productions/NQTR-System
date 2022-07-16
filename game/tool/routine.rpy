@@ -10,7 +10,7 @@ init -10 python:
                     name: str = None,
                     location_id: str = None,
                     room_id: str = None,
-                    type: str = None,
+                    tag: str = None,
                     day_deadline: int = None,
                     event_label_name: str = None
                     ):
@@ -24,7 +24,7 @@ init -10 python:
             self.tm_stop = tm_stop-0.1
             self.location_id = location_id
             self.room_id = room_id
-            self.type = type
+            self.tag = tag
             self.day_deadline = day_deadline
             # ATTENTION: in check_event_sp if the mc has not moved, delete the event (resolves any loops)
             # se si vuole degli eventi fissi usare check_event_df
@@ -83,7 +83,7 @@ init -10 python:
     def getChsInThisLocation(location_id: str):
         # TODO: to add when I change location_id
         """Returns the commitments of the ch (NCPs) in that Location at that time.
-        Give priority to special commitment, and commitment with a valid type."""
+        Give priority to special commitment, and commitment with a valid tag."""
         # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
         commitments = {}
@@ -131,35 +131,33 @@ init -10 python:
 
     def getChLocation(ch: str):
         """Returns the current commitment of the ch.
-        Give priority to special routine, and routine with a valid type."""
+        Give priority to special routine, and routine with a valid tag."""
         ret_commitment = None
         # special routine
-        for comm in routine.values():
+        for id, comm in routine.items():
             if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
                 if ch in comm.ch_talkobj_dict:
                     ret_commitment = comm
-                    if checkValidType(comm):
+                    if checkIfIsActiveByTag(tag = comm.tag, id = id):
                         return comm
         if ret_commitment != None:
             return ret_commitment
         # default routine
-        for comm in df_routine.values():
+        for id, comm in df_routine.items():
             if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
                 if ch in comm.ch_talkobj_dict:
                     ret_commitment = comm
-                    if checkValidType(comm.type):
+                    if checkIfIsActiveByTag(tag = comm.tag, id = id):
                         return comm
         return ret_commitment
 
 
-    # TODO: Is not used in Routine so move, maybe it is better in boolean_value
-    def checkValidType(type):
-        """Check according to its type, if it is True or False"""
+    def checkIfIsActiveByTag(tag: str, id = None):
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
         # Custom code
-        if (type == None):
+        if (tag == None):
             return False
-        if (type == "no_week"):
-            # TODO: Checkweekend
+        if (tag == "no_week"):
             return True
         return False
 
