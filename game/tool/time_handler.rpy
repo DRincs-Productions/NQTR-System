@@ -30,7 +30,6 @@ init -11 python:
             self.hour_of_new_day = hour_of_new_day
             self.hour = hour
             self.day = day
-            # TODO: manage weekends (function...)
             self.weekend_day = weekend_day
             # this variable is used to update images that change according to time.
             # es image = "sky-[image_time]"
@@ -129,9 +128,6 @@ init -11 python:
         def now_is_between(self, end: int, start: int = 0):
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#now-is-between """
             return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
-
-        # TODO: is weekend
-        # TODO: skip weekend
 
 
 # ATTENTION here it is initialized
