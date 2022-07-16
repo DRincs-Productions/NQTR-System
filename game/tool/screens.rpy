@@ -348,7 +348,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('development'),
+                Jump('development_characters_info'),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -396,7 +396,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('development'),
+                Jump('development_inventory'),
             ]
             if renpy.variant("pc"):
                 at small_menu
