@@ -22,6 +22,9 @@ I recommend the following ways to include it in your project:
 - [**Fork**](https://docs.github.com/en/get-started/quickstart/fork-a-repo) (to improve the repo or create a Toolkit based on mine)
 - [Manually](https://github.com/DRincs-Productions/NQTR-toolkit/releases) (not recommended)
 
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/67595890/179365279-0d0b6d45-0048-4a0d-8c6d-9571b9c328f4.gif)
+
+
 ### Pull branch
 
 To **insert** or **update** the Toolkit in your repo with Pull branch I recommend the following procedure:
