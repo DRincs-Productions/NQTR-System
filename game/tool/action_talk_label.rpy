@@ -26,6 +26,7 @@ label talk_menu:
 label talk_end:
     jump after_spending_time
 
+# label talk: is a label used to give the possibility to customize the dialog even more.
 label talk:
     if (talk_image != None):
         scene expression (talk_image) as bg
@@ -77,7 +78,7 @@ label stage_talkalice:
 
         $ addTalkChoice(choice_id = "alice", choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
 
-        $ actions["order_product"] = Action(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", rooms=["my_room"])
+        $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", rooms=["my_room"])
 
         $ quests["alice"].next_stage()
     elif (quests_levels["alice"] == 1):
@@ -103,7 +104,7 @@ label stage_talkalice_aboutann:
     a "Yes, of course. You can find the keys on the keyhole in the hall."
     mc "Thanks!"
     a "Don't ruin it..."
-    $ actions["take_key"] = Action(name = _("KEY"),  picture_in_background = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
+    $ actions["take_key"] = Act(name = _("KEY"),  picture_in_background = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
         xpos = 608, ypos = 667)
 
     $ quests["ann"].next_stage()

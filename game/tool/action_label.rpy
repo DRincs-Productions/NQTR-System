@@ -51,7 +51,7 @@ label order_product:
     call screen room_navigation
 
 label add_product:
-    $ actions["take_product"] = Action(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", rooms=['terrace'])
+    $ actions["take_product"] = Act(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", rooms=['terrace'])
     call screen room_navigation
 
 label take_product:

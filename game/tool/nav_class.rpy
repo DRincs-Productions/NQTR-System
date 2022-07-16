@@ -4,6 +4,8 @@
 default closed_rooms = {}
 
 init -9 python:
+    from typing import Optional
+
     class Room:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room """
 
@@ -13,14 +15,14 @@ init -9 python:
                     name: str = None,
                     icon: str = None,
                     bg: str = None,
-                    action_ids: list[str] = []):
+                    action_ids: Optional[list[str]] = None):
 
             self.id = id
             self.location_id = location_id
             self.name = name
             self.icon = icon
             self.bg = bg
-            self.action_ids = action_ids
+            self.action_ids = self.action_ids = action_ids if action_ids else []
 
 
     class Location:
