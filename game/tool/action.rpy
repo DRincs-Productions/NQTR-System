@@ -21,9 +21,9 @@ init -5 python:
                     "Warn: You have set day_deadline < 0, so it will be ignored")
 
 
-    def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):
+    def getActions(actions: dict[str, Act], room: Room,  tm: TimeHandler):
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
-        acts: list[Action] = []
+        acts: list[Act] = []
         for act_id, act in actions.items():
             if room.id in act.rooms:
                 if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
@@ -34,7 +34,7 @@ init -5 python:
         return acts
 
 
-    def clearExpiredActions(actions: dict[str, Action], cur_day: int):
+    def clearExpiredActions(actions: dict[str, Act], cur_day: int):
         """Delete Expired Actions"""
         actions_to_del = []
         for id, act in actions.items():
