@@ -59,9 +59,10 @@ init python:
                     flags_requests=[],
                     quests_levels_requests={},
                     description_request="",
-                    label_start=None,
+                    label_start=None, # Todo: implement this
                     label_end=None, # Todo: implement this
-                    label_check=None):
+                    label_check=None, # Todo: implement this
+                    ):
 
             self.quest_id = quest_id
             self.goals = goals
@@ -78,7 +79,6 @@ init python:
             self.quests_levels_requests = quests_levels_requests
             self.description_request = description_request
             # these labels will be started automatically at the appropriate time.
-            # TODO: have not yet been implemented
             self.label_start = label_start
             self.label_end = label_end
             self.label_check = label_check
@@ -97,8 +97,8 @@ init python:
             current_quest_stages[self.quest_id].setDay(
                 self.waiting_days_before_start)
 
-        def addInTask(self):
-            """Add the Stage in the current_task_stages"""
+        def addInCurrentTaskStages(self):
+            """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
             current_task_stages[self.quest_id] = Stage(
                 quest_id=self.quest_id,
                 goals=self.goals,
@@ -113,21 +113,19 @@ init python:
 
         def start(self):
             """If you have reached all the objectives then activate the Stage.
-            start() is used until the Stage becomes active.
-            TODO: WARNING: there is an error because after "call expression self.label_start" it doesn't go on, so:
-            the only thing that happens is that it doesn't return anything. (for now I don't know how serious is this error)"""
+            start() is used until the Stage becomes active."""
             if (self.active):
                 return self.active
-            if (not self.requestCheck()):
+            if (not self.respectAllRequests()):
                 return False
-            if (self.label_start != None):
-                self.active = True
-                renpy.call(self.label_start)
+            # if (self.label_start != None):
+            #     self.active = True
+            #     renpy.call(self.label_start)
             self.active = True
             # TODO: notify
             return True
 
-        def requestCheck(self):
+        def respectAllRequests(self):
             """Checks the requests, returns True if it satisfies them."""
             if (self.day_start != None and tm.day < self.day_start):
                 return False
@@ -142,7 +140,6 @@ init python:
         def isCompleted(self):
             """Check if the Stage can be complete."""
             # if (label_check != None)
-            # TODO: Execute label_check
             if (self.completed):
                 return True
             if (not self.active):
@@ -153,22 +150,19 @@ init python:
                     if (not x.isComplete()):
                         return False
             self.completed = True
-            # self.nextStageOnlyIsCompleted()
             return True
 
         def find(self, goals_id, value=1):
-            # TODO: To comment and test
             for item in self.goals:
                 if (item.id == goals_id):
                     item.find(value)
                     return True
             return False
 
-        def setDay(self, waiting_days_before_start):
-            # TODO: To comment
-            if (waiting_days_before_start != None):
-                self.day_start = (tm.day + waiting_days_before_start)
-
+        def addDaysWaitingBeforeStart(self, day):
+            if (day != None):
+                self.day_start = (tm.day + day)
+            return
 
     class Quest(object):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#quest 
@@ -221,6 +215,13 @@ init python:
                 self.update()
             return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
+        def addDaysWaitingBeforeStart(self, day):
+            """Add days of waiting before it starts"""
+            if (not (self.id in number_stages_completed_in_quest)):
+                renpy.log("Warn: the Quest: "+self.id+" not is in number_stages_completed_in_quest, so i update it")
+                self.update()
+            return current_task_stages[self.id].addDaysWaitingBeforeStart()
+
         def update(self):
             """Function to update the various values,
             If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
@@ -247,6 +248,7 @@ init python:
             quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages()
             current_quest_stages[self.id].start()
             number_stages_completed_in_quest[self.id] = n_stage
+            return
 
         def nextStageOnlyIsCompleted(self):
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
@@ -276,6 +278,7 @@ init python:
                 return
             number_stages_completed_in_quest[self.id] += 1
             self.start(number_stages_completed_in_quest[self.id])
+            return
 
         def isStarted(self):
             if (not (self.id in number_stages_completed_in_quest)):
@@ -301,9 +304,6 @@ init python:
             if (not (x in quests)):
                 number_stages_completed_in_quest.remove(x)
         return
-
-    # this function is done in the transition from one day to another
-
 
     def checkInactiveStage():
         """Check if the inactive Stage have the requirements to be activated, if so, activate them."""
