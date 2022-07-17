@@ -39,7 +39,8 @@ label talk:
         "Now is busy test later."
 
     call talk_menu
-    call after_spending_time
+    call nav_backbround
+    return
 
 # Display a random phrase and then end the conversation
 label talk_back:

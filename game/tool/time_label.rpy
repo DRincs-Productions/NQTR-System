@@ -21,7 +21,7 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, after_exit=True, is_che
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#wait
 label wait(wait_hour=DEFAULT_WAIT_HOUR, after_exit=True, is_check_event=False):
-    if(not flags["not_can_spend_time"]):
+    if(not getFlags(flag_id = "not_can_spend_time")):
         if(tm.new_hour(wait_hour)):
             if (not map_open):
                 call after_spending_time(after_exit = after_exit, is_check_event = is_check_event)
@@ -42,6 +42,10 @@ label after_spending_time(after_exit=True, is_check_event=False, is_check_routin
     if (is_check_event):
         $ cur_events_location = getEventsInThisLocation(cur_location.id, routine)
         call check_event
+    call nav_backbround(after_exit = after_exit)
+    return
+
+label nav_backbround(after_exit=True):
     if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
         # Change the background image to the current room image.
         call closed_room_event

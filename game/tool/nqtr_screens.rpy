@@ -267,7 +267,6 @@ screen room_navigation():
                                         SetVariable('talk_ch', ch_id),
                                         SetVariable('talk_image', comm.getTalkBackground(ch_id)),
                                         Call(talk_obj.getTalkLabelName()),
-                                        Jump("after_spending_time"),
                                     ]
                                     at middle_action
                                 # inserts the icon of the character who is currently in that room
@@ -282,7 +281,6 @@ screen room_navigation():
                                             SetVariable('talk_ch', ch_id),
                                             SetVariable('talk_image', comm.getTalkBackground(ch_id)),
                                             Call(talk_obj.getTalkLabelName()),
-                                            Jump("after_spending_time"),
                                         ]
                                 if renpy.variant("pc"):
                                     tooltip _("Talk")
