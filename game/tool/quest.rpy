@@ -24,7 +24,7 @@ init python:
                 self.need = 0
                 renpy.log("Warn: You have set need < 0, so it will be set to 0.")
 
-        def find(self, value: int = 1):
+        def find(self, value: int = 1) -> bool:
             """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
             It is used to complete the Goals."""
             if (self.need == 0):
@@ -36,7 +36,7 @@ init python:
                 return True
             return False
 
-        def isComplete(self):
+        def isComplete(self) -> bool:
             """Checks the status of completion. returns True if the mission has been completed"""
             if (self.complete == True):
                 return True
@@ -56,10 +56,11 @@ init python:
                     advice: str = None,
                     bg: str = None,
                     days_required_to_start: int = None,
-                    flags_requests: Optional[list[str]] = None,  # TODO: implement this
+                    # TODO: implement this
+                    flags_requests: Optional[list[str]] = None,
                     number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
                     request_description: str = None,
-                    start_label_name: str = None,  # Will be initiated when the stage is started 
+                    start_label_name: str = None,  # Will be initiated when the stage is started
                     end_label_name: str = None,  # TODO: implement this
                     check_label_name: str = None,  # TODO: implement this
                     ):
@@ -83,7 +84,7 @@ init python:
             self.end_label_name = end_label_name
             self.check_label_name = check_label_name
 
-        def addInCurrentQuestStages(self):
+        def addInCurrentQuestStages(self) -> None:
             """Add the Stage in the current_quest_stages"""
             current_quest_stages[self.quest_id] = Stage(
                 quest_id=self.quest_id,
@@ -98,7 +99,7 @@ init python:
             )
             return
 
-        def addInCurrentTaskStages(self):
+        def addInCurrentTaskStages(self) -> None:
             """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
             current_task_stages[self.quest_id] = Stage(
                 quest_id=self.quest_id,
@@ -113,7 +114,7 @@ init python:
             )
             return
 
-        def start(self):
+        def start(self) -> bool:
             """If you have reached all the objectives then activate the Stage.
             start() is used until the Stage becomes active."""
             if (self.active):
@@ -126,7 +127,7 @@ init python:
             # TODO: notify
             return True
 
-        def respectAllRequests(self):
+        def respectAllRequests(self) -> bool:
             """Checks the requests, returns True if it satisfies them."""
             if (self.day_start != None and tm.day < self.day_start):
                 return False
@@ -138,7 +139,7 @@ init python:
                     return False
             return True
 
-        def isCompleted(self):
+        def isCompleted(self) -> bool:
             """Check if the Stage can be complete."""
             # if (check_label_name != None)
             if (self.completed):
@@ -153,17 +154,17 @@ init python:
             self.completed = True
             return True
 
-        def find(self, goals_id: str, value: int = 1):
+        def find(self, goals_id: str, value: int = 1) -> bool:
             for item in self.goals:
                 if (item.id == goals_id):
                     item.find(value)
                     return True
             return False
 
-        def SetDayNumberRequiredToStart(self, day: int):
+        def SetDayNumberRequiredToStart(self, day: int) -> None:
             """Add days of waiting before it starts"""
             if (day != None):
-                self.day_start = (tm.day + day)
+                self.day_start = (day)
             return
 
 
@@ -190,7 +191,7 @@ init python:
             self.tag = tag
             self.development = development
 
-        def isCompleted(self):
+        def isCompleted(self) -> bool:
             """Check if all stages have been completed."""
             if (not (self.id in number_stages_completed_in_quest)):
                 updateQuestsLevels()
@@ -200,25 +201,25 @@ init python:
             else:
                 return False
 
-        def currentQuestId(self):
+        def currentQuestId(self) -> str:
             """Return the id of this current"""
             if (not (self.id in number_stages_completed_in_quest)):
                 self.update()
             return self.stages_id[number_stages_completed_in_quest[id]]
 
-        def completeStagesNumber(self):
+        def completeStagesNumber(self) -> int:
             """Returns the number of completed stages"""
             if (not (self.id in number_stages_completed_in_quest)):
                 self.update()
             return number_stages_completed_in_quest[id]
 
-        def getPercentageCompletion(self):
+        def getPercentageCompletion(self) -> int:
             """Returns the percentage of completion"""
             if (not (self.id in number_stages_completed_in_quest)):
                 self.update()
             return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
-        def SetDayNumberRequiredToStart(self, day: int):
+        def SetDayNumberRequiredToStart(self, day: int) -> None:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
             if (not (self.id in number_stages_completed_in_quest)):
                 renpy.log("Warn: the Quest: "+self.id +
@@ -226,7 +227,7 @@ init python:
                 self.update()
             return current_task_stages[self.id].SetDayNumberRequiredToStart(day)
 
-        def update(self):
+        def update(self) -> None:
             """Function to update the various values,
             If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
             Prevent errors like blocked Quests."""
@@ -247,14 +248,14 @@ init python:
                 self.afterNextStage()
                 return
 
-        def start(self, n_stage: int = 0):
+        def start(self, n_stage: int = 0) -> None:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
             quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages()
             current_quest_stages[self.id].start()
             number_stages_completed_in_quest[self.id] = n_stage
             return
 
-        def nextStageOnlyIsCompleted(self):
+        def nextStageOnlyIsCompleted(self) -> bool:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
             if (self.id in current_task_stages):
                 if (not current_task_stages[self.id].isCompleted()):
@@ -265,7 +266,7 @@ init python:
             self.nextStage()
             return True
 
-        def nextStage(self):
+        def nextStage(self) -> None:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
             if (self.id in current_task_stages):
                 del current_task_stages[self.quest_id]
@@ -273,7 +274,7 @@ init python:
             self.afterNextStage()
             return
 
-        def afterNextStage(self):
+        def afterNextStage(self) -> None:
             if (not (self.id in number_stages_completed_in_quest)):
                 renpy.log("Warn: the Quest: "+self.id +
                         " not is in number_stages_completed_in_quest, so i update it")
@@ -285,13 +286,13 @@ init python:
             self.start(number_stages_completed_in_quest[self.id])
             return
 
-        def isStarted(self):
+        def isStarted(self) -> bool:
             if (not (self.id in number_stages_completed_in_quest)):
                 self.update()
             return (self.id in current_quest_stages)
 
 
-    def updateQuestsLevels():
+    def updateQuestsLevels() -> None:
         """Synchronize number_stages_completed_in_quest with quests.
         After this function I suggest to use checkInactiveStage()."""
         # check if there are less elements than flag_keys
@@ -307,7 +308,7 @@ init python:
         return
 
 
-    def checkInactiveStage(current_stages: dict[str: Stage]):
+    def checkInactiveStage(current_stages: dict[str: Stage]) -> None:
         """Check if the inactive Stage have the requirements to be activated, if so, activate them."""
         for k in current_stages.keys():
             current_stages[k].start()
