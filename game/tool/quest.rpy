@@ -160,6 +160,7 @@ init python:
             return False
 
         def addDaysWaitingBeforeStart(self, day):
+            """Add days of waiting before it starts"""
             if (day != None):
                 self.day_start = (tm.day + day)
             return
@@ -216,7 +217,7 @@ init python:
             return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
         def addDaysWaitingBeforeStart(self, day):
-            """Add days of waiting before it starts"""
+            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
             if (not (self.id in number_stages_completed_in_quest)):
                 renpy.log("Warn: the Quest: "+self.id+" not is in number_stages_completed_in_quest, so i update it")
                 self.update()
