@@ -24,6 +24,8 @@ label talk_menu:
 
 # Best way to exit a dialogue
 label talk_end:
+    # Custom code
+    # ...
     jump after_spending_time
 
 # label talk: is a label used to give the possibility to customize the dialog even more.
