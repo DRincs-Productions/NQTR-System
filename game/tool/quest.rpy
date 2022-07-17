@@ -74,8 +74,8 @@ init python:
             self.completed = False
             self.bg = bg
             # These are the requirements to start the Stage
-            self.days_required_to_start = days_required_to_start
-            self.day_start = None
+            self.days_required_to_start = days_required_to_start if days_required_to_start else 0
+            self.day_start = None # Will be initiated when the stage is started
             self.flags_requests = flags_requests if flags_requests else []
             self.number_stages_completed_in_quest_requests = number_stages_completed_in_quest_requests if number_stages_completed_in_quest_requests else {}
             self.request_description = request_description if request_description else ""
@@ -97,6 +97,8 @@ init python:
                 check_label_name=self.check_label_name,
                 days_required_to_start=self.days_required_to_start,
             )
+            # setDayNumberRequiredToStart: is important to set the day_start to the current day.
+            current_quest_stages[self.quest_id].setDayNumberRequiredToStart(dayNumberRequired = self.days_required_to_start)
             return
 
         def addInCurrentTaskStages(self) -> None:
@@ -112,6 +114,8 @@ init python:
                 check_label_name=self.check_label_name,
                 days_required_to_start=self.days_required_to_start,
             )
+            # setDayNumberRequiredToStart: is important to set the day_start to the current day.
+            current_task_stages[self.quest_id].setDayNumberRequiredToStart(dayNumberRequired = self.days_required_to_start)
             return
 
         def start(self) -> bool:
@@ -161,10 +165,10 @@ init python:
                     return True
             return False
 
-        def SetDayNumberRequiredToStart(self, day: int) -> None:
+        def setDayNumberRequiredToStart(self, dayNumberRequired: int) -> None:
             """Add days of waiting before it starts"""
-            if (day != None):
-                self.day_start = (day)
+            if dayNumberRequired:
+                self.day_start = tm.day + dayNumberRequired
             return
 
 
@@ -219,13 +223,13 @@ init python:
                 self.update()
             return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
-        def SetDayNumberRequiredToStart(self, day: int) -> None:
+        def setDayNumberRequiredToStart(self, dayNumberRequired: int) -> None:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
             if (not (self.id in number_stages_completed_in_quest)):
                 renpy.log("Warn: the Quest: "+self.id +
                         " not is in number_stages_completed_in_quest, so i update it")
                 self.update()
-            return current_task_stages[self.id].SetDayNumberRequiredToStart(day)
+            return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired)
 
         def update(self) -> None:
             """Function to update the various values,
