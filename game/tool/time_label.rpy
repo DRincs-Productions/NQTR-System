@@ -47,7 +47,7 @@ label after_spending_time(after_exit=True, is_check_event=False, is_check_routin
         call closed_room_event
     else:
         $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
-        if (sp_bg_change_room != None):
+        if (sp_bg_change_room):
             scene expression (sp_bg_change_room) as bg
         else:
             scene expression (cur_room.bg) as bg

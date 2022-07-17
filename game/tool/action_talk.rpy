@@ -37,13 +37,14 @@ init -11 python:
             """This is a is picture in background?"""
             return not isNullOrEmpty(self.picture_in_background)
 
-        def talk(self) -> None:
-            """Inside you can find the labels and images to start talk()"""
+        def getTalkLabelName(self) -> None:
             # if label_name == None does the default procedure
             if not isNullOrEmpty(self.label_name):
-                renpy.call(self.label_name)
+                return self.label_name
             elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
-                renpy.call(DEFAULT_LABEL_TALK)
+                return DEFAULT_LABEL_TALK
+            else:
+                renpy.log("Error: DEFAULT_LABEL_TALK is null or empty")
             return
 
         def getBackground(self) -> str:
