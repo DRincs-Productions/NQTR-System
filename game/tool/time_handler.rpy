@@ -50,7 +50,7 @@ init -11 python:
                     "Warn: You have set weekend_day < 0, so it will be set to 6.")
                 self.weekend_day = 6
 
-        def get_hour_name(self):
+        def get_hour_name(self) -> str:
             if self.hour >= 22:
                 return hour_names[0][1]
             if self.hour >= 19:
@@ -63,16 +63,16 @@ init -11 python:
                 return hour_names[0][1]
             return hour_names[2][1]
 
-        def get_day_number(self):
+        def get_day_number(self) -> int:
             return self.day
 
         def get_hour_number(self) -> int:
             return self.hour
 
-        def get_weekday_number(self):
+        def get_weekday_number(self) -> int:
             return self.day % 7
 
-        def get_weekday_name(self):
+        def get_weekday_name(self) -> str:
             return weekday_names[self.get_weekday_number()]
 
         # def get_day_of_month(self, hour=None):
@@ -100,7 +100,7 @@ init -11 python:
         #         day -= len(month[1])
         #     return month_number
 
-        def new_hour(self, amt: int = event_duration):
+        def new_hour(self, amt: int = event_duration) -> bool:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy """
             # if it is too late you have to use new_day()
             if (self.hour < self.hour_of_new_day):
@@ -112,7 +112,7 @@ init -11 python:
             self.update_image_time()
             return True
 
-        def update_image_time(self):
+        def update_image_time(self) -> None:
             if (self.get_hour_name() == "Evening"):
                 self.image_time = 2
             elif (self.get_hour_name() == "Night"):
@@ -121,22 +121,25 @@ init -11 python:
                 self.image_time = 0
             else:
                 self.image_time = 1
+            return
 
-        def new_day(self):
+        def new_day(self) -> None:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
             self.hour = self.hour_of_new_day
             self.day += 1
             self.update_image_time()
+            return
 
-        def now_is_between(self, end: int, start: int = 0, now = None) -> bool:
+        def now_is_between(self, end: int, start: int = 0, now=None) -> bool:
             if now is None:
                 return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
             else:
                 return (((now >= start or start > end) and now < end) or (now >= start and (now < end or start > end)))
 
-    def now_is_between(end: int, start: int = 0, now = None) -> bool:
+
+    def now_is_between(end: int, start: int = 0, now=None) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#now-is-between """
-        return tm.now_is_between(end = end, start = start, now = now)
+        return tm.now_is_between(end=end, start=start, now=now)
 
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function
@@ -148,7 +151,7 @@ default tm = TimeHandler(
 )
 
 init -8 python:
-    def updateTimeHandler(tm: TimeHandler):
+    def updateTimeHandler(tm: TimeHandler) -> None:
         hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY
         hour = tm.hour
         weekend_day = tm.weekend_day
@@ -159,4 +162,4 @@ init -8 python:
         del hour
         del weekend_day
         del day
-        return tm
+        return

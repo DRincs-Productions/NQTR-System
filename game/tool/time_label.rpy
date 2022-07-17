@@ -9,7 +9,7 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, after_exit=True, is_che
         python:
             tm.new_day()
             # removes expired Commitments
-            routine = clearExpiredRoutine(routine, tm)
+            clearExpiredRoutine(routine, tm)
             clearExpiredActions(actions, tm.day)
             checkInactiveStage(current_stages= current_quest_stages | current_task_stages)
         call after_spending_time(after_exit = after_exit, is_check_event = is_check_event)
