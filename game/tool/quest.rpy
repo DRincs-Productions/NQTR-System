@@ -165,7 +165,7 @@ init python:
             return True
 
         def nextStage(self):
-            """If it is a Quest is replaced by the next Quest, and if it is a Task is deleted."""
+            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
             # if (label_end != None)
             # TODO: Execute label_end
             if (self.quest_id in current_task_stages):
@@ -265,7 +265,6 @@ init python:
             number_stages_completed_in_quest[self.id] = n_stage
 
         def nextStage(self):
-            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
             if (not (self.id in number_stages_completed_in_quest)):
                 self.update()
             if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
