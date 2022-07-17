@@ -98,7 +98,7 @@ init python:
                 days_required_to_start=self.days_required_to_start,
             )
             # SetDayNumberRequiredToStart: is important to set the day_start to the current day.
-            self.SetDayNumberRequiredToStart(number_stages_completed_in_quest_requests)
+            self.SetDayNumberRequiredToStart(self.number_stages_completed_in_quest_requests)
             return
 
         def addInCurrentTaskStages(self) -> None:
@@ -115,7 +115,7 @@ init python:
                 days_required_to_start=self.days_required_to_start,
             )
             # SetDayNumberRequiredToStart: is important to set the day_start to the current day.
-            self.SetDayNumberRequiredToStart(number_stages_completed_in_quest_requests)
+            self.SetDayNumberRequiredToStart(self.number_stages_completed_in_quest_requests)
             return
 
         def start(self) -> bool:
