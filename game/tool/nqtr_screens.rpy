@@ -566,3 +566,24 @@ screen menu_memo():
             action [
                 SetVariable('cur_quest_menu', cur_quest_menu+1),
             ]
+
+# making calls safely:
+# Why? Because if I use Call("label") in sleep mode from the room_navigation
+# and in the "label" I use "return" an almost all cases the game will end.
+label secure_call_from_room_navigation(label_name_to_call):
+    $ renpy.call(label_name_to_call)
+    call screen room_navigation
+
+label nav_backbround(after_exit=True):
+    if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
+        # Change the background image to the current room image.
+        call closed_room_event
+    else:
+        $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
+        if (sp_bg_change_room):
+            scene expression (sp_bg_change_room) as bg
+        else:
+            scene expression (cur_room.bg) as bg
+    if (after_exit):
+        call screen room_navigation
+    return
