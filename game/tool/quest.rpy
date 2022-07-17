@@ -55,13 +55,13 @@ init python:
                     description: str = None,
                     advice: str = None,
                     bg: str = None,
-                    waiting_days_before_start: int = None,
-                    flags_requests: Optional[list[str]] = None,
+                    days_required_to_start: int = None,
+                    flags_requests: Optional[list[str]] = None,  # TODO: implement this
                     number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
                     request_description: str = None,
-                    label_start: str = None,  # TODO: implement this
-                    label_end: str = None,  # TODO: implement this
-                    label_check: str = None,  # TODO: implement this
+                    start_label_name: str = None,  # Will be initiated when the stage is started 
+                    end_label_name: str = None,  # TODO: implement this
+                    check_label_name: str = None,  # TODO: implement this
                     ):
 
             self.quest_id = quest_id
@@ -73,15 +73,15 @@ init python:
             self.completed = False
             self.bg = bg
             # These are the requirements to start the Stage
-            self.waiting_days_before_start = waiting_days_before_start
+            self.days_required_to_start = days_required_to_start
             self.day_start = None
             self.flags_requests = flags_requests if flags_requests else []
             self.number_stages_completed_in_quest_requests = number_stages_completed_in_quest_requests if number_stages_completed_in_quest_requests else {}
             self.request_description = request_description if request_description else ""
             # these labels will be started automatically at the appropriate time.
-            self.label_start = label_start
-            self.label_end = label_end
-            self.label_check = label_check
+            self.start_label_name = start_label_name
+            self.end_label_name = end_label_name
+            self.check_label_name = check_label_name
 
         def addInCurrentQuestStages(self):
             """Add the Stage in the current_quest_stages"""
@@ -91,10 +91,10 @@ init python:
                 flags_requests=self.flags_requests,
                 number_stages_completed_in_quest_requests=self.number_stages_completed_in_quest_requests,
                 request_description=self.request_description,
-                label_start=self.label_start,
-                label_end=self.label_end,
-                label_check=self.label_check,
-                waiting_days_before_start=self.waiting_days_before_start,
+                start_label_name=self.start_label_name,
+                end_label_name=self.end_label_name,
+                check_label_name=self.check_label_name,
+                days_required_to_start=self.days_required_to_start,
             )
             return
 
@@ -106,10 +106,10 @@ init python:
                 flags_requests=self.flags_requests,
                 number_stages_completed_in_quest_requests=self.number_stages_completed_in_quest_requests,
                 request_description=self.request_description,
-                label_start=self.label_start,
-                label_end=self.label_end,
-                label_check=self.label_check,
-                waiting_days_before_start=self.waiting_days_before_start,
+                start_label_name=self.start_label_name,
+                end_label_name=self.end_label_name,
+                check_label_name=self.check_label_name,
+                days_required_to_start=self.days_required_to_start,
             )
             return
 
@@ -120,10 +120,9 @@ init python:
                 return self.active
             if (not self.respectAllRequests()):
                 return False
-            # if (self.label_start != None):
-            #     self.active = True
-            #     renpy.call(self.label_start)
             self.active = True
+            if (self.start_label_name != None):
+                renpy.call(self.start_label_name)
             # TODO: notify
             return True
 
@@ -141,7 +140,7 @@ init python:
 
         def isCompleted(self):
             """Check if the Stage can be complete."""
-            # if (label_check != None)
+            # if (check_label_name != None)
             if (self.completed):
                 return True
             if (not self.active):
@@ -161,7 +160,7 @@ init python:
                     return True
             return False
 
-        def addDaysWaitingBeforeStart(self, day: int):
+        def SetDayNumberRequiredToStart(self, day: int):
             """Add days of waiting before it starts"""
             if (day != None):
                 self.day_start = (tm.day + day)
@@ -219,13 +218,13 @@ init python:
                 self.update()
             return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
-        def addDaysWaitingBeforeStart(self, day: int):
+        def SetDayNumberRequiredToStart(self, day: int):
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
             if (not (self.id in number_stages_completed_in_quest)):
                 renpy.log("Warn: the Quest: "+self.id +
                         " not is in number_stages_completed_in_quest, so i update it")
                 self.update()
-            return current_task_stages[self.id].addDaysWaitingBeforeStart(day)
+            return current_task_stages[self.id].SetDayNumberRequiredToStart(day)
 
         def update(self):
             """Function to update the various values,
