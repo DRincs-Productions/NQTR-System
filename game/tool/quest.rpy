@@ -7,13 +7,13 @@ init python:
 
         def __init__(self,
                     id: str,
-                    description: str,
+                    description: str = None,
                     complete: bool = False,
                     need: int = 0,
                     have: int = 0):
 
             self.id = id
-            self.description = description
+            self.description = description if description else ""
             self.complete = complete
             self.need = need
             self.have = 0
@@ -49,35 +49,35 @@ init python:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#stage """
 
         def __init__(self,
-                    quest_id,
-                    goals=[],
-                    title=None,
-                    description=None,
-                    advice="",
-                    bg=None,
-                    waiting_days_before_start=None,
-                    flags_requests=[],
-                    quests_levels_requests={},
-                    description_request="",
-                    label_start=None,  # Todo: implement this
-                    label_end=None,  # Todo: implement this
-                    label_check=None,  # Todo: implement this
+                    quest_id: str,
+                    goals: Optional[list[str]] = None,
+                    title: str = None,
+                    description: str = None,
+                    advice: str = None,
+                    bg: str = None,
+                    waiting_days_before_start: int = None,
+                    flags_requests: Optional[list[str]] = None,
+                    number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
+                    request_description: str = None,
+                    label_start: str = None,  # Todo: implement this
+                    label_end: str = None,  # Todo: implement this
+                    label_check: str = None,  # Todo: implement this
                     ):
 
             self.quest_id = quest_id
-            self.goals = goals
+            self.goals = goals if goals else []
             self.active = False
-            self.title = title
-            self.description = description
-            self.advice = advice
+            self.title = title if title else ""
+            self.description = description if description else ""
+            self.advice = advice if advice else ""
             self.completed = False
             self.bg = bg
             # These are the requirements to start the Stage
             self.waiting_days_before_start = waiting_days_before_start
             self.day_start = None
-            self.flags_requests = flags_requests
-            self.quests_levels_requests = quests_levels_requests
-            self.description_request = description_request
+            self.flags_requests = flags_requests if flags_requests else []
+            self.number_stages_completed_in_quest_requests = number_stages_completed_in_quest_requests if number_stages_completed_in_quest_requests else {}
+            self.request_description = request_description if request_description else ""
             # these labels will be started automatically at the appropriate time.
             self.label_start = label_start
             self.label_end = label_end
@@ -89,8 +89,8 @@ init python:
                 quest_id=self.quest_id,
                 goals=self.goals,
                 flags_requests=self.flags_requests,
-                quests_levels_requests=self.quests_levels_requests,
-                description_request=self.description_request,
+                number_stages_completed_in_quest_requests=self.number_stages_completed_in_quest_requests,
+                request_description=self.request_description,
                 label_start=self.label_start,
                 label_end=self.label_end,
                 label_check=self.label_check,
@@ -104,8 +104,8 @@ init python:
                 quest_id=self.quest_id,
                 goals=self.goals,
                 flags_requests=self.flags_requests,
-                quests_levels_requests=self.quests_levels_requests,
-                description_request=self.description_request,
+                number_stages_completed_in_quest_requests=self.number_stages_completed_in_quest_requests,
+                request_description=self.request_description,
                 label_start=self.label_start,
                 label_end=self.label_end,
                 label_check=self.label_check,
@@ -131,7 +131,7 @@ init python:
             """Checks the requests, returns True if it satisfies them."""
             if (self.day_start != None and tm.day < self.day_start):
                 return False
-            for quest, level in self.quests_levels_requests.items():
+            for quest, level in self.number_stages_completed_in_quest_requests.items():
                 if (number_stages_completed_in_quest[quest] < level):
                     return False
             for item in self.flags_requests:
@@ -154,14 +154,14 @@ init python:
             self.completed = True
             return True
 
-        def find(self, goals_id, value=1):
+        def find(self, goals_id: str, value: int = 1):
             for item in self.goals:
                 if (item.id == goals_id):
                     item.find(value)
                     return True
             return False
 
-        def addDaysWaitingBeforeStart(self, day):
+        def addDaysWaitingBeforeStart(self, day: int):
             """Add days of waiting before it starts"""
             if (day != None):
                 self.day_start = (tm.day + day)
@@ -174,8 +174,8 @@ init python:
 
         def __init__(self,
                     id: str,
-                    title: str,
-                    description: str = "",
+                    title: str = None,
+                    description: str = None,
                     icon: str = None,
                     bg: str = None,
                     stages_id: Optional[list[str]] = None,
@@ -183,8 +183,8 @@ init python:
                     development: bool = False):
 
             self.id = id
-            self.title = title
-            self.description = description
+            self.title = title if title else ""
+            self.description = description if description else ""
             self.icon = icon
             self.bg = bg
             self.stages_id = self.stages_id = stages_id if stages_id else []
@@ -219,13 +219,13 @@ init python:
                 self.update()
             return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
-        def addDaysWaitingBeforeStart(self, day):
+        def addDaysWaitingBeforeStart(self, day: int):
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
             if (not (self.id in number_stages_completed_in_quest)):
                 renpy.log("Warn: the Quest: "+self.id +
                         " not is in number_stages_completed_in_quest, so i update it")
                 self.update()
-            return current_task_stages[self.id].addDaysWaitingBeforeStart()
+            return current_task_stages[self.id].addDaysWaitingBeforeStart(day)
 
         def update(self):
             """Function to update the various values,
@@ -248,7 +248,7 @@ init python:
                 self.afterNextStage()
                 return
 
-        def start(self, n_stage=0):
+        def start(self, n_stage: int = 0):
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
             quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages()
             current_quest_stages[self.id].start()

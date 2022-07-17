@@ -543,7 +543,7 @@ screen menu_memo():
                                 else:
                                     text _("You have completed all the quests.") size 28
                         else:
-                            text quest_menu.description_request size 24 color gui.accent_color
+                            text quest_menu.request_description size 24 color gui.accent_color
                     vbar value YScrollValue('vp2') style 'menu_vscroll'
     if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
         # increases and decreases cur_quest menu

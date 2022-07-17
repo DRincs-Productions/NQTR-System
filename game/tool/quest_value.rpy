@@ -14,7 +14,7 @@ define quest_stages = {
     # Quest "alice"
     "talk alice1"           :   Stage(quest_id = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="stagestart_talkalice"),
     "order products"        :   Stage(quest_id = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
-    "take products"         :   Stage(quest_id = "alice", title = _("Take products"), description = _("Take products on the Terrace."), description_request = _("Wait for the products you ordered to arrive (2 day)"), waiting_days_before_start = 2, label_start="add_product"),
+    "take products"         :   Stage(quest_id = "alice", title = _("Take products"), description = _("Take products on the Terrace."), request_description = _("Wait for the products you ordered to arrive (2 day)"), waiting_days_before_start = 2, label_start="add_product"),
     "talk alice2"           :   Stage(quest_id = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
     # Quest "ann"
     "talk al about ann"     :   Stage(quest_id = "ann", title = _("Talk [a]"), description = _("Talk [a]."), label_start="stagestart_talkalice_aboutann"),
