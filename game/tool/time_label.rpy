@@ -42,7 +42,7 @@ label after_spending_time(after_exit=True, is_check_event=False, is_check_routin
     if (is_check_event):
         $ cur_events_location = getEventsInThisLocation(cur_location.id, routine)
         call check_event
-    if(isClosedRoom(cur_room.id, closed_rooms, tm)):
+    if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
         # Change the background image to the current room image.
         call closed_room_event
     else:

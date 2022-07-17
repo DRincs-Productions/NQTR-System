@@ -66,7 +66,7 @@ init -11 python:
         def get_day_number(self):
             return self.day
 
-        def get_hour_number(self):
+        def get_hour_number(self) -> int:
             return self.hour
 
         def get_weekday_number(self):
