@@ -47,7 +47,7 @@ label order_product:
     mc "OK! Let's see, let's look for a book...."
     mc "Here's R****, for $1. Just the thing for me."
     $ del actions['order_product']
-    $ quests["alice"].nextStage()
+    $ current_quest_stages["alice"].nextStage()
     call screen room_navigation
 
 label add_product:
@@ -56,14 +56,14 @@ label add_product:
 
 label take_product:
     $ del actions['take_product']
-    $ quests["alice"].nextStage()
+    $ current_quest_stages["alice"].nextStage()
     call screen room_navigation
 
 label take_key:
     mc "Are these the car keys?! Well... I should try to access the car!"
     $ flags["goout"] = True
     $ del actions['take_key']
-    $ quests["ann"].nextStage()
+    $ current_quest_stages["ann"].nextStage()
     call screen room_navigation
 
 label talk_sleep:
