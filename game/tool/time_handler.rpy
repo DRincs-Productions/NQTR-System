@@ -66,6 +66,9 @@ init -11 python:
         def get_day_number(self):
             return self.day
 
+        def get_hour_number(self):
+            return self.hour
+
         def get_weekday_number(self):
             return self.day % 7
 
@@ -125,10 +128,15 @@ init -11 python:
             self.day += 1
             self.update_image_time()
 
-        def now_is_between(self, end: int, start: int = 0):
-            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#now-is-between """
-            return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
+        def now_is_between(self, end: int, start: int = 0, now = None) -> bool:
+            if now is None:
+                return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
+            else:
+                return (((now >= start or start > end) and now < end) or (now >= start and (now < end or start > end)))
 
+    def now_is_between(end: int, start: int = 0, now = None) -> bool:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#now-is-between """
+        return tm.now_is_between(end = end, start = start, now = now)
 
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function

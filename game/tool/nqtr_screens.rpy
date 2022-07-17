@@ -212,7 +212,7 @@ screen room_navigation():
             # Adds the button list of possible actions in that room
             if (room == cur_room and not room.id in closed_rooms):
                 # actions: dict[str, Act], room: Room,  now_is_between: callable[[int, int], bool], cur_day: int
-                for act in getActions(actions= actions | df_actions, room = room, now_is_between = tm.now_is_between, cur_day = tm.get_day_number()):
+                for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                     if (not act.isButton()):
                         imagebutton:
                             pos (act.xpos, act.ypos)
@@ -234,7 +234,7 @@ screen room_navigation():
             for room in rooms:
                 # Adds the button list of possible actions in that room
                 if (room == cur_room):
-                    for act in getActions(actions= actions | df_actions, room = room, now_is_between = tm.now_is_between, cur_day = tm.get_day_number()):
+                    for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                         if (act.isButton() == True):
                             imagebutton:
                                 idle act.button_icon
