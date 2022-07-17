@@ -285,12 +285,8 @@ init python:
             if (not (self.id in number_stages_completed_in_quest)):
                 self.update()
             return (self.id in current_quest_stages)
-        # TODO: add: def delete(self):
-            # removes it from current_quest_stages
-            # removes it from number_stages_completed_in_quest
 
-
-    # TODO: Use it when: Load Menu
+    
     def updateQuestsLevels():
         """Synchronize number_stages_completed_in_quest with quests.
         After this function I suggest to use checkInactiveStage()."""
