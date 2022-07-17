@@ -1,0 +1,66 @@
+{
+    "DRincs Start a Quest": {
+        "scope": "renpy",
+        "prefix": "DR_QuestStart",
+        "body": [
+            "$ quests[\"${1:quest_id}\"].start()",
+            "",
+        ],
+        "description": "Start a Quest"
+    },
+    "DRincs Next Stage": {
+        "scope": "renpy",
+        "prefix": "DR_QuestNextStage",
+        "body": [
+            "$ quests[\"${1:quest_id}\"].nextStage()",
+            "",
+        ],
+        "description": "Next Stage"
+    },
+    "DRincs Next Stage Only it is completed": {
+        "scope": "renpy",
+        "prefix": "DR_QuestNextStageIfIsCompleted",
+        "body": [
+            "$ quests[\"${1:quest_id}\"].nextStageOnlyIsCompleted()",
+            "",
+        ],
+        "description": "Next Stage Only it is completed"
+    },
+    "DRincs If Number of Stages completed in Quest": {
+        "scope": "renpy",
+        "prefix": "DR_QuestIfNumberOfStagesCompleted",
+        "body": [
+            "if (number_stages_completed_in_quest[\"${1:quest_id}\"] \"${2:==}\" \"${3:2}\")",
+            "    ",
+        ],
+        "description": "If Number of Stages completed in Quest"
+    },
+    "DRincs Add a Quest": {
+        "scope": "renpy",
+        "prefix": "DR_QuestAdd",
+        "body": [
+            "\"${1:quest_id}\"  : Quest(id = \"${1}\", title = _(\"${2:Help [a]}\"), bg = \"${3:quest ${1}}\",",
+            "    stages_id = [\"${4:stages_id_1\", \"stages_id_2}\"],",
+            "    description = _(\"${5:Long Description}\"),",
+            "    development = True",
+            "),",
+        ],
+        "description": "Add a Quest"
+    },
+    "DRincs Add a Stage": {
+        "scope": "renpy",
+        "prefix": "DR_QuestStageAdd",
+        "body": [
+            "\"${1:stage_id}\"  :  Stage(quest_id = \"${2:quest_id}\", title = _(\"${3:Help [a]}\"), days_required_to_start = ${4:2},",
+            "    description = _(\"${5:Long Description}\"),",
+            "    advice = _(\"${6:Advice}\"),",
+            "    request_description = _(\"${7:Request Description}\"),",
+            "    start_label_name=${8:\"stagestart_${1:stage_id}\"},",
+            "    number_stages_completed_in_quest_requests = {",
+            "        ${9:\"quest_1\" : 2,}",
+            "    }",
+            "),",
+        ],
+        "description": "Add a Stage"
+    },
+}

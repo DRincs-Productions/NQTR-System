@@ -70,7 +70,7 @@ label talk_back:
 # Quest "alice"
 
 label stage_talkalice:
-    if (quests_levels["alice"] == 0):
+    if (number_stages_completed_in_quest["alice"] == 0):
         show bg alice terrace talk
         a "Hi can you order me a new book from pc?"
         mc "Ok"
@@ -80,19 +80,19 @@ label stage_talkalice:
 
         $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", rooms=["my_room"])
 
-        $ quests["alice"].next_stage()
-    elif (quests_levels["alice"] == 1):
+        $ quests["alice"].nextStage()
+    elif (number_stages_completed_in_quest["alice"] == 1):
         mc "What book do you want me to order?"
         a "For me it is the same."
         jump talk_menu
-    elif (quests_levels["alice"] == 2):
+    elif (number_stages_completed_in_quest["alice"] == 2):
         mc "I ordered the Book, hope you enjoy it."
         a "Great, when it arrives remember to bring it to me."
         jump talk_menu
-    elif (quests_levels["alice"] == 3):
+    elif (number_stages_completed_in_quest["alice"] == 3):
         mc "Here's your book."
         a "Thank you, I can finally read something new."
-        $ quests["alice"].next_stage()
+        $ quests["alice"].nextStage()
         $ delTalkChoice(choice_id = "alice", choice_text = _("About the book"), dict_choices = talkch_choices)
     return
 
@@ -107,6 +107,6 @@ label stage_talkalice_aboutann:
     $ actions["take_key"] = Act(name = _("KEY"),  picture_in_background = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
         xpos = 608, ypos = 667)
 
-    $ quests["ann"].next_stage()
+    $ quests["ann"].nextStage()
     $ delTalkChoice(choice_id = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
     return

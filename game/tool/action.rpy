@@ -25,7 +25,7 @@ init -5 python:
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
-            self.rooms = self.rooms = rooms if rooms else []
+            self.rooms = rooms if rooms else []
             self.button_icon = button_icon
             self.button_icon_selected = button_icon_selected
             # Is an action that is started by clicking on an image in the room.

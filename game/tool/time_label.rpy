@@ -11,7 +11,7 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, after_exit=True, is_che
             # removes expired Commitments
             routine = clearExpiredRoutine(routine, tm)
             actions = clearExpiredActions(actions, tm.day)
-            checkInactiveStage()
+            checkInactiveStage(current_stages= current_quest_stages | current_task_stages)
         call after_spending_time(after_exit = after_exit, is_check_event = is_check_event)
     else:
         "[DEFAULT_BLOCK_SPENDTIME_DIALOGUE]"
