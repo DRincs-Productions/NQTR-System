@@ -1,24 +1,3 @@
-# Stage
-
-# quest_stages: is the list of all existing Stage tasks.
-# it is used to keep all information about all Stages
-
-# current_quest_stages: are the Stage currently active,
-# contains only the data strictly necessary for proper operation
-# after their completion they are replaced with the next one
-
-# Task
-# current_task_stages is identical to this_current, 
-# except that after completion they are not replaced by the next one, but eliminated. 
-# The idea is that the Tasks are not within the "Stage" and therefore have no subsequent internships.
-
-# Quest
-# the Quest is a list of Stages that follow each other according to their order
-# quests and number_stages_completed_in_quest are synchronized, meaning they will always have the same elements
-
-# number_stages_completed_in_quest: must not have elements at the beginning. what is it for? to know which number of this has arrived at an internship
-# quest_stages is similar to quest_stages and contains information about internships
-
 # the number of stages completed in a quest
 default number_stages_completed_in_quest = {}
 default current_quest_stages = {}
@@ -33,14 +12,14 @@ define quests = {
 }
 define quest_stages = {
     # Quest "alice"
-    "talk alice1"           :   Stage(quest_or_task_id = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="stagestart_talkalice"),
-    "order products"        :   Stage(quest_or_task_id = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
-    "take products"         :   Stage(quest_or_task_id = "alice", title = _("Take products"), description = _("Take products on the Terrace."), description_request = _("Wait for the products you ordered to arrive (2 day)"), waiting_days_before_start = 2, label_start="add_product"),
-    "talk alice2"           :   Stage(quest_or_task_id = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
+    "talk alice1"           :   Stage(quest_id = "alice", title = _("Talk [a]"), description = _("Talk [a] on the terrace."), label_start="stagestart_talkalice"),
+    "order products"        :   Stage(quest_id = "alice", title = _("Order products"), description = _("Order the products with your PC.")),
+    "take products"         :   Stage(quest_id = "alice", title = _("Take products"), description = _("Take products on the Terrace."), description_request = _("Wait for the products you ordered to arrive (2 day)"), waiting_days_before_start = 2, label_start="add_product"),
+    "talk alice2"           :   Stage(quest_id = "alice", title = _("Talk [a]"), description = _("Talk [a].")),
     # Quest "ann"
-    "talk al about ann"     :   Stage(quest_or_task_id = "ann", title = _("Talk [a]"), description = _("Talk [a]."), label_start="stagestart_talkalice_aboutann"),
-    "take the key"          :   Stage(quest_or_task_id = "ann", title = _("take the key"), description = _("take the key.")),
-    "visit ann"             :   Stage(quest_or_task_id = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
+    "talk al about ann"     :   Stage(quest_id = "ann", title = _("Talk [a]"), description = _("Talk [a]."), label_start="stagestart_talkalice_aboutann"),
+    "take the key"          :   Stage(quest_id = "ann", title = _("take the key"), description = _("take the key.")),
+    "visit ann"             :   Stage(quest_id = "ann", title = _("Visit [an]"), description = _("Go to the house of [an].")),
 }
 
 # Quest "alice"

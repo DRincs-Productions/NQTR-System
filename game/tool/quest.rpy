@@ -1,31 +1,9 @@
-# Explanation of the operation of the Stages that are in current_task_stages
-# to simplify I call:
-#   - quests[x]: Quest
-#   - quest_stages[x]: Stage
-#   - current_quest_stages[x]: currentStage
-#
-# First phase (Initialize a Stage):
-# Quest.start():                    # It is done manually
-#   Stage.addInQuest()
-#   currentStage.start():                  # it is done until it becomes active with TODO: ...
-#       currentStage.request_check():
-#           currentStage.active = True
-# --------------------------------------------------------------------------
-# currentStage.completed_try():            # It is done manually
-#   isCompleted():
-#       completed = True
-#   if (completed):
-#       Quest.nextStage():
-#           if it's not the last quest:
-#               Quest.start(next)   # Start the cycle again
-
 init python:
     from typing import Optional
 
 
     class Goal(object):
-        """Goal class, it has been designed to be included in the Stage class.
-        To complete the goals use find()"""
+        """"""
 
         def __init__(self,
                     id: str,
@@ -71,7 +49,7 @@ init python:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#stage """
 
         def __init__(self,
-                    quest_or_task_id,
+                    quest_id,
                     goals=[],
                     title=None,
                     description=None,
@@ -85,7 +63,7 @@ init python:
                     label_end=None,
                     label_check=None):
 
-            self.quest_or_task_id = quest_or_task_id
+            self.quest_id = quest_id
             self.goals = goals
             self.active = False
             self.title = title
@@ -105,10 +83,10 @@ init python:
             self.label_end = label_end
             self.label_check = label_check
 
-        def addInQuest(self):
+        def addInCurrentQuestStages(self):
             """Add the Stage in the current_quest_stages"""
-            current_quest_stages[self.quest_or_task_id] = Stage(
-                quest_or_task_id=self.quest_or_task_id,
+            current_quest_stages[self.quest_id] = Stage(
+                quest_id=self.quest_id,
                 goals=self.goals,
                 flags_requests=self.flags_requests,
                 quests_levels_requests=self.quests_levels_requests,
@@ -116,13 +94,13 @@ init python:
                 label_start=self.label_start,
                 label_end=self.label_end,
                 label_check=self.label_check)
-            current_quest_stages[self.quest_or_task_id].setDay(
+            current_quest_stages[self.quest_id].setDay(
                 self.waiting_days_before_start)
 
         def addInTask(self):
             """Add the Stage in the current_task_stages"""
-            current_task_stages[self.quest_or_task_id] = Stage(
-                quest_or_task_id=self.quest_or_task_id,
+            current_task_stages[self.quest_id] = Stage(
+                quest_id=self.quest_id,
                 goals=self.goals,
                 flags_requests=self.flags_requests,
                 quests_levels_requests=self.quests_levels_requests,
@@ -130,7 +108,7 @@ init python:
                 label_start=self.label_start,
                 label_end=self.label_end,
                 label_check=self.label_check)
-            current_task_stages[self.quest_or_task_id].setDay(
+            current_task_stages[self.quest_id].setDay(
                 self.waiting_days_before_start)
 
         def start(self):
@@ -161,7 +139,7 @@ init python:
                     return False
             return True
 
-        def completed_try(self):
+        def nextStageOnlyIsCompleted(self):
             """Check completed and if it is complete -> nextStage()
             set complete = True if it can actually go ahead completed"""
             if (not self.isCompleted()):
@@ -183,17 +161,17 @@ init python:
                     if (not x.isComplete()):
                         return False
             self.completed = True
-            # self.completed_try()
+            # self.nextStageOnlyIsCompleted()
             return True
 
         def nextStage(self):
             """If it is a Quest is replaced by the next Quest, and if it is a Task is deleted."""
             # if (label_end != None)
             # TODO: Execute label_end
-            if (self.quest_or_task_id in current_task_stages):
-                del current_task_stages[self.quest_or_task_id]
+            if (self.quest_id in current_task_stages):
+                del current_task_stages[self.quest_id]
                 return
-            quests[self.quest_or_task_id].nextStage()
+            quests[self.quest_id].nextStage()
 
         def find(self, goals_id, value=1):
             # TODO: To comment and test
@@ -282,7 +260,7 @@ init python:
 
         def start(self, n_stage=0):
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
-            quest_stages[self.stages_id[n_stage]].addInQuest()
+            quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages()
             current_quest_stages[self.id].start()
             number_stages_completed_in_quest[self.id] = n_stage
 
