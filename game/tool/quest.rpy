@@ -59,9 +59,9 @@ init python:
                     flags_requests=[],
                     quests_levels_requests={},
                     description_request="",
-                    label_start=None, # Todo: implement this
-                    label_end=None, # Todo: implement this
-                    label_check=None, # Todo: implement this
+                    label_start=None,  # Todo: implement this
+                    label_end=None,  # Todo: implement this
+                    label_check=None,  # Todo: implement this
                     ):
 
             self.quest_id = quest_id
@@ -93,9 +93,10 @@ init python:
                 description_request=self.description_request,
                 label_start=self.label_start,
                 label_end=self.label_end,
-                label_check=self.label_check)
-            current_quest_stages[self.quest_id].setDay(
-                self.waiting_days_before_start)
+                label_check=self.label_check,
+                waiting_days_before_start=self.waiting_days_before_start,
+            )
+            return
 
         def addInCurrentTaskStages(self):
             """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
@@ -107,9 +108,10 @@ init python:
                 description_request=self.description_request,
                 label_start=self.label_start,
                 label_end=self.label_end,
-                label_check=self.label_check)
-            current_task_stages[self.quest_id].setDay(
-                self.waiting_days_before_start)
+                label_check=self.label_check,
+                waiting_days_before_start=self.waiting_days_before_start,
+            )
+            return
 
         def start(self):
             """If you have reached all the objectives then activate the Stage.
@@ -165,6 +167,7 @@ init python:
                 self.day_start = (tm.day + day)
             return
 
+
     class Quest(object):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#quest 
         Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
@@ -219,7 +222,8 @@ init python:
         def addDaysWaitingBeforeStart(self, day):
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
             if (not (self.id in number_stages_completed_in_quest)):
-                renpy.log("Warn: the Quest: "+self.id+" not is in number_stages_completed_in_quest, so i update it")
+                renpy.log("Warn: the Quest: "+self.id +
+                        " not is in number_stages_completed_in_quest, so i update it")
                 self.update()
             return current_task_stages[self.id].addDaysWaitingBeforeStart()
 
@@ -272,7 +276,8 @@ init python:
 
         def afterNextStage(self):
             if (not (self.id in number_stages_completed_in_quest)):
-                renpy.log("Warn: the Quest: "+self.id+" not is in number_stages_completed_in_quest, so i update it")
+                renpy.log("Warn: the Quest: "+self.id +
+                        " not is in number_stages_completed_in_quest, so i update it")
                 self.update()
             if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
                 current_quest_stages[self.id].completed = True
@@ -286,7 +291,7 @@ init python:
                 self.update()
             return (self.id in current_quest_stages)
 
-    
+
     def updateQuestsLevels():
         """Synchronize number_stages_completed_in_quest with quests.
         After this function I suggest to use checkInactiveStage()."""
@@ -302,15 +307,14 @@ init python:
                 number_stages_completed_in_quest.remove(x)
         return
 
-    def checkInactiveStage():
+
+    def checkInactiveStage(current_stages: dict[str: Stage]):
         """Check if the inactive Stage have the requirements to be activated, if so, activate them."""
-        for k in current_quest_stages.keys():
-            current_quest_stages[k].start()
-        for k in current_task_stages.keys():
-            current_task_stages[k].start()
+        for k in current_stages.keys():
+            current_stages[k].start()
         return
 
-# TODO: Add the following functions
+    # TODO: Add the following functions
     # check if current_quest_stages.key is in quests, if not there delete it: Load Game
     # for isCompleted()
     # compare current_quest_stages current_task_stages if in current_quest_stages ce an extra quest is deleted
