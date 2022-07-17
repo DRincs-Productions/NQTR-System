@@ -59,9 +59,9 @@ init python:
                     flags_requests: Optional[list[str]] = None,
                     number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
                     request_description: str = None,
-                    label_start: str = None,  # Todo: implement this
-                    label_end: str = None,  # Todo: implement this
-                    label_check: str = None,  # Todo: implement this
+                    label_start: str = None,  # TODO: implement this
+                    label_end: str = None,  # TODO: implement this
+                    label_check: str = None,  # TODO: implement this
                     ):
 
             self.quest_id = quest_id
@@ -179,7 +179,7 @@ init python:
                     icon: str = None,
                     bg: str = None,
                     stages_id: Optional[list[str]] = None,
-                    tag: str = None,
+                    tag: str = None,  # TODO: implement this
                     development: bool = False):
 
             self.id = id
