@@ -14,12 +14,13 @@
 
 # Quest
 # the Quest is a list of Stages that follow each other according to their order
-# quests and quests_levels are synchronized, meaning they will always have the same elements
+# quests and number_stages_completed_in_quest are synchronized, meaning they will always have the same elements
 
-# quests_levels: must not have elements at the beginning. what is it for? to know which number of this has arrived at an internship
+# number_stages_completed_in_quest: must not have elements at the beginning. what is it for? to know which number of this has arrived at an internship
 # quest_stages is similar to quest_stages and contains information about internships
 
-default quests_levels = {}
+# the number of stages completed in a quest
+default number_stages_completed_in_quest = {}
 default current_quest_stages = {}
 default current_task_stages = {}
 
