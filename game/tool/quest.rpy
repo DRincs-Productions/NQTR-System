@@ -3,7 +3,7 @@ init python:
 
 
     class Goal(object):
-        """"""
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#goal"""
 
         def __init__(self,
                     id: str,
@@ -118,7 +118,7 @@ init python:
             the only thing that happens is that it doesn't return anything. (for now I don't know how serious is this error)"""
             if (self.active):
                 return self.active
-            if (not self.request_check()):
+            if (not self.requestCheck()):
                 return False
             if (self.label_start != None):
                 self.active = True
@@ -127,7 +127,7 @@ init python:
             # TODO: notify
             return True
 
-        def request_check(self):
+        def requestCheck(self):
             """Checks the requests, returns True if it satisfies them."""
             if (self.day_start != None and tm.day < self.day_start):
                 return False
@@ -171,7 +171,8 @@ init python:
 
 
     class Quest(object):
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#quest """
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#quest 
+        Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
 
         def __init__(self,
                     id: str,
@@ -248,8 +249,7 @@ init python:
             number_stages_completed_in_quest[self.id] = n_stage
 
         def nextStageOnlyIsCompleted(self):
-            """Check completed and if it is complete -> nextStage()
-            set complete = True if it can actually go ahead completed"""
+            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
             if (self.id in current_task_stages):
                 if (not current_task_stages[self.id].isCompleted()):
                     return False
