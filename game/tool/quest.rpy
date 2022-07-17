@@ -60,7 +60,7 @@ init python:
                     quests_levels_requests={},
                     description_request="",
                     label_start=None,
-                    label_end=None,
+                    label_end=None, # Todo: implement this
                     label_check=None):
 
             self.quest_id = quest_id
@@ -139,14 +139,6 @@ init python:
                     return False
             return True
 
-        def nextStageOnlyIsCompleted(self):
-            """Check completed and if it is complete -> nextStage()
-            set complete = True if it can actually go ahead completed"""
-            if (not self.isCompleted()):
-                return False
-            self.nextStage()
-            return True
-
         def isCompleted(self):
             """Check if the Stage can be complete."""
             # if (label_check != None)
@@ -163,15 +155,6 @@ init python:
             self.completed = True
             # self.nextStageOnlyIsCompleted()
             return True
-
-        def nextStage(self):
-            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
-            # if (label_end != None)
-            # TODO: Execute label_end
-            if (self.quest_id in current_task_stages):
-                del current_task_stages[self.quest_id]
-                return
-            quests[self.quest_id].nextStage()
 
         def find(self, goals_id, value=1):
             # TODO: To comment and test
@@ -255,7 +238,7 @@ init python:
                 return
             # if it is a completed Quest and a Stage has been added in a new update
             if (not self.isCompleted()) and current_quest_stages[self.id].completed:
-                self.nextStage()
+                self.afterNextStage()
                 return
 
         def start(self, n_stage=0):
@@ -264,7 +247,27 @@ init python:
             current_quest_stages[self.id].start()
             number_stages_completed_in_quest[self.id] = n_stage
 
+        def nextStageOnlyIsCompleted(self):
+            """Check completed and if it is complete -> nextStage()
+            set complete = True if it can actually go ahead completed"""
+            if (self.id in current_task_stages):
+                if (not current_task_stages[self.id].isCompleted()):
+                    return False
+            elif (self.id in current_quest_stages):
+                if (not current_task_stages[self.id].isCompleted()):
+                    return False
+            self.nextStage()
+            return True
+
         def nextStage(self):
+            """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
+            if (self.id in current_task_stages):
+                del current_task_stages[self.quest_id]
+                return
+            self.afterNextStage()
+            return
+
+        def afterNextStage(self):
             if (not (self.id in number_stages_completed_in_quest)):
                 renpy.log("Warn: the Quest: "+self.id+" not is in number_stages_completed_in_quest, so i update it")
                 self.update()
