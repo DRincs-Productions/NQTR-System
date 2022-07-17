@@ -75,7 +75,7 @@ init python:
             self.bg = bg
             # These are the requirements to start the Stage
             self.days_required_to_start = days_required_to_start
-            self.day_start = None
+            self.day_start = None # Will be initiated when the stage is started
             self.flags_requests = flags_requests if flags_requests else []
             self.number_stages_completed_in_quest_requests = number_stages_completed_in_quest_requests if number_stages_completed_in_quest_requests else {}
             self.request_description = request_description if request_description else ""
@@ -97,6 +97,8 @@ init python:
                 check_label_name=self.check_label_name,
                 days_required_to_start=self.days_required_to_start,
             )
+            # SetDayNumberRequiredToStart: is important to set the day_start to the current day.
+            self.SetDayNumberRequiredToStart(number_stages_completed_in_quest_requests)
             return
 
         def addInCurrentTaskStages(self) -> None:
@@ -112,6 +114,8 @@ init python:
                 check_label_name=self.check_label_name,
                 days_required_to_start=self.days_required_to_start,
             )
+            # SetDayNumberRequiredToStart: is important to set the day_start to the current day.
+            self.SetDayNumberRequiredToStart(number_stages_completed_in_quest_requests)
             return
 
         def start(self) -> bool:
@@ -164,7 +168,7 @@ init python:
         def SetDayNumberRequiredToStart(self, day: int) -> None:
             """Add days of waiting before it starts"""
             if (day != None):
-                self.day_start = (day)
+                self.day_start = (tm.get_day_number() + day)
             return
 
 
