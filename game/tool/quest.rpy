@@ -266,6 +266,7 @@ init python:
 
         def nextStage(self):
             if (not (self.id in number_stages_completed_in_quest)):
+                renpy.log("Warn: the Quest: "+self.id+" not is in number_stages_completed_in_quest, so i update it")
                 self.update()
             if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
                 current_quest_stages[self.id].completed = True
