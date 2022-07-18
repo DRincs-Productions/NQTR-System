@@ -575,6 +575,7 @@ label secure_call_from_room_navigation(label_name_to_call = ""):
         $ renpy.log("Error(secure_call_from_room_navigation): label_name_to_call is empty")
     else:
         $ renpy.call(label_name_to_call)
+    call set_backbround(sp_bg_change_room)
     call screen room_navigation
     $ renpy.log("Error(secure_call_from_room_navigation): thera is a anomaly in room_navigation. value: " + label_name_to_call)
     jump secure_call_from_room_navigation
@@ -585,10 +586,14 @@ label nav_backbround(after_exit=True):
         call closed_room_event
     else:
         $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
-        if (sp_bg_change_room):
-            scene expression (sp_bg_change_room) as bg
-        else:
-            scene expression (cur_room.bg) as bg
+        call set_backbround(sp_bg_change_room)
     if (after_exit):
         call screen room_navigation
+    return
+
+label set_backbround(sp_bg_change_room = ""):
+    if (not isNullOrEmpty(sp_bg_change_room)):
+        scene expression (sp_bg_change_room) as bg
+    else:
+        scene expression (cur_room.bg) as bg
     return

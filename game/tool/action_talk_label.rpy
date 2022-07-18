@@ -39,7 +39,7 @@ label talk:
         "Now is busy test later."
 
     call talk_menu
-    call nav_backbround
+    call set_backbround(sp_bg_change_room)
     return
 
 # Display a random phrase and then end the conversation
