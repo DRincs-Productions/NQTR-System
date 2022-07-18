@@ -106,7 +106,7 @@ screen room_navigation():
                         action [
                             Hide('wait_navigation'),
                             SetVariable('cur_location', location),
-                            Jump('close_map'),
+                            Call("secure_call_from_room_navigation", label_name_to_call = "close_map"),
                         ]
                         at small_map
 
@@ -222,7 +222,7 @@ screen room_navigation():
                             focus_mask True
                             action [
                                 Hide('wait_navigation'),
-                                Jump(act.label_name),
+                                Call("secure_call_from_room_navigation", label_name_to_call = act.label_name),
                             ]
                             if renpy.variant("pc"):
                                 tooltip act.name
@@ -243,7 +243,7 @@ screen room_navigation():
                                 focus_mask True
                                 action [
                                     Hide('wait_navigation'),
-                                    Jump(act.label_name),
+                                    Call("secure_call_from_room_navigation", label_name_to_call = act.label_name),
                                 ]
                                 if renpy.variant("pc"):
                                     tooltip act.name
@@ -266,7 +266,7 @@ screen room_navigation():
                                         Hide('wait_navigation'),
                                         SetVariable('talk_ch', ch_id),
                                         SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                        Call(talk_obj.getTalkLabelName()),
+                                        Call("secure_call_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
                                     ]
                                     at middle_action
                                 # inserts the icon of the character who is currently in that room
@@ -280,7 +280,7 @@ screen room_navigation():
                                             Hide('wait_navigation'),
                                             SetVariable('talk_ch', ch_id),
                                             SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                            Call(talk_obj.getTalkLabelName()),
+                                            Call("secure_call_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
                                         ]
                                 if renpy.variant("pc"):
                                     tooltip _("Talk")
@@ -348,7 +348,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('development_characters_info'),
+                Call("secure_call_from_room_navigation", label_name_to_call = "development_characters_info"),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -396,7 +396,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('development_inventory'),
+                Call("secure_call_from_room_navigation", label_name_to_call = "development_inventory"),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -409,7 +409,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('development'),
+                Call("secure_call_from_room_navigation", label_name_to_call = "development"),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -422,7 +422,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('open_map'),
+                Call("secure_call_from_room_navigation", label_name_to_call = "open_map"),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -570,9 +570,14 @@ screen menu_memo():
 # making calls safely:
 # Why? Because if I use Call("label") in sleep mode from the room_navigation
 # and in the "label" I use "return" an almost all cases the game will end.
-label secure_call_from_room_navigation(label_name_to_call):
-    $ renpy.call(label_name_to_call)
+label secure_call_from_room_navigation(label_name_to_call = ""):
+    if isNullOrEmpty(label_name_to_call):
+        $ renpy.log("Error(secure_call_from_room_navigation): label_name_to_call is empty")
+    else:
+        $ renpy.call(label_name_to_call)
     call screen room_navigation
+    $ renpy.log("Error(secure_call_from_room_navigation): thera is a anomaly in room_navigation. value: " + label_name_to_call)
+    jump secure_call_from_room_navigation
 
 label nav_backbround(after_exit=True):
     if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
