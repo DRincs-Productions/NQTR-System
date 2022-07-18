@@ -37,10 +37,12 @@ label open_map:
 
     if not cur_location:
         call change_room(room_id = cur_room.location_id)
-    scene expression map_images[cur_location.map_id] as bg
+    
 
     if (not map_open):
+        scene expression map_images[cur_location.map_id] as bg
         $ map_open = True
+        call screen room_navigation
         return
 ## Close the map
 label close_map:
