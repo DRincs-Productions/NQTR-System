@@ -12,17 +12,17 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, after_exit=True, is_che
             clearExpiredRoutine(routine, tm)
             clearExpiredActions(actions, tm.day)
             checkInactiveStage(current_stages= current_quest_stages | current_task_stages)
-        call after_spending_time(after_exit = after_exit, is_check_event = is_check_event)
+        call after_spending_time(is_check_event = is_check_event)
     else:
         "[DEFAULT_BLOCK_SPENDTIME_DIALOGUE]"
     return
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#wait
-label wait(wait_hour=DEFAULT_WAIT_HOUR, after_exit=True, is_check_event=False):
+label wait(wait_hour=DEFAULT_WAIT_HOUR, after_exit=False, is_check_event=False):
     if(not getFlags(flag_id = "not_can_spend_time")):
         if(tm.new_hour(wait_hour)):
             if (not map_open):
-                call after_spending_time(after_exit = after_exit, is_check_event = is_check_event)
+                call after_spending_time(is_check_event = is_check_event)
         else:
             "(It's late, you have to go to bed)"
     else:
@@ -30,7 +30,7 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, after_exit=True, is_check_event=False):
     return
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#after-spending-time
-label after_spending_time(after_exit=True, is_check_event=False, is_check_routines=True):
+label after_spending_time(after_exit=False, is_check_event=False, is_check_routines=True):
     if(is_check_routines):
         # this step is to change the background based on the presence of a ch
         $ commitments_in_cur_location = getChsInThisLocation(cur_location.id)

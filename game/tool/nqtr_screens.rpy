@@ -138,7 +138,7 @@ screen room_navigation():
                             Hide('wait_navigation'),
                             SetVariable('prev_room', cur_room),
                             SetVariable('cur_room', room),
-                            Call("change_room", room_id = None, after_exit=True),
+                            Call("secure_call_from_room_navigation", "change_room"),
                         ]
                         has vbox xsize 126 spacing 0
 
@@ -158,7 +158,7 @@ screen room_navigation():
                                     Hide('wait_navigation'),
                                     SetVariable('prev_room', cur_room),
                                     SetVariable('cur_room', room),
-                                    Call("change_room", room_id = None, after_exit=True),
+                                    Call("secure_call_from_room_navigation", "change_room"),
                                 ]
                                 at middle_room
 
@@ -187,7 +187,7 @@ screen room_navigation():
                                                         Hide('wait_navigation'),
                                                         SetVariable('prev_room', cur_room),
                                                         SetVariable('cur_room', room),
-                                                        Call("change_room", room_id = None, after_exit=True),
+                                                        Call("secure_call_from_room_navigation", "change_room"),
                                                     ]
                                                     at small_face
 
@@ -204,7 +204,7 @@ screen room_navigation():
                         Hide('wait_navigation'),
                         SetVariable('prev_room', cur_room),
                         SetVariable('cur_room', room),
-                        Call("change_room", room_id = None, after_exit=True),
+                        Call("secure_call_from_room_navigation", "change_room"),
                     ]
 
         # Action wich Picture in background

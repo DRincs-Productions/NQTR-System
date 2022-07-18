@@ -70,7 +70,7 @@ label talk_sleep:
             a "[mc]!!!! What are you doing?!!"
             a "Get out of here! Now!"
             $ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
-            jump after_spending_time
+            call after_spending_time
         "Leave her alone":
             pass
     return
