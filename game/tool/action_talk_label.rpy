@@ -28,8 +28,8 @@ label talk:
         scene expression (talk_image) as bg
 
     if(talk_ch == None):
-        call error_label
-        call screen room_navigation
+        $ renpy.log("Error(talk): talk_ch is None")
+        return
 
     # Costume Code
     if(talk_ch == "alice"):

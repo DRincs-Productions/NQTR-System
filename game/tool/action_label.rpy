@@ -23,11 +23,7 @@ label sleep:
             pass
     return
 
-## Error and warming Label
-
-label error_label:
-    "ERROR"
-    return
+## Development Label
 
 label development:
     "In development"

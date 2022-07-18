@@ -15,8 +15,6 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, after_exit=True, is_che
         call after_spending_time(after_exit = after_exit, is_check_event = is_check_event)
     else:
         "[DEFAULT_BLOCK_SPENDTIME_DIALOGUE]"
-        if (after_exit):
-            call screen room_navigation
     return
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#wait
@@ -29,8 +27,6 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, after_exit=True, is_check_event=False):
             "(It's late, you have to go to bed)"
     else:
         "[DEFAULT_BLOCK_SPENDTIME_DIALOGUE]"
-    if (after_exit):
-        call screen room_navigation
     return
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#after-spending-time
