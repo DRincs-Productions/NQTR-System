@@ -8,7 +8,7 @@ label nap:
             jump sleep
         "Return":
             pass
-    call screen room_navigation
+    return
 
 label sleep:
     menu:
@@ -21,22 +21,18 @@ label sleep:
             call new_day(time_of_new_day = 9, is_check_event=True)
         "Return":
             pass
-    jump after_spending_time
-
-## Error and warming Label
-
-label error_label:
-    "ERROR"
     return
+
+## Development Label
 
 label development:
     "In development"
-    call screen room_navigation
+    return
 
 label development_characters_info:
     "In development in another repo: {a=https://github.com/DRincs-Productions/DS-toolkit}DS toolkit{/a}"
-    call screen room_navigation
+    return
 
 label development_inventory:
     "In development in another repo: {a=https://github.com/DRincs-Productions/Inventory-System-toolkit}Inventory System{/a}"
-    call screen room_navigation
+    return

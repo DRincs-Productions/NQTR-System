@@ -3,7 +3,7 @@
         "scope": "renpy",
         "prefix": "DR_NewDay",
         "body": [
-            "call wait${1:(wait_hour=${2:1}, after_exit=${3:True})}",
+            "call wait${1:(wait_hour=${2:1})}",
             "",
         ],
         "description": "Add an Action in DEFAULT_LABEL_TALK"
@@ -12,7 +12,7 @@
         "scope": "renpy",
         "prefix": "DR_Wait",
         "body": [
-            "call new_day${1:(time_of_new_day=${2:9}, after_exit=${3:True})}",
+            "call new_day${1:(time_of_new_day=${2:9})}",
             "",
         ],
         "description": "Add an Action in DEFAULT_LABEL_TALK"

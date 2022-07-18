@@ -1,4 +1,7 @@
 init -10 python:
+    from typing import Optional
+
+
     class Commitment(object):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#commitment
         event_label_name: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#events """
@@ -7,7 +10,7 @@ init -10 python:
                     tm_start: int,
                     tm_stop: int,
                     ch_talkobj_dict: dict[str, TalkObject] = {},
-                    bg: str  = None,
+                    bg: str = None,
                     name: str = None,
                     location_id: str = None,
                     room_id: str = None,
@@ -38,7 +41,7 @@ init -10 python:
             # call change_room
             self.event_label_name = event_label_name
 
-        def getChIcons(self, ch_icons: dict[str, str]):
+        def getChIcons(self, ch_icons: dict[str, str]) -> list[str]:
             """returns a list of ch icons (not secondary ch)"""
             icons = []
             for ch in self.ch_talkobj_dict.keys():
@@ -46,15 +49,15 @@ init -10 python:
                     icons.append(ch_icons[ch])
             return icons
 
-        def getTalkBackground(self, ch):
+        def getTalkBackground(self, ch: str) -> str:
             "Returns the image during a conversation"
             return self.ch_talkobj_dict[ch].getBackground()
 
-        def getBackground(self):
+        def getBackground(self) -> str:
             "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
             return self.bg
 
-        def isEvent(self):
+        def isEvent(self) -> bool:
             "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
             return (self.event_label_name is not None)
 
@@ -65,7 +68,7 @@ init -10 python:
         #         renpy.call(self.event_label_name)
 
 
-    def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler):
+    def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler) -> None:
         """removes expired Commitments"""
         rlist = []
         rlist.clear()
@@ -75,10 +78,10 @@ init -10 python:
         for r in rlist:
             del commitments[r]
         del rlist
-        return commitments
+        return
 
 
-    def getChsInThisLocation(location_id: str):
+    def getChsInThisLocation(location_id: str) -> dict[str, Commitment]:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority """
         # Create a list of ch who have a commitment in that place at that time
         # It does not do enough checks, they will be done later with getChLocation()
@@ -111,7 +114,7 @@ init -10 python:
         return commitments
 
 
-    def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]):
+    def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]) -> dict[str, Commitment]:
         """Returns events at that location at that time.
         Checks only in routine."""
         # Create a list of ch who have a commitment in that place at that time
@@ -124,7 +127,7 @@ init -10 python:
         return events
 
 
-    def getChLocation(ch: str):
+    def getChLocation(ch: str) -> Optional[Commitment]:
         """Returns the current commitment of the ch.
         Give priority to special routine, and routine with a valid tag."""
         ret_commitment = None
@@ -133,7 +136,7 @@ init -10 python:
             if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
                 if ch in comm.ch_talkobj_dict:
                     ret_commitment = comm
-                    if checkIfIsActiveByTag(tag = comm.tag, id = id):
+                    if checkIfIsActiveByTag(tag=comm.tag, id=id):
                         return comm
         if ret_commitment != None:
             return ret_commitment
@@ -142,12 +145,12 @@ init -10 python:
             if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
                 if ch in comm.ch_talkobj_dict:
                     ret_commitment = comm
-                    if checkIfIsActiveByTag(tag = comm.tag, id = id):
+                    if checkIfIsActiveByTag(tag=comm.tag, id=id):
                         return comm
         return ret_commitment
 
 
-    def checkIfIsActiveByTag(tag: str, id = None):
+    def checkIfIsActiveByTag(tag: str, id: str = None) -> bool:
         """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
         # Custom code
         if (tag == None):
@@ -157,9 +160,9 @@ init -10 python:
         return False
 
 
-    def getBgRoomRoutine(commitments, room_id):
+    def getBgRoomRoutine(commitments: dict[str, Commitment], room_id) -> None:
         """Returns the first background image of the commitments based on the current room. if there are no returns None"""
         for item in commitments.values():
             if item.room_id == room_id:
                 return item.getBackground()
-        return None
+        return

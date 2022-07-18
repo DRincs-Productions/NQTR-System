@@ -1,12 +1,13 @@
 init -5 python:
     from typing import Optional
-    
+
+
     class Act:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
 
         def __init__(self,
-                    name: str, # requirement
-                    label_name: str, # requirement
+                    name: str,  # requirement
+                    label_name: str,  # requirement
                     rooms: Optional[list[str]] = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
@@ -25,7 +26,7 @@ init -5 python:
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
-            self.rooms = self.rooms = rooms if rooms else []
+            self.rooms = rooms if rooms else []
             self.button_icon = button_icon
             self.button_icon_selected = button_icon_selected
             # Is an action that is started by clicking on an image in the room.
@@ -50,29 +51,29 @@ init -5 python:
                 renpy.log(
                     "Error: You have set button_icon and picture_in_background to None, this action will be ignored")
 
-        def isButton(self):
+        def isButton(self) -> bool:
             """This is a button?"""
             return not isNullOrEmpty(self.button_icon)
 
-        def isPictureInBackground(self):
+        def isPictureInBackground(self) -> bool:
             """This is a is picture in background?"""
             return not isNullOrEmpty(self.picture_in_background)
 
 
-    def getActions(actions: dict[str, Action], room: Room,  tm: TimeHandler):
+    def getActions(actions: dict[str, Act], room: Room, now_hour: int, cur_day: int) -> list[Act]:
         """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
-        acts: list[Action] = []
+        acts: list[Act] = []
         for act_id, act in actions.items():
             if room.id in act.rooms:
-                if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
+                if (now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and (act.day_start < 0 | cur_day >= act.day_start)):
                     acts.append(act)
             elif act_id in room.action_ids:
-                if (tm.now_is_between(start=act.tm_start, end=act.tm_stop) and (act.day_start < 0 | tm.day >= act.day_start)):
+                if (now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and (act.day_start < 0 | cur_day >= act.day_start)):
                     acts.append(act)
         return acts
 
 
-    def clearExpiredActions(actions: dict[str, Action], cur_day: int):
+    def clearExpiredActions(actions: dict[str, Act], cur_day: int) -> None:
         """Delete Expired Actions"""
         actions_to_del = []
         for id, act in actions.items():
@@ -81,4 +82,4 @@ init -5 python:
         for act_id in actions_to_del:
             del actions[act_id]
         del actions_to_del
-        return actions
+        return

@@ -19,12 +19,8 @@ label talk_menu:
     # remove the item because otherwise every time I talk to a character more "Back" will be added (even if I have not understood why)
     $ talk_choices.remove((_("Back"), "talk_back"))
     $ del talk_choices
-    jump expression menu_result
+    call expression menu_result
     return
-
-# Best way to exit a dialogue
-label talk_end:
-    jump after_spending_time
 
 # label talk: is a label used to give the possibility to customize the dialog even more.
 label talk:
@@ -32,8 +28,8 @@ label talk:
         scene expression (talk_image) as bg
 
     if(talk_ch == None):
-        call error_label
-        call screen room_navigation
+        $ renpy.log("Error(talk): talk_ch is None")
+        return
 
     # Costume Code
     # if(talk_ch == "alice"):
@@ -43,7 +39,7 @@ label talk:
     #     "Now is busy test later."
 
     call talk_menu
-    jump talk_end
+    return
 
 # Display a random phrase and then end the conversation
 label talk_back:
@@ -65,4 +61,4 @@ label talk_back:
         mc "When it comes back to me I'll let you know, bye."
 
     $ del num
-    jump talk_end
+    return

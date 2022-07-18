@@ -106,7 +106,7 @@ screen room_navigation():
                         action [
                             Hide('wait_navigation'),
                             SetVariable('cur_location', location),
-                            Jump('close_map'),
+                            Call("after_return_from_room_navigation", label_name_to_call = "close_map"),
                         ]
                         at small_map
 
@@ -138,7 +138,7 @@ screen room_navigation():
                             Hide('wait_navigation'),
                             SetVariable('prev_room', cur_room),
                             SetVariable('cur_room', room),
-                            Call("change_room", room_id = None, after_exit=True),
+                            Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
                         ]
                         has vbox xsize 126 spacing 0
 
@@ -158,7 +158,7 @@ screen room_navigation():
                                     Hide('wait_navigation'),
                                     SetVariable('prev_room', cur_room),
                                     SetVariable('cur_room', room),
-                                    Call("change_room", room_id = None, after_exit=True),
+                                    Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
                                 ]
                                 at middle_room
 
@@ -187,7 +187,7 @@ screen room_navigation():
                                                         Hide('wait_navigation'),
                                                         SetVariable('prev_room', cur_room),
                                                         SetVariable('cur_room', room),
-                                                        Call("change_room", room_id = None, after_exit=True),
+                                                        Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
                                                     ]
                                                     at small_face
 
@@ -204,14 +204,15 @@ screen room_navigation():
                         Hide('wait_navigation'),
                         SetVariable('prev_room', cur_room),
                         SetVariable('cur_room', room),
-                        Call("change_room", room_id = None, after_exit=True),
+                        Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
                     ]
 
         # Action wich Picture in background
         for room in rooms:
             # Adds the button list of possible actions in that room
             if (room == cur_room and not room.id in closed_rooms):
-                for act in getActions(actions | df_actions, room, tm):
+                # actions: dict[str, Act], room: Room,  now_is_between: callable[[int, int], bool], cur_day: int
+                for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                     if (not act.isButton()):
                         imagebutton:
                             pos (act.xpos, act.ypos)
@@ -221,7 +222,7 @@ screen room_navigation():
                             focus_mask True
                             action [
                                 Hide('wait_navigation'),
-                                Jump(act.label_name),
+                                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
                             ]
                             if renpy.variant("pc"):
                                 tooltip act.name
@@ -233,7 +234,7 @@ screen room_navigation():
             for room in rooms:
                 # Adds the button list of possible actions in that room
                 if (room == cur_room):
-                    for act in getActions(actions | df_actions, room, tm):
+                    for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                         if (act.isButton() == True):
                             imagebutton:
                                 idle act.button_icon
@@ -242,7 +243,7 @@ screen room_navigation():
                                 focus_mask True
                                 action [
                                     Hide('wait_navigation'),
-                                    Jump(act.label_name),
+                                    Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
                                 ]
                                 if renpy.variant("pc"):
                                     tooltip act.name
@@ -265,7 +266,7 @@ screen room_navigation():
                                         Hide('wait_navigation'),
                                         SetVariable('talk_ch', ch_id),
                                         SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                        Function(talk_obj.talk),
+                                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
                                     ]
                                     at middle_action
                                 # inserts the icon of the character who is currently in that room
@@ -279,7 +280,7 @@ screen room_navigation():
                                             Hide('wait_navigation'),
                                             SetVariable('talk_ch', ch_id),
                                             SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                            Function(talk_obj.talk),
+                                            Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
                                         ]
                                 if renpy.variant("pc"):
                                     tooltip _("Talk")
@@ -290,7 +291,7 @@ screen room_navigation():
                 focus_mask True
                 action [
                     Hide('wait_navigation'),
-                    Call("wait", after_exit=True, is_check_event=True),
+                    Call("after_return_from_room_navigation", label_name_to_call = "wait"),
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
@@ -321,7 +322,7 @@ screen room_navigation():
                 focus_mask True
                 action [
                     Hide('wait_navigation'),
-                    Call("wait", after_exit=True, is_check_event=True),
+                    Call("after_return_from_room_navigation", label_name_to_call = "wait"),
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
@@ -347,7 +348,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('development_characters_info'),
+                Call("after_return_from_room_navigation", label_name_to_call = "development_characters_info"),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -395,7 +396,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('development_inventory'),
+                Call("after_return_from_room_navigation", label_name_to_call = "development_inventory"),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -408,7 +409,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('development'),
+                Call("after_return_from_room_navigation", label_name_to_call = "development"),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -421,7 +422,7 @@ screen room_navigation():
             focus_mask True
             action [
                 Hide('wait_navigation'),
-                Jump('open_map'),
+                Call("after_return_from_room_navigation", label_name_to_call = "open_map"),
             ]
             if renpy.variant("pc"):
                 at small_menu
@@ -443,7 +444,7 @@ screen room_navigation():
 
 screen menu_memo():
     style_prefix "game_menu"
-    # Synchronize quests_levels with quests
+    # Synchronize number_stages_completed_in_quest with quests
     $ updateQuestsLevels()
 
     add '/gui/overlay/game_menu.png'
@@ -478,7 +479,7 @@ screen menu_memo():
                         background None
                         action [
                             SetVariable('cur_task_menu', task_id), 
-                            SetVariable('cur_quest_menu', quests_levels[task_id])
+                            SetVariable('cur_quest_menu', number_stages_completed_in_quest[task_id])
                         ]
                         xpadding 0
                         ypadding 0
@@ -487,7 +488,7 @@ screen menu_memo():
                         textbutton quests[task_id].title:
                             action [
                                 SetVariable('cur_task_menu', task_id),
-                                SetVariable('cur_quest_menu', quests_levels[task_id]),
+                                SetVariable('cur_quest_menu', number_stages_completed_in_quest[task_id]),
                             ]
                             selected cur_task_menu == task_id
             # scroll bar
@@ -543,9 +544,9 @@ screen menu_memo():
                                 else:
                                     text _("You have completed all the quests.") size 28
                         else:
-                            text quest_menu.description_request size 24 color gui.accent_color
+                            text quest_menu.request_description size 24 color gui.accent_color
                     vbar value YScrollValue('vp2') style 'menu_vscroll'
-    if (cur_task_menu != '' and quests_levels[cur_task_menu] > 0):
+    if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
         # increases and decreases cur_quest menu
         imagebutton pos (690, 360):
             idle '/interface/button/prev_idle.webp'
@@ -561,7 +562,38 @@ screen menu_memo():
             hover '/interface/button/next_hover.webp'
             insensitive '/interface/button/next_insensitive.webp'
             focus_mask True
-            sensitive (cur_quest_menu < quests_levels[cur_task_menu])
+            sensitive (cur_quest_menu < number_stages_completed_in_quest[cur_task_menu])
             action [
                 SetVariable('cur_quest_menu', cur_quest_menu+1),
             ]
+
+label set_background:
+    if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
+        # Change the background image to the current room image.
+        call closed_room_event
+    else:
+        $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
+        call set_room_background(sp_bg_change_room)
+    return
+
+label set_room_background(sp_bg_change_room = ""):
+    if (not isNullOrEmpty(sp_bg_change_room)):
+        scene expression (sp_bg_change_room) as bg
+    else:
+        scene expression (cur_room.bg) as bg
+    return
+
+# making calls safely:
+# Why? Because if I use Call("label") in sleep mode from the room_navigation
+# and in the "label" I use "return" an almost all cases the game will end.
+label after_return_from_room_navigation(label_name_to_call = ""):
+    if isNullOrEmpty(label_name_to_call):
+        $ renpy.log("Error(after_return_from_room_navigation): label_name_to_call is empty")
+    else:
+        $ renpy.call(label_name_to_call)
+    call set_background
+    # Custom Code:
+    # ...
+    call screen room_navigation
+    $ renpy.log("Error(after_return_from_room_navigation): thera is a anomaly in room_navigation. value: " + label_name_to_call)
+    jump after_return_from_room_navigation
