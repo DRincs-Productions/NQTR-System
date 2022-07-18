@@ -138,7 +138,7 @@ screen room_navigation():
                             Hide('wait_navigation'),
                             SetVariable('prev_room', cur_room),
                             SetVariable('cur_room', room),
-                            Call("secure_call_from_room_navigation", "change_room"),
+                            Call("secure_call_from_room_navigation", label_name_to_call = "change_room"),
                         ]
                         has vbox xsize 126 spacing 0
 
@@ -158,7 +158,7 @@ screen room_navigation():
                                     Hide('wait_navigation'),
                                     SetVariable('prev_room', cur_room),
                                     SetVariable('cur_room', room),
-                                    Call("secure_call_from_room_navigation", "change_room"),
+                                    Call("secure_call_from_room_navigation", label_name_to_call = "change_room"),
                                 ]
                                 at middle_room
 
@@ -187,7 +187,7 @@ screen room_navigation():
                                                         Hide('wait_navigation'),
                                                         SetVariable('prev_room', cur_room),
                                                         SetVariable('cur_room', room),
-                                                        Call("secure_call_from_room_navigation", "change_room"),
+                                                        Call("secure_call_from_room_navigation", label_name_to_call = "change_room"),
                                                     ]
                                                     at small_face
 
@@ -204,7 +204,7 @@ screen room_navigation():
                         Hide('wait_navigation'),
                         SetVariable('prev_room', cur_room),
                         SetVariable('cur_room', room),
-                        Call("secure_call_from_room_navigation", "change_room"),
+                        Call("secure_call_from_room_navigation", label_name_to_call = "change_room"),
                     ]
 
         # Action wich Picture in background
@@ -291,7 +291,7 @@ screen room_navigation():
                 focus_mask True
                 action [
                     Hide('wait_navigation'),
-                    Call("wait", after_exit=True, is_check_event=True),
+                    Call("secure_call_from_room_navigation", label_name_to_call = "wait"),
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
@@ -322,7 +322,7 @@ screen room_navigation():
                 focus_mask True
                 action [
                     Hide('wait_navigation'),
-                    Call("wait", after_exit=True, is_check_event=True),
+                    Call("secure_call_from_room_navigation", label_name_to_call = "wait"),
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Wait")
@@ -580,15 +580,13 @@ label secure_call_from_room_navigation(label_name_to_call = ""):
     $ renpy.log("Error(secure_call_from_room_navigation): thera is a anomaly in room_navigation. value: " + label_name_to_call)
     jump secure_call_from_room_navigation
 
-label nav_backbround(after_exit=True):
+label nav_backbround():
     if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
         # Change the background image to the current room image.
         call closed_room_event
     else:
         $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
         call set_backbround(sp_bg_change_room)
-    if (after_exit):
-        call screen room_navigation
     return
 
 label set_backbround(sp_bg_change_room = ""):

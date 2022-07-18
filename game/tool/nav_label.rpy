@@ -7,7 +7,7 @@ define block_goout_dialogue = _("Now is not the time to go outside")
 
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room
-label change_room(room_id = None, after_exit=False):
+label change_room(room_id = None):
     # start an event if it exists
     if room_id:
         $ changeRoom(room_id = room_id, rooms = rooms, locations = locations)
