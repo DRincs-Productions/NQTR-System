@@ -8,7 +8,7 @@ label nap:
             jump sleep
         "Return":
             pass
-    call screen room_navigation
+    return
 
 label sleep:
     menu:
@@ -21,25 +21,21 @@ label sleep:
             call new_day(time_of_new_day = 9, is_check_event=True)
         "Return":
             pass
-    jump after_spending_time
-
-## Error and warming Label
-
-label error_label:
-    "ERROR"
     return
+
+## Development Label
 
 label development:
     "In development"
-    call screen room_navigation
+    return
 
 label development_characters_info:
     "In development in another repo: {a=https://github.com/DRincs-Productions/DS-toolkit}DS toolkit{/a}"
-    call screen room_navigation
+    return
 
 label development_inventory:
     "In development in another repo: {a=https://github.com/DRincs-Productions/Inventory-System-toolkit}Inventory System{/a}"
-    call screen room_navigation
+    return
 
 ## Various actions
 
@@ -48,23 +44,23 @@ label order_product:
     mc "Here's R****, for $1. Just the thing for me."
     $ del actions['order_product']
     $ quests["alice"].nextStage()
-    call screen room_navigation
+    return
 
 label add_product:
     $ actions["take_product"] = Act(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", rooms=['terrace'])
-    call screen room_navigation
+    return
 
 label take_product:
     $ del actions['take_product']
     $ quests["alice"].nextStage()
-    call screen room_navigation
+    return
 
 label take_key:
     mc "Are these the car keys?! Well... I should try to access the car!"
     $ flags["goout"] = True
     $ del actions['take_key']
     $ quests["ann"].nextStage()
-    call screen room_navigation
+    return
 
 label talk_sleep:
     "zZz zZz ..."
@@ -74,7 +70,7 @@ label talk_sleep:
             a "[mc]!!!! What are you doing?!!"
             a "Get out of here! Now!"
             $ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
-            jump after_spending_time
+            call after_spending_time
         "Leave her alone":
             pass
-    call screen room_navigation
+    return
