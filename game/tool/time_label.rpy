@@ -5,7 +5,7 @@ define DEFAULT_BLOCK_SPENDTIME_DIALOGUE = _("You can't do that now")
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day
 label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, is_check_event=True):
-    if(not flags["not_can_spend_time"]):
+    if(not getFlags("not_can_spend_time")):
         python:
             tm.new_day()
             # removes expired Commitments

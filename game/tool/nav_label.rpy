@@ -31,7 +31,7 @@ label go_previous_room:
 
 ## Open the map or close the map
 label open_map:
-    if(not flags.get("goout")):
+    if(not getFlags("goout")):
         "[block_goout_dialogue]"
         return
 
