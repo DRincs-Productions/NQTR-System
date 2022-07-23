@@ -568,12 +568,13 @@ screen menu_memo():
             ]
 
 label set_background:
-    if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
-        # Change the background image to the current room image.
-        call closed_room_event
-    else:
-        $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
-        call set_room_background(sp_bg_change_room)
+    if (not map_open):
+        if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
+            # Change the background image to the current room image.
+            call closed_room_event
+        else:
+            $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
+            call set_room_background(sp_bg_change_room)
     return
 
 label set_room_background(sp_bg_change_room = ""):
