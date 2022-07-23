@@ -7,7 +7,7 @@
             "    routine[\"${1:routine_id}\"] = Commitment(",
             "        ch_talkobj_dict={",
             "            \"${6:character_id}\" : TalkObject(label_name=\"${7:${6}_${1}_label}\", bg= \"${8:bg ${6} ${4} talk}\"),",
-            "            \"\": None",
+            "            ${9:\"\": None",}
             "        },",
             "        tm_start=${2:0}, tm_stop=${3:24}, room_id=\"${4:room_id}\", location_id=\"${5:home}\")",
             "",
@@ -21,7 +21,7 @@
             "\"${1:routine_id}\" : Commitment(",
             "    ch_talkobj_dict={",
             "        \"${6:character_id}\" : TalkObject(label_name=\"${7:${6}_${1}_label}\", bg= \"${8:bg ${6} ${4} talk}\"),",
-            "        \"\": None",
+            "        ${9:\"\": None",}
             "    },",
             "    tm_start=${2:0}, tm_stop=${3:24}, room_id=\"${4:room_id}\", location_id=\"${5:home}\")",
         ],

@@ -1,5 +1,7 @@
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#defalut-value
+# pressing the hold button will increase the time of:
 define DEFAULT_WAIT_HOUR = 1
+# using the default new day function the time of the next day will be:
 define DEFAULT_HOUR_OF_NEW_DAY = 5
 define DEFAULT_BLOCK_SPENDTIME_DIALOGUE = _("You can't do that now")
 
