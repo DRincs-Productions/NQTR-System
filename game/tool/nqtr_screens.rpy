@@ -386,7 +386,7 @@ screen room_navigation():
 
         # Money
         text "$20":
-            xalign (1.0)
+            align(1.0, 0.5)
             font 'DejaVuSans.ttf'
             size 30
             drop_shadow [(2, 2)]
