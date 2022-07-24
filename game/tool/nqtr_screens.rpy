@@ -152,7 +152,7 @@ screen room_navigation():
                                 idle room.icon
                                 selected_idle room.icon + ' a'
                                 selected_hover room.icon + ' a'
-                                selected True if cur_room and cur_room.id == room.id else False
+                                selected (True if cur_room and cur_room.id == room.id else False)
                                 focus_mask True
                                 action [
                                     Hide('wait_navigation'),
