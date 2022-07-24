@@ -152,7 +152,7 @@ screen room_navigation():
                                 idle room.icon
                                 selected_idle room.icon + ' a'
                                 selected_hover room.icon + ' a'
-                                selected room == cur_room
+                                selected room.id == cur_room.id
                                 focus_mask True
                                 action [
                                     Hide('wait_navigation'),
@@ -210,7 +210,7 @@ screen room_navigation():
         # Action wich Picture in background
         for room in rooms:
             # Adds the button list of possible actions in that room
-            if (room == cur_room and not room.id in closed_rooms):
+            if (room.id == cur_room.id and not room.id in closed_rooms):
                 # actions: dict[str, Act], room: Room,  now_is_between: callable[[int, int], bool], cur_day: int
                 for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                     if (not act.isButton()):
@@ -233,7 +233,7 @@ screen room_navigation():
             xalign 0.99
             for room in rooms:
                 # Adds the button list of possible actions in that room
-                if (room == cur_room):
+                if (room.id == cur_room.id):
                     for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                         if (act.isButton() == True):
                             imagebutton:
@@ -252,7 +252,7 @@ screen room_navigation():
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
                 for comm in commitments_in_cur_location.values():
-                    if (comm != None and room.id == comm.room_id and room == cur_room):
+                    if (comm != None and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
                             frame:
@@ -443,6 +443,7 @@ screen room_navigation():
                 outlines [(2, "#000", 0, 1)]
 
 screen menu_memo():
+    modal True
     style_prefix "game_menu"
     # Synchronize number_stages_completed_in_quest with quests
     $ updateQuestsLevels()
