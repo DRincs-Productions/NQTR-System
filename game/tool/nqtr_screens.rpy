@@ -443,6 +443,7 @@ screen room_navigation():
                 outlines [(2, "#000", 0, 1)]
 
 screen menu_memo():
+    modal True
     style_prefix "game_menu"
     # Synchronize number_stages_completed_in_quest with quests
     $ updateQuestsLevels()
