@@ -104,7 +104,6 @@ screen room_navigation():
                         selected location == cur_location
                         focus_mask True
                         action [
-                            Hide('wait_navigation'),
                             SetVariable('cur_location', location),
                             Call("after_return_from_room_navigation", label_name_to_call = "close_map"),
                         ]
@@ -135,7 +134,6 @@ screen room_navigation():
                     button:
                         xysize (126, 190)
                         action [
-                            Hide('wait_navigation'),
                             SetVariable('prev_room', cur_room),
                             SetVariable('cur_room', room),
                             Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
@@ -155,7 +153,6 @@ screen room_navigation():
                                 selected (True if cur_room and cur_room.id == room.id else False)
                                 focus_mask True
                                 action [
-                                    Hide('wait_navigation'),
                                     SetVariable('prev_room', cur_room),
                                     SetVariable('cur_room', room),
                                     Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
@@ -184,7 +181,6 @@ screen room_navigation():
                                                     idle ch_icon
                                                     focus_mask True
                                                     action [
-                                                        Hide('wait_navigation'),
                                                         SetVariable('prev_room', cur_room),
                                                         SetVariable('cur_room', room),
                                                         Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
@@ -201,7 +197,6 @@ screen room_navigation():
                             line_leading 0
                             line_spacing -2
                     key str(i) action [
-                        Hide('wait_navigation'),
                         SetVariable('prev_room', cur_room),
                         SetVariable('cur_room', room),
                         Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
@@ -221,7 +216,6 @@ screen room_navigation():
                                 hover act.picture_in_background_selected
                             focus_mask True
                             action [
-                                Hide('wait_navigation'),
                                 Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
                             ]
                             if renpy.variant("pc"):
@@ -242,7 +236,6 @@ screen room_navigation():
                                     hover act.button_icon_selected
                                 focus_mask True
                                 action [
-                                    Hide('wait_navigation'),
                                     Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
                                 ]
                                 if renpy.variant("pc"):
@@ -263,7 +256,6 @@ screen room_navigation():
                                     idle talk_obj.getButtonIcon()
                                     focus_mask True
                                     action [
-                                        Hide('wait_navigation'),
                                         SetVariable('talk_ch', ch_id),
                                         SetVariable('talk_image', comm.getTalkBackground(ch_id)),
                                         Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
@@ -277,7 +269,6 @@ screen room_navigation():
                                         focus_mask True
                                         at small_face
                                         action [
-                                            Hide('wait_navigation'),
                                             SetVariable('talk_ch', ch_id),
                                             SetVariable('talk_image', comm.getTalkBackground(ch_id)),
                                             Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
@@ -290,7 +281,6 @@ screen room_navigation():
                 idle '/interface/action-wait.webp'
                 focus_mask True
                 action [
-                    Hide('wait_navigation'),
                     Call("after_return_from_room_navigation", label_name_to_call = "wait"),
                 ]
                 if renpy.variant("pc"):
@@ -321,7 +311,6 @@ screen room_navigation():
                 idle '/interface/action-wait.webp'
                 focus_mask True
                 action [
-                    Hide('wait_navigation'),
                     Call("after_return_from_room_navigation", label_name_to_call = "wait"),
                 ]
                 if renpy.variant("pc"):
@@ -347,7 +336,6 @@ screen room_navigation():
             idle '/interface/menu-user.webp'
             focus_mask True
             action [
-                Hide('wait_navigation'),
                 Call("after_return_from_room_navigation", label_name_to_call = "development_characters_info"),
             ]
             if renpy.variant("pc"):
@@ -361,7 +349,6 @@ screen room_navigation():
             focus_mask True
             if len(current_quest_stages) > 0 :
                 action [
-                    Hide('wait_navigation'),
                     Show('menu_memo'),
                 ]
             if renpy.variant("pc"):
@@ -395,7 +382,6 @@ screen room_navigation():
             idle '/interface/menu-inventory.webp'
             focus_mask True
             action [
-                Hide('wait_navigation'),
                 Call("after_return_from_room_navigation", label_name_to_call = "development_inventory"),
             ]
             if renpy.variant("pc"):
@@ -408,7 +394,6 @@ screen room_navigation():
             idle '/interface/menu-phone.webp'
             focus_mask True
             action [
-                Hide('wait_navigation'),
                 Call("after_return_from_room_navigation", label_name_to_call = "development"),
             ]
             if renpy.variant("pc"):
@@ -421,7 +406,6 @@ screen room_navigation():
             idle '/interface/menu-map.webp'
             focus_mask True
             action [
-                Hide('wait_navigation'),
                 Call("after_return_from_room_navigation", label_name_to_call = "open_map"),
             ]
             if renpy.variant("pc"):
