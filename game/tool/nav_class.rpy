@@ -47,14 +47,14 @@ init -9 python:
             self.yalign = yalign
 
 
-    def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], tm: TimeHandler):
+    def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], now_hour: int) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#is-closed-room """
         cur_room_is_closed = False
         closed_rooms_to_del = []
         for id, item in closed_rooms.items():
-            if (id == room_id and tm.now_is_between(start=item.tm_start, end=item.tm_stop)):
+            if (id == room_id and now_is_between(start=item.tm_start, end=item.tm_stop, now=now_hour)):
                 cur_room_is_closed = True
-            elif (item.tm_stop != None and not tm.now_is_between(start=item.tm_start, end=item.tm_stop)):
+            elif (item.tm_stop != None and not now_is_between(start=item.tm_start, end=item.tm_stop, now=now_hour)):
                 closed_rooms_to_del.append(id)
         for id in closed_rooms_to_del:
             del closed_rooms[id]
@@ -62,7 +62,7 @@ init -9 python:
         return cur_room_is_closed
 
 
-    def changeRoom(room_id: str, rooms: list[Room], locations: list[Room]):
+    def changeRoom(room_id: str, rooms: list[Room], locations: list[Room]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
         new_room = None
         if not room_id:
@@ -84,7 +84,7 @@ init -9 python:
         return
 
 
-    def changeLocation(location_id: str, locations: list[Room]):
+    def changeLocation(location_id: str, locations: list[Room]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
         if not location_id:
             renpy.log("Error: location_id is None")

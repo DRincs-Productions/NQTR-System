@@ -19,7 +19,8 @@ label start:
     $ quests["alice"].start()
     $ quests["ann"].start()
 
-    ## call screen room_navigation
+    ## make check, for event...
     call after_spending_time
 
+    call screen room_navigation
     return

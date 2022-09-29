@@ -31,24 +31,29 @@ init -11 python:
 
             self.bg = bg
 
-        def isPictureInBackground(self):
+        def isButton(self) -> bool:
             """This is a button?"""
-            return button_icon != None
+            return not isNullOrEmpty(self.button_icon)
 
-        def talk(self):
-            """Inside you can find the labels and images to start talk()"""
+        def isPictureInBackground(self) -> bool:
+            """This is a is picture in background?"""
+            return not isNullOrEmpty(self.picture_in_background)
+
+        def getTalkLabelName(self) -> None:
             # if label_name == None does the default procedure
             if not isNullOrEmpty(self.label_name):
-                renpy.call(self.label_name)
+                return self.label_name
             elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
-                renpy.call(DEFAULT_LABEL_TALK)
+                return DEFAULT_LABEL_TALK
+            else:
+                renpy.log("Error: DEFAULT_LABEL_TALK is null or empty")
             return
 
-        def getBackground(self):
+        def getBackground(self) -> str:
             """Returns the image during a conversation"""
             return self.bg
 
-        def getButtonIcon(self):
+        def getButtonIcon(self) -> str:
             if(self.button_icon != None):
                 return button_icon
             else:
@@ -56,7 +61,7 @@ init -11 python:
             return self.bg
 
 
-    def addTalkChoice(choice_text: str, label_name: str, choice_id: str, dict_choices: dict[str, list]):
+    def addTalkChoice(choice_text: str, label_name: str, choice_id: str, dict_choices: dict[str, list]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#add-an-talk-choice-in-default_label_talk """
         if (choice_id in dict_choices.keys()):
             dict_choices[choice_id].append((choice_text, label_name))
@@ -65,10 +70,10 @@ init -11 python:
             talk_choices.append((choice_text, label_name))
             dict_choices[choice_id] = talk_choices
             del talk_choices
-        return #talk_choices
+        return
 
 
-    def delTalkChoice(choice_text: str, choice_id: str, dict_choices: dict[str, list]):
+    def delTalkChoice(choice_text: str, choice_id: str, dict_choices: dict[str, list]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#delete-an-action-in-default_label_talk """
         val = 0
         ch_to_del = choice_id
@@ -81,4 +86,4 @@ init -11 python:
         dict_choices[choice_id].pop(val)
         del val
         del ch_to_del
-        return #dict_choices
+        return

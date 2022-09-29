@@ -19,12 +19,8 @@ label talk_menu:
     # remove the item because otherwise every time I talk to a character more "Back" will be added (even if I have not understood why)
     $ talk_choices.remove((_("Back"), "talk_back"))
     $ del talk_choices
-    jump expression menu_result
+    call expression menu_result
     return
-
-# Best way to exit a dialogue
-label talk_end:
-    jump after_spending_time
 
 # label talk: is a label used to give the possibility to customize the dialog even more.
 label talk:
@@ -32,8 +28,8 @@ label talk:
         scene expression (talk_image) as bg
 
     if(talk_ch == None):
-        call error_label
-        call screen room_navigation
+        $ renpy.log("Error(talk): talk_ch is None")
+        return
 
     # Costume Code
     if(talk_ch == "alice"):
@@ -43,7 +39,7 @@ label talk:
         "Now is busy test later."
 
     call talk_menu
-    jump talk_end
+    return
 
 # Display a random phrase and then end the conversation
 label talk_back:
@@ -65,12 +61,12 @@ label talk_back:
         mc "When it comes back to me I'll let you know, bye."
 
     $ del num
-    jump talk_end
+    return
 
 # Quest "alice"
 
 label stage_talkalice:
-    if (quests_levels["alice"] == 0):
+    if (number_stages_completed_in_quest["alice"] == 0):
         show bg alice terrace talk
         a "Hi can you order me a new book from pc?"
         mc "Ok"
@@ -80,19 +76,19 @@ label stage_talkalice:
 
         $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", rooms=["my_room"])
 
-        $ quests["alice"].next_stage()
-    elif (quests_levels["alice"] == 1):
+        $ quests["alice"].nextStage()
+    elif (number_stages_completed_in_quest["alice"] == 1):
         mc "What book do you want me to order?"
         a "For me it is the same."
         jump talk_menu
-    elif (quests_levels["alice"] == 2):
+    elif (number_stages_completed_in_quest["alice"] == 2):
         mc "I ordered the Book, hope you enjoy it."
         a "Great, when it arrives remember to bring it to me."
         jump talk_menu
-    elif (quests_levels["alice"] == 3):
+    elif (number_stages_completed_in_quest["alice"] == 3):
         mc "Here's your book."
         a "Thank you, I can finally read something new."
-        $ quests["alice"].next_stage()
+        $ quests["alice"].nextStage()
         $ delTalkChoice(choice_id = "alice", choice_text = _("About the book"), dict_choices = talkch_choices)
     return
 
@@ -107,6 +103,6 @@ label stage_talkalice_aboutann:
     $ actions["take_key"] = Act(name = _("KEY"),  picture_in_background = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
         xpos = 608, ypos = 667)
 
-    $ quests["ann"].next_stage()
+    $ quests["ann"].nextStage()
     $ delTalkChoice(choice_id = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
     return
