@@ -6,15 +6,16 @@ init -5 python:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
 
         def __init__(self,
-                    name: str,  # requirement
-                    label_name: str,  # requirement
-                    # only Act
+                    # Requirement
+                    name: str,
+                    label_name: str,
+                    # Act params
                     rooms: Optional[list[str]] = None,
                     tm_start: int = 0,
                     tm_stop: int = 25,
                     day_start: int = -1,
                     day_deadline: int = -1,
-                    # Button
+                    # Button params
                     button_icon: str = None,
                     button_icon_selected: str = None,
                     picture_in_background: str = None,
@@ -22,53 +23,29 @@ init -5 python:
                     xpos: int = None,
                     ypos: int = None,
                     ):
+                    
+            # Button init
             super().__init__(
-                name= name,
-                label_name= label_name,
-                button_icon= button_icon,
-                button_icon_selected= button_icon_selected,
-                picture_in_background= picture_in_background,
-                picture_in_background_selected= picture_in_background_selected,
-                xpos= xpos,
-                ypos= ypos,
+                name=name,
+                label_name=label_name,
+                button_icon=button_icon,
+                button_icon_selected=button_icon_selected,
+                picture_in_background=picture_in_background,
+                picture_in_background_selected=picture_in_background_selected,
+                xpos=xpos,
+                ypos=ypos,
             )
-
+            # Act init
             self.tm_start = tm_start
             self.tm_stop = tm_stop-0.1
             self.day_deadline = day_deadline
             self.day_start = day_start
             self.rooms = rooms if rooms else []
-            self.button_icon = button_icon
-            self.button_icon_selected = button_icon_selected
-            # Is an action that is started by clicking on an image in the room.
-            self.picture_in_background = picture_in_background
-            self.picture_in_background_selected = picture_in_background_selected
-            self.xpos = xpos
-            self.ypos = ypos
             if self.day_start < 0:
                 renpy.log("Warn: You have set day_start < 0, so it will be ignored")
             if self.day_deadline < 0:
                 renpy.log(
                     "Warn: You have set day_deadline < 0, so it will be ignored")
-            if (self.xpos != None and self.ypos == None):
-                renpy.log(
-                    "Warn: xpos is set but ypos is not, so ypos set to 0")
-                self.ypos = 0
-            if (self.xpos == None and self.ypos != None):
-                renpy.log(
-                    "Warn: ypos is set but xpos is not, so xpos set to 0")
-                self.xpos = 0
-            if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
-                renpy.log(
-                    "Error: You have set button_icon and picture_in_background to None, this action will be ignored")
-
-        def isButton(self) -> bool:
-            """This is a button?"""
-            return not isNullOrEmpty(self.button_icon)
-
-        def isPictureInBackground(self) -> bool:
-            """This is a is picture in background?"""
-            return not isNullOrEmpty(self.picture_in_background)
 
 
     def getActions(actions: dict[str, Act], room: Room, now_hour: int, cur_day: int) -> list[Act]:
