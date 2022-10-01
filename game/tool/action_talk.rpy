@@ -15,8 +15,8 @@ init -11 python:
                     button_icon_selected: str = None,
                     picture_in_background: str = None,
                     picture_in_background_selected: str = None,
-                    xpos: int = None,
-                    ypos: int = None,
+                    xalign: int = None,
+                    yalign: int = None,
                     ):
             super().__init__(
                 name= name,
@@ -25,8 +25,8 @@ init -11 python:
                 button_icon_selected= button_icon_selected,
                 picture_in_background= picture_in_background,
                 picture_in_background_selected= picture_in_background_selected,
-                xpos= xpos,
-                ypos= ypos,
+                xalign= xalign,
+                yalign= yalign,
             )
 
             self.bg = bg

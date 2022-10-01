@@ -11,7 +11,7 @@ define rooms = [
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location
 define locations = [
-    Location(id = "house", map_id="map", external_room_id="terrace", name=_("MC house"), picture_in_background="icon map home", xpos=0.3, ypos=0.2),
+    Location(id = "house", map_id="map", external_room_id="terrace", name=_("MC house"), picture_in_background="icon map home", xalign=0.3, yalign=0.2),
 ]
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map

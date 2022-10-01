@@ -20,8 +20,8 @@ init -5 python:
                     button_icon_selected: str = None,
                     picture_in_background: str = None,
                     picture_in_background_selected: str = None,
-                    xpos: int = None,
-                    ypos: int = None,
+                    xalign: int = None,
+                    yalign: int = None,
                     ):
                     
             # Button init
@@ -32,8 +32,8 @@ init -5 python:
                 button_icon_selected=button_icon_selected,
                 picture_in_background=picture_in_background,
                 picture_in_background_selected=picture_in_background_selected,
-                xpos=xpos,
-                ypos=ypos,
+                xalign=xalign,
+                yalign=yalign,
             )
             # Act init
             self.tm_start = tm_start

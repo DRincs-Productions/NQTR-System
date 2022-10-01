@@ -9,8 +9,8 @@ init -99 python:
                     button_icon_selected: str = None,
                     picture_in_background: str = None,
                     picture_in_background_selected: str = None,
-                    xpos: int = None,
-                    ypos: int = None):
+                    xalign: int = None,
+                    yalign: int = None):
 
             self.name = name
             self.label_name = label_name
@@ -19,16 +19,16 @@ init -99 python:
             # Is an action that is started by clicking on an image in the room.
             self.picture_in_background = picture_in_background
             self.picture_in_background_selected = picture_in_background_selected
-            self.xpos = xpos
-            self.ypos = ypos
-            if (self.xpos != None and self.ypos == None):
+            self.xalign = xalign
+            self.yalign = yalign
+            if (self.xalign != None and self.yalign == None):
                 renpy.log(
-                    "Warn: xpos is set but ypos is not, so ypos set to 0")
-                self.ypos = 0
-            if (self.xpos == None and self.ypos != None):
+                    "Warn: xalign is set but yalign is not, so yalign set to 0")
+                self.yalign = 0
+            if (self.xalign == None and self.yalign != None):
                 renpy.log(
-                    "Warn: ypos is set but xpos is not, so xpos set to 0")
-                self.xpos = 0
+                    "Warn: yalign is set but xalign is not, so xalign set to 0")
+                self.xalign = 0
             if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
                 renpy.log(
                     "Error: You have set button_icon and picture_in_background to None, this action will be ignored")

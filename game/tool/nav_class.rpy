@@ -23,8 +23,8 @@ init -9 python:
                     button_icon_selected: str = None,
                     picture_in_background: str = None,
                     picture_in_background_selected: str = None,
-                    xpos: int = None,
-                    ypos: int = None,
+                    xalign: int = None,
+                    yalign: int = None,
                     ):
                     
             # Button init
@@ -35,8 +35,8 @@ init -9 python:
                 button_icon_selected= button_icon_selected,
                 picture_in_background= picture_in_background,
                 picture_in_background_selected= picture_in_background_selected,
-                xpos= xpos,
-                ypos= ypos,
+                xalign= xalign,
+                yalign= yalign,
             )
             # Room init
             self.id = id
@@ -59,8 +59,8 @@ init -9 python:
                     button_icon_selected: str = None,
                     picture_in_background: str = None,
                     picture_in_background_selected: str = None,
-                    xpos: int = None,
-                    ypos: int = None,
+                    xalign: int = None,
+                    yalign: int = None,
         ):
                     
             # Button init
@@ -71,8 +71,8 @@ init -9 python:
                 button_icon_selected= button_icon_selected,
                 picture_in_background= picture_in_background,
                 picture_in_background_selected= picture_in_background_selected,
-                xpos= xpos,
-                ypos= ypos,
+                xalign= xalign,
+                yalign= yalign,
             )
             self.id = id
             self.map_id = map_id

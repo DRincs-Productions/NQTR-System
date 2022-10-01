@@ -210,7 +210,7 @@ screen room_navigation():
                 for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                     if (not act.isButton()):
                         imagebutton:
-                            pos (act.xpos, act.ypos)
+                            pos (act.xalign, act.yalign)
                             idle act.picture_in_background
                             if not act.picture_in_background_selected == None:
                                 hover act.picture_in_background_selected
