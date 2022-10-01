@@ -1,17 +1,17 @@
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room
 define rooms = [
-    Room(id="my_room", location_id="house", name=_("MC room"), icon="icon myroom", bg="bg myroom",action_ids = ["sleep","nap",]), 
-    Room(id="alice_room", location_id="house", name=_("[a] room"), icon="icon aliceroom", bg="bg aliceroom"), 
-    Room(id="bathroom", location_id="house", name=_("Bathroom"), icon="icon bathroom", bg="bg bathroom"), 
-    Room(id="lounge", location_id="house", name=_("Lounge"), icon="icon lounge", bg="bg lounge"), 
-    Room(id="terrace", location_id="house", name=_("Terrace"), icon="icon terrace", bg="bg terrace"), 
-    Room(id="ann_room", location_id="house_Ann", name=_("Ann room"), icon="icon annroom", bg="bg annroom"),
-    Room(id="courtyard", location_id="house_Ann", name=_("Courtyard"), icon="icon courtyard", bg="bg courtyard"), 
+    Room(id="my_room", location_id="house", name=_("MC room"), button_icon="icon myroom", bg="bg myroom",action_ids = ["sleep","nap",]), 
+    Room(id="alice_room", location_id="house", name=_("[a] room"), button_icon="icon aliceroom", bg="bg aliceroom"), 
+    Room(id="bathroom", location_id="house", name=_("Bathroom"), button_icon="icon bathroom", bg="bg bathroom"), 
+    Room(id="lounge", location_id="house", name=_("Lounge"), button_icon="icon lounge", bg="bg lounge"), 
+    Room(id="terrace", location_id="house", name=_("Terrace"), button_icon="icon terrace", bg="bg terrace"), 
+    Room(id="ann_room", location_id="house_Ann", name=_("Ann room"), button_icon="icon annroom", bg="bg annroom"),
+    Room(id="courtyard", location_id="house_Ann", name=_("Courtyard"), button_icon="icon courtyard", bg="bg courtyard"), 
 ]
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location
 define locations = [
-    Location(id = "house", map_id="map", external_room_id="terrace", name=_("MC house"), icon="icon map home", xalign=0.3, yalign=0.2),
+    Location(id = "house", map_id="map", external_room_id="terrace", name=_("MC house"), picture_in_background="icon map home", xpos=0.3, ypos=0.2),
 ]
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map

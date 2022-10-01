@@ -7,44 +7,76 @@ init -9 python:
     from typing import Optional
 
 
-    class Room:
+    class Room(Button):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room """
 
         def __init__(self,
+                    # Requirement
+                    name: str,
                     id: str,
                     location_id: str,
-                    name: str = None,
-                    icon: str = None,
+                    # Room params
                     bg: str = None,
-                    action_ids: Optional[list[str]] = None):
-
+                    action_ids: Optional[list[str]] = None,
+                    # Button params
+                    button_icon: str = None,
+                    button_icon_selected: str = None,
+                    picture_in_background: str = None,
+                    picture_in_background_selected: str = None,
+                    xpos: int = None,
+                    ypos: int = None,
+                    ):
+                    
+            # Button init
+            super().__init__(
+                name= name,
+                label_name= None,
+                button_icon= button_icon,
+                button_icon_selected= button_icon_selected,
+                picture_in_background= picture_in_background,
+                picture_in_background_selected= picture_in_background_selected,
+                xpos= xpos,
+                ypos= ypos,
+            )
+            # Room init
             self.id = id
             self.location_id = location_id
-            self.name = name
-            self.icon = icon
             self.bg = bg
             self.action_ids = self.action_ids = action_ids if action_ids else []
 
 
-    class Location:
+    class Location(Button):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location """
 
         def __init__(self,
+                    # Requirement
                     id: str,
                     map_id: str,
                     external_room_id: str,
-                    name: str = None,
-                    icon: str = None,
-                    xalign: int = 0,
-                    yalign: int = 0):
-
+                    name: str,
+                    # Button params
+                    button_icon: str = None,
+                    button_icon_selected: str = None,
+                    picture_in_background: str = None,
+                    picture_in_background_selected: str = None,
+                    xpos: int = None,
+                    ypos: int = None,
+        ):
+                    
+            # Button init
+            super().__init__(
+                name= name,
+                label_name= None,
+                button_icon= button_icon,
+                button_icon_selected= button_icon_selected,
+                picture_in_background= picture_in_background,
+                picture_in_background_selected= picture_in_background_selected,
+                xpos= xpos,
+                ypos= ypos,
+            )
             self.id = id
             self.map_id = map_id
-            self.name = name
             self.external_room_id = external_room_id
-            self.icon = icon
-            self.xalign = xalign
-            self.yalign = yalign
 
 
     def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], now_hour: int) -> bool:
