@@ -98,9 +98,9 @@ screen room_navigation():
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
-                        idle location.icon
-                        selected_idle location.icon + ' a'
-                        selected_hover location.icon + ' a'
+                        idle location.picture_in_background
+                        selected_idle location.picture_in_background + ' a'
+                        selected_hover location.picture_in_background + ' a'
                         selected location == cur_location
                         focus_mask True
                         action [
@@ -130,7 +130,7 @@ screen room_navigation():
                 $ i += 1
 
                 # If the Locations where I am is the same as the Locations where the room is located
-                if (room.location_id == cur_location.id and room.icon != None):
+                if (room.location_id == cur_location.id and room.button_icon != None):
                     button:
                         xysize (126, 190)
                         action [
@@ -147,9 +147,9 @@ screen room_navigation():
                             # Room icon
                             imagebutton:
                                 align (0.5, 0.0)
-                                idle room.icon
-                                selected_idle room.icon + ' a'
-                                selected_hover room.icon + ' a'
+                                idle room.button_icon
+                                selected_idle room.button_icon + ' a'
+                                selected_hover room.button_icon + ' a'
                                 selected (True if cur_room and cur_room.id == room.id else False)
                                 focus_mask True
                                 action [
