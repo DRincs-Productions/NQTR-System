@@ -1,6 +1,6 @@
 init -99 python:
     class Button(object):
-        """Wiki: ... """
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Button """
 
         def __init__(self,
                     name: str,  # requirement
