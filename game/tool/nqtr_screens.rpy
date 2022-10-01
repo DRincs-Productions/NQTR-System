@@ -2,23 +2,23 @@ init:
     transform middle_room:
         size (136, 136)
         on selected_idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.3)
         on idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(0)
         on hover:
-            yanchor 1 alpha 0.9
+            yanchor 1 alpha 0.9 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
-            yanchor 1 alpha 0.9
+            yanchor 1 alpha 0.9 matrixcolor BrightnessMatrix(-0.5)
     transform small_map:
         size (80, 80)
         on selected_idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 matrixcolor BrightnessMatrix(-0.3)
         on idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 matrixcolor BrightnessMatrix(0)
         on hover:
-            yanchor 1 alpha 0.9
+            yanchor 1 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
-            yanchor 1 alpha 0.9
+            yanchor 1 matrixcolor BrightnessMatrix(-0.5)
     transform middle_action:
         size (120, 120)
         on selected_idle:
@@ -31,13 +31,13 @@ init:
             yanchor 1 alpha 1.0
     transform middle_action_is_in_room:
         on selected_idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 matrixcolor BrightnessMatrix(-0.3)
         on idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 matrixcolor BrightnessMatrix(0)
         on hover:
-            yanchor 0 alpha 1.5
+            yanchor 0 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
-            yanchor 0 alpha 1.5
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform small_face:
         size (60, 60)
         on selected_idle:
@@ -98,9 +98,9 @@ screen room_navigation():
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
-                        idle location.picture_in_background
-                        selected_idle location.picture_in_background + ' a'
-                        selected_hover location.picture_in_background + ' a'
+                        idle location.getPictureInBackgroundOrDefault()
+                        selected_idle location.getSelectedPictureInBackgroundOrDefault()
+                        selected_hover location.getSelectedPictureInBackgroundOrDefault()
                         selected location == cur_location
                         focus_mask True
                         action [
@@ -148,8 +148,8 @@ screen room_navigation():
                             imagebutton:
                                 align (0.5, 0.0)
                                 idle room.button_icon
-                                selected_idle room.button_icon + ' a'
-                                selected_hover room.button_icon + ' a'
+                                selected_idle room.button_icon
+                                selected_hover room.button_icon
                                 selected (True if cur_room and cur_room.id == room.id else False)
                                 focus_mask True
                                 action [
