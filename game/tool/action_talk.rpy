@@ -17,6 +17,8 @@ init -11 python:
                     picture_in_background_selected: str = None,
                     xalign: int = None,
                     yalign: int = None,
+                    disabled = False, # bool | str
+                    hidden = False, # bool | str
                     ):
             super().__init__(
                 name= name,
@@ -27,6 +29,8 @@ init -11 python:
                 picture_in_background_selected= picture_in_background_selected,
                 xalign= xalign,
                 yalign= yalign,
+                disabled= disabled,
+                hidden= hidden,
             )
 
             self.bg = bg

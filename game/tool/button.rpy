@@ -10,7 +10,10 @@ init -99 python:
                     picture_in_background: str = None,
                     picture_in_background_selected: str = None,
                     xalign: int = None,
-                    yalign: int = None):
+                    yalign: int = None,
+                    disabled = False, # bool | str
+                    hidden = False, # bool | str
+                    ):
 
             self.name = name
             self.label_name = label_name
@@ -21,6 +24,8 @@ init -99 python:
             self.picture_in_background_selected = picture_in_background_selected
             self.xalign = xalign
             self.yalign = yalign
+            self.disabled = disabled
+            self.hidden = hidden
             if (self.xalign != None and self.yalign == None):
                 renpy.log(
                     "Warn: xalign is set but yalign is not, so yalign set to 0")
@@ -40,3 +45,17 @@ init -99 python:
         def isPictureInBackground(self):
             """This is a is picture in background?"""
             return not isNullOrEmpty(self.picture_in_background)
+        
+        def isDisabled(self):
+            """"If disabled is a string: get the value of the flags system"""
+            if (isinstance(self.disabled, str)):
+                return getFlags(self.disabled)
+            else:
+                return self.disabled
+
+        def isHidden(self):
+            """"If hidden is a string: get the value of the flags system"""
+            if (isinstance(self.hidden, str)):
+                return getFlags(self.hidden)
+            else:
+                return self.hidden

@@ -22,6 +22,8 @@ init -5 python:
                     picture_in_background_selected: str = None,
                     xalign: int = None,
                     yalign: int = None,
+                    disabled = False, # bool | str
+                    hidden = False, # bool | str
                     ):
                     
             # Button init
@@ -34,6 +36,8 @@ init -5 python:
                 picture_in_background_selected=picture_in_background_selected,
                 xalign=xalign,
                 yalign=yalign,
+                disabled= disabled,
+                hidden= hidden,
             )
             # Act init
             self.tm_start = tm_start

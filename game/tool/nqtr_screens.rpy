@@ -94,7 +94,7 @@ screen room_navigation():
     if (map_open):
         for location in locations:
             # If the Map where I am is the same as the Map where the room is located
-            if (location.map_id == cur_location.map_id):
+            if (location.map_id == cur_location.map_id and not location.isHidden()):
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
@@ -130,7 +130,7 @@ screen room_navigation():
                 $ i += 1
 
                 # If the Locations where I am is the same as the Locations where the room is located
-                if (room.location_id == cur_location.id and room.button_icon != None):
+                if (room.location_id == cur_location.id and room.button_icon != None and not room.isHidden()):
                     button:
                         xysize (126, 190)
                         action [
@@ -229,7 +229,7 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
                     for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
-                        if (act.isButton() == True):
+                        if (act.isButton() == True and not act.isHidden()):
                             imagebutton:
                                 idle act.button_icon
                                 if not act.button_icon_selected == None:
@@ -248,33 +248,34 @@ screen room_navigation():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            frame:
-                                xysize (120, 120)
-                                background None
+                            if (not talk_obj.isHidden())
+                                frame:
+                                    xysize (120, 120)
+                                    background None
 
-                                imagebutton:
-                                    idle talk_obj.getButtonIcon()
-                                    focus_mask True
-                                    action [
-                                        SetVariable('talk_ch', ch_id),
-                                        SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
-                                    ]
-                                    at middle_action
-                                # inserts the icon of the character who is currently in that room
-                                # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-                                if (ch_id in ch_icons):
                                     imagebutton:
-                                        idle ch_icons.get(ch_id)
+                                        idle talk_obj.getButtonIcon()
                                         focus_mask True
-                                        at small_face
                                         action [
                                             SetVariable('talk_ch', ch_id),
                                             SetVariable('talk_image', comm.getTalkBackground(ch_id)),
                                             Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
                                         ]
-                                if renpy.variant("pc"):
-                                    tooltip _("Talk")
+                                        at middle_action
+                                    # inserts the icon of the character who is currently in that room
+                                    # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
+                                    if (ch_id in ch_icons):
+                                        imagebutton:
+                                            idle ch_icons.get(ch_id)
+                                            focus_mask True
+                                            at small_face
+                                            action [
+                                                SetVariable('talk_ch', ch_id),
+                                                SetVariable('talk_image', comm.getTalkBackground(ch_id)),
+                                                Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
+                                            ]
+                                    if renpy.variant("pc"):
+                                        tooltip _("Talk")
 
             # Fixed button to wait
             imagebutton:
