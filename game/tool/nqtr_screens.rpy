@@ -2,23 +2,31 @@ init:
     transform middle_room:
         size (136, 136)
         on selected_idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.3)
         on idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(0)
         on hover:
-            yanchor 1 alpha 0.9
+            yanchor 1 alpha 0.9 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
-            yanchor 1 alpha 0.9
+            yanchor 1 alpha 0.9 matrixcolor BrightnessMatrix(-0.5)
+        on insensitive:
+            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.5)
     transform small_map:
         size (80, 80)
         on selected_idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 matrixcolor BrightnessMatrix(-0.3)
         on idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 matrixcolor BrightnessMatrix(0)
         on hover:
-            yanchor 1 alpha 0.9
+            yanchor 1 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
-            yanchor 1 alpha 0.9
+            yanchor 1 matrixcolor BrightnessMatrix(-0.5)
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform middle_action:
         size (120, 120)
         on selected_idle:
@@ -29,15 +37,23 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform middle_action_is_in_room:
         on selected_idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 matrixcolor BrightnessMatrix(-0.3)
         on idle:
-            yanchor 0 alpha 0.9
+            yanchor 0 matrixcolor BrightnessMatrix(0)
         on hover:
-            yanchor 0 alpha 1.5
+            yanchor 0 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
-            yanchor 0 alpha 1.5
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform small_face:
         size (60, 60)
         on selected_idle:
@@ -48,6 +64,10 @@ init:
             yanchor 1 alpha 0.93
         on selected_hover:
             yanchor 1 alpha 0.93
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform small_menu:
         size (80, 80)
         on selected_idle:
@@ -58,6 +78,10 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform small_menu_mobile:
         size (100, 100)
         on selected_idle:
@@ -68,6 +92,10 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform close_zoom:
         xanchor 25
         size (75, 25)
@@ -94,14 +122,15 @@ screen room_navigation():
     if (map_open):
         for location in locations:
             # If the Map where I am is the same as the Map where the room is located
-            if (location.map_id == cur_location.map_id):
+            if (location.map_id == cur_location.map_id and not location.isHidden()):
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
-                        idle location.icon
-                        selected_idle location.icon + ' a'
-                        selected_hover location.icon + ' a'
+                        idle location.getPictureInBackgroundOrDefault()
+                        selected_idle location.getSelectedPictureInBackgroundOrDefault()
+                        selected_hover location.getSelectedPictureInBackgroundOrDefault()
                         selected location == cur_location
+                        sensitive not location.isHidden()
                         focus_mask True
                         action [
                             SetVariable('cur_location', location),
@@ -130,7 +159,7 @@ screen room_navigation():
                 $ i += 1
 
                 # If the Locations where I am is the same as the Locations where the room is located
-                if (room.location_id == cur_location.id and room.icon != None):
+                if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden()):
                     button:
                         xysize (126, 190)
                         action [
@@ -147,10 +176,11 @@ screen room_navigation():
                             # Room icon
                             imagebutton:
                                 align (0.5, 0.0)
-                                idle room.icon
-                                selected_idle room.icon + ' a'
-                                selected_hover room.icon + ' a'
+                                idle room.getButtonOrDefault()
+                                selected_idle room.getSelectedButtonOrDefault()
+                                selected_hover room.getSelectedButtonOrDefault()
                                 selected (True if cur_room and cur_room.id == room.id else False)
+                                sensitive not room.isHidden()
                                 focus_mask True
                                 action [
                                     SetVariable('prev_room', cur_room),
@@ -179,6 +209,7 @@ screen room_navigation():
                                             for ch_icon in comm.getChIcons(ch_icons):
                                                 imagebutton:
                                                     idle ch_icon
+                                                    sensitive not room.isHidden()
                                                     focus_mask True
                                                     action [
                                                         SetVariable('prev_room', cur_room),
@@ -210,10 +241,9 @@ screen room_navigation():
                 for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                     if (not act.isButton()):
                         imagebutton:
-                            pos (act.xpos, act.ypos)
-                            idle act.picture_in_background
-                            if not act.picture_in_background_selected == None:
-                                hover act.picture_in_background_selected
+                            pos (act.xalign, act.yalign)
+                            idle act.getPictureInBackgroundOrDefault()
+                            hover act.getSelectedPictureInBackgroundOrDefault()
                             focus_mask True
                             action [
                                 Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
@@ -229,11 +259,10 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
                     for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
-                        if (act.isButton() == True):
+                        if (act.isButton() == True and not act.isHidden()):
                             imagebutton:
-                                idle act.button_icon
-                                if not act.button_icon_selected == None:
-                                    hover act.button_icon_selected
+                                idle act.getButtonOrDefault()
+                                hover act.getSelectedButtonOrDefault()
                                 focus_mask True
                                 action [
                                     Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
@@ -248,33 +277,35 @@ screen room_navigation():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            frame:
-                                xysize (120, 120)
-                                background None
+                            if (not talk_obj.isHidden()):
+                                frame:
+                                    xysize (120, 120)
+                                    background None
 
-                                imagebutton:
-                                    idle talk_obj.getButtonIcon()
-                                    focus_mask True
-                                    action [
-                                        SetVariable('talk_ch', ch_id),
-                                        SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
-                                    ]
-                                    at middle_action
-                                # inserts the icon of the character who is currently in that room
-                                # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-                                if (ch_id in ch_icons):
                                     imagebutton:
-                                        idle ch_icons.get(ch_id)
+                                        idle talk_obj.getButtonIcon()
+                                        hover talk_obj.getSelectedButtonOrDefault()
                                         focus_mask True
-                                        at small_face
                                         action [
                                             SetVariable('talk_ch', ch_id),
                                             SetVariable('talk_image', comm.getTalkBackground(ch_id)),
                                             Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
                                         ]
-                                if renpy.variant("pc"):
-                                    tooltip _("Talk")
+                                        at middle_action
+                                    # inserts the icon of the character who is currently in that room
+                                    # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
+                                    if (ch_id in ch_icons):
+                                        imagebutton:
+                                            idle ch_icons.get(ch_id)
+                                            focus_mask True
+                                            at small_face
+                                            action [
+                                                SetVariable('talk_ch', ch_id),
+                                                SetVariable('talk_image', comm.getTalkBackground(ch_id)),
+                                                Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
+                                            ]
+                                    if renpy.variant("pc"):
+                                        tooltip _("Talk")
 
             # Fixed button to wait
             imagebutton:
