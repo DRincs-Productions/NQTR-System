@@ -9,6 +9,10 @@ init:
             yanchor 1 alpha 0.9 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
             yanchor 1 alpha 0.9 matrixcolor BrightnessMatrix(-0.5)
+        on insensitive:
+            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.5)
     transform small_map:
         size (80, 80)
         on selected_idle:
@@ -19,6 +23,10 @@ init:
             yanchor 1 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
             yanchor 1 matrixcolor BrightnessMatrix(-0.5)
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform middle_action:
         size (120, 120)
         on selected_idle:
@@ -29,6 +37,10 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform middle_action_is_in_room:
         on selected_idle:
             yanchor 0 matrixcolor BrightnessMatrix(-0.3)
@@ -37,6 +49,10 @@ init:
         on hover:
             yanchor 0 matrixcolor BrightnessMatrix(0.1)
         on selected_hover:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
             yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform small_face:
         size (60, 60)
@@ -48,6 +64,10 @@ init:
             yanchor 1 alpha 0.93
         on selected_hover:
             yanchor 1 alpha 0.93
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform small_menu:
         size (80, 80)
         on selected_idle:
@@ -58,6 +78,10 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform small_menu_mobile:
         size (100, 100)
         on selected_idle:
@@ -68,6 +92,10 @@ init:
             yanchor 1 alpha 1.0
         on selected_hover:
             yanchor 1 alpha 1.0
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
     transform close_zoom:
         xanchor 25
         size (75, 25)
@@ -102,6 +130,7 @@ screen room_navigation():
                         selected_idle location.getSelectedPictureInBackgroundOrDefault()
                         selected_hover location.getSelectedPictureInBackgroundOrDefault()
                         selected location == cur_location
+                        sensitive not location.isHidden()
                         focus_mask True
                         action [
                             SetVariable('cur_location', location),
@@ -130,7 +159,7 @@ screen room_navigation():
                 $ i += 1
 
                 # If the Locations where I am is the same as the Locations where the room is located
-                if (room.location_id == cur_location.id and room.button_icon != None and not room.isHidden()):
+                if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden()):
                     button:
                         xysize (126, 190)
                         action [
@@ -147,10 +176,11 @@ screen room_navigation():
                             # Room icon
                             imagebutton:
                                 align (0.5, 0.0)
-                                idle room.button_icon
-                                selected_idle room.button_icon
-                                selected_hover room.button_icon
+                                idle room.getButtonOrDefault()
+                                selected_idle room.getSelectedButtonOrDefault()
+                                selected_hover room.getSelectedButtonOrDefault()
                                 selected (True if cur_room and cur_room.id == room.id else False)
+                                sensitive not room.isHidden()
                                 focus_mask True
                                 action [
                                     SetVariable('prev_room', cur_room),
@@ -179,6 +209,7 @@ screen room_navigation():
                                             for ch_icon in comm.getChIcons(ch_icons):
                                                 imagebutton:
                                                     idle ch_icon
+                                                    sensitive not room.isHidden()
                                                     focus_mask True
                                                     action [
                                                         SetVariable('prev_room', cur_room),
@@ -211,9 +242,8 @@ screen room_navigation():
                     if (not act.isButton()):
                         imagebutton:
                             pos (act.xalign, act.yalign)
-                            idle act.picture_in_background
-                            if not act.picture_in_background_selected == None:
-                                hover act.picture_in_background_selected
+                            idle act.getPictureInBackgroundOrDefault()
+                            hover act.getSelectedPictureInBackgroundOrDefault()
                             focus_mask True
                             action [
                                 Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
@@ -231,9 +261,8 @@ screen room_navigation():
                     for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                         if (act.isButton() == True and not act.isHidden()):
                             imagebutton:
-                                idle act.button_icon
-                                if not act.button_icon_selected == None:
-                                    hover act.button_icon_selected
+                                idle act.getButtonOrDefault()
+                                hover act.getSelectedButtonOrDefault()
                                 focus_mask True
                                 action [
                                     Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
@@ -255,6 +284,7 @@ screen room_navigation():
 
                                     imagebutton:
                                         idle talk_obj.getButtonIcon()
+                                        hover talk_obj.getSelectedButtonOrDefault()
                                         focus_mask True
                                         action [
                                             SetVariable('talk_ch', ch_id),
