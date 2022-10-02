@@ -14,6 +14,7 @@ image icon alice = "Alice/icon.webp"
 image icon ann = "Ann/icon.webp"
 
 image bg map = "location/map-[tm.image_time].webp"
+image bg nightcity = "location/nightcity.webp"
 
 image bg myroom = "location/myroom-[tm.image_time].webp"
 image bg aliceroom = "location/aliceroom-[tm.image_time].webp"
