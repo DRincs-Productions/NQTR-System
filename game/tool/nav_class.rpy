@@ -82,6 +82,27 @@ init -9 python:
             self.map_id = map_id
             self.external_room_id = external_room_id
 
+    class Map:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map """
+
+        def __init__(self,
+                    # Requirement
+                    id: str,
+                    name: str,
+                    bg: str,
+                    map_id_north: str = None,
+                    map_id_south: str = None,
+                    map_id_west: str = None,
+                    map_id_east: str = None,
+        ):
+
+            self.id = id
+            self.name = name
+            self.bg = bg
+            self.map_id_north = map_id_north
+            self.map_id_south = map_id_south
+            self.map_id_west = map_id_west
+            self.map_id_east = map_id_east
 
     def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], now_hour: int) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#is-closed-room """
