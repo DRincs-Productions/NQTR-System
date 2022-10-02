@@ -24,9 +24,9 @@
         ],
         "description": "Add a Location in dictionary"
     },
-    "DRincs Add a Map in list": {
+    "DRincs Add a Map in dict": {
         "scope": "renpy",
-        "prefix": "DR_MapAdd_in_list",
+        "prefix": "DR_MapAdd_in_dict",
         "body": [
             "\"${1:map_id}\": Map(",
             "    name = _(\"${2:Map Name}\"), bg = \"bg ${1:map_id}\",",
