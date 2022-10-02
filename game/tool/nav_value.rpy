@@ -15,8 +15,21 @@ define locations = [
 ]
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map
-define map_images = {
-    "map"       :   "bg map",
+define maps = {
+    "map": Map(
+        name = _("Map"), bg = "bg map",
+        map_id_north = "nightcity",
+        map_id_south = None,
+        map_id_west = None,
+        map_id_east = None,
+    ),
+    "nightcity": Map(
+        name = _("Night City"), bg = "bg nightcity",
+        map_id_north = None,
+        map_id_south = "map",
+        map_id_west = None,
+        map_id_east = None,
+    ),
 }
 
 # TODO: Wiki
@@ -28,5 +41,6 @@ define ch_icons = {
 default prev_room = None
 default cur_room = rooms[0]
 default cur_location = locations[0]
+default cur_map_id = cur_location.map_id
 # Variable to check the map screen: if it is True then the player is viewing the map.
 default map_open = False
