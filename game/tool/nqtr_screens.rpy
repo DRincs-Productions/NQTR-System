@@ -1,3 +1,5 @@
+image gui triangular_button = "/interface/button/triangular_button.webp"
+
 init:
     transform middle_room:
         size (136, 136)
@@ -102,6 +104,21 @@ init:
     transform close_zoom_mobile:
         xanchor 35
         size (105, 35)
+    transform middle_map(rotation = 0, xsize = 50, ysize = 50):
+        rotate rotation
+        xysize (xsize, ysize)
+        on selected_idle:
+            yanchor 0 alpha 0.6
+        on idle:
+            yanchor 0 alpha 0.6
+        on hover:
+            yanchor 1 alpha 1.0
+        on selected_hover:
+            yanchor 1 alpha 1.0
+        on insensitive:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
+        on action:
+            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
 
 style menu_vscroll is vscrollbar:
     xsize 7
@@ -119,10 +136,72 @@ screen room_navigation():
     $ (x,y) = renpy.get_mouse_pos()
 
     # Map
-    if (map_open):
+    if (map_open and cur_map_id):
+        $ map_north = maps[cur_map_id].map_id_north
+        $ map_south = maps[cur_map_id].map_id_south
+        $ map_east = maps[cur_map_id].map_id_east
+        $ map_west = maps[cur_map_id].map_id_west
+
+        # North map
+        if (not isNullOrEmpty(map_north)):
+            hbox:
+                align (0.5, 0.1)
+                imagebutton:
+                    idle "gui triangular_button"
+                    focus_mask True
+                    action [
+                        SetVariable('cur_map_id', map_north), 
+                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
+                    ]
+                    if renpy.variant("pc"):
+                        tooltip maps[map_north].name
+                    at middle_map(rotation = 270)
+        # South map
+        if (not isNullOrEmpty(map_south)):
+            hbox:
+                align (0.5, 0.99)
+                imagebutton:
+                    idle "gui triangular_button"
+                    focus_mask True
+                    action [
+                        SetVariable('cur_map_id', map_south), 
+                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
+                    ]
+                    if renpy.variant("pc"):
+                        tooltip maps[map_south].name
+                    at middle_map(rotation = 90)
+        # West map
+        if (not isNullOrEmpty(map_west)):
+            hbox:
+                align (0.001, 0.5)
+                imagebutton:
+                    idle "gui triangular_button"
+                    focus_mask True
+                    action [
+                        SetVariable('cur_map_id', map_west), 
+                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
+                    ]
+                    if renpy.variant("pc"):
+                        tooltip maps[map_west].name
+                    at middle_map(rotation = 180)
+        # East map
+        if (not isNullOrEmpty(map_east)):
+            hbox:
+                align (0.999, 0.5)
+                imagebutton:
+                    idle "gui triangular_button"
+                    focus_mask True
+                    action [
+                        SetVariable('cur_map_id', map_east), 
+                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
+                    ]
+                    if renpy.variant("pc"):
+                        tooltip maps[map_east].name
+                    at middle_map(rotation = 0)
+
         for location in locations:
             # If the Map where I am is the same as the Map where the room is located
-            if (location.map_id == cur_location.map_id and not location.isHidden()):
+            if (location.map_id == cur_map_id and not location.isHidden()):
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
