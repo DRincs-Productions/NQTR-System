@@ -15,8 +15,21 @@ define locations = [
 ]
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map
-define map_images = {
-    "map"       :   "bg map",
+define maps = {
+    Map(
+        id: "map", name: _("Map"), bg: "bg map",
+        map_id_north: str = "nightcity",
+        map_id_south: str = None,
+        map_id_west: str = None,
+        map_id_east: str = None,
+    ),
+    Map(
+        id: "nightcity", name: _("Night City"), bg: "bg nightcity",
+        map_id_north: str = None,
+        map_id_south: str = "map",
+        map_id_west: str = None,
+        map_id_east: str = None,
+    ),
 }
 
 # TODO: Wiki
