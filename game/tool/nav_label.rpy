@@ -40,7 +40,7 @@ label open_map:
     
 
     if (not map_open):
-        scene expression map_images[cur_location.map_id] as bg
+        scene expression maps[cur_location.map_id].bg as bg
         $ map_open = True
         call screen room_navigation
         return
