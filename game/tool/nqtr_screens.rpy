@@ -143,12 +143,13 @@ screen room_navigation():
         $ map_id_west = maps[cur_map_id].map_id_west
 
         # North map
-        if (not isNullOrEmpty(map_id_north)):
+        if (not isNullOrEmpty(map_id_north) not maps[map_id_north].isHidden()):
             hbox:
                 align (0.5, 0.1)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
+                    sensitive not maps[map_id_north].isDisabled()
                     action [
                         SetVariable('cur_map_id', map_id_north), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -157,12 +158,13 @@ screen room_navigation():
                         tooltip maps[map_id_north].name
                     at middle_map(rotation = 270)
         # South map
-        if (not isNullOrEmpty(map_id_south)):
+        if (not isNullOrEmpty(map_id_south) not maps[map_id_south].isHidden()):
             hbox:
                 align (0.5, 0.99)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
+                    sensitive not maps[map_id_south].isDisabled()
                     action [
                         SetVariable('cur_map_id', map_id_south), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -171,12 +173,13 @@ screen room_navigation():
                         tooltip maps[map_id_south].name
                     at middle_map(rotation = 90)
         # West map
-        if (not isNullOrEmpty(map_id_west)):
+        if (not isNullOrEmpty(map_id_west) not maps[map_id_west].isHidden()):
             hbox:
                 align (0.001, 0.5)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
+                    sensitive not maps[map_id_west].isDisabled()
                     action [
                         SetVariable('cur_map_id', map_id_west), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -185,12 +188,13 @@ screen room_navigation():
                         tooltip maps[map_id_west].name
                     at middle_map(rotation = 180)
         # East map
-        if (not isNullOrEmpty(map_id_east)):
+        if (not isNullOrEmpty(map_id_east) not maps[map_id_east].isHidden()):
             hbox:
                 align (0.999, 0.5)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
+                    sensitive not maps[map_id_east].isDisabled()
                     action [
                         SetVariable('cur_map_id', map_id_east), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -259,7 +263,7 @@ screen room_navigation():
                                 selected_idle room.getSelectedButtonOrDefault()
                                 selected_hover room.getSelectedButtonOrDefault()
                                 selected (True if cur_room and cur_room.id == room.id else False)
-                                sensitive not room.isHidden()
+                                sensitive not room.isDisabled()
                                 focus_mask True
                                 action [
                                     SetVariable('prev_room', cur_room),
@@ -288,7 +292,7 @@ screen room_navigation():
                                             for ch_icon in comm.getChIcons(ch_icons):
                                                 imagebutton:
                                                     idle ch_icon
-                                                    sensitive not room.isHidden()
+                                                    sensitive not room.isDisabled()
                                                     focus_mask True
                                                     action [
                                                         SetVariable('prev_room', cur_room),

@@ -65,8 +65,10 @@ init -9 python:
                     picture_in_background_selected: str = None,
                     xalign: int = None,
                     yalign: int = None,
+                    disabled = False, # bool | str
+                    hidden = False, # bool | str
         ):
-                    
+
             # Button init
             super().__init__(
                 name= name,
@@ -77,12 +79,14 @@ init -9 python:
                 picture_in_background_selected= picture_in_background_selected,
                 xalign= xalign,
                 yalign= yalign,
+                disabled= disabled,
+                hidden= hidden,
             )
             self.id = id
             self.map_id = map_id
             self.external_room_id = external_room_id
 
-    class Map:
+    class Map(Button):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map """
 
         def __init__(self,
@@ -93,9 +97,23 @@ init -9 python:
                     map_id_south: str = None,
                     map_id_west: str = None,
                     map_id_east: str = None,
+                    disabled = False, # bool | str
+                    hidden = False, # bool | str
         ):
 
-            self.name = name
+            # Button init
+            super().__init__(
+                name= name,
+                label_name= None,
+                button_icon= None,
+                button_icon_selected= None,
+                picture_in_background= None,
+                picture_in_background_selected= None,
+                xalign= None,
+                yalign= None,
+                disabled= disabled,
+                hidden= hidden,
+            )
             self.bg = bg
             self.map_id_north = map_id_north
             self.map_id_south = map_id_south
