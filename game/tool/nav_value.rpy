@@ -17,18 +17,18 @@ define locations = [
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map
 define maps = {
     "map": Map(
-        name: _("Map"), bg: "bg map",
-        map_id_north: str = "nightcity",
-        map_id_south: str = None,
-        map_id_west: str = None,
-        map_id_east: str = None,
+        name = _("Map"), bg = "bg map",
+        map_id_north = "nightcity",
+        map_id_south = None,
+        map_id_west = None,
+        map_id_east = None,
     ),
     "nightcity": Map(
-        name: _("Night City"), bg: "bg nightcity",
-        map_id_north: str = None,
-        map_id_south: str = "map",
-        map_id_west: str = None,
-        map_id_east: str = None,
+        name = _("Night City"), bg = "bg nightcity",
+        map_id_north = None,
+        map_id_south = "map",
+        map_id_west = None,
+        map_id_east = None,
     ),
 }
 
