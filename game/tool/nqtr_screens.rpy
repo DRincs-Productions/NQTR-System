@@ -143,7 +143,7 @@ screen room_navigation():
         $ map_id_west = maps[cur_map_id].map_id_west
 
         # North map
-        if (not isNullOrEmpty(map_id_north) not maps[map_id_north].isHidden()):
+        if (not isNullOrEmpty(map_id_north) and not maps[map_id_north].isHidden()):
             hbox:
                 align (0.5, 0.1)
                 imagebutton:
@@ -158,7 +158,7 @@ screen room_navigation():
                         tooltip maps[map_id_north].name
                     at middle_map(rotation = 270)
         # South map
-        if (not isNullOrEmpty(map_id_south) not maps[map_id_south].isHidden()):
+        if (not isNullOrEmpty(map_id_south) and not maps[map_id_south].isHidden()):
             hbox:
                 align (0.5, 0.99)
                 imagebutton:
@@ -173,7 +173,7 @@ screen room_navigation():
                         tooltip maps[map_id_south].name
                     at middle_map(rotation = 90)
         # West map
-        if (not isNullOrEmpty(map_id_west) not maps[map_id_west].isHidden()):
+        if (not isNullOrEmpty(map_id_west) and not maps[map_id_west].isHidden()):
             hbox:
                 align (0.001, 0.5)
                 imagebutton:
@@ -188,7 +188,7 @@ screen room_navigation():
                         tooltip maps[map_id_west].name
                     at middle_map(rotation = 180)
         # East map
-        if (not isNullOrEmpty(map_id_east) not maps[map_id_east].isHidden()):
+        if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden()):
             hbox:
                 align (0.999, 0.5)
                 imagebutton:
