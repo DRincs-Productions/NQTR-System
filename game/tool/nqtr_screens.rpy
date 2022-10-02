@@ -137,66 +137,66 @@ screen room_navigation():
 
     # Map
     if (map_open and cur_map_id):
-        $ map_north = maps[cur_map_id].map_id_north
-        $ map_south = maps[cur_map_id].map_id_south
-        $ map_east = maps[cur_map_id].map_id_east
-        $ map_west = maps[cur_map_id].map_id_west
+        $ map_id_north = maps[cur_map_id].map_id_north
+        $ map_id_south = maps[cur_map_id].map_id_south
+        $ map_id_east = maps[cur_map_id].map_id_east
+        $ map_id_west = maps[cur_map_id].map_id_west
 
         # North map
-        if (not isNullOrEmpty(map_north)):
+        if (not isNullOrEmpty(map_id_north)):
             hbox:
                 align (0.5, 0.1)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
                     action [
-                        SetVariable('cur_map_id', map_north), 
+                        SetVariable('cur_map_id', map_id_north), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
                     ]
                     if renpy.variant("pc"):
-                        tooltip maps[map_north].name
+                        tooltip maps[map_id_north].name
                     at middle_map(rotation = 270)
         # South map
-        if (not isNullOrEmpty(map_south)):
+        if (not isNullOrEmpty(map_id_south)):
             hbox:
                 align (0.5, 0.99)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
                     action [
-                        SetVariable('cur_map_id', map_south), 
+                        SetVariable('cur_map_id', map_id_south), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
                     ]
                     if renpy.variant("pc"):
-                        tooltip maps[map_south].name
+                        tooltip maps[map_id_south].name
                     at middle_map(rotation = 90)
         # West map
-        if (not isNullOrEmpty(map_west)):
+        if (not isNullOrEmpty(map_id_west)):
             hbox:
                 align (0.001, 0.5)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
                     action [
-                        SetVariable('cur_map_id', map_west), 
+                        SetVariable('cur_map_id', map_id_west), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
                     ]
                     if renpy.variant("pc"):
-                        tooltip maps[map_west].name
+                        tooltip maps[map_id_west].name
                     at middle_map(rotation = 180)
         # East map
-        if (not isNullOrEmpty(map_east)):
+        if (not isNullOrEmpty(map_id_east)):
             hbox:
                 align (0.999, 0.5)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
                     action [
-                        SetVariable('cur_map_id', map_east), 
+                        SetVariable('cur_map_id', map_id_east), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
                     ]
                     if renpy.variant("pc"):
-                        tooltip maps[map_east].name
+                        tooltip maps[map_id_east].name
                     at middle_map(rotation = 0)
 
         for location in locations:
