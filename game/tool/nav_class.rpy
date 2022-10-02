@@ -87,7 +87,6 @@ init -9 python:
 
         def __init__(self,
                     # Requirement
-                    id: str,
                     name: str,
                     bg: str,
                     map_id_north: str = None,
@@ -96,7 +95,6 @@ init -9 python:
                     map_id_east: str = None,
         ):
 
-            self.id = id
             self.name = name
             self.bg = bg
             self.map_id_north = map_id_north
