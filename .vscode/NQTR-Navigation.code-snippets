@@ -3,7 +3,7 @@
         "scope": "renpy",
         "prefix": "DR_RoomAdd_in_list",
         "body": [
-            "Room(id=\"${1:room_id}\", location_id=\"${2:house}\", name=_(\"${3:My room}\"), icon=\"icon ${4:myroom}\", bg=\"bg ${4:myroom}\", action_ids = []),",
+            "Room(id=\"${1:room_id}\", location_id=\"${2:house}\", name=_(\"${3:My room}\"), button_icon=\"icon ${4:myroom}\", bg=\"bg ${4:myroom}\", action_ids = []),",
         ],
         "description": "Add a Room in dictionary"
     },
@@ -20,8 +20,22 @@
         "scope": "renpy",
         "prefix": "DR_LocationAdd_in_list",
         "body": [
-            "Location(id = \"${1:house_id}\", key_map=\"${2:map}\", name=_(\"${3:My house}\"), icon=\"${4:icon map home}\", external_room_id=\"${1:house_id}_external_room\", xalign=0.5, yalign=0.5),",
+            "Location(id = \"${1:house_id}\", key_map=\"${2:map}\", name=_(\"${3:My house}\"), picture_in_background=\"${4:icon map home}\", external_room_id=\"${1:house_id}_external_room\", xalign=0.5, yalign=0.5),",
         ],
         "description": "Add a Location in dictionary"
+    },
+    "DRincs Add a Map in dict": {
+        "scope": "renpy",
+        "prefix": "DR_MapAdd_in_dict",
+        "body": [
+            "\"${1:map_id}\": Map(",
+            "    name = _(\"${2:Map Name}\"), bg = \"bg ${1:map_id}\",",
+            "    map_id_north = None,",
+            "    map_id_south = None,",
+            "    map_id_west = None,",
+            "    map_id_east = None,",
+            "),",
+        ],
+        "description": "Add a Map in dictionary"
     },
 }

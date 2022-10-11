@@ -2,32 +2,38 @@ define DEFAULT_LABEL_TALK = "talk"
 define DEFAULT_TALK_BUTTON_ICON = "/interface/action-talk.webp"
 
 init -11 python:
-    class TalkObject:
+    class TalkObject(Button):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system """
 
         def __init__(self,
+                    # only TalkObject
                     bg: str = None,
+                    # Button
+                    name: str = None,
                     label_name: str = None,
                     button_icon: str = None,
+                    button_icon_selected: str = None,
                     picture_in_background: str = None,
-                    xpos: int = None,
-                    ypos: int = None):
+                    picture_in_background_selected: str = None,
+                    xalign: int = None,
+                    yalign: int = None,
+                    disabled = False, # bool | str
+                    hidden = False, # bool | str
+                    ):
+            super().__init__(
+                name= name,
+                label_name= label_name,
+                button_icon= button_icon,
+                button_icon_selected= button_icon_selected,
+                picture_in_background= picture_in_background,
+                picture_in_background_selected= picture_in_background_selected,
+                xalign= xalign,
+                yalign= yalign,
+                disabled= disabled,
+                hidden= hidden,
+            )
 
             self.bg = bg
-            self.label_name = label_name
-            # Is an action that is started by clicking on an image in the room.
-            self.button_icon = button_icon
-            self.picture_in_background = picture_in_background
-            self.xpos = xpos
-            self.ypos = ypos
-            if (self.xpos != None and self.ypos == None):
-                renpy.log(
-                    "Warn: xpos is set but ypos is not, so ypos set to 0")
-                self.ypos = 0
-            if (self.xpos == None and self.ypos != None):
-                renpy.log(
-                    "Warn: ypos is set but xpos is not, so xpos set to 0")
-                self.xpos = 0
 
         def isButton(self) -> bool:
             """This is a button?"""
