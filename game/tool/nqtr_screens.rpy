@@ -217,7 +217,7 @@ screen room_navigation():
                         focus_mask True
                         action [
                             SetVariable('cur_location', location),
-                            Call("after_return_from_room_navigation", label_name_to_call = "close_map"),
+                            Call("after_return_from_room_navigation", label_name_to_call = "change_location"),
                         ]
                         at small_map
 

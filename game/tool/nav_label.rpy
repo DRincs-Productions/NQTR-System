@@ -8,15 +8,31 @@ define block_goout_dialogue = _("Now is not the time to go outside")
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room
 label change_room(room_id = None):
-    # start an event if it exists
     if room_id:
-        $ changeRoom(room_id = room_id, rooms = rooms, locations = locations)
-        # TODO: move here: commitments_in_cur_location and cur_events_location to after_spending_time
-        # if (cur_room and prev_room and cur_room.location_id != prev_room.location_id):
-        #     # this step is to change the background based on the presence of a ch
-        #     $ commitments_in_cur_location = getChsInThisLocation(cur_location.id)
-        #     $ cur_events_location = getEventsInThisLocation(cur_location.id, routine)
+        python:
+            new_room = getRoomById(room_id = room_id, rooms = rooms)
+            prev_room = cur_room
+            cur_room = new_room
+            del new_room
+    if cur_location.id != cur_room.location_id:
+        python:
+            new_location = getLocationById(location_id = cur_room.location_id, locations = locations)
+            prev_location = cur_location
+            cur_location = new_location
+            del new_location
     call after_spending_time(is_check_event=True)
+    return
+
+# Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location
+label change_location(location_id = None, close_map = True):
+    if location_id:
+        python:
+            new_location = geyLocationById(location_id = location_id, locations = locations)
+            prev_location = cur_location
+            cur_location = new_location
+            del new_location
+    call change_room(cur_location.external_room_id)
+    call close_map
     return
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#go-previous-room
@@ -48,12 +64,7 @@ label open_map:
 ## Close the map
 label close_map:
     python:
-        for room in rooms:
-            if(room.id == cur_location.external_room_id):
-                cur_room = room
         map_open = False
-    scene expression (cur_room.bg) as bg
-    call change_room
     return
 
 # Is opened in change_room when a room id is in closed rooms

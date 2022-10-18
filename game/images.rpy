@@ -6,9 +6,11 @@ image icon bathroom = "location/bathroom-icon.webp"
 image icon lounge = "location/lounge-icon.webp"
 image icon terrace = "location/terrace-icon.webp"
 image icon courtyard = "location/courtyard-icon.webp"
+image icon gym = "location/gym-icon.webp"
 
 # locations
 image icon map home = "/interface/map-home.webp"
+image icon map gym = "/interface/map-gym.webp"
 
 image icon alice = "Alice/icon.webp"
 image icon ann = "Ann/icon.webp"
@@ -23,6 +25,7 @@ image bg bathroom = "location/bathroom.webp"
 image bg lounge = "location/lounge-[tm.image_time].webp"
 image bg terrace = "location/terrace-[tm.image_time].webp"
 image bg courtyard = "location/courtyard-[tm.image_time].webp"
+image bg gym = "location/gym.webp"
 
 image bg alice roomsleep = Composite( (1920, 1080),
     (0, 0), "/Alice/roomsleep0.webp",
