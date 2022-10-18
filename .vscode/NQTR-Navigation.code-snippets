@@ -11,7 +11,7 @@
         "scope": "renpy",
         "prefix": "DR_ChangeRoom",
         "body": [
-            "$ changeRoom(room_id = \"${1:room_id}\", rooms = rooms, locations = locations)",
+            "call change_room(room_id = \"${1:room_id}\")",
             "",
         ],
         "description": "Change Room"

@@ -7,11 +7,13 @@ define rooms = [
     Room(id="terrace", location_id="house", name=_("Terrace"), button_icon="icon terrace", bg="bg terrace"), 
     Room(id="ann_room", location_id="house_Ann", name=_("Ann room"), button_icon="icon annroom", bg="bg annroom"),
     Room(id="courtyard", location_id="house_Ann", name=_("Courtyard"), button_icon="icon courtyard", bg="bg courtyard"), 
+    Room(id="gym_room", location_id="gym", name=_("Gym"), button_icon="icon gym", bg="bg gym"), 
 ]
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location
 define locations = [
     Location(id = "house", map_id="map", external_room_id="terrace", name=_("MC house"), picture_in_background="icon map home", xalign=0.3, yalign=0.2),
+    Location(id = "gym", map_id="map", external_room_id="gym_room", name=_("Gym"), picture_in_background="icon map gym", xalign=0.5, yalign=0.3),
 ]
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map
@@ -40,6 +42,7 @@ define ch_icons = {
 
 default prev_room = None
 default cur_room = rooms[0]
+default prev_location = None
 default cur_location = locations[0]
 default cur_map_id = cur_location.map_id
 # Variable to check the map screen: if it is True then the player is viewing the map.
