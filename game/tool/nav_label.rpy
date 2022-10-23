@@ -27,7 +27,7 @@ label change_room(room_id = None):
 label change_location(location_id = None, close_map = True):
     if location_id:
         python:
-            new_location = geyLocationById(location_id = location_id, locations = locations)
+            new_location = getLocationById(location_id = location_id, locations = locations)
             prev_location = cur_location
             cur_location = new_location
             del new_location

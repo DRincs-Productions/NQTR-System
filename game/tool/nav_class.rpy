@@ -146,7 +146,7 @@ init -9 python:
         return
 
 
-    def geyLocationById(location_id: str, locations: list[Room]) -> None:
+    def getLocationById(location_id: str, locations: list[Room]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
         if not location_id:
             renpy.log("Error: location_id is None")
