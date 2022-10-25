@@ -308,7 +308,7 @@ init python:
         # in case it eliminates them
         for x in number_stages_completed_in_quest.keys():
             if (not (x in quests)):
-                number_stages_completed_in_quest.remove(x)
+                del number_stages_completed_in_quest[x]
         return
 
 
