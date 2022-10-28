@@ -28,7 +28,7 @@ label talk:
         scene expression (talk_image) as bg
 
     if(talk_ch == None):
-        call log_error("talk_ch is None", renpy.get_filename_line())
+        $ log_error("talk_ch is None", renpy.get_filename_line())
         return
 
     # Costume Code
