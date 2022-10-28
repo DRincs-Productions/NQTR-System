@@ -19,10 +19,10 @@ init python:
             self.have = 0
             if (self.have < 0):
                 self.have = 0
-                renpy.log("Warn: You have set have < 0, so it will be set to 0.")
+                log_warn("You have set have < 0, so it will be set to 0.", renpy.get_filename_line())
             if (self.need < 0):
                 self.need = 0
-                renpy.log("Warn: You have set need < 0, so it will be set to 0.")
+                log_warn("You have set need < 0, so it will be set to 0.", renpy.get_filename_line())
 
         def find(self, value: int = 1) -> bool:
             """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
@@ -226,8 +226,8 @@ init python:
         def setDayNumberRequiredToStart(self, dayNumberRequired: int) -> None:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
             if (not (self.id in number_stages_completed_in_quest)):
-                renpy.log("Warn: the Quest: "+self.id +
-                        " not is in number_stages_completed_in_quest, so i update it")
+                log_warn("the Quest: "+self.id +
+                        " not is in number_stages_completed_in_quest, so i update it", renpy.get_filename_line())
                 self.update()
             return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired)
 
@@ -280,8 +280,8 @@ init python:
 
         def afterNextStage(self) -> None:
             if (not (self.id in number_stages_completed_in_quest)):
-                renpy.log("Warn: the Quest: "+self.id +
-                        " not is in number_stages_completed_in_quest, so i update it")
+                log_warn("the Quest: "+self.id +
+                        " not is in number_stages_completed_in_quest, so i update it", renpy.get_filename_line())
                 self.update()
             if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
                 current_quest_stages[self.id].completed = True

@@ -33,7 +33,7 @@ init python:
         if (not flag_id in flags):
             updateFlags(flags = flags, flag_keys = flag_keys)
             if (not flag_id in flags):
-                renpy.log("Error(getFlags): in flags is not there flag_id: "+flag_id)
+                log_error("in flags is not there flag_id: " + flag_id, renpy.get_filename_line())
             else:
                 return False
         return flags[flag_id]

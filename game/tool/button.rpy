@@ -27,16 +27,13 @@ init -99 python:
             self.disabled = disabled
             self.hidden = hidden
             if (self.xalign != None and self.yalign == None):
-                renpy.log(
-                    "Warn: xalign is set but yalign is not, so yalign set to 0")
+                log_warn("xalign is set but yalign is not, so yalign set to 0", renpy.get_filename_line())
                 self.yalign = 0
             if (self.xalign == None and self.yalign != None):
-                renpy.log(
-                    "Warn: yalign is set but xalign is not, so xalign set to 0")
+                log_warn("yalign is set but xalign is not, so xalign set to 0", renpy.get_filename_line())
                 self.xalign = 0
             if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
-                renpy.log(
-                    "Error: You have set button_icon and picture_in_background to None, this action will be ignored")
+                log_error("You have set button_icon and picture_in_background to None, this action will be ignored", renpy.get_filename_line())
 
         def isButton(self) -> bool:
             """This is a button?"""
@@ -66,7 +63,7 @@ init -99 python:
             elif(not isNullOrEmpty(self.picture_in_background)):
                 return self.picture_in_background
             else:
-                renpy.log("Error: You have set button_icon and picture_in_background to None, this button will be ignored")
+                log_error("You have set button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
             return ""
 
         def getPictureInBackgroundOrDefault(self) -> str:
@@ -75,7 +72,7 @@ init -99 python:
             elif(not isNullOrEmpty(self.button_icon)):
                 return self.button_icon
             else:
-                renpy.log("Error: You have set button_icon and picture_in_background to None, this button will be ignored")
+                log_error("You have set button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
             return ""
 
         def getSelectedButtonOrDefault(self) -> str:
@@ -88,7 +85,7 @@ init -99 python:
             elif(not isNullOrEmpty(self.picture_in_background)):
                 return self.picture_in_background
             else:
-                renpy.log("Error: You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored")
+                log_error("You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
             return ""
 
         def getSelectedPictureInBackgroundOrDefault(self) -> str:
@@ -101,5 +98,5 @@ init -99 python:
             elif(not isNullOrEmpty(self.button_icon)):
                 return self.button_icon
             else:
-                renpy.log("Error: You have set picture_in_background_selected and button_icon_selected and button_icon and picture_in_background to None, this button will be ignored")
+                log_error("You have set picture_in_background_selected and button_icon_selected and button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
             return ""
