@@ -85,7 +85,7 @@ init -99 python:
             elif(not isNullOrEmpty(self.picture_in_background)):
                 return self.picture_in_background
             else:
-                log_error("You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
+                log_info("You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
             return ""
 
         def getSelectedPictureInBackgroundOrDefault(self) -> str:
