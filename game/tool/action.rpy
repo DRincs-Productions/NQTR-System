@@ -46,9 +46,9 @@ init -5 python:
             self.day_start = day_start
             self.rooms = rooms if rooms else []
             if self.day_start < 0:
-                log_warn("You have set day_start < 0, so it will be ignored", renpy.get_filename_line())
+                log_info("You have set day_start < 0, so it will be ignored", renpy.get_filename_line())
             if self.day_deadline < 0:
-                log_warn("You have set day_deadline < 0, so it will be ignored", renpy.get_filename_line())
+                log_info("You have set day_deadline < 0, so it will be ignored", renpy.get_filename_line())
 
 
     def getActions(actions: dict[str, Act], room: Room, now_hour: int, cur_day: int) -> list[Act]:

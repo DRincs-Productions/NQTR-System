@@ -33,7 +33,7 @@ init -99 python:
                 log_warn("yalign is set but xalign is not, so xalign set to 0", renpy.get_filename_line())
                 self.xalign = 0
             if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
-                log_error("You have set button_icon and picture_in_background to None, this action will be ignored", renpy.get_filename_line())
+                log_info("You have set button_icon and picture_in_background to None, this action will be ignored", renpy.get_filename_line())
 
         def isButton(self) -> bool:
             """This is a button?"""
