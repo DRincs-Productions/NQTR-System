@@ -22,5 +22,6 @@ label start:
     ## make check, for event...
     call after_spending_time
 
+    call enable_notifyEx
     call screen room_navigation
     return
