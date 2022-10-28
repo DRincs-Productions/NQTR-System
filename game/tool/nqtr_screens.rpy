@@ -666,7 +666,7 @@ screen menu_memo():
                 SetVariable('cur_quest_menu', cur_quest_menu+1),
             ]
 
-label set_background:
+label set_background_nqtr:
     if (not map_open):
         if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
             # Change the background image to the current room image.
@@ -678,9 +678,9 @@ label set_background:
 
 label set_room_background(sp_bg_change_room = ""):
     if (not isNullOrEmpty(sp_bg_change_room)):
-        scene expression (sp_bg_change_room) as bg
+        call set_background(sp_bg_change_room)
     else:
-        scene expression (cur_room.bg) as bg
+        call set_background(cur_room.bg)
     return
 
 # making calls safely:
@@ -691,7 +691,7 @@ label after_return_from_room_navigation(label_name_to_call = ""):
         $ renpy.log("Error(after_return_from_room_navigation): label_name_to_call is empty")
     else:
         $ renpy.call(label_name_to_call)
-    call set_background
+    call set_background_nqtr
     # Custom Code:
     # ...
     call screen room_navigation
