@@ -688,12 +688,12 @@ label set_room_background(sp_bg_change_room = ""):
 # and in the "label" I use "return" an almost all cases the game will end.
 label after_return_from_room_navigation(label_name_to_call = ""):
     if isNullOrEmpty(label_name_to_call):
-        $ renpy.log("Error(after_return_from_room_navigation): label_name_to_call is empty")
+        $ log_error("label_name_to_call is empty", renpy.get_filename_line())
     else:
         $ renpy.call(label_name_to_call)
     call set_background_nqtr
     # Custom Code:
     # ...
     call screen room_navigation
-    $ renpy.log("Error(after_return_from_room_navigation): thera is a anomaly in room_navigation. value: " + label_name_to_call)
+    $ log_error("thera is a anomaly in room_navigation. value: " + label_name_to_call, renpy.get_filename_line())
     jump after_return_from_room_navigation

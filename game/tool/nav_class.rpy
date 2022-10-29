@@ -138,7 +138,7 @@ init -9 python:
     def getRoomById(room_id: str, rooms: list[Room]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
         if not room_id:
-            renpy.log("Warning: room_id is None")
+            log_warn("room_id is None", renpy.get_filename_line())
             return
         for room in rooms:
             if room.id == room_id:
@@ -149,7 +149,7 @@ init -9 python:
     def getLocationById(location_id: str, locations: list[Room]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
         if not location_id:
-            renpy.log("Error: location_id is None")
+            log_error("location_id is None", renpy.get_filename_line())
             return
         for location in locations:
             if location.id == location_id:

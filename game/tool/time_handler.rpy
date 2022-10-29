@@ -36,18 +36,16 @@ init -11 python:
             self.image_time = 0
             self.update_image_time()
             if self.hour_of_new_day < 0:
-                renpy.log(
-                    "Warn: You have set hour_of_new_day < 0, so it will be set to 0.")
+                log_warn("You have set hour_of_new_day < 0, so it will be set to 0.", renpy.get_filename_line())
                 self.hour_of_new_day = 0
             if self.hour < 0:
-                renpy.log("Warn: You have set hour < 0, so it will be set to 0.")
+                log_warn("You have set hour < 0, so it will be set to 0.", renpy.get_filename_line())
                 self.hour = 0
             if self.day < 0:
-                renpy.log("Warn: You have set day < 0, so it will be set to 0.")
+                log_warn("You have set day < 0, so it will be set to 0.", renpy.get_filename_line())
                 self.day = 0
             if self.weekend_day < 0:
-                renpy.log(
-                    "Warn: You have set weekend_day < 0, so it will be set to 6.")
+                log_warn("You have set weekend_day < 0, so it will be set to 6.", renpy.get_filename_line())
                 self.weekend_day = 6
 
         def get_hour_name(self) -> str:
