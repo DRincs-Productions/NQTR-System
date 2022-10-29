@@ -1,7 +1,7 @@
 init -998 python:
     # 'define config.log' is in core.rpy
-    error_notify = __("Where was an {color=#f00}{b}ERROR{/b}{/color}. Please send the developer the logs found in: {color=#00ccff}[config.log]{/color}")
-    warn_notify = _("Where was an {color=#f5bc02}{b}WARN{/b}{/color}. Please send the developer the logs found in: {color=#00ccff}[config.log]{/color}")
+    error_notify = __("There was an {color=#f00}{b}ERROR{/b}{/color}. Please send the developer the logs found in: {color=#00ccff}[config.log]{/color}")
+    warn_notify = _("There was an {color=#f5bc02}{b}WARN{/b}{/color}. Please send the developer the logs found in: {color=#00ccff}[config.log]{/color}")
     info_notify = False
 
     def log_error(msg: str, filename_line = None):
