@@ -1,6 +1,8 @@
 init python:
     from typing import Optional
 
+    new_quest_notify = _("A new quest began")
+    quest_updated_notify = _("The quest has been updated")
 
     class Goal(object):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#goal"""
@@ -32,7 +34,6 @@ init python:
             self.have += value
             if (self.isComplete()):
                 self.complete = True
-                # Todo: notify description
                 return True
             return False
 
@@ -128,7 +129,6 @@ init python:
             self.active = True
             if (self.start_label_name != None):
                 renpy.call(self.start_label_name)
-            # TODO: notify
             return True
 
         def respectAllRequests(self) -> bool:
@@ -257,6 +257,8 @@ init python:
             quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages()
             current_quest_stages[self.id].start()
             number_stages_completed_in_quest[self.id] = n_stage
+            if (n_stage == 0):
+                notifyEx(new_quest_notify)
             return
 
         def nextStageOnlyIsCompleted(self) -> bool:
@@ -276,6 +278,7 @@ init python:
                 del current_task_stages[self.quest_id]
                 return
             self.afterNextStage()
+            notifyEx(quest_updated_notify)
             return
 
         def afterNextStage(self) -> None:
