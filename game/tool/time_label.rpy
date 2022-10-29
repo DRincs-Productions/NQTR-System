@@ -41,5 +41,5 @@ label after_spending_time(is_check_event=False, is_check_routines=True):
     if (is_check_event):
         $ cur_events_location = getEventsInThisLocation(cur_location.id, routine)
         call check_event
-    call set_background
+    call set_background_nqtr
     return

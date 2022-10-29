@@ -50,7 +50,7 @@ init -11 python:
             elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
                 return DEFAULT_LABEL_TALK
             else:
-                renpy.log("Error: DEFAULT_LABEL_TALK is null or empty")
+                log_error("DEFAULT_LABEL_TALK is null or empty", renpy.get_filename_line())
             return
 
         def getBackground(self) -> str:

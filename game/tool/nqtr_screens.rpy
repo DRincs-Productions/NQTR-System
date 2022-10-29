@@ -217,7 +217,7 @@ screen room_navigation():
                         focus_mask True
                         action [
                             SetVariable('cur_location', location),
-                            Call("after_return_from_room_navigation", label_name_to_call = "close_map"),
+                            Call("after_return_from_room_navigation", label_name_to_call = "change_location"),
                         ]
                         at small_map
 
@@ -666,7 +666,7 @@ screen menu_memo():
                 SetVariable('cur_quest_menu', cur_quest_menu+1),
             ]
 
-label set_background:
+label set_background_nqtr:
     if (not map_open):
         if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
             # Change the background image to the current room image.
@@ -678,9 +678,9 @@ label set_background:
 
 label set_room_background(sp_bg_change_room = ""):
     if (not isNullOrEmpty(sp_bg_change_room)):
-        scene expression (sp_bg_change_room) as bg
+        call set_background(sp_bg_change_room)
     else:
-        scene expression (cur_room.bg) as bg
+        call set_background(cur_room.bg)
     return
 
 # making calls safely:
@@ -688,12 +688,12 @@ label set_room_background(sp_bg_change_room = ""):
 # and in the "label" I use "return" an almost all cases the game will end.
 label after_return_from_room_navigation(label_name_to_call = ""):
     if isNullOrEmpty(label_name_to_call):
-        $ renpy.log("Error(after_return_from_room_navigation): label_name_to_call is empty")
+        $ log_error("label_name_to_call is empty", renpy.get_filename_line())
     else:
         $ renpy.call(label_name_to_call)
-    call set_background
+    call set_background_nqtr
     # Custom Code:
     # ...
     call screen room_navigation
-    $ renpy.log("Error(after_return_from_room_navigation): thera is a anomaly in room_navigation. value: " + label_name_to_call)
+    $ log_error("thera is a anomaly in room_navigation. value: " + label_name_to_call, renpy.get_filename_line())
     jump after_return_from_room_navigation

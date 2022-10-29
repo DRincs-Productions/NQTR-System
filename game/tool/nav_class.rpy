@@ -56,7 +56,7 @@ init -9 python:
                     # Requirement
                     id: str,
                     map_id: str,
-                    external_room_id: str,
+                    external_room_id: str, # Will be set this room when a location is changed
                     name: str,
                     # Button params
                     button_icon: str = None,
@@ -135,35 +135,23 @@ init -9 python:
         return cur_room_is_closed
 
 
-    def changeRoom(room_id: str, rooms: list[Room], locations: list[Room]) -> None:
+    def getRoomById(room_id: str, rooms: list[Room]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
-        new_room = None
         if not room_id:
-            renpy.log("Warning: room_id is None")
-            del new_room
+            log_warn("room_id is None", renpy.get_filename_line())
             return
         for room in rooms:
-            if room.id is str and room.id == room_id:
-                new_room = room
-        if new_room:
-            prev_room = cur_room
-            cur_room = new_room
-        else:
-            renpy.log("Error: cur_room is None")
-            del new_room
-            return
-        del new_room
-        changeLocation(cur_room.location_id, locations)
+            if room.id == room_id:
+                return room
         return
 
 
-    def changeLocation(location_id: str, locations: list[Room]) -> None:
+    def getLocationById(location_id: str, locations: list[Room]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
         if not location_id:
-            renpy.log("Error: location_id is None")
+            log_error("location_id is None", renpy.get_filename_line())
             return
         for location in locations:
-            if location.id is str and location.id == location_id:
-                prev_location = cur_location
-                cur_location = location
+            if location.id == location_id:
+                return location
         return

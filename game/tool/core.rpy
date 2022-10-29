@@ -1,3 +1,5 @@
+define config.log = "log.txt"
+
 label after_load:
     $ updateTimeHandler(tm)
     $ clearExpiredActions(actions, tm.day)

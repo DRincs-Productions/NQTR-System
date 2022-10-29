@@ -1,6 +1,8 @@
 init python:
     from typing import Optional
 
+    new_quest_notify = _("A new quest began")
+    quest_updated_notify = _("The quest has been updated")
 
     class Goal(object):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#goal"""
@@ -19,10 +21,10 @@ init python:
             self.have = 0
             if (self.have < 0):
                 self.have = 0
-                renpy.log("Warn: You have set have < 0, so it will be set to 0.")
+                log_warn("You have set have < 0, so it will be set to 0.", renpy.get_filename_line())
             if (self.need < 0):
                 self.need = 0
-                renpy.log("Warn: You have set need < 0, so it will be set to 0.")
+                log_warn("You have set need < 0, so it will be set to 0.", renpy.get_filename_line())
 
         def find(self, value: int = 1) -> bool:
             """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
@@ -32,7 +34,6 @@ init python:
             self.have += value
             if (self.isComplete()):
                 self.complete = True
-                # Todo: notify description
                 return True
             return False
 
@@ -128,7 +129,6 @@ init python:
             self.active = True
             if (self.start_label_name != None):
                 renpy.call(self.start_label_name)
-            # TODO: notify
             return True
 
         def respectAllRequests(self) -> bool:
@@ -226,8 +226,8 @@ init python:
         def setDayNumberRequiredToStart(self, dayNumberRequired: int) -> None:
             """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
             if (not (self.id in number_stages_completed_in_quest)):
-                renpy.log("Warn: the Quest: "+self.id +
-                        " not is in number_stages_completed_in_quest, so i update it")
+                log_warn("the Quest: "+self.id +
+                        " not is in number_stages_completed_in_quest, so i update it", renpy.get_filename_line())
                 self.update()
             return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired)
 
@@ -257,6 +257,8 @@ init python:
             quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages()
             current_quest_stages[self.id].start()
             number_stages_completed_in_quest[self.id] = n_stage
+            if (n_stage == 0):
+                notifyEx(new_quest_notify)
             return
 
         def nextStageOnlyIsCompleted(self) -> bool:
@@ -276,12 +278,13 @@ init python:
                 del current_task_stages[self.quest_id]
                 return
             self.afterNextStage()
+            notifyEx(quest_updated_notify)
             return
 
         def afterNextStage(self) -> None:
             if (not (self.id in number_stages_completed_in_quest)):
-                renpy.log("Warn: the Quest: "+self.id +
-                        " not is in number_stages_completed_in_quest, so i update it")
+                log_warn("the Quest: "+self.id +
+                        " not is in number_stages_completed_in_quest, so i update it", renpy.get_filename_line())
                 self.update()
             if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
                 current_quest_stages[self.id].completed = True
@@ -308,7 +311,7 @@ init python:
         # in case it eliminates them
         for x in number_stages_completed_in_quest.keys():
             if (not (x in quests)):
-                number_stages_completed_in_quest.remove(x)
+                del number_stages_completed_in_quest[x]
         return
 
 
