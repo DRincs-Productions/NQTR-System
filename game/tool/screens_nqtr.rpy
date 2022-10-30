@@ -418,10 +418,10 @@ screen room_navigation():
 screen menu_memo():
     modal True
     style_prefix "game_menu"
+    add "gui/overlay/game_menu.png"
+
     # Synchronize number_stages_completed_in_quest with quests
     $ updateQuestsLevels()
-
-    add '/gui/overlay/game_menu.png'
 
     # button for closure
     imagebutton:
