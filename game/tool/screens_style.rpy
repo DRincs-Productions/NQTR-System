@@ -1,4 +1,3 @@
-
 init:
     transform middle_room:
         size (136, 136)
@@ -100,9 +99,17 @@ init:
     transform close_zoom:
         xanchor 25
         size (75, 25)
+        on idle:
+            yanchor 0 matrixcolor BrightnessMatrix(0)
+        on hover:
+            yanchor 0 matrixcolor BrightnessMatrix(0.9)
     transform close_zoom_mobile:
         xanchor 35
         size (105, 35)
+        on idle:
+            yanchor 0 matrixcolor BrightnessMatrix(0)
+        on hover:
+            yanchor 0 matrixcolor BrightnessMatrix(0.9)
     transform middle_map(rotation = 0, xsize = 50, ysize = 50):
         rotate rotation
         xysize (xsize, ysize)

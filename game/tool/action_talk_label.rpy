@@ -101,7 +101,7 @@ label stage_talkalice_aboutann:
     mc "Thanks!"
     a "Don't ruin it..."
     $ actions["take_key"] = Act(name = _("KEY"),  picture_in_background = "/action-key.webp", label_name = "take_key", rooms=['lounge'],
-        xalign = 608, yalign = 667)
+        xalign = 608/1920, yalign = 667/1080)
 
     $ quests["ann"].nextStage()
     $ delTalkChoice(choice_id = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
