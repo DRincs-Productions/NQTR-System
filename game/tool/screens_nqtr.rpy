@@ -427,7 +427,6 @@ screen menu_memo():
     imagebutton:
         align (0.95, 0.05)
         idle '/interface/button/close_idle.webp'
-        hover '/interface/button/close_hover.webp'
         action [
             Hide('menu_memo'),
         ]
