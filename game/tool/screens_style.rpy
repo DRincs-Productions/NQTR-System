@@ -1,3 +1,5 @@
+define gui.lateralframescroll_ysize = 850
+
 image gui triangular_button = "/interface/button/triangular_button.webp"
 
 style menu_vscroll is vscrollbar:

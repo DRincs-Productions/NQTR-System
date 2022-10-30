@@ -37,7 +37,7 @@ screen menu_memo():
         ypos 170
         xpos 80
         xsize 400
-        ysize 850
+        ysize gui.lateralframescroll_ysize
         background None
         # task title list
         viewport mousewheel 'change' draggable True id 'vp1':
