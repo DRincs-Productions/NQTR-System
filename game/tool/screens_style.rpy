@@ -1,4 +1,6 @@
 define gui.lateralframescroll_ysize = 850
+define gui.little_text_size = 18
+define gui.hour_text_size = 60
 
 image gui triangular_button = "/interface/button/triangular_button.webp"
 

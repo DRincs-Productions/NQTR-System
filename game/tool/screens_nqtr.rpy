@@ -92,8 +92,7 @@ screen room_navigation():
 
                     # Locations name
                     text location.name:
-                        font 'DejaVuSans.ttf'
-                        size 18
+                        size gui.little_text_size
                         drop_shadow [(2, 2)]
                         xalign 0.5
                         text_align 0.5
@@ -172,8 +171,7 @@ screen room_navigation():
 
                         # Room name
                         text room.name:
-                            font 'DejaVuSans.ttf'
-                            size 18
+                            size gui.little_text_size
                             drop_shadow [(2, 2)]
                             xalign 0.5
                             text_align 0.5
@@ -277,8 +275,7 @@ screen room_navigation():
             align (0.5, 0.01)
             text "[tm.hour]:00":
                 xalign (0.5)
-                font 'DejaVuSans.ttf'
-                size 60
+                size gui.hour_text_size
                 drop_shadow [(2, 2)]
             text tm.get_weekday_name():
                 xalign (0.5)
@@ -404,8 +401,7 @@ screen room_navigation():
             text "[text]":
                 xpos x-20
                 ypos y-20
-                font 'DejaVuSans.ttf' 
-                size 18 
+                size gui.little_text_size 
                 drop_shadow [(2, 2)] 
                 outlines [(2, "#000", 0, 1)]
 
