@@ -425,7 +425,7 @@ screen menu_memo():
 
     # button for closure
     imagebutton:
-        pos (1740, 100)
+        align (0.95, 0.05)
         idle '/interface/button/close_idle.webp'
         hover '/interface/button/close_hover.webp'
         action [
