@@ -539,6 +539,9 @@ screen menu_memo():
                 SetVariable('cur_quest_menu', cur_quest_menu+1),
             ]
 
+    key 'K_ESCAPE' action Hide('menu_memo')
+    key 'mouseup_3' action Hide('menu_memo')
+
 label set_background_nqtr:
     if (not map_open):
         if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
