@@ -1,3 +1,9 @@
+image gui triangular_button = "/interface/button/triangular_button.webp"
+
+style menu_vscroll is vscrollbar:
+    xsize 7
+    unscrollable 'hide'
+
 init:
     transform middle_room:
         size (136, 136)
@@ -125,7 +131,3 @@ init:
             yanchor 0 matrixcolor BrightnessMatrix(-0.8)
         on action:
             yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-
-style menu_vscroll is vscrollbar:
-    xsize 7
-    unscrollable 'hide'
