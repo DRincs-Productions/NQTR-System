@@ -521,7 +521,7 @@ screen menu_memo():
 
     if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
         # increases and decreases cur_quest menu
-        imagebutton align (690/1920, 360/1080):
+        imagebutton align (680/1920, 340/1080):
             idle '/interface/button/prev_idle.webp'
             hover '/interface/button/prev_hover.webp'
             insensitive '/interface/button/prev_insensitive.webp'
@@ -530,7 +530,7 @@ screen menu_memo():
             action [
                 SetVariable('cur_quest_menu', cur_quest_menu-1),
             ]
-        imagebutton align (1570/1920, 360/1080):
+        imagebutton align (1580/1920, 340/1080):
             idle '/interface/button/next_idle.webp'
             hover '/interface/button/next_hover.webp'
             insensitive '/interface/button/next_insensitive.webp'
