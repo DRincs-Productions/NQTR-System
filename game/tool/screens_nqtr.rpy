@@ -199,7 +199,7 @@ screen room_navigation():
                 for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                     if (not act.isButton()):
                         imagebutton:
-                            pos (act.xalign, act.yalign)
+                            align (act.xalign, act.yalign)
                             idle act.getPictureInBackgroundOrDefault()
                             hover act.getSelectedPictureInBackgroundOrDefault()
                             focus_mask True
