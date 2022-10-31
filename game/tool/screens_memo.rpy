@@ -44,7 +44,7 @@ screen menu_memo():
             has vbox spacing 5
             for task_id in current_quest_stages.keys():
                 button:
-                    xpos 30
+                    xpos gui.interface_text_size
                     xsize 390
                     background None
                     action [
@@ -86,8 +86,7 @@ screen menu_memo():
                 background None
 
                 text quest_menu.title:
-                    size 30
-                    font 'DejaVuSans.ttf'
+                    size gui.interface_text_size
                     xalign 0.5
 
             frame:

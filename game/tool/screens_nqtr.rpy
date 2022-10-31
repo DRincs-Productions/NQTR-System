@@ -354,8 +354,7 @@ screen room_navigation():
         # Money
         text "$20":
             align(1.0, 0.5)
-            font 'DejaVuSans.ttf'
-            size 30
+            size gui.interface_text_size
             drop_shadow [(2, 2)]
 
         imagebutton:
