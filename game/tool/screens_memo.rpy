@@ -97,21 +97,21 @@ screen menu_memo():
                 viewport mousewheel 'change' draggable True id 'vp2':
                     has vbox spacing 30
                     if cur_task_menu in quests_descriptions:
-                        text quests_descriptions[cur_task_menu] size 24 color gui.accent_color
+                        text quests_descriptions[cur_task_menu] size gui.normal_text_size color gui.accent_color
                     else:
-                        text quests[cur_task_menu].description size 24 color gui.accent_color
+                        text quests[cur_task_menu].description size gui.normal_text_size color gui.accent_color
                     if (current_quest_stages[cur_task_menu].active):
-                        text quest_menu.description size 24
-                        text quest_menu.advice size 28
+                        text quest_menu.description size gui.normal_text_size
+                        text quest_menu.advice size gui.big_normal_text_size
                         for item in quest_menu.goals:
-                            text item.description size 28
+                            text item.description size gui.big_normal_text_size
                         if current_quest_stages[cur_task_menu].completed and (cur_quest_menu+1) == len(quests[cur_task_menu].stages_id):
                             if quests[cur_task_menu].development:
-                                text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size 28
+                                text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size gui.big_normal_text_size
                             else:
-                                text _("You have completed all the quests.") size 28
+                                text _("You have completed all the quests.") size gui.big_normal_text_size
                     else:
-                        text quest_menu.request_description size 24 color gui.accent_color
+                        text quest_menu.request_description size gui.normal_text_size color gui.accent_color
                 vbar value YScrollValue('vp2') style 'menu_vscroll'
 
     if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):

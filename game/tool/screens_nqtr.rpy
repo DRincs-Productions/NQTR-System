@@ -279,8 +279,7 @@ screen room_navigation():
                 drop_shadow [(2, 2)]
             text tm.get_weekday_name():
                 xalign (0.5)
-                font 'DejaVuSans.ttf'
-                size 24
+                size gui.normal_text_size
                 drop_shadow [(2, 2)]
                 line_leading -16
 
