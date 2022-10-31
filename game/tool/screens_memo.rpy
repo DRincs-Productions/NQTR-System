@@ -3,6 +3,13 @@ default cur_task_menu = ""
 # quest level based on the task selected in the menu
 default cur_quest_menu = ""
 
+default gui.menu_memo_image_ysize = 400
+default gui.menu_memo_image_xsize = 800
+default gui.menu_memo_frame_xsize = 1190
+default gui.menu_memo_frame_ysize = 400
+default gui.menu_memo_frame_xalign = 0.72
+default gui.menu_memo_frame_yalign = 0.6
+
 screen menu_memo():
 
     tag menu
@@ -68,29 +75,30 @@ screen menu_memo():
     if cur_task_menu != '':
         $ quest_menu = quest_stages[quests[cur_task_menu].stages_id[cur_quest_menu]]
         vbox:
-            align (0.72, 0.6)
+            xalign gui.menu_memo_frame_xalign
+            yalign gui.menu_memo_frame_yalign
             # Image
             if quest_menu.bg != '' and quest_menu.bg != None:
                 add Frame(quest_menu.bg, Borders(0,0,0,0)):
-                    xsize 800
-                    ysize 400
-                    pos (195,0)
+                    xsize gui.menu_memo_image_xsize
+                    ysize gui.menu_memo_image_ysize
+                    xalign 0.5
+                    yalign 0
             elif quests[cur_task_menu].bg != '' and quests[cur_task_menu].bg != None:
                 add Frame(quests[cur_task_menu].bg, Borders(0,0,0,0)):
-                    xsize 800
-                    ysize 400
-                    pos (195,0)
-            frame:
-                xsize 1180
-                xalign 0.5
-                background None
-
-                text quest_menu.title:
-                    size gui.interface_text_size
+                    xsize gui.menu_memo_image_xsize
+                    ysize gui.menu_memo_image_ysize
                     xalign 0.5
+                    yalign 0
+
+            text quest_menu.title:
+                size gui.interface_text_size
+                xalign 0.5
 
             frame:
-                area (0, 0, 1190, 400)
+                # area (0, 0, 1190, 400)
+                xsize gui.menu_memo_frame_xsize
+                ysize gui.menu_memo_frame_ysize
                 background None
 
                 has hbox
