@@ -323,18 +323,18 @@ screen room_navigation():
             else:
                 at small_menu_mobile
 
-        imagebutton:
-            idle '/interface/menu-memo.webp'
-            focus_mask True
-            if len(current_quest_stages) > 0 :
+        if len(current_quest_stages) > 0 :
+            imagebutton:
+                idle '/interface/menu-memo.webp'
+                focus_mask True
                 action [
                     Show('menu_memo'),
                 ]
-            if renpy.variant("pc"):
-                at small_menu
-                tooltip _("Memo")
-            else:
-                at small_menu_mobile
+                if renpy.variant("pc"):
+                    at small_menu
+                    tooltip _("Memo")
+                else:
+                    at small_menu_mobile
 
         imagebutton:
             idle '/interface/menu-help.webp'

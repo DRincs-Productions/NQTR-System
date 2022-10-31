@@ -47,7 +47,7 @@ screen menu_memo():
         ysize gui.lateralframescroll_ysize
         background None
         # task title list
-        viewport mousewheel 'change' draggable True id 'vp1':
+        viewport mousewheel True draggable True id 'vp1':
             has vbox spacing 5
             for task_id in current_quest_stages.keys():
                 button:
@@ -102,7 +102,7 @@ screen menu_memo():
                 background None
 
                 has hbox
-                viewport mousewheel 'change' draggable True id 'vp2':
+                viewport mousewheel True draggable True id 'vp2':
                     has vbox spacing 30
                     if cur_task_menu in quests_descriptions:
                         text quests_descriptions[cur_task_menu] size gui.normal_text_size color gui.accent_color

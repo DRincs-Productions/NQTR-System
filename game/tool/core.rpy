@@ -9,3 +9,10 @@ label after_load:
     $ commitments_in_cur_location = getChsInThisLocation(cur_location.id)
     $ updateQuestsLevels()
     return
+
+init python:
+    def myrollback():
+        ui.add(renpy.Keymap(rollback=If(renpy.get_screen('menu_memo'), NullAction(), Rollback())))
+
+    config.overlay_functions.append(myrollback)
+
