@@ -1,134 +1,3 @@
-image gui triangular_button = "/interface/button/triangular_button.webp"
-
-init:
-    transform middle_room:
-        size (136, 136)
-        on selected_idle:
-            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.3)
-        on idle:
-            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(0)
-        on hover:
-            yanchor 1 alpha 0.9 matrixcolor BrightnessMatrix(0.1)
-        on selected_hover:
-            yanchor 1 alpha 0.9 matrixcolor BrightnessMatrix(-0.5)
-        on insensitive:
-            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.8)
-        on action:
-            yanchor 0 alpha 0.9 matrixcolor BrightnessMatrix(-0.5)
-    transform small_map:
-        size (80, 80)
-        on selected_idle:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.3)
-        on idle:
-            yanchor 0 matrixcolor BrightnessMatrix(0)
-        on hover:
-            yanchor 1 matrixcolor BrightnessMatrix(0.1)
-        on selected_hover:
-            yanchor 1 matrixcolor BrightnessMatrix(-0.5)
-        on insensitive:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
-        on action:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-    transform middle_action:
-        size (120, 120)
-        on selected_idle:
-            yanchor 0 alpha 0.7
-        on idle:
-            yanchor 0 alpha 0.7
-        on hover:
-            yanchor 1 alpha 1.0
-        on selected_hover:
-            yanchor 1 alpha 1.0
-        on insensitive:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
-        on action:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-    transform middle_action_is_in_room:
-        on selected_idle:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.3)
-        on idle:
-            yanchor 0 matrixcolor BrightnessMatrix(0)
-        on hover:
-            yanchor 0 matrixcolor BrightnessMatrix(0.1)
-        on selected_hover:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-        on insensitive:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
-        on action:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-    transform small_face:
-        size (60, 60)
-        on selected_idle:
-            yanchor 0 alpha 1.0
-        on idle:
-            yanchor 0 alpha 1.0
-        on hover:
-            yanchor 1 alpha 0.93
-        on selected_hover:
-            yanchor 1 alpha 0.93
-        on insensitive:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
-        on action:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-    transform small_menu:
-        size (80, 80)
-        on selected_idle:
-            yanchor 0 alpha 0.4
-        on idle:
-            yanchor 0 alpha 0.4
-        on hover:
-            yanchor 1 alpha 1.0
-        on selected_hover:
-            yanchor 1 alpha 1.0
-        on insensitive:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
-        on action:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-    transform small_menu_mobile:
-        size (100, 100)
-        on selected_idle:
-            yanchor 0 alpha 0.4
-        on idle:
-            yanchor 0 alpha 0.4
-        on hover:
-            yanchor 1 alpha 1.0
-        on selected_hover:
-            yanchor 1 alpha 1.0
-        on insensitive:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
-        on action:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-    transform close_zoom:
-        xanchor 25
-        size (75, 25)
-    transform close_zoom_mobile:
-        xanchor 35
-        size (105, 35)
-    transform middle_map(rotation = 0, xsize = 50, ysize = 50):
-        rotate rotation
-        xysize (xsize, ysize)
-        on selected_idle:
-            yanchor 0 alpha 0.6
-        on idle:
-            yanchor 0 alpha 0.6
-        on hover:
-            yanchor 1 alpha 1.0
-        on selected_hover:
-            yanchor 1 alpha 1.0
-        on insensitive:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.8)
-        on action:
-            yanchor 0 matrixcolor BrightnessMatrix(-0.5)
-
-style menu_vscroll is vscrollbar:
-    xsize 7
-    unscrollable 'hide'
-
-# Id of the task selected in the menu
-default cur_task_menu = ""
-# quest level based on the task selected in the menu
-default cur_quest_menu = ""
-
 screen room_navigation():
     modal True
     $ i = 0
@@ -223,8 +92,7 @@ screen room_navigation():
 
                     # Locations name
                     text location.name:
-                        font 'DejaVuSans.ttf'
-                        size 18
+                        size gui.little_text_size
                         drop_shadow [(2, 2)]
                         xalign 0.5
                         text_align 0.5
@@ -303,8 +171,7 @@ screen room_navigation():
 
                         # Room name
                         text room.name:
-                            font 'DejaVuSans.ttf'
-                            size 18
+                            size gui.little_text_size
                             drop_shadow [(2, 2)]
                             xalign 0.5
                             text_align 0.5
@@ -324,7 +191,7 @@ screen room_navigation():
                 for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number()):
                     if (not act.isButton()):
                         imagebutton:
-                            pos (act.xalign, act.yalign)
+                            align (act.xalign, act.yalign)
                             idle act.getPictureInBackgroundOrDefault()
                             hover act.getSelectedPictureInBackgroundOrDefault()
                             focus_mask True
@@ -408,13 +275,11 @@ screen room_navigation():
             align (0.5, 0.01)
             text "[tm.hour]:00":
                 xalign (0.5)
-                font 'DejaVuSans.ttf'
-                size 60
+                size gui.hour_text_size
                 drop_shadow [(2, 2)]
             text tm.get_weekday_name():
                 xalign (0.5)
-                font 'DejaVuSans.ttf'
-                size 24
+                size gui.normal_text_size
                 drop_shadow [(2, 2)]
                 line_leading -16
 
@@ -458,18 +323,18 @@ screen room_navigation():
             else:
                 at small_menu_mobile
 
-        imagebutton:
-            idle '/interface/menu-memo.webp'
-            focus_mask True
-            if len(current_quest_stages) > 0 :
+        if len(current_quest_stages) > 0 :
+            imagebutton:
+                idle '/interface/menu-memo.webp'
+                focus_mask True
                 action [
                     Show('menu_memo'),
                 ]
-            if renpy.variant("pc"):
-                at small_menu
-                tooltip _("Memo")
-            else:
-                at small_menu_mobile
+                if renpy.variant("pc"):
+                    at small_menu
+                    tooltip _("Memo")
+                else:
+                    at small_menu_mobile
 
         imagebutton:
             idle '/interface/menu-help.webp'
@@ -488,8 +353,7 @@ screen room_navigation():
         # Money
         text "$20":
             align(1.0, 0.5)
-            font 'DejaVuSans.ttf'
-            size 30
+            size gui.interface_text_size
             drop_shadow [(2, 2)]
 
         imagebutton:
@@ -535,136 +399,9 @@ screen room_navigation():
             text "[text]":
                 xpos x-20
                 ypos y-20
-                font 'DejaVuSans.ttf' 
-                size 18 
+                size gui.little_text_size 
                 drop_shadow [(2, 2)] 
                 outlines [(2, "#000", 0, 1)]
-
-screen menu_memo():
-    modal True
-    style_prefix "game_menu"
-    # Synchronize number_stages_completed_in_quest with quests
-    $ updateQuestsLevels()
-
-    add '/gui/overlay/game_menu.png'
-
-    # button for closure
-    imagebutton:
-        pos (1740, 100)
-        idle '/interface/button/close_idle.webp'
-        hover '/interface/button/close_hover.webp'
-        action [
-            Hide('menu_memo'),
-        ]
-        if renpy.variant("pc"):
-            focus_mask True
-            at close_zoom
-        else:
-            at close_zoom_mobile
-
-    hbox pos (150, 150) spacing 30:
-        frame:
-            ypos 25
-            xsize 400
-            ysize 850
-            background None
-            has hbox
-            # task title list
-            viewport mousewheel 'change' draggable True id 'vp1':
-                has vbox spacing 5
-                for task_id in current_quest_stages.keys():
-                    button:
-                        xsize 390
-                        background None
-                        action [
-                            SetVariable('cur_task_menu', task_id), 
-                            SetVariable('cur_quest_menu', number_stages_completed_in_quest[task_id])
-                        ]
-                        xpadding 0
-                        ypadding 0
-                        xmargin 0
-                        ymargin 0
-                        textbutton quests[task_id].title:
-                            action [
-                                SetVariable('cur_task_menu', task_id),
-                                SetVariable('cur_quest_menu', number_stages_completed_in_quest[task_id]),
-                            ]
-                            selected cur_task_menu == task_id
-            # scroll bar
-            vbar value YScrollValue('vp1') style 'menu_vscroll'
-
-        # Information on the current quest
-        if cur_task_menu != '':
-            $ quest_menu = quest_stages[quests[cur_task_menu].stages_id[cur_quest_menu]]
-            frame:
-                area (0, 30, 1190, 850)
-                background None
-                has vbox spacing 20
-                # Image
-                if quest_menu.bg != '' and quest_menu.bg != None:
-                    add Frame(quest_menu.bg, Borders(0,0,0,0)):
-                        xsize 800
-                        ysize 400
-                        pos (195,0)
-                elif quests[cur_task_menu].bg != '' and quests[cur_task_menu].bg != None:
-                    add Frame(quests[cur_task_menu].bg, Borders(0,0,0,0)):
-                        xsize 800
-                        ysize 400
-                        pos (195,0)
-                frame:
-                    xsize 1180
-                    xalign 0.5
-                    background None
-
-                    text quest_menu.title:
-                        size 30
-                        font 'DejaVuSans.ttf'
-                        xalign 0.5
-
-                frame: 
-                    area (0, 0, 1190, 400)
-                    background None
-
-                    has hbox
-                    viewport mousewheel 'change' draggable True id 'vp2':
-                        has vbox spacing 30
-                        if cur_task_menu in quests_descriptions:
-                            text quests_descriptions[cur_task_menu] size 24 color gui.accent_color
-                        else:
-                            text quests[cur_task_menu].description size 24 color gui.accent_color
-                        if (current_quest_stages[cur_task_menu].active):
-                            text quest_menu.description size 24
-                            text quest_menu.advice size 28
-                            for item in quest_menu.goals:
-                                text item.description size 28
-                            if current_quest_stages[cur_task_menu].completed and (cur_quest_menu+1) == len(quests[cur_task_menu].stages_id):
-                                if quests[cur_task_menu].development:
-                                    text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size 28
-                                else:
-                                    text _("You have completed all the quests.") size 28
-                        else:
-                            text quest_menu.request_description size 24 color gui.accent_color
-                    vbar value YScrollValue('vp2') style 'menu_vscroll'
-    if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
-        # increases and decreases cur_quest menu
-        imagebutton pos (690, 360):
-            idle '/interface/button/prev_idle.webp'
-            hover '/interface/button/prev_hover.webp'
-            insensitive '/interface/button/prev_insensitive.webp'
-            focus_mask True
-            sensitive (cur_quest_menu > 0)
-            action [
-                SetVariable('cur_quest_menu', cur_quest_menu-1),
-            ]
-        imagebutton pos (1570, 360):
-            idle '/interface/button/next_idle.webp'
-            hover '/interface/button/next_hover.webp'
-            insensitive '/interface/button/next_insensitive.webp'
-            focus_mask True
-            sensitive (cur_quest_menu < number_stages_completed_in_quest[cur_task_menu])
-            action [
-                SetVariable('cur_quest_menu', cur_quest_menu+1),
-            ]
 
 label set_background_nqtr:
     if (not map_open):
