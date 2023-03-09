@@ -1,4 +1,5 @@
 from typing import Optional
+
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.navigation import Room
 from pythonpackages.nqtr.time import TimeHandler
