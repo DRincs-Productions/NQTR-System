@@ -42,7 +42,7 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, is_check_event=True):
 label after_spending_time(is_check_event=False, is_check_routines=True):
     if(is_check_routines):
         # this step is to change the background based on the presence of a ch
-        $ commitments_in_cur_location = getChsInThisLocation(cur_location.id, routine)
+        $ commitments_in_cur_location = getChsInThisLocation(cur_location.id, routine | df_routine)
     # check event
     if (is_check_event):
         $ cur_events_location = getEventsInThisLocation(cur_location.id, routine)

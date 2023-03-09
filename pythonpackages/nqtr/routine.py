@@ -93,13 +93,6 @@ def getChsInThisLocation(location_id: str, routine: dict[str, Commitment]) -> di
             # Full verification
             for chKey in comm.ch_talkobj_dict.keys():
                 commitments[chKey] = None
-    for comm in df_routine.values():
-        # Check Time and Location
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop)):
-            # Full verification
-            ch_talkobj_dict = comm.ch_talkobj_dict
-            for chKey in ch_talkobj_dict.keys():
-                commitments[chKey] = None
     # Check I enter the current commitments of the ch.
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
     commitments_key_to_del = []
