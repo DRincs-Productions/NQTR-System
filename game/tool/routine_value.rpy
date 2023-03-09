@@ -1,3 +1,6 @@
+init python:
+    from pythonpackages.nqtr.routine import Commitment
+
 # are the routines of the CHs in the current place
 # it is changed after waiting for some time or when moving from one location to another
 default commitments_in_cur_location = {}
