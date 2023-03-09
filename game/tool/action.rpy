@@ -1,5 +1,6 @@
 init -5 python:
     from typing import Optional
+    from pythonpackages.nqtr.button import Button
 
 
     class Act(Button):

@@ -2,6 +2,9 @@ define DEFAULT_LABEL_TALK = "talk"
 define DEFAULT_TALK_BUTTON_ICON = "/interface/action-talk.webp"
 
 init -11 python:
+    from pythonpackages.nqtr.button import Button
+
+
     class TalkObject(Button):
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system """
 

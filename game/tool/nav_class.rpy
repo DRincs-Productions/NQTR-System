@@ -5,6 +5,7 @@ default closed_rooms = {}
 
 init -9 python:
     from typing import Optional
+    from pythonpackages.nqtr.button import Button
 
 
     class Room(Button):

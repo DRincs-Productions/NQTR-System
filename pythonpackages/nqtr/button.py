@@ -1,3 +1,7 @@
+from pythonpackages.utility import *
+from pythonpackages.renpy_custom_log import *
+
+
 class Button(object):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Button """
 
@@ -26,13 +30,13 @@ class Button(object):
         self.disabled = disabled
         self.hidden = hidden
         if (self.xalign != None and self.yalign == None):
-            log_warn("xalign is set but yalign is not, so yalign set to 0", renpy.get_filename_line())
+            log_warn("xalign is set but yalign is not, so yalign set to 0", "nqtr.Button.__init__")
             self.yalign = 0
         if (self.xalign == None and self.yalign != None):
-            log_warn("yalign is set but xalign is not, so xalign set to 0", renpy.get_filename_line())
+            log_warn("yalign is set but xalign is not, so xalign set to 0", "nqtr.Button.__init__")
             self.xalign = 0
         if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
-            log_info("You have set button_icon and picture_in_background to None, this action will be ignored", renpy.get_filename_line())
+            log_info("You have set button_icon and picture_in_background to None, this action will be ignored", "nqtr.Button.__init__")
 
     def isButton(self) -> bool:
         """This is a button?"""
@@ -62,7 +66,7 @@ class Button(object):
         elif(not isNullOrEmpty(self.picture_in_background)):
             return self.picture_in_background
         else:
-            log_error("You have set button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
+            log_error("You have set button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getButtonOrDefault()")
         return ""
 
     def getPictureInBackgroundOrDefault(self) -> str:
@@ -71,7 +75,7 @@ class Button(object):
         elif(not isNullOrEmpty(self.button_icon)):
             return self.button_icon
         else:
-            log_error("You have set button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
+            log_error("You have set button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getPictureInBackgroundOrDefault())")
         return ""
 
     def getSelectedButtonOrDefault(self) -> str:
@@ -84,7 +88,7 @@ class Button(object):
         elif(not isNullOrEmpty(self.picture_in_background)):
             return self.picture_in_background
         else:
-            log_info("You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
+            log_info("You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getSelectedButtonOrDefault())")
         return ""
 
     def getSelectedPictureInBackgroundOrDefault(self) -> str:
@@ -97,5 +101,5 @@ class Button(object):
         elif(not isNullOrEmpty(self.button_icon)):
             return self.button_icon
         else:
-            log_error("You have set picture_in_background_selected and button_icon_selected and button_icon and picture_in_background to None, this button will be ignored", renpy.get_filename_line())
+            log_error("You have set picture_in_background_selected and button_icon_selected and button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getSelectedPictureInBackgroundOrDefault())")
         return ""
