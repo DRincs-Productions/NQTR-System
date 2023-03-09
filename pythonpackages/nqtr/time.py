@@ -1,15 +1,19 @@
+from pythonpackages.renpy_custom_log import *
+
+
 class TimeHandler(object):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#time-handler """
 
-    def __init__(self,
-                hour_of_new_day: int = 5,
-                hour: int = 8,
-                weekend_day: int = 6,
-                day: int = 0,
-                event_duration: int = 6,
-                hour_names = (),
-                weekday_names = ()
-                ):
+    def __init__(
+        self,
+        hour_of_new_day: int = 5,
+        hour: int = 8,
+        weekend_day: int = 6,
+        day: int = 0,
+        event_duration: int = 6,
+        hour_names=(),
+        weekday_names=()
+    ):
         self.hour_of_new_day = hour_of_new_day
         self.hour = hour
         self.day = day
@@ -22,16 +26,20 @@ class TimeHandler(object):
         self.image_time = 0
         self.update_image_time()
         if self.hour_of_new_day < 0:
-            log_warn("You have set hour_of_new_day < 0, so it will be set to 0.", renpy.get_filename_line())
+            log_warn("You have set hour_of_new_day < 0, so it will be set to 0.",
+                     "nqtr.time.TimeHandler.__init__")
             self.hour_of_new_day = 0
         if self.hour < 0:
-            log_warn("You have set hour < 0, so it will be set to 0.", renpy.get_filename_line())
+            log_warn("You have set hour < 0, so it will be set to 0.",
+                     "nqtr.time.TimeHandler.__init__")
             self.hour = 0
         if self.day < 0:
-            log_warn("You have set day < 0, so it will be set to 0.", renpy.get_filename_line())
+            log_warn("You have set day < 0, so it will be set to 0.",
+                     "nqtr.time.TimeHandler.__init__")
             self.day = 0
         if self.weekend_day < 0:
-            log_warn("You have set weekend_day < 0, so it will be set to 6.", renpy.get_filename_line())
+            log_warn("You have set weekend_day < 0, so it will be set to 6.",
+                     "nqtr.time.TimeHandler.__init__")
             self.weekend_day = 6
 
     def get_hour_name(self) -> str:
@@ -121,4 +129,3 @@ class TimeHandler(object):
             return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
         else:
             return (((now >= start or start > end) and now < end) or (now >= start and (now < end or start > end)))
-
