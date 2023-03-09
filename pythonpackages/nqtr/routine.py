@@ -7,18 +7,19 @@ class Commitment(object):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#commitment
     event_label_name: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#events """
 
-    def __init__(self,
-                tm_start: int,
-                tm_stop: int,
-                ch_talkobj_dict: dict[str, TalkObject] = {},
-                bg: str = None,
-                name: str = None,
-                location_id: str = None,
-                room_id: str = None,
-                tag: str = None,
-                day_deadline: int = None,
-                event_label_name: str = None
-                ):
+    def __init__(
+        self,
+        tm_start: int,
+        tm_stop: int,
+        ch_talkobj_dict: dict[str, TalkObject] = {},
+        bg: str = None,
+        name: str = None,
+        location_id: str = None,
+        room_id: str = None,
+        tag: str = None,
+        day_deadline: int = None,
+        event_label_name: str = None
+    ):
 
         self.bg = bg
         self.ch_talkobj_dict = ch_talkobj_dict
