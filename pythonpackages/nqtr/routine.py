@@ -97,7 +97,7 @@ def getChsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: T
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
     commitments_key_to_del = []
     for ch in commitments.keys():
-        commitments[ch] = getChLocation(ch)
+        commitments[ch] = getChLocation(ch, routine)
         if commitments[ch] == None:
             commitments_key_to_del.append(ch)
         elif commitments[ch].location_id != location_id:
@@ -121,27 +121,19 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]) ->
     return events
 
 
-def getChLocation(ch: str) -> Optional[Commitment]:
+def getChLocation(ch: str, routine: dict[str, Commitment]) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
-    Give priority to special routine, and routine with a valid tag."""
-    ret_commitment = None
+    Give priority to ActiveByTag after first_found."""
+    first_found_commitment = None
     # special routine
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
             if ch in comm.ch_talkobj_dict:
-                ret_commitment = comm
+                if (first_found_commitment == None)
+                    first_found_commitment = comm
                 if checkIfIsActiveByTag(tag=comm.tag, id=id):
                     return comm
-    if ret_commitment != None:
-        return ret_commitment
-    # default routine
-    for id, comm in df_routine.items():
-        if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
-            if ch in comm.ch_talkobj_dict:
-                ret_commitment = comm
-                if checkIfIsActiveByTag(tag=comm.tag, id=id):
-                    return comm
-    return ret_commitment
+    return first_found_commitment
 
 
 def checkIfIsActiveByTag(tag: str, id: str = None) -> bool:
