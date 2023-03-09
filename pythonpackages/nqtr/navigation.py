@@ -3,12 +3,6 @@ from typing import Optional
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.routine import Commitment
 
-# list of closed rooms is checked change_room
-# is composed of id = room_id and Commitment()
-# expired elements are checked in after_spending_time, if you don't want an expiration: tm_stop = None
-closed_rooms = {}
-
-
 class Room(Button):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room """
 

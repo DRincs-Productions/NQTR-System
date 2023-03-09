@@ -97,7 +97,7 @@ def getChsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: T
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
     commitments_key_to_del = []
     for ch in commitments.keys():
-        commitments[ch] = getChLocation(ch, routine)
+        commitments[ch] = getChLocation(ch, routine, tm)
         if commitments[ch] == None:
             commitments_key_to_del.append(ch)
         elif commitments[ch].location_id != location_id:
@@ -121,7 +121,7 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]) ->
     return events
 
 
-def getChLocation(ch: str, routine: dict[str, Commitment]) -> Optional[Commitment]:
+def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
     first_found_commitment = None

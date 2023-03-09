@@ -1,3 +1,6 @@
+init python:
+    from pythonpackages.nqtr.navigation import isClosedRoom
+
 screen room_navigation():
     modal True
     $ i = 0
