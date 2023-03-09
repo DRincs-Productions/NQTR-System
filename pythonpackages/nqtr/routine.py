@@ -108,7 +108,7 @@ def getChsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: T
     return commitments
 
 
-def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]) -> dict[str, Commitment]:
+def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: TimeHandler) -> dict[str, Commitment]:
     """Returns events at that location at that time.
     Checks only in routine."""
     # Create a list of ch who have a commitment in that place at that time

@@ -1,5 +1,7 @@
 init python:
     from pythonpackages.nqtr.navigation import isClosedRoom
+    from pythonpackages.nqtr.routine import getBgRoomRoutine
+    from pythonpackages.nqtr.action import getActions
 
 screen room_navigation():
     modal True
