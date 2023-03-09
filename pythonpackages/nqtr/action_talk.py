@@ -1,38 +1,41 @@
 from pythonpackages.nqtr.button import Button
 from pythonpackages.utility import *
+from pythonpackages.renpy_custom_log import *
 
 DEFAULT_LABEL_TALK = "talk"
 DEFAULT_TALK_BUTTON_ICON = "/interface/action-talk.webp"
 
+
 class TalkObject(Button):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system """
 
-    def __init__(self,
-                # only TalkObject
-                bg: str = None,
-                # Button
-                name: str = None,
-                label_name: str = None,
-                button_icon: str = None,
-                button_icon_selected: str = None,
-                picture_in_background: str = None,
-                picture_in_background_selected: str = None,
-                xalign: int = None,
-                yalign: int = None,
-                disabled = False, # bool | str
-                hidden = False, # bool | str
-                ):
+    def __init__(
+        self,
+        # only TalkObject
+        bg: str = None,
+        # Button
+        name: str = None,
+        label_name: str = None,
+        button_icon: str = None,
+        button_icon_selected: str = None,
+        picture_in_background: str = None,
+        picture_in_background_selected: str = None,
+        xalign: int = None,
+        yalign: int = None,
+        disabled=False,  # bool | str
+        hidden=False,  # bool | str
+    ):
         super().__init__(
-            name= name,
-            label_name= label_name,
-            button_icon= button_icon,
-            button_icon_selected= button_icon_selected,
-            picture_in_background= picture_in_background,
-            picture_in_background_selected= picture_in_background_selected,
-            xalign= xalign,
-            yalign= yalign,
-            disabled= disabled,
-            hidden= hidden,
+            name=name,
+            label_name=label_name,
+            button_icon=button_icon,
+            button_icon_selected=button_icon_selected,
+            picture_in_background=picture_in_background,
+            picture_in_background_selected=picture_in_background_selected,
+            xalign=xalign,
+            yalign=yalign,
+            disabled=disabled,
+            hidden=hidden,
         )
 
         self.bg = bg
@@ -52,7 +55,8 @@ class TalkObject(Button):
         elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
             return DEFAULT_LABEL_TALK
         else:
-            log_error("DEFAULT_LABEL_TALK is null or empty", renpy.get_filename_line())
+            log_error("DEFAULT_LABEL_TALK is null or empty",
+                      "nqtr.action_talk.TalkObject.getTalkLabelName()")
         return
 
     def getBackground(self) -> str:
@@ -60,11 +64,10 @@ class TalkObject(Button):
         return self.bg
 
     def getButtonIcon(self) -> str:
-        if(self.button_icon != None):
-            return button_icon
+        if (self.button_icon != None):
+            return self.button_icon
         else:
             return DEFAULT_TALK_BUTTON_ICON
-        return self.bg
 
 
 def delTalkChoice(choice_text: str, choice_id: str, dict_choices: dict[str, list]) -> None:
