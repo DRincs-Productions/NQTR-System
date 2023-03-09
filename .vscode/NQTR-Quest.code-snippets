@@ -3,7 +3,9 @@
         "scope": "renpy",
         "prefix": "DR_QuestStart",
         "body": [
-            "$ quests[\"${1:quest_id}\"].start()",
+            "python:",
+            "    if(quests[\"${1:quest_id}\"].start() == False)",
+            "        log_error(\"The quest ${1:quest_id} has not started\", renpy.get_filename_line())",
             "",
         ],
         "description": "Start a Quest"
