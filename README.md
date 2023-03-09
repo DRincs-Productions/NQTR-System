@@ -18,7 +18,7 @@ Feel free to contribute, fork this and send a pull request. 😄
 
 ## Documentation
 
-[Wiki](https://github.com/DRincs-Productions/NQTR-toolkit/wiki)
+**[Wiki](https://github.com/DRincs-Productions/NQTR-toolkit/wiki)**
 
 
 ## Code snippets ([VSCode](https://code.visualstudio.com/))
