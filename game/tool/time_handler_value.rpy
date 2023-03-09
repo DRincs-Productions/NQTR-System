@@ -21,11 +21,13 @@ default tm = TimeHandler(
                     weekend_day = 6,
                     day = 0,
                     event_duration = event_duration,
-                    define = define,
+                    hour_names = hour_names,
                     weekday_names = weekday_names
 )
 
 init -8 python:
+    from pythonpackages.nqtr.time import TimeHandler
+
     def updateTimeHandler(tm: TimeHandler) -> None:
         hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY
         hour = tm.hour
@@ -36,7 +38,7 @@ init -8 python:
             hour=hour, weekend_day=weekend_day, 
             day=day,
             event_duration = event_duration,
-            define = define,
+            hour_names = hour_names,
             weekday_names = weekday_names
         )
         del hour_of_new_day

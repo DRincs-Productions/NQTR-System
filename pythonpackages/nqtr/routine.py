@@ -1,6 +1,6 @@
 from typing import Optional
 from pythonpackages.nqtr.action_talk import TalkObject
-from pythonpackages.nqtr.time_handler import TimeHandler
+from pythonpackages.nqtr.time import TimeHandler
 
 
 class Commitment(object):
