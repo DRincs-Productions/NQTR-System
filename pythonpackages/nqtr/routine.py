@@ -123,19 +123,20 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment]) ->
 
 def getChLocation(ch: str, routine: dict[str, Commitment]) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
-    Give priority to ActiveByTag after first_found."""
+    Give priority to valid first found."""
     first_found_commitment = None
     # special routine
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
             if ch in comm.ch_talkobj_dict:
-                if (first_found_commitment == None)
-                    first_found_commitment = comm
-                if checkIfIsActiveByTag(tag=comm.tag, id=id):
+                if (comm.tag != None):
+                    if checkIfIsActiveByTag(tag=comm.tag, id=id):
+                        return comm
+                else:
                     return comm
-    return first_found_commitment
+    return None
 
-
+# TODO To Move move in renpy
 def checkIfIsActiveByTag(tag: str, id: str = None) -> bool:
     """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
     # Custom code
