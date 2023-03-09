@@ -1,6 +1,6 @@
 from typing import Optional
 from pythonpackages.nqtr.button import Button
-from pythonpackages.nqtr.nav_class import Room
+from pythonpackages.nqtr.navigation import Room
 from pythonpackages.renpy_custom_log import *
 
 

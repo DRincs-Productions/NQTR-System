@@ -1,3 +1,8 @@
+init python:
+    from pythonpackages.nqtr.navigation import Room
+    from pythonpackages.nqtr.navigation import Location
+    from pythonpackages.nqtr.navigation import Map
+
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room
 define rooms = [
     Room(id="my_room", location_id="house", name=_("MC room"), button_icon="icon myroom", bg="bg myroom",action_ids = ["sleep","nap",]), 
