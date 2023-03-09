@@ -139,7 +139,7 @@ init python:
                 if (number_stages_completed_in_quest[quest] < level):
                     return False
             for item in self.flags_requests:
-                if (not flags[item]):
+                if (not getFlags(item)):
                     return False
             return True
 

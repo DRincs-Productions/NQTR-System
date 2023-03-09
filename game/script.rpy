@@ -15,10 +15,9 @@ label start:
 
     call change_room(room_id = "my_room")
     $ prev_room = rooms[5]
-    $ flags = updateFlags(flags, flag_keys)
-    if(quests["alice"].start() == False):
+    if(not quests["alice"].start()):
         $ log_error("The quest alice has not started", renpy.get_filename_line())
-    if(quests["ann"].start() == False):
+    if(not quests["ann"].start()):
         $ log_error("The quest ann has not started", renpy.get_filename_line())
 
     ## make check, for event...
