@@ -410,7 +410,7 @@ screen room_navigation():
 
 label set_background_nqtr:
     if (not map_open):
-        if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number())):
+        if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.get_hour_number(), tm = tm)):
             # Change the background image to the current room image.
             call closed_room_event
         else:
