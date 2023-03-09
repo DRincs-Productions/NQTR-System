@@ -1,6 +1,7 @@
 from typing import Optional
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.navigation import Room
+from pythonpackages.nqtr.time import TimeHandler
 from pythonpackages.renpy_custom_log import *
 
 
@@ -66,15 +67,15 @@ def clearExpiredActions(actions: dict[str, Act], cur_day: int) -> None:
 
 
 
-def getActions(actions: dict[str, Act], room: Room, now_hour: int, cur_day: int) -> list[Act]:
+def getActions(actions: dict[str, Act], room: Room, now_hour: int, cur_day: int, tm: TimeHandler) -> list[Act]:
     """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
     acts: list[Act] = []
     for act_id, act in actions.items():
         if room.id in act.rooms:
-            if (now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and (act.day_start < 0 | cur_day >= act.day_start)):
+            if (tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and (act.day_start < 0 | cur_day >= act.day_start)):
                 acts.append(act)
         elif act_id in room.action_ids:
-            if (now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and (act.day_start < 0 | cur_day >= act.day_start)):
+            if (tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and (act.day_start < 0 | cur_day >= act.day_start)):
                 acts.append(act)
     return acts
 
