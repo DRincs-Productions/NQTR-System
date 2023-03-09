@@ -8,27 +8,21 @@ __all__ = [
     "log_filename_line",
 ]
 
-def log_error(msg: str, filename_line = None, error_notify = None):
+def log_error(msg: str, filename_line = None):
     renpy.log("Error: " + msg)
     log_filename_line(filename_line)
-    if error_notify:
-        notifyExPreventsLoops(msg = error_notify)
     renpy.log("")
     return
 
-def log_warn(msg: str, filename_line = None, warn_notify = None):
+def log_warn(msg: str, filename_line = None):
     renpy.log("Warn: " + msg)
     log_filename_line(filename_line)
-    if not IsNullOrWhiteSpace(warn_notify):
-        notifyExPreventsLoops(msg = warn_notify)
     renpy.log("")
     return
 
-def log_info(msg: str, filename_line = None, info_notify = False):
+def log_info(msg: str, filename_line = None):
     renpy.log("Info: " + msg)
     log_filename_line(filename_line)
-    if not IsNullOrWhiteSpace(info_notify):
-        notifyExPreventsLoops(msg = info_notify)
     renpy.log("")
     return
 
