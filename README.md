@@ -15,16 +15,18 @@ In order to simplify the update work and avoid errors in saving I created functi
 Feel free to contribute, fork this and send a pull request. 😄
 
 
+
+## Documentation
+
+[Wiki](https://github.com/DRincs-Productions/NQTR-toolkit/wiki)
+
+
 ## Code snippets ([VSCode](https://code.visualstudio.com/))
 (all begin with `DR_`)
 
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/67595890/179365279-0d0b6d45-0048-4a0d-8c6d-9571b9c328f4.gif)
 
 
-
-## Documentation
-
-[Wiki](https://github.com/DRincs-Productions/NQTR-toolkit/wiki)
 
 ## Insert Toolkit in your project
 
