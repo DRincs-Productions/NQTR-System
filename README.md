@@ -6,6 +6,8 @@
 <a href="https://discord.gg/5UFPjP9" title="Discord"><img src="https://img.shields.io/discord/688162156151439536" alt="Discord" /></a>
 </span>
 
+**IMPORTANT**: image and some screens were taken from Big Brother for testing purposes. (Will be replaced as soon as I have time)
+
 A complete system introducing the concepts of location, time and event, producing the framework of a not-quite-point-and-click adventure game.
 
 This repo is a complete set of tools to create a game where you can explore and relate to characters.
