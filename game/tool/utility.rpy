@@ -1,13 +1,11 @@
 init -999 python:
+    import pythonpackages.utility as utility
+
     def isNullOrEmpty(item: str) -> bool:
-        if not item:
-            return True
-        return False
+        return utility.isNullOrEmpty(item)
 
     def IsNullOrWhiteSpace(item: str) -> bool:
-        if not item or item.isspace():
-            return True
-        return False
+        return utility.IsNullOrWhiteSpace(item)
 
     def null_or_image(s):
         """It checks for the presence of an image, in case it is not there it returns a null value. Possible use: avoid mistakes in the management of clothes."""

@@ -1,4 +1,5 @@
 from pythonpackages.nqtr.button import Button
+from pythonpackages.utility import *
 
 DEFAULT_LABEL_TALK = "talk"
 DEFAULT_TALK_BUTTON_ICON = "/interface/action-talk.webp"
