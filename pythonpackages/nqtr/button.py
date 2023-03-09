@@ -75,7 +75,7 @@ class Button(object):
         elif(not isNullOrEmpty(self.button_icon)):
             return self.button_icon
         else:
-            log_error("You have set button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getPictureInBackgroundOrDefault())")
+            log_error("You have set button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getPictureInBackgroundOrDefault()")
         return ""
 
     def getSelectedButtonOrDefault(self) -> str:
@@ -88,7 +88,7 @@ class Button(object):
         elif(not isNullOrEmpty(self.picture_in_background)):
             return self.picture_in_background
         else:
-            log_info("You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getSelectedButtonOrDefault())")
+            log_info("You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getSelectedButtonOrDefault()")
         return ""
 
     def getSelectedPictureInBackgroundOrDefault(self) -> str:
@@ -101,5 +101,5 @@ class Button(object):
         elif(not isNullOrEmpty(self.button_icon)):
             return self.button_icon
         else:
-            log_error("You have set picture_in_background_selected and button_icon_selected and button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getSelectedPictureInBackgroundOrDefault())")
+            log_error("You have set picture_in_background_selected and button_icon_selected and button_icon and picture_in_background to None, this button will be ignored", "nqtr.Button.getSelectedPictureInBackgroundOrDefault()")
         return ""
