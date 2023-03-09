@@ -82,7 +82,7 @@ def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler) -> 
     return
 
 
-def getChsInThisLocation(location_id: str) -> dict[str, Commitment]:
+def getChsInThisLocation(location_id: str, routine: dict[str, Commitment]) -> dict[str, Commitment]:
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority """
     # Create a list of ch who have a commitment in that place at that time
     # It does not do enough checks, they will be done later with getChLocation()

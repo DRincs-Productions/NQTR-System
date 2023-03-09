@@ -1,3 +1,6 @@
+init python:
+    from pythonpackages.nqtr.navigation import getRoomById
+
 # if in a room there is a different bg (taken in routine) than usual, use this one
 default sp_bg_change_room = None
 # Image of a closed door
