@@ -8,27 +8,28 @@ from pythonpackages.renpy_custom_log import *
 class Act(Button):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
 
-    def __init__(self,
-                # Requirement
-                name: str,
-                label_name: str,
-                # Act params
-                rooms: Optional[list[str]] = None,
-                tm_start: int = 0,
-                tm_stop: int = 25,
-                day_start: int = -1,
-                day_deadline: int = -1,
-                # Button params
-                button_icon: str = None,
-                button_icon_selected: str = None,
-                picture_in_background: str = None,
-                picture_in_background_selected: str = None,
-                xalign: int = None,
-                yalign: int = None,
-                disabled = False, # bool | str
-                hidden = False, # bool | str
-                ):
-                
+    def __init__(
+        self,
+        # Requirement
+        name: str,
+        label_name: str,
+        # Act params
+        rooms: Optional[list[str]] = None,
+        tm_start: int = 0,
+        tm_stop: int = 25,
+        day_start: int = -1,
+        day_deadline: int = -1,
+        # Button params
+        button_icon: str = None,
+        button_icon_selected: str = None,
+        picture_in_background: str = None,
+        picture_in_background_selected: str = None,
+        xalign: int = None,
+        yalign: int = None,
+        disabled=False,  # bool | str
+        hidden=False,  # bool | str
+    ):
+
         # Button init
         super().__init__(
             name=name,
@@ -39,8 +40,8 @@ class Act(Button):
             picture_in_background_selected=picture_in_background_selected,
             xalign=xalign,
             yalign=yalign,
-            disabled= disabled,
-            hidden= hidden,
+            disabled=disabled,
+            hidden=hidden,
         )
         # Act init
         self.tm_start = tm_start
@@ -49,9 +50,11 @@ class Act(Button):
         self.day_start = day_start
         self.rooms = rooms if rooms else []
         if self.day_start < 0:
-            log_info("You have set day_start < 0, so it will be ignored", "nqtr.action.Act.__init__")
+            log_info("You have set day_start < 0, so it will be ignored",
+                     "nqtr.action.Act.__init__")
         if self.day_deadline < 0:
-            log_info("You have set day_deadline < 0, so it will be ignored", "nqtr.action.Act.__init__")
+            log_info("You have set day_deadline < 0, so it will be ignored",
+                     "nqtr.action.Act.__init__")
 
 
 def clearExpiredActions(actions: dict[str, Act], cur_day: int) -> None:
@@ -66,7 +69,6 @@ def clearExpiredActions(actions: dict[str, Act], cur_day: int) -> None:
     return
 
 
-
 def getActions(actions: dict[str, Act], room: Room, now_hour: int, cur_day: int, tm: TimeHandler) -> list[Act]:
     """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
     acts: list[Act] = []
@@ -78,4 +80,3 @@ def getActions(actions: dict[str, Act], room: Room, now_hour: int, cur_day: int,
             if (tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and (act.day_start < 0 | cur_day >= act.day_start)):
                 acts.append(act)
     return acts
-
