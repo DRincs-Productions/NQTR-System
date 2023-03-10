@@ -213,7 +213,7 @@ class Quest(object):
         else:
             return False
 
-    def currentQuestId(self) -> str:
+    def currentQuestId(self, number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
         if (not (self.id in number_stages_completed_in_quest)):
             self.update()
