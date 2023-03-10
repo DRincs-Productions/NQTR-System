@@ -18,7 +18,7 @@ init python:
 
     def getFlags(flag_id: str) -> bool:
         """returns the value of the flag_id in flags"""
-        return myFlags.getFlags(flag_id, flags, flag_keys)
+        return myFlags.getFlags(flag_id, flags)
 
     def setFlags(flag_id: str, value: bool):
         return myFlags.setFlags(flag_id, value, flags)

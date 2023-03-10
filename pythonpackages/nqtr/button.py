@@ -16,8 +16,8 @@ class Button(object):
         picture_in_background_selected: str = None,
         xalign: int = None,
         yalign: int = None,
-        disabled=False,  # bool | str
-        hidden=False,  # bool | str
+        disabled: bool | str = False,
+        hidden: bool | str = False,
     ):
 
         self.name = name
@@ -51,17 +51,17 @@ class Button(object):
         """This is a is picture in background?"""
         return not isNullOrEmpty(self.picture_in_background)
 
-    def isDisabled(self) -> bool:
+    def isDisabled(self, flags: dict[str, bool] = {}) -> bool:
         """"If disabled is a string: get the value of the flags system"""
         if (isinstance(self.disabled, str)):
-            return getFlags(self.disabled)
+            return getFlags(self.disabled, flags)
         else:
             return self.disabled
 
-    def isHidden(self) -> bool:
+    def isHidden(self, flags: dict[str, bool] = {}) -> bool:
         """"If hidden is a string: get the value of the flags system"""
         if (isinstance(self.hidden, str)):
-            return getFlags(self.hidden)
+            return getFlags(self.hidden, flags)
         else:
             return self.hidden
 

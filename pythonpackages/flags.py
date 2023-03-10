@@ -28,15 +28,11 @@ def updateFlags(flags: dict[str, bool], flag_keys: list[str]):
     return flags
 
 
-def getFlags(flag_id: str, flags: dict[str, bool], flag_keys: list[str]) -> bool:
+def getFlags(flag_id: str, flags: dict[str, bool]) -> bool:
     """returns the value of the flag_id in flags"""
     if (flag_id in flags):
         return flags[flag_id]
     else:
-        updateFlags(flags=flags, flag_keys=flag_keys)
-        if (not flag_id in flags):
-            log_error("in flags is not there flag_id: " + flag_id +
-                      " flags: " + json.dumps(flags), "pythonpackages.flags.getFlags()")
         return False
 
 

@@ -17,13 +17,13 @@ screen room_navigation():
         $ map_id_west = maps[cur_map_id].map_id_west
 
         # North map
-        if (not isNullOrEmpty(map_id_north) and not maps[map_id_north].isHidden()):
+        if (not isNullOrEmpty(map_id_north) and not maps[map_id_north].isHidden(flags)):
             hbox:
                 align (0.5, 0.1)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
-                    sensitive not maps[map_id_north].isDisabled()
+                    sensitive not maps[map_id_north].isDisabled(flags)
                     action [
                         SetVariable('cur_map_id', map_id_north), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -32,13 +32,13 @@ screen room_navigation():
                         tooltip maps[map_id_north].name
                     at middle_map(rotation = 270)
         # South map
-        if (not isNullOrEmpty(map_id_south) and not maps[map_id_south].isHidden()):
+        if (not isNullOrEmpty(map_id_south) and not maps[map_id_south].isHidden(flags)):
             hbox:
                 align (0.5, 0.99)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
-                    sensitive not maps[map_id_south].isDisabled()
+                    sensitive not maps[map_id_south].isDisabled(flags)
                     action [
                         SetVariable('cur_map_id', map_id_south), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -47,13 +47,13 @@ screen room_navigation():
                         tooltip maps[map_id_south].name
                     at middle_map(rotation = 90)
         # West map
-        if (not isNullOrEmpty(map_id_west) and not maps[map_id_west].isHidden()):
+        if (not isNullOrEmpty(map_id_west) and not maps[map_id_west].isHidden(flags)):
             hbox:
                 align (0.001, 0.5)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
-                    sensitive not maps[map_id_west].isDisabled()
+                    sensitive not maps[map_id_west].isDisabled(flags)
                     action [
                         SetVariable('cur_map_id', map_id_west), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -62,13 +62,13 @@ screen room_navigation():
                         tooltip maps[map_id_west].name
                     at middle_map(rotation = 180)
         # East map
-        if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden()):
+        if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden(flags)):
             hbox:
                 align (0.999, 0.5)
                 imagebutton:
                     idle "gui triangular_button"
                     focus_mask True
-                    sensitive not maps[map_id_east].isDisabled()
+                    sensitive not maps[map_id_east].isDisabled(flags)
                     action [
                         SetVariable('cur_map_id', map_id_east), 
                         Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -79,7 +79,7 @@ screen room_navigation():
 
         for location in locations:
             # If the Map where I am is the same as the Map where the room is located
-            if (location.map_id == cur_map_id and not location.isHidden()):
+            if (location.map_id == cur_map_id and not location.isHidden(flags)):
                 vbox:
                     align (location.yalign, location.xalign)
                     imagebutton:
@@ -87,7 +87,7 @@ screen room_navigation():
                         selected_idle location.getSelectedPictureInBackgroundOrDefault()
                         selected_hover location.getSelectedPictureInBackgroundOrDefault()
                         selected location == cur_location
-                        sensitive not location.isHidden()
+                        sensitive not location.isHidden(flags)
                         focus_mask True
                         action [
                             SetVariable('cur_location', location),
@@ -115,7 +115,7 @@ screen room_navigation():
                 $ i += 1
 
                 # If the Locations where I am is the same as the Locations where the room is located
-                if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden()):
+                if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden(flags)):
                     button:
                         xysize (126, 190)
                         action [
@@ -136,7 +136,7 @@ screen room_navigation():
                                 selected_idle room.getSelectedButtonOrDefault()
                                 selected_hover room.getSelectedButtonOrDefault()
                                 selected (True if cur_room and cur_room.id == room.id else False)
-                                sensitive not room.isDisabled()
+                                sensitive not room.isDisabled(flags)
                                 focus_mask True
                                 action [
                                     SetVariable('prev_room', cur_room),
@@ -165,7 +165,7 @@ screen room_navigation():
                                             for ch_icon in comm.getChIcons(ch_icons):
                                                 imagebutton:
                                                     idle ch_icon
-                                                    sensitive not room.isDisabled()
+                                                    sensitive not room.isDisabled(flags)
                                                     focus_mask True
                                                     action [
                                                         SetVariable('prev_room', cur_room),
@@ -214,7 +214,7 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
                     for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number(), tm = tm):
-                        if (act.isButton() == True and not act.isHidden()):
+                        if (act.isButton() == True and not act.isHidden(flags)):
                             imagebutton:
                                 idle act.getButtonOrDefault()
                                 hover act.getSelectedButtonOrDefault()
@@ -232,7 +232,7 @@ screen room_navigation():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            if (not talk_obj.isHidden()):
+                            if (not talk_obj.isHidden(flags)):
                                 frame:
                                     xysize (120, 120)
                                     background None
