@@ -139,6 +139,8 @@ def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> O
     return None
 
 # TODO To Move move in renpy
+
+
 def checkIfIsActiveByTag(tag: str, id: str = None) -> bool:
     """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
     # Custom code
