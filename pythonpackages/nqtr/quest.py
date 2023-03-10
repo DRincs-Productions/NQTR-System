@@ -231,13 +231,13 @@ class Quest(object):
             self.update()
         return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
-    def setDayNumberRequiredToStart(self, dayNumberRequired: int) -> None:
+    def setDayNumberRequiredToStart(self, dayNumberRequired: int, tm: TimeHandler) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
                      " not is in number_stages_completed_in_quest, so i update it", "nqtr.quest.Quest.setDayNumberRequiredToStart()")
             self.update()
-        return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired)
+        return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired, tm)
 
     def update(self) -> None:
         """Function to update the various values,
