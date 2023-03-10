@@ -90,7 +90,7 @@ class Stage(object):
         self.end_label_name = end_label_name
         self.check_label_name = check_label_name
 
-    def addInCurrentQuestStages(self, current_quest_stages: dict[str, Stage]) -> None:
+    def addInCurrentQuestStages(self, current_quest_stages: dict[str, Stage], tm: TimeHandler) -> None:
         """Add the Stage in the current_quest_stages"""
         current_quest_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
@@ -105,11 +105,11 @@ class Stage(object):
         )
         # setDayNumberRequiredToStart: is important to set the day_start to the current day.
         current_quest_stages[self.quest_id].setDayNumberRequiredToStart(
-            dayNumberRequired=self.days_required_to_start)
+            dayNumberRequired=self.days_required_to_start, tm=tm)
         return
 
     # TODO: Ora questo può essere rimpiazzato con addInCurrentQuestStages
-    def addInCurrentTaskStages(self, current_task_stages: dict[str, Stage]) -> None:
+    def addInCurrentTaskStages(self, current_task_stages: dict[str, Stage], tm: TimeHandler) -> None:
         """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
         current_task_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
@@ -124,7 +124,7 @@ class Stage(object):
         )
         # setDayNumberRequiredToStart: is important to set the day_start to the current day.
         current_task_stages[self.quest_id].setDayNumberRequiredToStart(
-            dayNumberRequired=self.days_required_to_start)
+            dayNumberRequired=self.days_required_to_start, tm=tm)
         return
 
     def start(self) -> bool:
@@ -261,10 +261,10 @@ class Quest(object):
             return
 
     # TODO To move in renpy
-    def start(self, current_quest_stages: dict[str, Stage], n_stage: int = 0) -> None:
+    def start(self, current_quest_stages: dict[str, Stage], tm: TimeHandler, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
-        quest_stages[self.stages_id[n_stage]
-                     ].addInCurrentQuestStages(current_quest_stages)
+        quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages(
+            current_quest_stages, tm)
         current_quest_stages[self.id].start()
         number_stages_completed_in_quest[self.id] = n_stage
         if (n_stage == 0):
