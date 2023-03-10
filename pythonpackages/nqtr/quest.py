@@ -217,19 +217,19 @@ class Quest(object):
     def currentQuestId(self, number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
         if (not (self.id in number_stages_completed_in_quest)):
-            self.update()
+            self.update(current_quest_stages, number_stages_completed_in_quest)
         return self.stages_id[number_stages_completed_in_quest[id]]
 
     def completeStagesNumber(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
         if (not (self.id in number_stages_completed_in_quest)):
-            self.update()
+            self.update(current_quest_stages, number_stages_completed_in_quest)
         return number_stages_completed_in_quest[id]
 
     def getPercentageCompletion(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the percentage of completion"""
         if (not (self.id in number_stages_completed_in_quest)):
-            self.update()
+            self.update(current_quest_stages, number_stages_completed_in_quest)
         return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
     def setDayNumberRequiredToStart(self, dayNumberRequired: int, current_task_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler) -> None:
@@ -237,10 +237,9 @@ class Quest(object):
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
                      " not is in number_stages_completed_in_quest, so i update it", "nqtr.quest.Quest.setDayNumberRequiredToStart()")
-            self.update()
+            self.update(current_quest_stages, number_stages_completed_in_quest)
         return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired, tm)
 
-    # TODO To find self.update() and review
     def update(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> None:
         """Function to update the various values,
         If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
@@ -303,7 +302,7 @@ class Quest(object):
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
                      " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.afterNextStage()")
-            self.update()
+            self.update(current_quest_stages, number_stages_completed_in_quest)
         if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
             current_quest_stages[self.id].completed = True
             return
@@ -313,7 +312,7 @@ class Quest(object):
 
     def isStarted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> bool:
         if (not (self.id in number_stages_completed_in_quest)):
-            self.update()
+            self.update(current_quest_stages, number_stages_completed_in_quest)
         return (self.id in current_quest_stages)
 
 
