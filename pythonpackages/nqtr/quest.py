@@ -203,7 +203,7 @@ class Quest(object):
         self.tag = tag
         self.development = development
 
-    def isCompleted(self) -> bool:
+    def isCompleted(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
         """Check if all stages have been completed."""
         if (not (self.id in number_stages_completed_in_quest)):
             updateQuestsLevels()
@@ -244,7 +244,7 @@ class Quest(object):
         """Function to update the various values,
         If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
         Prevent errors like blocked Quests."""
-        if (self.isCompleted()):
+        if (self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)):
             return
         if (not (self.id in current_quest_stages) and number_stages_completed_in_quest[self.id] == 0):
             return
@@ -257,7 +257,7 @@ class Quest(object):
             number_stages_completed_in_quest[self.id] = len(self.stages_id)-1
             return
         # if it is a completed Quest and a Stage has been added in a new update
-        if (not self.isCompleted()) and current_quest_stages[self.id].completed:
+        if (not self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].completed:
             self.afterNextStage(current_quest_stages,
                                 number_stages_completed_in_quest)
             return
