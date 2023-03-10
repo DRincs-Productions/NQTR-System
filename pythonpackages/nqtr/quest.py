@@ -239,7 +239,8 @@ class Quest(object):
             self.update()
         return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired, tm)
 
-    def update(self) -> None:
+    # TODO To find self.update() and review
+    def update(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> None:
         """Function to update the various values,
         If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
         Prevent errors like blocked Quests."""
@@ -257,7 +258,8 @@ class Quest(object):
             return
         # if it is a completed Quest and a Stage has been added in a new update
         if (not self.isCompleted()) and current_quest_stages[self.id].completed:
-            self.afterNextStage()
+            self.afterNextStage(current_quest_stages,
+                                number_stages_completed_in_quest)
             return
 
     # TODO To move in renpy
@@ -271,7 +273,8 @@ class Quest(object):
             notifyEx(new_quest_notify)
         return
 
-    def nextStageOnlyIsCompleted(self) -> bool:
+    # TODO To move in renpy
+    def nextStageOnlyIsCompleted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], ) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
         if (self.id in current_task_stages):
             if (not current_task_stages[self.id].isCompleted()):
@@ -279,19 +282,22 @@ class Quest(object):
         elif (self.id in current_quest_stages):
             if (not current_task_stages[self.id].isCompleted()):
                 return False
-        self.nextStage()
+        self.nextStage(current_quest_stages,
+                       number_stages_completed_in_quest, current_task_stages)
         return True
 
-    def nextStage(self) -> None:
+    # TODO To move in renpy
+    def nextStage(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], ) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
         if (self.id in current_task_stages):
             del current_task_stages[self.quest_id]
             return
-        self.afterNextStage()
+        self.afterNextStage(current_quest_stages,
+                            number_stages_completed_in_quest)
         notifyEx(quest_updated_notify)
         return
 
-    def afterNextStage(self) -> None:
+    def afterNextStage(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> None:
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
                      " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.afterNextStage()")
