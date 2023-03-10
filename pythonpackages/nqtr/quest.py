@@ -204,6 +204,7 @@ class Quest(object):
         self.tag = tag
         self.development = development
 
+    # TODO To move in renpy
     def isCompleted(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
         """Check if all stages have been completed."""
         if (not (self.id in number_stages_completed_in_quest)):
@@ -214,25 +215,29 @@ class Quest(object):
         else:
             return False
 
-    def currentQuestId(self, number_stages_completed_in_quest: dict[str, int]) -> str:
+    # TODO To move in renpy
+    def currentQuestId(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
         if (not (self.id in number_stages_completed_in_quest)):
             self.update(current_quest_stages, number_stages_completed_in_quest)
         return self.stages_id[number_stages_completed_in_quest[id]]
 
-    def completeStagesNumber(self, number_stages_completed_in_quest: dict[str, int]) -> int:
+    # TODO To move in renpy
+    def completeStagesNumber(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
         if (not (self.id in number_stages_completed_in_quest)):
             self.update(current_quest_stages, number_stages_completed_in_quest)
         return number_stages_completed_in_quest[id]
 
-    def getPercentageCompletion(self, number_stages_completed_in_quest: dict[str, int]) -> int:
+    # TODO To move in renpy
+    def getPercentageCompletion(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the percentage of completion"""
         if (not (self.id in number_stages_completed_in_quest)):
             self.update(current_quest_stages, number_stages_completed_in_quest)
         return number_stages_completed_in_quest[id]/len(self.stages_id)*100
 
-    def setDayNumberRequiredToStart(self, dayNumberRequired: int, current_task_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler) -> None:
+    # TODO To move in renpy
+    def setDayNumberRequiredToStart(self, dayNumberRequired: int, current_quest_stages: dict[str, Stage], current_task_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
@@ -310,6 +315,7 @@ class Quest(object):
         self.start(number_stages_completed_in_quest[self.id])
         return
 
+    # TODO To move in renpy
     def isStarted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> bool:
         if (not (self.id in number_stages_completed_in_quest)):
             self.update(current_quest_stages, number_stages_completed_in_quest)
