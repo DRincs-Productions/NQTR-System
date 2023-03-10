@@ -2,6 +2,7 @@ from typing import Optional
 from pythonpackages.renpy_custom_log import *
 import renpy.exports as renpy
 from pythonpackages.nqtr.time import TimeHandler
+from pythonpackages.flags import *
 
 new_quest_notify = _("A new quest began")
 quest_updated_notify = _("The quest has been updated")
@@ -127,19 +128,19 @@ class Stage(object):
             dayNumberRequired=self.days_required_to_start, tm=tm)
         return
 
-    def start(self) -> bool:
+    def start(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """If you have reached all the objectives then activate the Stage.
         start() is used until the Stage becomes active."""
         if (self.active):
             return self.active
-        if (not self.respectAllRequests()):
+        if (not self.respectAllRequests(number_stages_completed_in_quest, tm, flags)):
             return False
         self.active = True
         if (self.start_label_name != None):
             renpy.call(self.start_label_name)
         return True
 
-    def respectAllRequests(self) -> bool:
+    def respectAllRequests(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """Checks the requests, returns True if it satisfies them."""
         if (self.day_start != None and tm.day < self.day_start):
             return False
@@ -147,17 +148,17 @@ class Stage(object):
             if (number_stages_completed_in_quest[quest] < level):
                 return False
         for item in self.flags_requests:
-            if (not getFlags(item)):
+            if (not getFlags(item, flags)):
                 return False
         return True
 
-    def isCompleted(self) -> bool:
+    def isCompleted(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """Check if the Stage can be complete."""
         # if (check_label_name != None)
         if (self.completed):
             return True
         if (not self.active):
-            if (not self.start()):
+            if (not self.start(number_stages_completed_in_quest, tm, flags)):
                 return False
         if self.goals:
             for x in self.goals:
@@ -263,24 +264,25 @@ class Quest(object):
             return
 
     # TODO To move in renpy
-    def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, n_stage: int = 0) -> None:
+    def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
         quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages(
             current_quest_stages, tm)
-        current_quest_stages[self.id].start()
+        current_quest_stages[self.id].start(
+            number_stages_completed_in_quest, tm, flags)
         number_stages_completed_in_quest[self.id] = n_stage
         if (n_stage == 0):
             notifyEx(new_quest_notify)
         return
 
     # TODO To move in renpy
-    def nextStageOnlyIsCompleted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], ) -> bool:
+    def nextStageOnlyIsCompleted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
         if (self.id in current_task_stages):
-            if (not current_task_stages[self.id].isCompleted()):
+            if (not current_task_stages[self.id].isCompleted(number_stages_completed_in_quest, tm, flags)):
                 return False
         elif (self.id in current_quest_stages):
-            if (not current_task_stages[self.id].isCompleted()):
+            if (not current_task_stages[self.id].isCompleted(number_stages_completed_in_quest, tm, flags)):
                 return False
         self.nextStage(current_quest_stages,
                        number_stages_completed_in_quest, current_task_stages)
