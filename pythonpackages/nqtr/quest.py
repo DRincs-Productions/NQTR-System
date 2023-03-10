@@ -219,7 +219,7 @@ class Quest(object):
             self.update()
         return self.stages_id[number_stages_completed_in_quest[id]]
 
-    def completeStagesNumber(self) -> int:
+    def completeStagesNumber(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
         if (not (self.id in number_stages_completed_in_quest)):
             self.update()
