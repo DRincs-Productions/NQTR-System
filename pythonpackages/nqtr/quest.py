@@ -1,5 +1,6 @@
 from typing import Optional
 from pythonpackages.renpy_custom_log import *
+import renpy.exports as renpy
 
 new_quest_notify = _("A new quest began")
 quest_updated_notify = _("The quest has been updated")
