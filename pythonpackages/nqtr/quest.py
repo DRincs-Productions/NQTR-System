@@ -89,7 +89,7 @@ class Stage(object):
         self.end_label_name = end_label_name
         self.check_label_name = check_label_name
 
-    def addInCurrentQuestStages(self) -> None:
+    def addInCurrentQuestStages(self, current_quest_stages: dict[str, Stage]) -> None:
         """Add the Stage in the current_quest_stages"""
         current_quest_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
@@ -107,7 +107,8 @@ class Stage(object):
             dayNumberRequired=self.days_required_to_start)
         return
 
-    def addInCurrentTaskStages(self) -> None:
+    # TODO: Ora questo può essere rimpiazzato con addInCurrentQuestStages
+    def addInCurrentTaskStages(self, current_task_stages: dict[str, Stage]) -> None:
         """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
         current_task_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
@@ -258,9 +259,11 @@ class Quest(object):
             self.afterNextStage()
             return
 
-    def start(self, n_stage: int = 0) -> None:
+    # TODO To move in renpy
+    def start(self, current_quest_stages: dict[str, Stage], n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
-        quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages()
+        quest_stages[self.stages_id[n_stage]
+                     ].addInCurrentQuestStages(current_quest_stages)
         current_quest_stages[self.id].start()
         number_stages_completed_in_quest[self.id] = n_stage
         if (n_stage == 0):
