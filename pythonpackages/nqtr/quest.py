@@ -1,6 +1,7 @@
 from typing import Optional
 from pythonpackages.renpy_custom_log import *
 import renpy.exports as renpy
+from pythonpackages.nqtr.time import TimeHandler
 
 new_quest_notify = _("A new quest began")
 quest_updated_notify = _("The quest has been updated")
@@ -172,7 +173,7 @@ class Stage(object):
                 return True
         return False
 
-    def setDayNumberRequiredToStart(self, dayNumberRequired: int) -> None:
+    def setDayNumberRequiredToStart(self, dayNumberRequired: int, tm: TimeHandler) -> None:
         """Add days of waiting before it starts"""
         if dayNumberRequired:
             self.day_start = tm.day + dayNumberRequired
