@@ -5,6 +5,7 @@ from pythonpackages.renpy_custom_log import *
 __all__ = [
     "updateFlags",
     "getFlags",
+    "setFlags",
 ]
 
 
