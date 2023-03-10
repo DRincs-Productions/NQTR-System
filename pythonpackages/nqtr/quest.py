@@ -225,7 +225,7 @@ class Quest(object):
             self.update()
         return number_stages_completed_in_quest[id]
 
-    def getPercentageCompletion(self) -> int:
+    def getPercentageCompletion(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the percentage of completion"""
         if (not (self.id in number_stages_completed_in_quest)):
             self.update()
