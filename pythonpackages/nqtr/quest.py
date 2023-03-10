@@ -303,7 +303,7 @@ class Quest(object):
         self.start(number_stages_completed_in_quest[self.id])
         return
 
-    def isStarted(self) -> bool:
+    def isStarted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> bool:
         if (not (self.id in number_stages_completed_in_quest)):
             self.update()
         return (self.id in current_quest_stages)
