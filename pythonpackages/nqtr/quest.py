@@ -207,25 +207,21 @@ class Quest(object):
         self.tag = tag
         self.development = development
 
-    # TODO To move in renpy
     def isCompleted(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
         """Check if all stages have been completed."""
         if (not (self.id in number_stages_completed_in_quest)):
-            updateQuestsLevels()
             return False
         if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
             return current_quest_stages[self.id].completed
         else:
             return False
 
-    # TODO To move in renpy
     def currentQuestId(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
         if (not (self.id in number_stages_completed_in_quest)):
             self.update(current_quest_stages, number_stages_completed_in_quest)
         return self.stages_id[number_stages_completed_in_quest[id]]
 
-    # TODO To move in renpy
     def completeStagesNumber(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
         if (not (self.id in number_stages_completed_in_quest)):

@@ -45,6 +45,17 @@ init python:
                 return False
         return True
 
+    def checkIfTheQuestIsCurrentQuestStages(id: str) -> bool:
+        if (not checkIfTheQuestExist(id)):
+            return False
+        if (not (id in current_quest_stages)):
+            log_warn("the Quest: " + id + " not is in current_quest_stages, so i update it", renpy.get_filename_line())
+            quests[id].update(current_quest_stages, current_quest_stages)
+            if (not (id in current_quest_stages)):
+                log_warn("the Quest: " + id + " not is in current_quest_stages, not even after the update", renpy.get_filename_line())
+                return False
+        return True
+
     def getPercentageCompletion(id: str) -> int:
         """Returns the percentage of completion"""
         log_info("getPercentageCompletion", renpy.get_filename_line())
@@ -92,31 +103,23 @@ init python:
 
     def isStarted(id: str) -> bool:
         log_info("isStarted", renpy.get_filename_line())
-        if (not checkIfTheQuestIsCurrentTaskStages(id))
+        if (not checkIfTheQuestIsCurrentQuestStages(id))
             return False
         return (id in current_quest_stages)
 
-    # TODO To move in renpy
-    def isCompleted(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
+    def isCompleted(id: str) -> bool:
         """Check if all stages have been completed."""
+        if (not checkIfTheQuestExist(id)):
+            return
         if (not (self.id in number_stages_completed_in_quest)):
             updateQuestsLevels()
             return False
-        if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
-            return current_quest_stages[self.id].completed
-        else:
-            return False
+        return quests[id].isCompleted(current_quest_stages, number_stages_completed_in_quest)
 
-    # TODO To move in renpy
     def currentQuestId(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
-        if (not (self.id in number_stages_completed_in_quest)):
-            self.update(current_quest_stages, number_stages_completed_in_quest)
-        return self.stages_id[number_stages_completed_in_quest[id]]
+        return quests[id].currentQuestId(current_quest_stages, number_stages_completed_in_quest)
 
-    # TODO To move in renpy
     def completeStagesNumber(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
-        if (not (self.id in number_stages_completed_in_quest)):
-            self.update(current_quest_stages, number_stages_completed_in_quest)
-        return number_stages_completed_in_quest[id]
+        return quests[id].completeStagesNumber(current_quest_stages, number_stages_completed_in_quest)
