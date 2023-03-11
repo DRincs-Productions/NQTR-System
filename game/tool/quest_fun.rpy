@@ -72,7 +72,7 @@ init python:
             return 0
         return quests[id].getPercentageCompletion(number_stages_completed_in_quest[id])
 
-    def quest_setDayNumberRequiredToStart(id: str, dayNumberRequired: int) -> None:
+    def quest_setDayNumberRequiredToStart(id: str, day: int) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
         log_info("quest_setDayNumberRequiredToStart", renpy.get_filename_line())
         if (not checkIfTheQuestIsCurrentTaskStages(id)):
