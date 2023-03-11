@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.navigation import Room
@@ -27,8 +27,8 @@ class Act(Button):
         picture_in_background_selected: str = None,
         xalign: int = None,
         yalign: int = None,
-        disabled=False,  # bool | str
-        hidden=False,  # bool | str
+        disabled: Union[bool, str] = False,
+        hidden: Union[bool, str] = False,
     ):
 
         # Button init

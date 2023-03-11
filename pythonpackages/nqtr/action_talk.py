@@ -1,3 +1,5 @@
+from typing import Union
+
 from pythonpackages.nqtr.button import Button
 from pythonpackages.renpy_custom_log import *
 from pythonpackages.utility import *
@@ -22,8 +24,8 @@ class TalkObject(Button):
         picture_in_background_selected: str = None,
         xalign: int = None,
         yalign: int = None,
-        disabled=False,  # bool | str
-        hidden=False,  # bool | str
+        disabled: Union[bool, str] = False,
+        hidden: Union[bool, str] = False,
     ):
         super().__init__(
             name=name,

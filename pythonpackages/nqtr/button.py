@@ -1,3 +1,5 @@
+from typing import Union
+
 from pythonpackages.flags import *
 from pythonpackages.renpy_custom_log import *
 from pythonpackages.utility import *
@@ -16,8 +18,8 @@ class Button(object):
         picture_in_background_selected: str = None,
         xalign: int = None,
         yalign: int = None,
-        disabled: bool | str = False,
-        hidden: bool | str = False,
+        disabled: Union[bool, str] = False,
+        hidden: Union[bool, str] = False,
     ):
 
         self.name = name

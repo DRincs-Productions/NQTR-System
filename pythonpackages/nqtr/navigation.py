@@ -1,5 +1,5 @@
 
-from typing import Optional
+from typing import Optional, Union
 
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.routine import Commitment
@@ -26,8 +26,8 @@ class Room(Button):
         picture_in_background_selected: str = None,
         xalign: int = None,
         yalign: int = None,
-        disabled=False,  # bool | str
-        hidden=False,  # bool | str
+        disabled: Union[bool, str] = False,
+        hidden: Union[bool, str] = False,
     ):
 
         # Button init
@@ -67,8 +67,8 @@ class Location(Button):
         picture_in_background_selected: str = None,
         xalign: int = None,
         yalign: int = None,
-        disabled=False,  # bool | str
-        hidden=False,  # bool | str
+        disabled: Union[bool, str] = False,
+        hidden: Union[bool, str] = False,
     ):
 
         # Button init
@@ -101,8 +101,8 @@ class Map(Button):
         map_id_south: str = None,
         map_id_west: str = None,
         map_id_east: str = None,
-        disabled=False,  # bool | str
-        hidden=False,  # bool | str
+        disabled: Union[bool, str] = False,
+        hidden: Union[bool, str] = False,
     ):
 
         # Button init

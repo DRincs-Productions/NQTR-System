@@ -66,7 +66,7 @@ init python:
     def quest_setDayNumberRequiredToStart(id: str, dayNumberRequired: int) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
         log_info("quest_setDayNumberRequiredToStart", renpy.get_filename_line())
-        if (not checkIfTheQuestIsCurrentTaskStages(id))
+        if (not checkIfTheQuestIsCurrentTaskStages(id)):
             return
         return current_task_stages[id].setDayNumberRequiredToStart(dayNumberRequired, tm)
 
@@ -103,7 +103,7 @@ init python:
 
     def quest_isStarted(id: str) -> bool:
         log_info("quest_isStarted", renpy.get_filename_line())
-        if (not checkIfTheQuestIsCurrentQuestStages(id))
+        if (not checkIfTheQuestIsCurrentQuestStages(id)):
             return False
         return (id in current_quest_stages)
 
