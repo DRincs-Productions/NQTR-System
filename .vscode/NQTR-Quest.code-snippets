@@ -3,7 +3,7 @@
         "scope": "renpy",
         "prefix": "DR_QuestStart",
         "body": [
-            "if(not quests[\"${1:quest_id}\"].start())",
+            "if(not quest_start(\"${1:quest_id}\"))",
             "    $ log_error(\"The quest ${1:quest_id} has not started\", renpy.get_filename_line())",
             "",
         ],
@@ -13,7 +13,7 @@
         "scope": "renpy",
         "prefix": "DR_QuestNextStage",
         "body": [
-            "$ quests[\"${1:quest_id}\"].nextStage()",
+            "$ quest_nextStage(\"${1:quest_id}\")",
             "",
         ],
         "description": "Next Stage"
@@ -22,7 +22,7 @@
         "scope": "renpy",
         "prefix": "DR_QuestNextStageIfIsCompleted",
         "body": [
-            "$ quests[\"${1:quest_id}\"].nextStageOnlyIsCompleted()",
+            "$ quest_nextStageOnlyIsCompleted(\"${1:quest_id}\")",
             "",
         ],
         "description": "Next Stage Only it is completed"

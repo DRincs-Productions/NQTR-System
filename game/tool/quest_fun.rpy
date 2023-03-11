@@ -58,43 +58,43 @@ init python:
 
     def quest_getPercentageCompletion(id: str) -> int:
         """Returns the percentage of completion"""
-        log_info("getPercentageCompletion", renpy.get_filename_line())
+        log_info("quest_getPercentageCompletion", renpy.get_filename_line())
         if (not checkIfTheQuestIsInNumberStages(id))
             return 0
         return quests[id].getPercentageCompletion(number_stages_completed_in_quest[id])
 
     def quest_setDayNumberRequiredToStart(id: str, dayNumberRequired: int) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
-        log_info("setDayNumberRequiredToStart", renpy.get_filename_line())
+        log_info("quest_setDayNumberRequiredToStart", renpy.get_filename_line())
         if (not checkIfTheQuestIsCurrentTaskStages(id))
             return
         return current_task_stages[id].setDayNumberRequiredToStart(dayNumberRequired, tm)
 
-    def quest_start(id: str, n_stage: int = 0) -> None:
+    def quest_start(id: str, n_stage: int = 0) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
-        log_info("start", renpy.get_filename_line())
+        log_info("quest_start", renpy.get_filename_line())
         if (not checkIfTheQuestExist(id)):
-            return
+            return False
         quests[id].start(quest_stages, current_quest_stages, number_stages_completed_in_quest, tm, flags, n_stage)
         if (n_stage == 0):
             notifyEx(new_quest_notify)
-        return
+        return True
 
     def quest_nextStageOnlyIsCompleted(id: str) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
-        log_info("nextStageOnlyIsCompleted", renpy.get_filename_line())
+        log_info("quest_nextStageOnlyIsCompleted", renpy.get_filename_line())
         if (id in current_task_stages):
             if (not current_task_stages[id].isCompleted(number_stages_completed_in_quest, tm, flags)):
                 return False
         elif (id in current_quest_stages):
             if (not current_task_stages[id].isCompleted(number_stages_completed_in_quest, tm, flags)):
                 return False
-        nextStage(current_quest_stages, number_stages_completed_in_quest, current_task_stages)
+        quest_nextStage(id)
         return True
 
     def quest_nextStage(id: str) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
-        log_info("nextStage", renpy.get_filename_line())
+        log_info("quest_nextStage", renpy.get_filename_line())
         if (not checkIfTheQuestExist(id)):
             return
         quests[id].nextStage(current_quest_stages, number_stages_completed_in_quest, current_task_stages)
@@ -102,13 +102,14 @@ init python:
         return
 
     def quest_isStarted(id: str) -> bool:
-        log_info("isStarted", renpy.get_filename_line())
+        log_info("quest_isStarted", renpy.get_filename_line())
         if (not checkIfTheQuestIsCurrentQuestStages(id))
             return False
         return (id in current_quest_stages)
 
     def quest_isCompleted(id: str) -> bool:
         """Check if all stages have been completed."""
+        log_info("quest_isCompleted", renpy.get_filename_line())
         if (not checkIfTheQuestExist(id)):
             return
         if (not (self.id in number_stages_completed_in_quest)):
@@ -118,8 +119,10 @@ init python:
 
     def quest_currentQuestId(id: str) -> str:
         """Return the id of this current"""
+        log_info("quest_currentQuestId", renpy.get_filename_line())
         return quests[id].currentQuestId(current_quest_stages, number_stages_completed_in_quest)
 
     def quest_completeStagesNumber(id: str) -> int:
         """Returns the number of completed stages"""
+        log_info("quest_completeStagesNumber", renpy.get_filename_line())
         return quests[id].completeStagesNumber(current_quest_stages, number_stages_completed_in_quest)
