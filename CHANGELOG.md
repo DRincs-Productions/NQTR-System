@@ -1,6 +1,12 @@
 # v1.0.3
+```shell
+git checkout -b NQTR-toolkit
+git checkout NQTR-toolkit
+git config pull.rebase false
+git pull https://github.com/DRincs-Productions/NQTR-toolkit.git v1.0.3 --allow-unrelated-histories
 
-( developing )
+```
+
 Now NQTR is a python library, and renpy interacts with it through easy-to-use functions.
 
 What it means:
@@ -19,6 +25,8 @@ Cons:
 ## Migrations
 
 Use search and replace of vscode with regex functionality enabled
+
+![image](https://user-images.githubusercontent.com/67595890/224504331-1f546922-5673-4fa9-8cc7-e3fc4e671305.png)
 
 ### quest_start
 
@@ -54,6 +62,14 @@ Use search and replace of vscode with regex functionality enabled
 
 * `flags\["(.*)"\] =(.*)`
 * `setFlags("$1",$2)`
+
+
+## What's Changed
+* 55 convert pos to align by @DonRP in https://github.com/DRincs-Productions/NQTR-System/pull/56
+* 57 convert all class in library py by @DonRP in https://github.com/DRincs-Productions/NQTR-System/pull/58
+
+
+**Full Changelog**: https://github.com/DRincs-Productions/NQTR-System/compare/v1.0.2...v1.0.3
 
 # v1.0.2
 
