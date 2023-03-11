@@ -8,38 +8,38 @@ Use search and replace of vscode with regex functionality enabled
 
 ### quest_start
 
-* `quests["quest_id"].start()`
-* `quest_start(id = "quest_id")`
+* `quests\["(.*)"\].start\(\)`
+* `quest_start(id = "$1")`
 
 ### quest_nextStage
 
-* `quests["quest_id"].nextStage()`
-* `quest_nextStage(id = "quest_id")`
+* `quests\["(.*)"\].nextStage\(\)`
+* `quest_nextStage(id = "$1")`
 
 ### quest_nextStageOnlyIsCompleted
 
-* `quests["quest_id"].nextStageOnlyIsCompleted()`
-* `quest_nextStageOnlyIsCompleted(id = "quest_id")`
+* `quests\["(.*)"\].nextStageOnlyIsCompleted\(\)`
+* `quest_nextStageOnlyIsCompleted(id = "$1")`
 
 ### quest_setDayNumberRequiredToStart
 
-* `quests["quest_id"].SetDayNumberRequiredToStart(day = 2)`
-* `quest_setDayNumberRequiredToStart(id = "quest_id", day = 2)`
+* `quests\["(.*)"\].SetDayNumberRequiredToStart\((.*)\)`
+* `quest_setDayNumberRequiredToStart(id = "$1",$2)`
 
 ### new_day
 
-* `tm.new_day()`
-* `new_day()`
+* `tm.new_day\((.*))\`
+* `new_day($1)`
 
 ### new_hour
 
-* `tm.new_hour(3)`
-* `new_hour(3)`
+* `tm.new_hour((.*))`
+* `new_hour($1)`
 
 ### setFlags
 
-* `flags["flag_id"] = True`
-* `setFlags("flag_id", True)`
+* `flags\["(.*)"\] =(.*)`
+* `setFlags("$1",$2)`
 
 # v1.0.2
 
