@@ -21,7 +21,7 @@
         "scope": "renpy",
         "prefix": "DR_NowIsBetween",
         "body": [
-            "if (tm.now_is_between(start=${1:0}, end=${2:24})):",
+            "if (now_is_between(start=${1:0}, end=${2:24})):",
             "    ",
         ],
         "description": "Check if now is between: start & end"
