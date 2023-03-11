@@ -17,6 +17,12 @@ init python:
                 del number_stages_completed_in_quest[x]
         return
 
+    def checkInactiveStage() -> None:
+        """Check if the inactive Stage have the requirements to be activated, if so, activate them."""
+        for k in current_stages.keys():
+            current_stages[k].start(number_stages_completed_in_quest, tm, flags)
+        return
+
     def checkIfTheQuestExist(id: str) -> bool:
         if (not (id in quests)):
             log_warn("the Quest: " + id + " does not exist", renpy.get_filename_line())
@@ -97,7 +103,7 @@ init python:
         log_info("quest_nextStage", renpy.get_filename_line())
         if (not checkIfTheQuestExist(id)):
             return
-        quests[id].nextStage(current_quest_stages, number_stages_completed_in_quest, current_task_stages)
+        quests[id].nextStage(quest_stages, current_quest_stages, number_stages_completed_in_quest, current_task_stages, tm, flags)
         notifyEx(quest_updated_notify)
         return
 

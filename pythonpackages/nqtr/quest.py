@@ -242,7 +242,8 @@ class Quest(object):
             return
         # if the Quest has been started, but there is no current_quest_stages, it restarts the Quest from 0
         if (not (self.id in current_quest_stages)):
-            self.start()
+            self.start(quest_stages, current_quest_stages,
+                       number_stages_completed_in_quest, tm, flags)
             return
         # if you have somehow exceeded the number of stages
         if len(self.stages_id)-1 < number_stages_completed_in_quest[self.id]:
@@ -250,8 +251,8 @@ class Quest(object):
             return
         # if it is a completed Quest and a Stage has been added in a new update
         if (not self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].completed:
-            self.afterNextStage(current_quest_stages,
-                                number_stages_completed_in_quest)
+            self.afterNextStage(quest_stages, current_quest_stages,
+                                number_stages_completed_in_quest, tm, flags)
             return
 
     def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
@@ -263,16 +264,16 @@ class Quest(object):
         number_stages_completed_in_quest[self.id] = n_stage
         return
 
-    def nextStage(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage]) -> None:
+    def nextStage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
         if (self.id in current_task_stages):
             del current_task_stages[self.quest_id]
             return
-        self.afterNextStage(current_quest_stages,
-                            number_stages_completed_in_quest)
+        self.afterNextStage(quest_stages, current_quest_stages,
+                            number_stages_completed_in_quest, tm, flags)
         return
 
-    def afterNextStage(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> None:
+    def afterNextStage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
                      " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.afterNextStage()")
@@ -281,15 +282,10 @@ class Quest(object):
             current_quest_stages[self.id].completed = True
             return
         number_stages_completed_in_quest[self.id] += 1
-        self.start(number_stages_completed_in_quest[self.id])
+        self.start(quest_stages, current_quest_stages, number_stages_completed_in_quest,
+                   tm, flags, number_stages_completed_in_quest[self.id])
         return
 
-
-def checkInactiveStage(current_stages: dict[str: Stage]) -> None:
-    """Check if the inactive Stage have the requirements to be activated, if so, activate them."""
-    for k in current_stages.keys():
-        current_stages[k].start()
-    return
 
 # TODO: Add the following functions
 # check if current_quest_stages.key is in quests, if not there delete it: Load Game
