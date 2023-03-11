@@ -236,15 +236,6 @@ class Quest(object):
         """Returns the percentage of completion"""
         return current_level/len(self.stages_id)*100
 
-    # TODO To move in renpy
-    def setDayNumberRequiredToStart(self, dayNumberRequired: int, current_quest_stages: dict[str, Stage], current_task_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler) -> None:
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
-        if (not (self.id in number_stages_completed_in_quest)):
-            log_warn("the Quest: "+self.id +
-                     " not is in number_stages_completed_in_quest, so i update it", "nqtr.quest.Quest.setDayNumberRequiredToStart()")
-            self.update(current_quest_stages, number_stages_completed_in_quest)
-        return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired, tm)
-
     def update(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> None:
         """Function to update the various values,
         If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
