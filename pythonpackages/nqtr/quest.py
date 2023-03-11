@@ -1,11 +1,10 @@
 from typing import Optional
-from pythonpackages.renpy_custom_log import *
-import renpy.exports as renpy
-from pythonpackages.nqtr.time import TimeHandler
-from pythonpackages.flags import *
 
-new_quest_notify = _("A new quest began")
-quest_updated_notify = _("The quest has been updated")
+import renpy.exports as renpy
+
+from pythonpackages.flags import *
+from pythonpackages.nqtr.time import TimeHandler
+from pythonpackages.renpy_custom_log import *
 
 
 class Goal(object):
@@ -229,12 +228,9 @@ class Quest(object):
             self.update(current_quest_stages, number_stages_completed_in_quest)
         return number_stages_completed_in_quest[id]
 
-    # TODO To move in renpy
-    def getPercentageCompletion(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> int:
+    def getPercentageCompletion(self, current_level: int) -> int:
         """Returns the percentage of completion"""
-        if (not (self.id in number_stages_completed_in_quest)):
-            self.update(current_quest_stages, number_stages_completed_in_quest)
-        return number_stages_completed_in_quest[id]/len(self.stages_id)*100
+        return current_level/len(self.stages_id)*100
 
     # TODO To move in renpy
     def setDayNumberRequiredToStart(self, dayNumberRequired: int, current_quest_stages: dict[str, Stage], current_task_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler) -> None:

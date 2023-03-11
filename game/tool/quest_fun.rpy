@@ -1,3 +1,6 @@
+define new_quest_notify = _("A new quest began")
+define quest_updated_notify = _("The quest has been updated")
+
 init python:
     def updateQuestsLevels() -> None:
         """Synchronize number_stages_completed_in_quest with quests.
@@ -13,3 +16,57 @@ init python:
             if (not (x in quests)):
                 del number_stages_completed_in_quest[x]
         return
+
+    def getPercentageCompletion(id: str) -> int:
+        """Returns the percentage of completion"""
+        if (not (id in number_stages_completed_in_quest)):
+            quests[id].update(current_quest_stages, number_stages_completed_in_quest)
+        return quests[id].getPercentageCompletion(number_stages_completed_in_quest[id])
+
+    # TODO To move in renpy
+    def setDayNumberRequiredToStart(self, dayNumberRequired: int, current_quest_stages: dict[str, Stage], current_task_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler) -> None:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
+        if (not (self.id in number_stages_completed_in_quest)):
+            log_warn("the Quest: "+self.id + " not is in number_stages_completed_in_quest, so i update it", "nqtr.quest.Quest.setDayNumberRequiredToStart()")
+            self.update(current_quest_stages, number_stages_completed_in_quest)
+        return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired, tm)
+
+    # TODO To move in renpy
+    def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
+        quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages(
+            current_quest_stages, tm)
+        current_quest_stages[self.id].start(
+            number_stages_completed_in_quest, tm, flags)
+        number_stages_completed_in_quest[self.id] = n_stage
+        if (n_stage == 0):
+            notifyEx(new_quest_notify)
+        return
+
+    # TODO To move in renpy
+    def nextStageOnlyIsCompleted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
+        if (self.id in current_task_stages):
+            if (not current_task_stages[self.id].isCompleted(number_stages_completed_in_quest, tm, flags)):
+                return False
+        elif (self.id in current_quest_stages):
+            if (not current_task_stages[self.id].isCompleted(number_stages_completed_in_quest, tm, flags)):
+                return False
+        self.nextStage(current_quest_stages, number_stages_completed_in_quest, current_task_stages)
+        return True
+
+    # TODO To move in renpy
+    def nextStage(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], ) -> None:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
+        if (self.id in current_task_stages):
+            del current_task_stages[self.quest_id]
+            return
+        self.afterNextStage(current_quest_stages, number_stages_completed_in_quest)
+        notifyEx(quest_updated_notify)
+        return
+
+    # TODO To move in renpy
+    def isStarted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> bool:
+        if (not (self.id in number_stages_completed_in_quest)):
+            self.update(current_quest_stages, number_stages_completed_in_quest)
+        return (self.id in current_quest_stages)
