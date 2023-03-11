@@ -92,7 +92,8 @@ class Stage(object):
         self.end_label_name = end_label_name
         self.check_label_name = check_label_name
 
-    def addInCurrentQuestStages(self, current_quest_stages: dict[str, Stage], tm: TimeHandler) -> None:
+    # TODO: object is Stage
+    def addInCurrentQuestStages(self, current_quest_stages: dict[str, object], tm: TimeHandler) -> None:
         """Add the Stage in the current_quest_stages"""
         current_quest_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
@@ -111,7 +112,8 @@ class Stage(object):
         return
 
     # TODO: Ora questo può essere rimpiazzato con addInCurrentQuestStages
-    def addInCurrentTaskStages(self, current_task_stages: dict[str, Stage], tm: TimeHandler) -> None:
+    # TODO: object is Stage
+    def addInCurrentTaskStages(self, current_task_stages: dict[str, object], tm: TimeHandler) -> None:
         """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
         current_task_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
@@ -253,11 +255,11 @@ class Quest(object):
 
     def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
+        number_stages_completed_in_quest[self.id] = n_stage
         quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages(
             current_quest_stages, tm)
         current_quest_stages[self.id].start(
             number_stages_completed_in_quest, tm, flags)
-        number_stages_completed_in_quest[self.id] = n_stage
         return
 
     def nextStage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
