@@ -288,12 +288,6 @@ class Quest(object):
         self.start(number_stages_completed_in_quest[self.id])
         return
 
-    # TODO To move in renpy
-    def isStarted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> bool:
-        if (not (self.id in number_stages_completed_in_quest)):
-            self.update(current_quest_stages, number_stages_completed_in_quest)
-        return (self.id in current_quest_stages)
-
 
 def checkInactiveStage(current_stages: dict[str: Stage]) -> None:
     """Check if the inactive Stage have the requirements to be activated, if so, activate them."""

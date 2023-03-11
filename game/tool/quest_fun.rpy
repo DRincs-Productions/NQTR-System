@@ -61,6 +61,7 @@ init python:
 
     def start(id: str, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
+        log_info("start", renpy.get_filename_line())
         if (not checkIfTheQuestExist(id)):
             return
         quests[id].start(quest_stages, current_quest_stages, number_stages_completed_in_quest, tm, flags, n_stage)
@@ -70,6 +71,7 @@ init python:
 
     def nextStageOnlyIsCompleted(id: str) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
+        log_info("nextStageOnlyIsCompleted", renpy.get_filename_line())
         if (id in current_task_stages):
             if (not current_task_stages[id].isCompleted(number_stages_completed_in_quest, tm, flags)):
                 return False
@@ -81,14 +83,15 @@ init python:
 
     def nextStage(id: str) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
+        log_info("nextStage", renpy.get_filename_line())
         if (not checkIfTheQuestExist(id)):
             return
         quests[id].nextStage(current_quest_stages, number_stages_completed_in_quest, current_task_stages)
         notifyEx(quest_updated_notify)
         return
 
-    # TODO To move in renpy
-    def isStarted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> bool:
-        if (not (self.id in number_stages_completed_in_quest)):
-            self.update(current_quest_stages, number_stages_completed_in_quest)
-        return (self.id in current_quest_stages)
+    def isStarted(id: str) -> bool:
+        log_info("isStarted", renpy.get_filename_line())
+        if (not checkIfTheQuestIsCurrentTaskStages(id))
+            return False
+        return (id in current_quest_stages)
