@@ -1,14 +1,24 @@
 {
+    // format
     "[renpy]": {
         "editor.defaultFormatter": "ms-python.python",
     },
     "editor.formatOnSave": true,
+    // reorganise imports
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    // hide
     "files.exclude": {
         "**/*.rpyc": true,
         "**/*.rpa": true,
         "**/*.rpymc": true,
         "**/cache/": true
     },
+    // olther
+    "extensions.ignoreRecommendations": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    // color
     "editor.tokenColorCustomizations": {
         "textMateRules": [
             {
@@ -123,30 +133,6 @@
                 }
             },
             {
-                "scope": "renpy.meta.color.#570058",
-                "settings": {
-                    "foreground": "#570058"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#cc5dcd",
-                "settings": {
-                    "foreground": "#cc5dcd"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#570058",
-                "settings": {
-                    "foreground": "#570058"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#570058",
-                "settings": {
-                    "foreground": "#570058"
-                }
-            },
-            {
                 "scope": "renpy.meta.color.#cc5dcd",
                 "settings": {
                     "foreground": "#cc5dcd"
@@ -189,234 +175,6 @@
                 }
             },
             {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
                 "scope": "renpy.meta.color.#e59400",
                 "settings": {
                     "foreground": "#e59400"
@@ -426,48 +184,6 @@
                 "scope": "renpy.meta.color.#ffbe00",
                 "settings": {
                     "foreground": "#ffbe00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#ffbe00",
-                "settings": {
-                    "foreground": "#ffbe00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ff00",
-                "settings": {
-                    "foreground": "#00ff00"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#e59400",
-                "settings": {
-                    "foreground": "#e59400"
                 }
             },
             {
@@ -480,12 +196,6 @@
                 "scope": "renpy.meta.color.#f5bc02",
                 "settings": {
                     "foreground": "#f5bc02"
-                }
-            },
-            {
-                "scope": "renpy.meta.color.#00ccff",
-                "settings": {
-                    "foreground": "#00ccff"
                 }
             }
         ]
