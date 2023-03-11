@@ -1,6 +1,20 @@
 # v1.0.3
 
 ( developing )
+Now NQTR is a python library, and renpy interacts with it through easy-to-use functions.
+
+What it means:
+
+Pros:
+
+* Performance
+* I can now develop directly with python. this makes my life easier since I can use the tools to develop in python
+* Can create tests
+* From now on future versions will have less complex migration: since now I aim to modify as little as possible renpy functions , but only the library.
+
+Cons:
+
+* Sharing variables with renpy and the library is slightly more difficult because it relies on pointers. (As long as I only share dictionaries, I won't have any big problems).
 
 ## Migrations
 
