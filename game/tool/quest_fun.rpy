@@ -2,6 +2,9 @@ define new_quest_notify = _("A new quest began")
 define quest_updated_notify = _("The quest has been updated")
 
 init python:
+    from pythonpackages.nqtr.quest import Stage
+
+
     def updateQuestsLevels() -> None:
         """Synchronize number_stages_completed_in_quest with quests.
         After this function I suggest to use checkInactiveStage()."""
@@ -17,7 +20,7 @@ init python:
                 del number_stages_completed_in_quest[x]
         return
 
-    def checkInactiveStage() -> None:
+    def checkInactiveStage(current_stages: dict[str, Stage]) -> None:
         """Check if the inactive Stage have the requirements to be activated, if so, activate them."""
         for k in current_stages.keys():
             current_stages[k].start(number_stages_completed_in_quest, tm, flags)
@@ -133,7 +136,7 @@ init python:
     def quest_completeStagesNumber(id: str) -> int:
         """Returns the number of completed stages"""
         log_info("quest_completeStagesNumber", renpy.get_filename_line())
-        if (not (self.id in number_stages_completed_in_quest)):
+        if (not (id in number_stages_completed_in_quest)):
             quest_update(id)
         return quests[id].completeStagesNumber(number_stages_completed_in_quest)
 
