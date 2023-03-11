@@ -126,9 +126,20 @@ init python:
     def quest_currentQuestId(id: str) -> str:
         """Return the id of this current"""
         log_info("quest_currentQuestId", renpy.get_filename_line())
-        return quests[id].currentQuestId(current_quest_stages, number_stages_completed_in_quest)
+        if (not (id in number_stages_completed_in_quest)):
+            quest_update(id)
+        return quests[id].currentQuestId(number_stages_completed_in_quest)
 
     def quest_completeStagesNumber(id: str) -> int:
         """Returns the number of completed stages"""
         log_info("quest_completeStagesNumber", renpy.get_filename_line())
-        return quests[id].completeStagesNumber(current_quest_stages, number_stages_completed_in_quest)
+        if (not (self.id in number_stages_completed_in_quest)):
+            quest_update(id)
+        return quests[id].completeStagesNumber(number_stages_completed_in_quest)
+
+    def quest_update(id: str) -> int:
+        """Function to update the various values,
+        If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
+        Prevent errors like blocked Quests."""
+        log_info("quest_update", renpy.get_filename_line())
+        return quests[id].update(quest_stages, current_quest_stages, number_stages_completed_in_quest, tm, flags)

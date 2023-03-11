@@ -216,23 +216,19 @@ class Quest(object):
         else:
             return False
 
-    def currentQuestId(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> str:
+    def currentQuestId(self, number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
-        if (not (self.id in number_stages_completed_in_quest)):
-            self.update(current_quest_stages, number_stages_completed_in_quest)
         return self.stages_id[number_stages_completed_in_quest[id]]
 
-    def completeStagesNumber(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> int:
+    def completeStagesNumber(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
-        if (not (self.id in number_stages_completed_in_quest)):
-            self.update(current_quest_stages, number_stages_completed_in_quest)
         return number_stages_completed_in_quest[id]
 
     def getPercentageCompletion(self, current_level: int) -> int:
         """Returns the percentage of completion"""
         return current_level/len(self.stages_id)*100
 
-    def update(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int]) -> None:
+    def update(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         """Function to update the various values,
         If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
         Prevent errors like blocked Quests."""
@@ -277,7 +273,8 @@ class Quest(object):
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
                      " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.afterNextStage()")
-            self.update(current_quest_stages, number_stages_completed_in_quest)
+            self.update(quest_stages, current_quest_stages,
+                        number_stages_completed_in_quest, tm, flags)
         if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
             current_quest_stages[self.id].completed = True
             return
