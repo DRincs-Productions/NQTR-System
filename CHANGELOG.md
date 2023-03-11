@@ -1,10 +1,8 @@
-# Changelog
-
-## v1.0.3
+# v1.0.3
 
 ( developing )
 
-## v1.0.2
+# v1.0.2
 
 ```shell
 git checkout -b NQTR-toolkit
@@ -23,7 +21,7 @@ git pull https://github.com/DRincs-Productions/NQTR-toolkit.git v1.0.2 --allow-u
 
 **Full Changelog**: https://github.com/DRincs-Productions/NQTR-toolkit/compare/v1.0.1...v1.0.2
 
-## v1.0.1
+# v1.0.1
 
 ## What's Changed
 * Create LICENSE by @DonRP in https://github.com/DRincs-Productions/NQTR-toolkit/pull/1
@@ -48,7 +46,7 @@ git pull https://github.com/DRincs-Productions/NQTR-toolkit.git v1.0.2 --allow-u
 **Full Changelog**: https://github.com/DRincs-Productions/NQTR-toolkit/commits/v1.0.1
 
 
-## v1.0.0
+# v1.0.0
 
 ```shell
 git checkout -b NQTR-toolkit
