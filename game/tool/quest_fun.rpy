@@ -57,7 +57,7 @@ init python:
         log_info("setDayNumberRequiredToStart", renpy.get_filename_line())
         if (not checkIfTheQuestIsCurrentTaskStages(id))
             return
-        return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired, tm)
+        return current_task_stages[id].setDayNumberRequiredToStart(dayNumberRequired, tm)
 
     def start(id: str, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
@@ -68,25 +68,22 @@ init python:
             notifyEx(new_quest_notify)
         return
 
-    # TODO To move in renpy
-    def nextStageOnlyIsCompleted(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
+    def nextStageOnlyIsCompleted(id: str) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
-        if (self.id in current_task_stages):
-            if (not current_task_stages[self.id].isCompleted(number_stages_completed_in_quest, tm, flags)):
+        if (id in current_task_stages):
+            if (not current_task_stages[id].isCompleted(number_stages_completed_in_quest, tm, flags)):
                 return False
-        elif (self.id in current_quest_stages):
-            if (not current_task_stages[self.id].isCompleted(number_stages_completed_in_quest, tm, flags)):
+        elif (id in current_quest_stages):
+            if (not current_task_stages[id].isCompleted(number_stages_completed_in_quest, tm, flags)):
                 return False
-        self.nextStage(current_quest_stages, number_stages_completed_in_quest, current_task_stages)
+        nextStage(current_quest_stages, number_stages_completed_in_quest, current_task_stages)
         return True
 
-    # TODO To move in renpy
-    def nextStage(self, current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], ) -> None:
+    def nextStage(id: str) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
-        if (self.id in current_task_stages):
-            del current_task_stages[self.quest_id]
+        if (not checkIfTheQuestExist(id)):
             return
-        self.afterNextStage(current_quest_stages, number_stages_completed_in_quest)
+        quests[id].nextStage(current_quest_stages, number_stages_completed_in_quest, current_task_stages)
         notifyEx(quest_updated_notify)
         return
 
