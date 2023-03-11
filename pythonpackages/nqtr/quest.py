@@ -258,7 +258,6 @@ class Quest(object):
                                 number_stages_completed_in_quest)
             return
 
-    # TODO To move in renpy
     def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
         quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages(
@@ -266,8 +265,6 @@ class Quest(object):
         current_quest_stages[self.id].start(
             number_stages_completed_in_quest, tm, flags)
         number_stages_completed_in_quest[self.id] = n_stage
-        if (n_stage == 0):
-            notifyEx(new_quest_notify)
         return
 
     # TODO To move in renpy

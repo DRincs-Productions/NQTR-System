@@ -17,9 +17,14 @@ init python:
                 del number_stages_completed_in_quest[x]
         return
 
-    def checkIfTheQuestIsInNumberStages(id: str) -> bool:
+    def checkIfTheQuestExist(id: str) -> bool:
         if (not (id in quests)):
             log_warn("the Quest: " + id + " does not exist", renpy.get_filename_line())
+            return False
+        return True
+
+    def checkIfTheQuestIsInNumberStages(id: str) -> bool:
+        if (not checkIfTheQuestExist(id)):
             return False
         if (not (id in number_stages_completed_in_quest)):
             log_warn("the Quest: " + id + " not is in number_stages_completed_in_quest, so i update it", renpy.get_filename_line())
@@ -30,8 +35,7 @@ init python:
         return True
 
     def checkIfTheQuestIsCurrentTaskStages(id: str) -> bool:
-        if (not (id in quests)):
-            log_warn("the Quest: " + id + " does not exist", renpy.get_filename_line())
+        if (not checkIfTheQuestExist(id)):
             return False
         if (not (id in current_task_stages)):
             log_warn("the Quest: " + id + " not is in current_task_stages, so i update it", renpy.get_filename_line())
@@ -55,14 +59,11 @@ init python:
             return
         return current_task_stages[self.id].setDayNumberRequiredToStart(dayNumberRequired, tm)
 
-    # TODO To move in renpy
-    def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
+    def start(id: str, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
-        quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages(
-            current_quest_stages, tm)
-        current_quest_stages[self.id].start(
-            number_stages_completed_in_quest, tm, flags)
-        number_stages_completed_in_quest[self.id] = n_stage
+        if (not checkIfTheQuestExist(id)):
+            return
+        quests[id].start(quest_stages, current_quest_stages, number_stages_completed_in_quest, tm, flags, n_stage)
         if (n_stage == 0):
             notifyEx(new_quest_notify)
         return
