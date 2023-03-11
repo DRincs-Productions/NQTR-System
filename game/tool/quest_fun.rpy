@@ -59,7 +59,7 @@ init python:
     def quest_getPercentageCompletion(id: str) -> int:
         """Returns the percentage of completion"""
         log_info("quest_getPercentageCompletion", renpy.get_filename_line())
-        if (not checkIfTheQuestIsInNumberStages(id))
+        if (not checkIfTheQuestIsInNumberStages(id)):
             return 0
         return quests[id].getPercentageCompletion(number_stages_completed_in_quest[id])
 
@@ -112,7 +112,7 @@ init python:
         log_info("quest_isCompleted", renpy.get_filename_line())
         if (not checkIfTheQuestExist(id)):
             return
-        if (not (self.id in number_stages_completed_in_quest)):
+        if (not (id in number_stages_completed_in_quest)):
             updateQuestsLevels()
             return False
         return quests[id].isCompleted(current_quest_stages, number_stages_completed_in_quest)
