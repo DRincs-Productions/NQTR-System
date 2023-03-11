@@ -238,7 +238,7 @@ screen room_navigation():
                                     background None
 
                                     imagebutton:
-                                        idle talk_obj.getButtonIcon()
+                                        idle talk_obj.getButtonIcon() or gui.default_talk_button_icon
                                         hover talk_obj.getSelectedButtonOrDefault()
                                         focus_mask True
                                         action [

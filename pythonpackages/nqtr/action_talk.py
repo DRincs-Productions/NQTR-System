@@ -1,11 +1,11 @@
-from typing import Union
+from typing import Optional, Union
 
 from pythonpackages.nqtr.button import Button
 from pythonpackages.renpy_custom_log import *
 from pythonpackages.utility import *
 
+# TODO to move in renpy
 DEFAULT_LABEL_TALK = "talk"
-DEFAULT_TALK_BUTTON_ICON = "/interface/action-talk.webp"
 
 
 class TalkObject(Button):
@@ -65,8 +65,8 @@ class TalkObject(Button):
         """Returns the image during a conversation"""
         return self.bg
 
-    def getButtonIcon(self) -> str:
+    def getButtonIcon(self) -> Optional[str]:
         if (self.button_icon != None):
             return self.button_icon
         else:
-            return DEFAULT_TALK_BUTTON_ICON
+            return None

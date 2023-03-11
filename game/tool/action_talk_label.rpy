@@ -5,6 +5,8 @@ default talk_image = None
 # 'alice'   :   [("Choice 1", "label_one"), ("Choice 2", "label_two")]
 default talkch_choices = {}
 
+define gui.default_talk_button_icon = "/interface/action-talk.webp"
+
 # Opens the choice menu, with the various dialogs you can currently do with a ch
 label talk_menu:
     # check if there is already a list of menu choices for talk_ch
