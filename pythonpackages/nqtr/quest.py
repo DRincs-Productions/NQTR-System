@@ -10,12 +10,14 @@ from pythonpackages.renpy_custom_log import *
 class Goal(object):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#goal"""
 
-    def __init__(self,
-                 id: str,
-                 description: str = None,
-                 complete: bool = False,
-                 need: int = 0,
-                 have: int = 0):
+    def __init__(
+        self,
+        id: str,
+        description: str = None,
+        complete: bool = False,
+        need: int = 0,
+        have: int = 0
+    ):
 
         self.id = id
         self.description = description if description else ""
@@ -54,22 +56,22 @@ class Goal(object):
 class Stage(object):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#stage """
 
-    def __init__(self,
-                 quest_id: str,
-                 goals: Optional[list[str]] = None,
-                 title: str = None,
-                 description: str = None,
-                 advice: str = None,
-                 bg: str = None,
-                 days_required_to_start: int = None,
-                 # TODO: implement this
-                 flags_requests: Optional[list[str]] = None,
-                 number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
-                 request_description: str = None,
-                 start_label_name: str = None,  # Will be initiated when the stage is started
-                 end_label_name: str = None,  # TODO: implement this
-                 check_label_name: str = None,  # TODO: implement this
-                 ):
+    def __init__(
+        self,
+        quest_id: str,
+        goals: Optional[list[str]] = None,
+        title: str = None,
+        description: str = None,
+        advice: str = None,
+        bg: str = None,
+        days_required_to_start: int = None,
+        flags_requests: Optional[list[str]] = None,  # TODO: implement this
+        number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
+        request_description: str = None,
+        start_label_name: str = None,  # Will be initiated when the stage is started
+        end_label_name: str = None,  # TODO: implement this
+        check_label_name: str = None,  # TODO: implement this
+    ):
 
         self.quest_id = quest_id
         self.goals = goals if goals else []
@@ -184,15 +186,17 @@ class Quest(object):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#quest 
     Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
 
-    def __init__(self,
-                 id: str,
-                 title: str = None,
-                 description: str = None,
-                 icon: str = None,
-                 bg: str = None,
-                 stages_id: Optional[list[str]] = None,
-                 tag: str = None,  # TODO: implement this
-                 development: bool = False):
+    def __init__(
+        self,
+        id: str,
+        title: str = None,
+        description: str = None,
+        icon: str = None,
+        bg: str = None,
+        stages_id: Optional[list[str]] = None,
+        tag: str = None,  # TODO: implement this
+        development: bool = False
+    ):
 
         self.id = id
         self.title = title if title else ""
