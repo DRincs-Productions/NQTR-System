@@ -6,23 +6,23 @@ define hour_names = ((2, _("Night")),
             (20, _("Evening")),
             )
 define weekday_names = (_("{#weekday}Monday"),
-                _("{#weekday}Tuesday"),
-                _("{#weekday}Wednesday"),
-                _("{#weekday}Thursday"),
-                _("{#weekday}Friday"),
-                _("{#weekday}Saturday"),
-                _("{#weekday}Sunday")
-                )
+            _("{#weekday}Tuesday"),
+            _("{#weekday}Wednesday"),
+            _("{#weekday}Thursday"),
+            _("{#weekday}Friday"),
+            _("{#weekday}Saturday"),
+            _("{#weekday}Sunday")
+)
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function
 default tm = TimeHandler(
-                    hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY,
-                    hour = 8,
-                    weekend_day = 6,
-                    day = 0,
-                    event_duration = event_duration,
-                    hour_names = hour_names,
-                    weekday_names = weekday_names
+            hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY,
+            hour = 8,
+            weekend_day = 6,
+            day = 0,
+            event_duration = event_duration,
+            hour_names = hour_names,
+            weekday_names = weekday_names
 )
 
 init -8 python:
