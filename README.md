@@ -1,7 +1,7 @@
 # Navigation Quest Time Routine System for Ren'py
 
-![Last commit](https://img.shields.io/github/last-commit/DonRP/NQTR-toolkit)
-![License](https://img.shields.io/github/license/DonRP/NQTR-toolkit)
+![Last commit](https://img.shields.io/github/last-commit/DRincs-Productions/NQTR-System)
+![License](https://img.shields.io/github/license/DRincs-Productions/NQTR-System)
 <span class="discord">
 <a href="https://discord.gg/5UFPjP9" title="Discord"><img src="https://img.shields.io/discord/688162156151439536" alt="Discord" /></a>
 </span>
@@ -16,19 +16,15 @@ In order to simplify the update work and avoid errors in saving I created functi
 
 Feel free to contribute, fork this and send a pull request. 😄
 
-
-
 ## Documentation
 
-**[Wiki](https://github.com/DRincs-Productions/NQTR-toolkit/wiki)**
-
+**[Wiki](https://github.com/DRincs-Productions/NQTR-System/wiki)**
 
 ## Code snippets ([VSCode](https://code.visualstudio.com/))
+
 (all begin with `DR_`)
 
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/67595890/179365279-0d0b6d45-0048-4a0d-8c6d-9571b9c328f4.gif)
-
-
 
 ## Insert Toolkit in your project
 
@@ -36,20 +32,19 @@ I recommend the following ways to include it in your project:
 
 - [**Pull branch**](#pull-branch) (to **insert** it into your game and **update** it easily)
 - [**Fork**](https://docs.github.com/en/get-started/quickstart/fork-a-repo) (to improve the repo or create a Toolkit based on mine)
-- [Manually](https://github.com/DRincs-Productions/NQTR-toolkit/releases) (not recommended)
-
+- [Manually](https://github.com/DRincs-Productions/NQTR-System/releases) (not recommended)
 
 ### Pull branch
 
 To **insert** or **update** the Toolkit in your repo with Pull branch I recommend the following procedure:
 
-(only if you want to insert the repo) Create a new empty branch, in the example I'll use **NQTR-toolkit**
+(only if you want to insert the repo) Create a new empty branch, in the example I'll use **nqtr-tool**
 
 ```shell
-git checkout -b NQTR-toolkit
-git checkout NQTR-toolkit
+git checkout -b nqtr-tool
+git checkout nqtr-tool
 git config pull.rebase false
-git pull https://github.com/DRincs-Productions/NQTR-toolkit.git tool-only --allow-unrelated-histories
+git pull https://github.com/DRincs-Productions/NQTR-System.git tool-only --allow-unrelated-histories
 
 ```
 

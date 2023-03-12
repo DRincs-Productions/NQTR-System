@@ -1,9 +1,10 @@
 # v1.0.3
+
 ```shell
-git checkout -b NQTR-toolkit
-git checkout NQTR-toolkit
+git checkout -b nqtr-tool
+git checkout nqtr-tool
 git config pull.rebase false
-git pull https://github.com/DRincs-Productions/NQTR-toolkit.git v1.0.3 --allow-unrelated-histories
+git pull https://github.com/DRincs-Productions/NQTR-System.git v1.0.3 --allow-unrelated-histories
 
 ```
 
@@ -63,13 +64,12 @@ Use search and replace of vscode with regex functionality enabled
 * `flags\["(.*)"\] =(.*)`
 * `setFlags("$1",$2)`
 
-
 ## What's Changed
-* 55 convert pos to align by @DonRP in https://github.com/DRincs-Productions/NQTR-System/pull/56
-* 57 convert all class in library py by @DonRP in https://github.com/DRincs-Productions/NQTR-System/pull/58
 
+* 55 convert pos to align by @DonRP in <https://github.com/DRincs-Productions/NQTR-System/pull/56>
+* 57 convert all class in library py by @DonRP in <https://github.com/DRincs-Productions/NQTR-System/pull/58>
 
-**Full Changelog**: https://github.com/DRincs-Productions/NQTR-System/compare/v1.0.2...v1.0.3
+**Full Changelog**: <https://github.com/DRincs-Productions/NQTR-System/compare/v1.0.2...v1.0.3>
 
 # v1.0.2
 
