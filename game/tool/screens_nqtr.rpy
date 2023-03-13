@@ -11,71 +11,7 @@ screen room_navigation():
 
     # Map
     if (map_open and cur_map_id):
-        $ map_id_north = maps[cur_map_id].map_id_north
-        $ map_id_south = maps[cur_map_id].map_id_south
-        $ map_id_east = maps[cur_map_id].map_id_east
-        $ map_id_west = maps[cur_map_id].map_id_west
-
-        # North map
-        if (not isNullOrEmpty(map_id_north) and not maps[map_id_north].isHidden(flags)):
-            hbox:
-                align (0.5, 0.1)
-                imagebutton:
-                    idle "gui triangular_button"
-                    focus_mask True
-                    sensitive not maps[map_id_north].isDisabled(flags)
-                    action [
-                        SetVariable('cur_map_id', map_id_north), 
-                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip maps[map_id_north].name
-                    at middle_map(rotation = 270)
-        # South map
-        if (not isNullOrEmpty(map_id_south) and not maps[map_id_south].isHidden(flags)):
-            hbox:
-                align (0.5, 0.99)
-                imagebutton:
-                    idle "gui triangular_button"
-                    focus_mask True
-                    sensitive not maps[map_id_south].isDisabled(flags)
-                    action [
-                        SetVariable('cur_map_id', map_id_south), 
-                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip maps[map_id_south].name
-                    at middle_map(rotation = 90)
-        # West map
-        if (not isNullOrEmpty(map_id_west) and not maps[map_id_west].isHidden(flags)):
-            hbox:
-                align (0.001, 0.5)
-                imagebutton:
-                    idle "gui triangular_button"
-                    focus_mask True
-                    sensitive not maps[map_id_west].isDisabled(flags)
-                    action [
-                        SetVariable('cur_map_id', map_id_west), 
-                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip maps[map_id_west].name
-                    at middle_map(rotation = 180)
-        # East map
-        if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden(flags)):
-            hbox:
-                align (0.999, 0.5)
-                imagebutton:
-                    idle "gui triangular_button"
-                    focus_mask True
-                    sensitive not maps[map_id_east].isDisabled(flags)
-                    action [
-                        SetVariable('cur_map_id', map_id_east), 
-                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip maps[map_id_east].name
-                    at middle_map(rotation = 0)
+        use map(maps, cur_map_id)
 
         for location in locations:
             # If the Map where I am is the same as the Map where the room is located
