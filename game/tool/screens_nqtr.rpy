@@ -11,98 +11,11 @@ screen room_navigation():
 
     # Map
     if (map_open and cur_map_id):
-        $ map_id_north = maps[cur_map_id].map_id_north
-        $ map_id_south = maps[cur_map_id].map_id_south
-        $ map_id_east = maps[cur_map_id].map_id_east
-        $ map_id_west = maps[cur_map_id].map_id_west
-
-        # North map
-        if (not isNullOrEmpty(map_id_north) and not maps[map_id_north].isHidden(flags)):
-            hbox:
-                align (0.5, 0.1)
-                imagebutton:
-                    idle "gui triangular_button"
-                    focus_mask True
-                    sensitive not maps[map_id_north].isDisabled(flags)
-                    action [
-                        SetVariable('cur_map_id', map_id_north), 
-                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip maps[map_id_north].name
-                    at middle_map(rotation = 270)
-        # South map
-        if (not isNullOrEmpty(map_id_south) and not maps[map_id_south].isHidden(flags)):
-            hbox:
-                align (0.5, 0.99)
-                imagebutton:
-                    idle "gui triangular_button"
-                    focus_mask True
-                    sensitive not maps[map_id_south].isDisabled(flags)
-                    action [
-                        SetVariable('cur_map_id', map_id_south), 
-                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip maps[map_id_south].name
-                    at middle_map(rotation = 90)
-        # West map
-        if (not isNullOrEmpty(map_id_west) and not maps[map_id_west].isHidden(flags)):
-            hbox:
-                align (0.001, 0.5)
-                imagebutton:
-                    idle "gui triangular_button"
-                    focus_mask True
-                    sensitive not maps[map_id_west].isDisabled(flags)
-                    action [
-                        SetVariable('cur_map_id', map_id_west), 
-                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip maps[map_id_west].name
-                    at middle_map(rotation = 180)
-        # East map
-        if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden(flags)):
-            hbox:
-                align (0.999, 0.5)
-                imagebutton:
-                    idle "gui triangular_button"
-                    focus_mask True
-                    sensitive not maps[map_id_east].isDisabled(flags)
-                    action [
-                        SetVariable('cur_map_id', map_id_east), 
-                        Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip maps[map_id_east].name
-                    at middle_map(rotation = 0)
+        use map(maps, cur_map_id)
 
         for location in locations:
             # If the Map where I am is the same as the Map where the room is located
-            if (location.map_id == cur_map_id and not location.isHidden(flags)):
-                vbox:
-                    align (location.yalign, location.xalign)
-                    imagebutton:
-                        idle location.getPictureInBackgroundOrDefault()
-                        selected_idle location.getSelectedPictureInBackgroundOrDefault()
-                        selected_hover location.getSelectedPictureInBackgroundOrDefault()
-                        selected location == cur_location
-                        sensitive not location.isHidden(flags)
-                        focus_mask True
-                        action [
-                            SetVariable('cur_location', location),
-                            Call("after_return_from_room_navigation", label_name_to_call = "change_location"),
-                        ]
-                        at small_map
-
-                    # Locations name
-                    text location.name:
-                        size gui.little_text_size
-                        drop_shadow [(2, 2)]
-                        xalign 0.5
-                        text_align 0.5
-                        line_leading 0
-                        line_spacing -2
+            use location_button(location)
 
     else:
         # Rooms
@@ -114,79 +27,15 @@ screen room_navigation():
             for room in rooms:
                 $ i += 1
 
-                # If the Locations where I am is the same as the Locations where the room is located
-                if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden(flags)):
-                    button:
-                        xysize (126, 190)
-                        action [
-                            SetVariable('prev_room', cur_room),
-                            SetVariable('cur_room', room),
-                            Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-                        ]
-                        has vbox xsize 126 spacing 0
+                # Check the presence of ch in that room
+                $ there_are_ch = False
+                for comm in commitments_in_cur_location.values():
+                    # If it is the selected room
+                    if comm != None and room.id == comm.room_id:
+                        # I insert hbox only if they are sure that someone is there
+                        $ there_are_ch = True
 
-                        frame:
-                            xysize (126, 140)
-                            background None
-
-                            # Room icon
-                            imagebutton:
-                                align (0.5, 0.0)
-                                idle room.getButtonOrDefault()
-                                selected_idle room.getSelectedButtonOrDefault()
-                                selected_hover room.getSelectedButtonOrDefault()
-                                selected (True if cur_room and cur_room.id == room.id else False)
-                                sensitive not room.isDisabled(flags)
-                                focus_mask True
-                                action [
-                                    SetVariable('prev_room', cur_room),
-                                    SetVariable('cur_room', room),
-                                    Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-                                ]
-                                at middle_room
-
-                            # Check the presence of ch in that room
-                            $ there_are_ch = False
-                            for comm in commitments_in_cur_location.values():
-                                # If it is the selected room
-                                if comm != None and room.id == comm.room_id:
-                                    # I insert hbox only if they are sure that someone is there
-                                    $ there_are_ch = True
-
-                            if there_are_ch:
-                                hbox:
-                                    ypos 73
-                                    xalign 0.5
-                                    spacing - 30
-
-                                    for comm in commitments_in_cur_location.values():
-                                        # If it is the selected room
-                                        if room.id == comm.room_id:
-                                            for ch_icon in comm.getChIcons(ch_icons):
-                                                imagebutton:
-                                                    idle ch_icon
-                                                    sensitive not room.isDisabled(flags)
-                                                    focus_mask True
-                                                    action [
-                                                        SetVariable('prev_room', cur_room),
-                                                        SetVariable('cur_room', room),
-                                                        Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-                                                    ]
-                                                    at small_face
-
-                        # Room name
-                        text room.name:
-                            size gui.little_text_size
-                            drop_shadow [(2, 2)]
-                            xalign 0.5
-                            text_align 0.5
-                            line_leading 0
-                            line_spacing -2
-                    key str(i) action [
-                        SetVariable('prev_room', cur_room),
-                        SetVariable('cur_room', room),
-                        Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-                    ]
+                use room_button(room, cur_room, i, there_are_ch)
 
         # Action wich Picture in background
         for room in rooms:
@@ -194,18 +43,8 @@ screen room_navigation():
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
                 # actions: dict[str, Act], room: Room,  now_is_between: callable[[int, int], bool], cur_day: int
                 for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number(), tm = tm):
-                    if (not act.isButton()):
-                        imagebutton:
-                            align (act.xalign, act.yalign)
-                            idle act.getPictureInBackgroundOrDefault()
-                            hover act.getSelectedPictureInBackgroundOrDefault()
-                            focus_mask True
-                            action [
-                                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-                            ]
-                            if renpy.variant("pc"):
-                                tooltip act.name
-                            at middle_action_is_in_room
+                    use action_button(act)
+
         # Normal Actions (with side button)
         vbox:
             yalign 0.95
@@ -214,17 +53,7 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
                     for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number(), tm = tm):
-                        if (act.isButton() == True and not act.isHidden(flags)):
-                            imagebutton:
-                                idle act.getButtonOrDefault()
-                                hover act.getSelectedButtonOrDefault()
-                                focus_mask True
-                                action [
-                                    Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-                                ]
-                                if renpy.variant("pc"):
-                                    tooltip act.name
-                                at middle_action
+                        use action_button(act, show_picture_in_background = True)
 
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
@@ -232,74 +61,13 @@ screen room_navigation():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            if (not talk_obj.isHidden(flags)):
-                                frame:
-                                    xysize (120, 120)
-                                    background None
-
-                                    imagebutton:
-                                        idle talk_obj.getButtonIcon() or gui.default_talk_button_icon
-                                        hover talk_obj.getSelectedButtonOrDefault()
-                                        focus_mask True
-                                        action [
-                                            SetVariable('talk_ch', ch_id),
-                                            SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                            Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
-                                        ]
-                                        at middle_action
-                                    # inserts the icon of the character who is currently in that room
-                                    # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-                                    if (ch_id in ch_icons):
-                                        imagebutton:
-                                            idle ch_icons.get(ch_id)
-                                            focus_mask True
-                                            at small_face
-                                            action [
-                                                SetVariable('talk_ch', ch_id),
-                                                SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                                Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
-                                            ]
-                                    if renpy.variant("pc"):
-                                        tooltip _("Talk")
+                            use action_talk_button(ch_id, talk_obj, comm.getTalkBackground(ch_id))
 
             # Fixed button to wait
-            imagebutton:
-                idle '/interface/action-wait.webp'
-                focus_mask True
-                action [
-                    Call("after_return_from_room_navigation", label_name_to_call = "wait"),
-                ]
-                if renpy.variant("pc"):
-                    tooltip _("Wait")
-                at middle_action
+            use wait_button()
 
     # Time
-    hbox:
-        align (0.5, 0.01)
-        vbox:
-            align (0.5, 0.01)
-            text "[tm.hour]:00":
-                xalign (0.5)
-                size gui.hour_text_size
-                drop_shadow [(2, 2)]
-            text tm.get_weekday_name():
-                xalign (0.5)
-                size gui.normal_text_size
-                drop_shadow [(2, 2)]
-                line_leading -16
-
-        if (map_open):
-            # Fixed button to wait
-            imagebutton:
-                xysize (300, 300)
-                idle '/interface/action-wait.webp'
-                focus_mask True
-                action [
-                    Call("after_return_from_room_navigation", label_name_to_call = "wait"),
-                ]
-                if renpy.variant("pc"):
-                    tooltip _("Wait")
-                at middle_action
+    use time_text(tm, show_wait_button = map_open)
 
     # Tools
     hbox:
