@@ -22,7 +22,9 @@ screen menu_memo():
     add "gui/overlay/game_menu.png"
 
     frame area (150, 70, 350, 50) background None:
-        text _("{b}Memo{/b}") color gui.accent_color size gui.name_text_size
+        text _("{b}Memo{/b}"):
+            color gui.accent_color
+            size gui.name_text_size
 
     # Synchronize number_stages_completed_in_quest with quests
     $ updateQuestsLevels()
