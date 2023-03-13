@@ -147,7 +147,7 @@ screen map(maps, cur_map_id):
     if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden(flags)):
         use map_button(map_id = map_id_east, map = maps[map_id_east], align_value = (0.999, 0.5), rotation = 0)
 
-screen room_button(room, cur_room, i):
+screen room_button(room, cur_room, i, find_ch = False):
     # If the Locations where I am is the same as the Locations where the room is located
     if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden(flags)):
         button:
@@ -179,15 +179,7 @@ screen room_button(room, cur_room, i):
                     ]
                     at middle_room
 
-                # Check the presence of ch in that room
-                $ there_are_ch = False
-                for comm in commitments_in_cur_location.values():
-                    # If it is the selected room
-                    if comm != None and room.id == comm.room_id:
-                        # I insert hbox only if they are sure that someone is there
-                        $ there_are_ch = True
-
-                if there_are_ch:
+                if find_ch:
                     hbox:
                         ypos 73
                         xalign 0.5
