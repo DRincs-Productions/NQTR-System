@@ -79,30 +79,7 @@ screen room_navigation():
 
         for location in locations:
             # If the Map where I am is the same as the Map where the room is located
-            if (location.map_id == cur_map_id and not location.isHidden(flags)):
-                vbox:
-                    align (location.yalign, location.xalign)
-                    imagebutton:
-                        idle location.getPictureInBackgroundOrDefault()
-                        selected_idle location.getSelectedPictureInBackgroundOrDefault()
-                        selected_hover location.getSelectedPictureInBackgroundOrDefault()
-                        selected location == cur_location
-                        sensitive not location.isHidden(flags)
-                        focus_mask True
-                        action [
-                            SetVariable('cur_location', location),
-                            Call("after_return_from_room_navigation", label_name_to_call = "change_location"),
-                        ]
-                        at small_map
-
-                    # Locations name
-                    text location.name:
-                        size gui.little_text_size
-                        drop_shadow [(2, 2)]
-                        xalign 0.5
-                        text_align 0.5
-                        line_leading 0
-                        line_spacing -2
+            use location_button(location)
 
     else:
         # Rooms
