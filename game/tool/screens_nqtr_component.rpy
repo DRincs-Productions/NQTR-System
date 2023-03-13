@@ -1,4 +1,4 @@
-screen time_text(tm):
+screen time_text(tm, show_wait_button = False):
     hbox:
         align (0.5, 0.01)
         vbox:
@@ -13,7 +13,7 @@ screen time_text(tm):
                 drop_shadow [(2, 2)]
                 line_leading -16
 
-        if (map_open):
+        if (show_wait_button):
             # Fixed button to wait
             imagebutton:
                 xysize (300, 300)

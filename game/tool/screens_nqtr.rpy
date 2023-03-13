@@ -274,7 +274,7 @@ screen room_navigation():
                 at middle_action
 
     # Time
-    use time_text(tm)
+    use time_text(tm, show_wait_button = map_open)
 
     # Tools
     hbox:
