@@ -23,7 +23,7 @@ screen menu_memo():
 
     frame:
         area (150, 70, 350, 50)
-        background None:
+        background None
         text _("{b}Memo{/b}"):
             color gui.accent_color
             size gui.name_text_size
