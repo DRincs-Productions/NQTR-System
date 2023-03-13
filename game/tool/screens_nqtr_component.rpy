@@ -146,3 +146,78 @@ screen map(maps, cur_map_id):
     # East map
     if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden(flags)):
         use map_button(map_id = map_id_east, map = maps[map_id_east], align_value = (0.999, 0.5), rotation = 0)
+
+screen room_button(room, cur_room, i):
+    # If the Locations where I am is the same as the Locations where the room is located
+    if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden(flags)):
+        button:
+            xysize (126, 190)
+            action [
+                SetVariable('prev_room', cur_room),
+                SetVariable('cur_room', room),
+                Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
+            ]
+            has vbox xsize 126 spacing 0
+
+            frame:
+                xysize (126, 140)
+                background None
+
+                # Room icon
+                imagebutton:
+                    align (0.5, 0.0)
+                    idle room.getButtonOrDefault()
+                    selected_idle room.getSelectedButtonOrDefault()
+                    selected_hover room.getSelectedButtonOrDefault()
+                    selected (True if cur_room and cur_room.id == room.id else False)
+                    sensitive not room.isDisabled(flags)
+                    focus_mask True
+                    action [
+                        SetVariable('prev_room', cur_room),
+                        SetVariable('cur_room', room),
+                        Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
+                    ]
+                    at middle_room
+
+                # Check the presence of ch in that room
+                $ there_are_ch = False
+                for comm in commitments_in_cur_location.values():
+                    # If it is the selected room
+                    if comm != None and room.id == comm.room_id:
+                        # I insert hbox only if they are sure that someone is there
+                        $ there_are_ch = True
+
+                if there_are_ch:
+                    hbox:
+                        ypos 73
+                        xalign 0.5
+                        spacing - 30
+
+                        for comm in commitments_in_cur_location.values():
+                            # If it is the selected room
+                            if room.id == comm.room_id:
+                                for ch_icon in comm.getChIcons(ch_icons):
+                                    imagebutton:
+                                        idle ch_icon
+                                        sensitive not room.isDisabled(flags)
+                                        focus_mask True
+                                        action [
+                                            SetVariable('prev_room', cur_room),
+                                            SetVariable('cur_room', room),
+                                            Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
+                                        ]
+                                        at small_face
+
+            # Room name
+            text room.name:
+                size gui.little_text_size
+                drop_shadow [(2, 2)]
+                xalign 0.5
+                text_align 0.5
+                line_leading 0
+                line_spacing -2
+        key str(i) action [
+            SetVariable('prev_room', cur_room),
+            SetVariable('cur_room', room),
+            Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
+        ]
