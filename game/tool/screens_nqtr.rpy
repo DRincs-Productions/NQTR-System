@@ -263,15 +263,7 @@ screen room_navigation():
                                         tooltip _("Talk")
 
             # Fixed button to wait
-            imagebutton:
-                idle '/interface/action-wait.webp'
-                focus_mask True
-                action [
-                    Call("after_return_from_room_navigation", label_name_to_call = "wait"),
-                ]
-                if renpy.variant("pc"):
-                    tooltip _("Wait")
-                at middle_action
+            use wait_button()
 
     # Time
     use time_text(tm, show_wait_button = map_open)

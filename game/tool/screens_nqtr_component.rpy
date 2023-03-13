@@ -1,3 +1,16 @@
+screen wait_button(small = False):
+    imagebutton:
+        if small:
+            xysize (300, 300)
+        idle '/interface/action-wait.webp'
+        focus_mask True
+        action [
+            Call("after_return_from_room_navigation", label_name_to_call = "wait"),
+        ]
+        if renpy.variant("pc"):
+            tooltip _("Wait")
+        at middle_action
+
 screen time_text(tm, show_wait_button = False):
     hbox:
         align (0.5, 0.01)
@@ -15,13 +28,4 @@ screen time_text(tm, show_wait_button = False):
 
         if (show_wait_button):
             # Fixed button to wait
-            imagebutton:
-                xysize (300, 300)
-                idle '/interface/action-wait.webp'
-                focus_mask True
-                action [
-                    Call("after_return_from_room_navigation", label_name_to_call = "wait"),
-                ]
-                if renpy.variant("pc"):
-                    tooltip _("Wait")
-                at middle_action
+            use wait_button(small = True)
