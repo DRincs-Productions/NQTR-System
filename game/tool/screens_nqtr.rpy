@@ -194,18 +194,8 @@ screen room_navigation():
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
                 # actions: dict[str, Act], room: Room,  now_is_between: callable[[int, int], bool], cur_day: int
                 for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number(), tm = tm):
-                    if (not act.isButton()):
-                        imagebutton:
-                            align (act.xalign, act.yalign)
-                            idle act.getPictureInBackgroundOrDefault()
-                            hover act.getSelectedPictureInBackgroundOrDefault()
-                            focus_mask True
-                            action [
-                                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-                            ]
-                            if renpy.variant("pc"):
-                                tooltip act.name
-                            at middle_action_is_in_room
+                    use action_button(act)
+
         # Normal Actions (with side button)
         vbox:
             yalign 0.95
@@ -214,17 +204,7 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
                     for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.get_hour_number() , cur_day = tm.get_day_number(), tm = tm):
-                        if (act.isButton() == True and not act.isHidden(flags)):
-                            imagebutton:
-                                idle act.getButtonOrDefault()
-                                hover act.getSelectedButtonOrDefault()
-                                focus_mask True
-                                action [
-                                    Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-                                ]
-                                if renpy.variant("pc"):
-                                    tooltip act.name
-                                at middle_action
+                        use action_button(act, show_picture_in_background = True)
 
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
@@ -232,35 +212,7 @@ screen room_navigation():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            if (not talk_obj.isHidden(flags)):
-                                frame:
-                                    xysize (120, 120)
-                                    background None
-
-                                    imagebutton:
-                                        idle talk_obj.getButtonIcon() or gui.default_talk_button_icon
-                                        hover talk_obj.getSelectedButtonOrDefault()
-                                        focus_mask True
-                                        action [
-                                            SetVariable('talk_ch', ch_id),
-                                            SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                            Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
-                                        ]
-                                        at middle_action
-                                    # inserts the icon of the character who is currently in that room
-                                    # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-                                    if (ch_id in ch_icons):
-                                        imagebutton:
-                                            idle ch_icons.get(ch_id)
-                                            focus_mask True
-                                            at small_face
-                                            action [
-                                                SetVariable('talk_ch', ch_id),
-                                                SetVariable('talk_image', comm.getTalkBackground(ch_id)),
-                                                Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
-                                            ]
-                                    if renpy.variant("pc"):
-                                        tooltip _("Talk")
+                            use action_talk_button(ch_id, talk_obj, comm.getTalkBackground(ch_id))
 
             # Fixed button to wait
             use wait_button()
