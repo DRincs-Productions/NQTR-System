@@ -26,18 +26,7 @@ screen menu_memo():
     # Synchronize number_stages_completed_in_quest with quests
     $ updateQuestsLevels()
 
-    # button for closure
-    imagebutton:
-        align (0.95, 0.05)
-        idle '/interface/button/close_idle.webp'
-        action [
-            Hide('menu_memo'),
-        ]
-        if renpy.variant("pc"):
-            focus_mask True
-            at close_zoom
-        else:
-            at close_zoom_mobile
+    use close_button("menu_memo")
 
     frame:
         ypos 170
