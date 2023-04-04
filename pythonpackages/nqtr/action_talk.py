@@ -14,16 +14,16 @@ class TalkObject(Button):
     def __init__(
         self,
         # only TalkObject
-        bg: str = None,
+        bg: Optional[str] = None,
         # Button
-        name: str = None,
-        label_name: str = None,
-        button_icon: str = None,
-        button_icon_selected: str = None,
-        picture_in_background: str = None,
-        picture_in_background_selected: str = None,
-        xalign: int = None,
-        yalign: int = None,
+        name: Optional[str] = None,
+        label_name: Optional[str] = None,
+        button_icon: Optional[str] = None,
+        button_icon_selected: Optional[str] = None,
+        picture_in_background: Optional[str] = None,
+        picture_in_background_selected: Optional[str] = None,
+        xalign: Optional[int] = None,
+        yalign: Optional[int] = None,
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):

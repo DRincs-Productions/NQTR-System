@@ -13,13 +13,13 @@ class Commitment(object):
         tm_start: int,
         tm_stop: int,
         ch_talkobj_dict: dict[str, TalkObject] = {},
-        bg: str = None,
-        name: str = None,
-        location_id: str = None,
-        room_id: str = None,
-        tag: str = None,
-        day_deadline: int = None,
-        event_label_name: str = None
+        bg: Optional[str] = None,
+        name: Optional[str] = None,
+        location_id: Optional[str] = None,
+        room_id: Optional[str] = None,
+        tag: Optional[str] = None,
+        day_deadline: Optional[int] = None,
+        event_label_name: Optional[str] = None
     ):
 
         self.bg = bg
