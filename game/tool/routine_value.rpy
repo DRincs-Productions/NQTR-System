@@ -21,17 +21,15 @@ define df_routine = {
         },
         tm_start=20, tm_stop=10,
         location_id="house", room_id="alice_room",
-        bg="bg alice roomsleep"
+        bg="bg alice roomsleep",
     ),
     "alice_lounge" : Commitment(
         tm_start=10, tm_stop=14,
         location_id="house", room_id="lounge",
-        bg=None
     ),
     "alice_go_school" : Commitment(
         tm_start=10, tm_stop=14,
         location_id="school", tag="no_week",
-        bg=None
     ),
     "alice_read" : Commitment(
         ch_talkobj_dict={
@@ -39,6 +37,6 @@ define df_routine = {
         },
         tm_start=14, tm_stop=20,
         location_id="house", room_id="terrace",
-        bg="bg alice terrace"
+        bg="bg alice terrace",
     ),
 }
