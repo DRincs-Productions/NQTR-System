@@ -45,11 +45,11 @@ class Button(object):
             log_info("You have set button_icon and picture_in_background to None, this action will be ignored",
                      "nqtr.button.Button.__init__")
 
-    def isButton(self) -> bool:
+    def isButton(self) -> bool:  # TODO: convert to a property
         """This is a button?"""
         return not isNullOrEmpty(self.button_icon)
 
-    def isPictureInBackground(self) -> bool:
+    def isPictureInBackground(self) -> bool:  # TODO: convert to a property
         """This is a is picture in background?"""
         return not isNullOrEmpty(self.picture_in_background)
 
@@ -67,7 +67,7 @@ class Button(object):
         else:
             return self.hidden
 
-    def getButtonOrDefault(self) -> str:
+    def getButtonOrDefault(self) -> str:  # TODO: convert to a property
         if (not isNullOrEmpty(self.button_icon)):
             return self.button_icon
         elif (not isNullOrEmpty(self.picture_in_background)):
@@ -77,6 +77,7 @@ class Button(object):
                       "nqtr.button.Button.getButtonOrDefault()")
         return ""
 
+    # TODO: convert to a property
     def getPictureInBackgroundOrDefault(self) -> str:
         if (not isNullOrEmpty(self.picture_in_background)):
             return self.picture_in_background
@@ -87,7 +88,7 @@ class Button(object):
                       "nqtr.button.Button.getPictureInBackgroundOrDefault()")
         return ""
 
-    def getSelectedButtonOrDefault(self) -> str:
+    def getSelectedButtonOrDefault(self) -> str:  # TODO: convert to a property
         if (not isNullOrEmpty(self.button_icon_selected)):
             return self.button_icon_selected
         elif (not isNullOrEmpty(self.button_icon)):
@@ -101,6 +102,7 @@ class Button(object):
                      "nqtr.button.Button.getSelectedButtonOrDefault()")
         return ""
 
+    # TODO: convert to a property
     def getSelectedPictureInBackgroundOrDefault(self) -> str:
         if (not isNullOrEmpty(self.picture_in_background_selected)):
             return self.picture_in_background_selected

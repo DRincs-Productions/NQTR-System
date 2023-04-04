@@ -1,5 +1,8 @@
 from pythonpackages.renpy_custom_log import *
 
+START_DAY_HOUR = 0
+MAX_DAY_HOUR = 24
+
 
 class TimeHandler(object):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#time-handler """
@@ -42,7 +45,7 @@ class TimeHandler(object):
                      "nqtr.time.TimeHandler.__init__")
             self.weekend_day = 6
 
-    def get_hour_name(self) -> str:
+    def get_hour_name(self) -> str:  # TODO: convert to a property
         if self.hour >= 22:
             return self.hour_names[0][1]
         if self.hour >= 19:
@@ -55,16 +58,16 @@ class TimeHandler(object):
             return self.hour_names[0][1]
         return self.hour_names[2][1]
 
-    def get_day_number(self) -> int:
+    def get_day_number(self) -> int:  # TODO: convert to a property
         return self.day
 
-    def get_hour_number(self) -> int:
+    def get_hour_number(self) -> int:  # TODO: convert to a property
         return self.hour
 
-    def get_weekday_number(self) -> int:
+    def get_weekday_number(self) -> int:  # TODO: convert to a property
         return self.day % 7
 
-    def get_weekday_name(self) -> str:
+    def get_weekday_name(self) -> str:  # TODO: convert to a property
         return self.weekday_names[self.get_weekday_number()]
 
     # def get_day_of_month(self, hour=None):
@@ -101,12 +104,12 @@ class TimeHandler(object):
             return False
 
         self.hour += amt
-        if (self.hour > 24):
-            self.hour -= 24
+        if (self.hour > MAX_DAY_HOUR):
+            self.hour -= MAX_DAY_HOUR
         self.update_image_time()
         return True
 
-    def update_image_time(self) -> None:
+    def update_image_time(self) -> None:  # TODO: convert to a property
         if (self.get_hour_name() == "Evening"):
             self.image_time = 2
         elif (self.get_hour_name() == "Night"):
@@ -117,7 +120,7 @@ class TimeHandler(object):
             self.image_time = 1
         return
 
-    def new_day(self) -> None:
+    def new_day(self) -> None:  # TODO: convert to a property
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
         self.hour = self.hour_of_new_day
         self.day += 1

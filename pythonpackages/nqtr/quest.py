@@ -44,7 +44,7 @@ class Goal(object):
             return True
         return False
 
-    def isComplete(self) -> bool:
+    def isComplete(self) -> bool:  # TODO: convert to a property
         """Checks the status of completion. returns True if the mission has been completed"""
         if (self.complete == True):
             return True

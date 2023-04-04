@@ -1,7 +1,7 @@
 from typing import Optional
 
 from pythonpackages.nqtr.action_talk import TalkObject
-from pythonpackages.nqtr.time import TimeHandler
+from pythonpackages.nqtr.time import MAX_DAY_HOUR, START_DAY_HOUR, TimeHandler
 
 
 class Commitment(object):
@@ -10,14 +10,13 @@ class Commitment(object):
 
     def __init__(
         self,
-        tm_start: int,
-        tm_stop: int,
+        tm_start: int = START_DAY_HOUR,
+        tm_stop: int = MAX_DAY_HOUR,
         ch_talkobj_dict: dict[str, TalkObject] = {},
         bg: Optional[str] = None,
-        name: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
-        tag: Optional[str] = None,
+        tag: Optional[str] = None,  # TODO: implement this
         day_deadline: Optional[int] = None,
         event_label_name: Optional[str] = None
     ):
@@ -56,11 +55,11 @@ class Commitment(object):
         "Returns the image during a conversation"
         return self.ch_talkobj_dict[ch].getBackground()
 
-    def getBackground(self) -> str:
+    def getBackground(self) -> str:  # TODO: convert to a property
         "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
         return self.bg
 
-    def isEvent(self) -> bool:
+    def isEvent(self) -> bool:  # TODO: convert to a property
         "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
         return (self.event_label_name is not None)
 
