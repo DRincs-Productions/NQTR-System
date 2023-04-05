@@ -1,7 +1,7 @@
 from typing import Optional
 
 from pythonpackages.nqtr.action_talk import TalkObject
-from pythonpackages.nqtr.time import MAX_DAY_HOUR, START_DAY_HOUR, TimeHandler
+from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
 
 
 class Commitment(object):
@@ -10,7 +10,7 @@ class Commitment(object):
 
     def __init__(
         self,
-        tm_start: int = START_DAY_HOUR,
+        tm_start: int = MIN_DAY_HOUR,
         tm_stop: int = MAX_DAY_HOUR,
         ch_talkobj_dict: dict[str, TalkObject] = {},
         bg: Optional[str] = None,

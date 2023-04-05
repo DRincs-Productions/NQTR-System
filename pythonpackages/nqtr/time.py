@@ -1,7 +1,8 @@
 from pythonpackages.renpy_custom_log import *
 
-START_DAY_HOUR = 0
+MIN_DAY_HOUR = 0
 MAX_DAY_HOUR = 24
+DEFAULT_TIME_SPENT = 1
 
 
 class TimeHandler(object):
@@ -13,7 +14,6 @@ class TimeHandler(object):
         hour: int = 8,
         weekend_day: int = 6,
         day: int = 0,
-        event_duration: int = 6,
         hour_names=(),
         weekday_names=()
     ):
@@ -21,7 +21,6 @@ class TimeHandler(object):
         self.hour_number = hour
         self.day_number = day
         self.weekend_day = weekend_day
-        self.event_duration = event_duration
         self.hour_names = hour_names
         self.weekday_names = weekday_names
 
@@ -91,8 +90,8 @@ class TimeHandler(object):
         self._hour = value
         if (self._hour > MAX_DAY_HOUR):
             self._hour = MAX_DAY_HOUR
-        if (self._hour < START_DAY_HOUR):
-            self._hour = START_DAY_HOUR
+        if (self._hour < MIN_DAY_HOUR):
+            self._hour = MIN_DAY_HOUR
 
     @property
     def weekday_number(self) -> int:
@@ -127,11 +126,8 @@ class TimeHandler(object):
     #         day -= len(month[1])
     #     return month_number
 
-    def new_hour(self, amt: int = None) -> bool:
+    def new_hour(self, amt: int = DEFAULT_TIME_SPENT) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy """
-        # if it is too late you have to use new_day()
-        if (amt == None):
-            amt = self.event_duration
         if (self.hour_number < self.hour_of_new_day):
             return False
 
