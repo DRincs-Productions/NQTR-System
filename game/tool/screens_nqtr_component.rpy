@@ -20,7 +20,7 @@ screen time_text(tm, show_wait_button = False):
                 xalign (0.5)
                 size gui.hour_text_size
                 drop_shadow [(2, 2)]
-            text tm.get_weekday_name():
+            text tm.weekday_name:
                 xalign (0.5)
                 size gui.normal_text_size
                 drop_shadow [(2, 2)]

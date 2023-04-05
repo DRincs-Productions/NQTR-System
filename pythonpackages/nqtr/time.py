@@ -90,11 +90,13 @@ class TimeHandler(object):
     def hour_number(self, value):
         self.hour = value
 
-    def get_weekday_number(self) -> int:  # TODO: convert to a property
+    @property
+    def weekday_number(self) -> int:
         return self.day % 7
 
-    def get_weekday_name(self) -> str:  # TODO: convert to a property
-        return self.weekday_names[self.get_weekday_number()]
+    @property
+    def weekday_name(self) -> str:
+        return self.weekday_names[self.weekday_number]
 
     # def get_day_of_month(self, hour=None):
     #     hour = self.get_hour(hour)
@@ -134,11 +136,11 @@ class TimeHandler(object):
             self.hour -= MAX_DAY_HOUR
         return True
 
-    def new_day(self) -> None:  # TODO: convert to a property
+    def new_day(self) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
         self.hour = self.hour_of_new_day
         self.day += 1
-        return
+        return True
 
     def now_is_between(self, end: int, start: int = 0, now=None) -> bool:
         if now is None:

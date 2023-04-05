@@ -40,6 +40,16 @@ Use search and replace of vscode with regex functionality enabled
 * `get_hour_number\(\)`
 * `hour_number`
 
+### get_weekday_number
+
+* `get_weekday_number\(\)`
+* `weekday_number`
+
+### get_weekday_name
+
+* `get_weekday_name\(\)`
+* `weekday_name`
+
 # v1.0.3
 
 ```shell
