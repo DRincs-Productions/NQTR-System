@@ -88,10 +88,7 @@ def getActions(actions: dict[str, Act], room: Room, now_hour: int, current_day: 
     """Return all possible actions in a certain room (ATTENTION: give a Room object as parameter, and not the id)"""
     acts: list[Act] = []
     for act_id, act in actions.items():
-        if room.id in act.rooms:
-            if tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and act.have_valid_day(current_day):
-                acts.append(act)
-        elif act_id in room.action_ids:
-            if tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour) and act.have_valid_day(current_day):
+        if room.id in act.rooms or act_id in room.action_ids:
+            if act.have_valid_day(current_day) and tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour):
                 acts.append(act)
     return acts
