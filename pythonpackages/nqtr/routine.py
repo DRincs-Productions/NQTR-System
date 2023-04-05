@@ -43,6 +43,11 @@ class Commitment(object):
         # call change_room
         self.event_label_name = event_label_name
 
+    @property
+    def is_event(self) -> bool:
+        "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
+        return (self.event_label_name is not None)
+
     def getChIcons(self, ch_icons: dict[str, str]) -> list[str]:
         """returns a list of ch icons (not secondary ch)"""
         icons = []
@@ -58,10 +63,6 @@ class Commitment(object):
     def getBackground(self) -> str:  # TODO: convert to a property
         "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
         return self.bg
-
-    def isEvent(self) -> bool:  # TODO: convert to a property
-        "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
-        return (self.event_label_name is not None)
 
     # doesn't seem to work
     # use something like this: renpy.call(cur_events_location[cur_room.id].event_label_name)
@@ -117,7 +118,7 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm
     events = {}
     for comm in routine.values():
         # Check Time and Location and is event
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.isEvent() == True):
+        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.is_event == True):
             events[comm.room_id] = comm
     return events
 
