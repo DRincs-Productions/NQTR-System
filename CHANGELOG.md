@@ -59,6 +59,16 @@ Use search and replace of vscode with regex functionality enabled
 * `getBackground\(\)`
 * `background`
 
+### bg
+
+* `bg =(.*)`
+* `background =$1`
+
+### bg
+
+* `bg=(.*)`
+* `background =$1`
+
 # v1.0.3
 
 ```shell

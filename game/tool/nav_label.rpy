@@ -79,5 +79,5 @@ label closed_room_event:
     return
 
 label set_image_map:
-    scene expression maps[cur_map_id].bg as bg
+    scene expression maps[cur_map_id].background as bg
     return

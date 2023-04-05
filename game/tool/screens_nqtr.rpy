@@ -190,7 +190,7 @@ label set_room_background(sp_bg_change_room = ""):
     if (not isNullOrEmpty(sp_bg_change_room)):
         call set_background(sp_bg_change_room)
     else:
-        call set_background(cur_room.bg)
+        call set_background(cur_room.background)
     return
 
 # making calls safely:

@@ -66,14 +66,14 @@ screen menu_memo():
             xalign gui.menu_memo_frame_xalign
             yalign gui.menu_memo_frame_yalign
             # Image
-            if quest_menu.bg != '' and quest_menu.bg != None:
-                add Frame(quest_menu.bg, Borders(0,0,0,0)):
+            if quest_menu.background != '' and quest_menu.background != None:
+                add Frame(quest_menu.background, Borders(0,0,0,0)):
                     xsize gui.menu_memo_image_xsize
                     ysize gui.menu_memo_image_ysize
                     xalign 0.5
                     yalign 0
-            elif quests[cur_task_menu].bg != '' and quests[cur_task_menu].bg != None:
-                add Frame(quests[cur_task_menu].bg, Borders(0,0,0,0)):
+            elif quests[cur_task_menu].background != '' and quests[cur_task_menu].background != None:
+                add Frame(quests[cur_task_menu].background, Borders(0,0,0,0)):
                     xsize gui.menu_memo_image_xsize
                     ysize gui.menu_memo_image_ysize
                     xalign 0.5
