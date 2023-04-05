@@ -64,7 +64,8 @@ class Stage(object):
         title: str = None,
         description: str = None,
         advice: str = None,
-        background: Optional[str] = None,
+        background: Optional[str] = None,  # Deprecate: use info_image
+        info_image: Optional[str] = None,  # Deprecate: use info_image
         days_required_to_start: int = None,
         flags_requests: Optional[list[str]] = None,  # TODO: implement this
         number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
@@ -81,7 +82,10 @@ class Stage(object):
         self.description = description if description else ""
         self.advice = advice if advice else ""
         self.completed = False
-        self.background = background
+        if info_image:
+            self.info_image = info_image
+        else:
+            self.info_image = background
         # These are the requirements to start the Stage
         self.days_required_to_start = days_required_to_start if days_required_to_start else 0
         self.day_start = None  # Will be initiated when the stage is started
@@ -93,13 +97,25 @@ class Stage(object):
         self.end_label_name = end_label_name
         self.check_label_name = check_label_name
 
+    @DeprecationWarning
     @property
     def background(self) -> Optional[str]:
-        return self._bg
+        """Deprecate: use info_image"""
+        return self._info_image
 
+    @DeprecationWarning
     @background.setter
     def background(self, value: Optional[str]):
-        self._bg = value
+        """Deprecate: use info_image"""
+        self._info_image = value
+
+    @property
+    def info_image(self) -> Optional[str]:
+        return self._info_image
+
+    @background.setter
+    def info_image(self, value: Optional[str]):
+        self._info_image = value
 
     # TODO: object is Stage
 
@@ -204,7 +220,8 @@ class Quest(object):
         title: str = None,
         description: str = None,
         icon: str = None,
-        background: Optional[str] = None,
+        background: Optional[str] = None,  # Deprecate: use info_image
+        info_image: Optional[str] = None,  # Deprecate: use info_image
         stages_id: Optional[list[str]] = None,
         tag: str = None,  # TODO: implement this
         development: bool = False
@@ -214,18 +231,33 @@ class Quest(object):
         self.title = title if title else ""
         self.description = description if description else ""
         self.icon = icon
-        self.background = background
+        if info_image:
+            self.info_image = info_image
+        else:
+            self.info_image = background
         self.stages_id = self.stages_id = stages_id if stages_id else []
         self.tag = tag
         self.development = development
 
+    @DeprecationWarning
     @property
     def background(self) -> Optional[str]:
-        return self._bg
+        """Deprecate: use info_image"""
+        return self._info_image
 
+    @DeprecationWarning
     @background.setter
     def background(self, value: Optional[str]):
-        self._bg = value
+        """Deprecate: use info_image"""
+        self._info_image = value
+
+    @property
+    def info_image(self) -> Optional[str]:
+        return self._info_image
+
+    @background.setter
+    def info_image(self, value: Optional[str]):
+        self._info_image = value
 
     def isCompleted(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
         """Check if all stages have been completed."""

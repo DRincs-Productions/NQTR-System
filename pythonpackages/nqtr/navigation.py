@@ -51,6 +51,7 @@ class Room(Button):
 
     @property
     def background(self) -> Optional[str]:
+        """Image path shown when standing at the Room"""
         return self._bg
 
     @background.setter
@@ -134,6 +135,7 @@ class Map(Button):
 
     @property
     def background(self) -> str:
+        """Image path shown when standing at the Map"""
         return self._bg
 
     @background.setter
