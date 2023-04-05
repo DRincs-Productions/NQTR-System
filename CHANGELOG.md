@@ -50,6 +50,11 @@ Use search and replace of vscode with regex functionality enabled
 * `get_weekday_name\(\)`
 * `weekday_name`
 
+### day
+
+* `\.day`
+* `.day_number`
+
 # v1.0.3
 
 ```shell

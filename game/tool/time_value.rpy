@@ -32,7 +32,7 @@ init -8 python:
         hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY
         hour = tm.hour
         weekend_day = tm.weekend_day
-        day = tm.day
+        day = tm.day_number
         tm = TimeHandler(
             hour_of_new_day=hour_of_new_day,
             hour=hour, weekend_day=weekend_day, 

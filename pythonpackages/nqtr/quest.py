@@ -145,7 +145,7 @@ class Stage(object):
 
     def respectAllRequests(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """Checks the requests, returns True if it satisfies them."""
-        if (self.day_start != None and tm.day < self.day_start):
+        if (self.day_start != None and tm.day_number < self.day_start):
             return False
         for quest, level in self.number_stages_completed_in_quest_requests.items():
             if (number_stages_completed_in_quest[quest] < level):
@@ -180,7 +180,7 @@ class Stage(object):
     def setDayNumberRequiredToStart(self, dayNumberRequired: int, tm: TimeHandler) -> None:
         """Add days of waiting before it starts"""
         if dayNumberRequired:
-            self.day_start = tm.day + dayNumberRequired
+            self.day_start = tm.day_number + dayNumberRequired
         return
 
 
