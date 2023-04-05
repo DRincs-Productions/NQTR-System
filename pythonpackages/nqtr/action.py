@@ -85,7 +85,7 @@ def clearExpiredActions(actions: dict[str, Act], current_day: int) -> None:
 
 
 def getActions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler) -> list[Act]:
-    """Return a action list for the current room and available for the current time""""
+    """Return a action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
         if room.id in act.rooms or act_id in room.action_ids:
