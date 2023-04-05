@@ -33,12 +33,12 @@ Use search and replace of vscode with regex functionality enabled
 ### get_day_number
 
 * `get_day_number\(\)`
-* `day_number`
+* `day`
 
 ### get_hour_number
 
 * `get_hour_number\(\)`
-* `hour_number`
+* `hour`
 
 ### get_weekday_number
 
@@ -49,11 +49,6 @@ Use search and replace of vscode with regex functionality enabled
 
 * `get_weekday_name\(\)`
 * `weekday_name`
-
-### day
-
-* `\.day`
-* `.day_number`
 
 # v1.0.3
 

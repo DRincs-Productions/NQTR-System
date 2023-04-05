@@ -75,7 +75,7 @@ def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler) -> 
     rlist = []
     rlist.clear()
     for key, val in commitments.iteritems():
-        if (val.day_deadline != None and val.day_deadline <= tm.day_number):
+        if (val.day_deadline != None and val.day_deadline <= tm.day):
             rlist.append(key)
     for r in rlist:
         del commitments[r]

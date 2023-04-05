@@ -42,7 +42,7 @@ screen room_navigation():
             # Adds the button list of possible actions in that room
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
                 # actions: dict[str, Act], room: Room,  now_is_between: callable[[int, int], bool], cur_day: int
-                for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.hour_number , cur_day = tm.day_number, tm = tm):
+                for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.hour , cur_day = tm.day, tm = tm):
                     use action_button(act)
 
         # Normal Actions (with side button)
@@ -52,7 +52,7 @@ screen room_navigation():
             for room in rooms:
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
-                    for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.hour_number , cur_day = tm.day_number, tm = tm):
+                    for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.hour , cur_day = tm.day, tm = tm):
                         use action_button(act, show_picture_in_background = True)
 
                 # Talk
@@ -178,7 +178,7 @@ screen room_navigation():
 
 label set_background_nqtr:
     if (not map_open):
-        if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.hour_number, tm = tm)):
+        if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.hour, tm = tm)):
             # Change the background image to the current room image.
             call closed_room_event
         else:
