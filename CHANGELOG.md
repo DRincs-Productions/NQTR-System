@@ -25,6 +25,11 @@ Use search and replace of vscode with regex functionality enabled
 * `getButtonIcon\(\)`
 * `button_icon`
 
+### get_hour_name
+
+* `get_hour_name\(\)`
+* `hour_name`
+
 # v1.0.3
 
 ```shell

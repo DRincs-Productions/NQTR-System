@@ -24,10 +24,7 @@ class TimeHandler(object):
         self.event_duration = event_duration
         self.hour_names = hour_names
         self.weekday_names = weekday_names
-        # this variable is used to update images that change according to time.
-        # es image = "sky-[image_time]"
-        self.image_time = 0
-        self.update_image_time()
+
         if self.hour_of_new_day < 0:
             log_warn("You have set hour_of_new_day < 0, so it will be set to 0.",
                      "nqtr.time.TimeHandler.__init__")
@@ -45,18 +42,37 @@ class TimeHandler(object):
                      "nqtr.time.TimeHandler.__init__")
             self.weekend_day = 6
 
-    def get_hour_name(self) -> str:  # TODO: convert to a property
-        if self.hour >= 22:
+    @property
+    def hour_name(self) -> str:
+        if self.hour >= 22:  # Night
             return self.hour_names[0][1]
-        if self.hour >= 19:
+        elif self.hour >= 19:  # Evening
             return self.hour_names[3][1]
-        if self.hour >= 12:
+        elif self.hour >= 12:  # Afternoon
             return self.hour_names[2][1]
-        if self.hour >= self.hour_of_new_day:
+        elif self.hour >= 5:  # Morning
             return self.hour_names[1][1]
-        if self.hour >= 0:
+        elif self.hour >= 0:  # Night
             return self.hour_names[0][1]
-        return self.hour_names[2][1]
+        else:  # Afternoon
+            return self.hour_names[2][1]
+
+    @property
+    def image_time(self) -> str:
+        """this variable is used to update images that change according to time.
+        es: image = "sky-[tm.image_time]"""
+        if self.hour >= 22:  # Night
+            return "3"
+        elif self.hour >= 19:  # Evening
+            return "2"
+        elif self.hour >= 12:  # Afternoon
+            return "1"
+        elif self.hour >= 5:  # Morning
+            return "0"
+        elif self.hour >= 0:  # Night
+            return "3"
+        else:  # Afternoon
+            return "1"
 
     def get_day_number(self) -> int:  # TODO: convert to a property
         return self.day
@@ -106,25 +122,12 @@ class TimeHandler(object):
         self.hour += amt
         if (self.hour > MAX_DAY_HOUR):
             self.hour -= MAX_DAY_HOUR
-        self.update_image_time()
         return True
-
-    def update_image_time(self) -> None:  # TODO: convert to a property
-        if (self.get_hour_name() == "Evening"):
-            self.image_time = 2
-        elif (self.get_hour_name() == "Night"):
-            self.image_time = 3
-        elif (self.get_hour_name() == "Morning"):
-            self.image_time = 0
-        else:
-            self.image_time = 1
-        return
 
     def new_day(self) -> None:  # TODO: convert to a property
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
         self.hour = self.hour_of_new_day
         self.day += 1
-        self.update_image_time()
         return
 
     def now_is_between(self, end: int, start: int = 0, now=None) -> bool:
