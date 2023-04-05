@@ -1,27 +1,23 @@
 ## Actions they do are meant to pass time
 
-label nap:
-    menu:
-        "Nap for 3 hours":
-            call wait(3)
-        "Sleep":
-            jump sleep
-        "Return":
-            pass
-    return
+menu nap:
+    "Nap for 3 hours":
+        call wait(3)
+    "Sleep":
+        jump sleep
+    "Return":
+        pass
 
-label sleep:
-    menu:
-        "What time do you want to set the alarm?"
-        "[DEFAULT_HOUR_OF_NEW_DAY]:00":
-            call new_day(is_check_event=True)
-        "7:00":
-            call new_day(time_of_new_day = 7, is_check_event=True)
-        "9:00":
-            call new_day(time_of_new_day = 9, is_check_event=True)
-        "Return":
-            pass
-    return
+menu sleep:
+    "What time do you want to set the alarm?"
+    "[DEFAULT_HOUR_OF_NEW_DAY]:00":
+        call new_day(is_check_event=True)
+    "7:00":
+        call new_day(time_of_new_day = 7, is_check_event=True)
+    "9:00":
+        call new_day(time_of_new_day = 9, is_check_event=True)
+    "Return":
+        pass
 
 ## Development Label
 
@@ -62,15 +58,13 @@ label take_key:
     $ quest_nextStage(id = "ann")
     return
 
-label talk_sleep:
+menu talk_sleep:
     "zZz zZz ..."
-    menu:
-        "Try waking up":
-            # will lock the room
-            a "[mc]!!!! What are you doing?!!"
-            a "Get out of here! Now!"
-            $ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
-            call after_spending_time
-        "Leave her alone":
-            pass
-    return
+    "Try waking up":
+        # will lock the room
+        a "[mc]!!!! What are you doing?!!"
+        a "Get out of here! Now!"
+        $ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
+        call after_spending_time
+    "Leave her alone":
+        pass
