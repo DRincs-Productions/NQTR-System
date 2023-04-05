@@ -74,11 +74,21 @@ class TimeHandler(object):
         else:  # Afternoon
             return "1"
 
-    def get_day_number(self) -> int:  # TODO: convert to a property
+    @property
+    def day_number(self) -> int:
         return self.day
 
-    def get_hour_number(self) -> int:  # TODO: convert to a property
+    @day_number.setter
+    def day_number(self, value):
+        self.day = value
+
+    @property
+    def hour_number(self) -> int:
         return self.hour
+
+    @hour_number.setter
+    def hour_number(self, value):
+        self.hour = value
 
     def get_weekday_number(self) -> int:  # TODO: convert to a property
         return self.day % 7
