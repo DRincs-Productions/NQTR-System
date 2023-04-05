@@ -14,7 +14,7 @@ class TalkObject(Button):
     def __init__(
         self,
         # only TalkObject
-        bg: Optional[str] = None,  # conversation_background
+        conversation_background: Optional[str] = None,
         # Button
         name: Optional[str] = None,
         label_name: Optional[str] = None,
@@ -41,8 +41,25 @@ class TalkObject(Button):
             default_label_name=DEFAULT_LABEL_TALK,
         )
 
-        self.bg = bg
+        self.conversation_background = conversation_background
 
-    def getBackground(self) -> str:  # TODO: convert to a property
-        """Returns the image during a conversation"""
-        return self.bg
+    @DeprecationWarning
+    @property
+    def background(self) -> Optional[str]:
+        "Deprecation: use conversation_background"
+        return self.conversation_background
+
+    @DeprecationWarning
+    @background.setter
+    def background(self, value: Optional[str]):
+        "Deprecation: use conversation_background"
+        self.conversation_background = value
+
+    @property
+    def conversation_background(self) -> Optional[str]:
+        "Image path shown during a conversation."
+        return self._bg
+
+    @conversation_background.setter
+    def conversation_background(self, value: Optional[str]):
+        self._bg = value

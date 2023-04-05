@@ -13,7 +13,7 @@ class Commitment(object):
         tm_start: int = MIN_DAY_HOUR,
         tm_stop: int = MAX_DAY_HOUR,
         ch_talkobj_dict: dict[str, TalkObject] = {},
-        bg: Optional[str] = None,
+        background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
         tag: Optional[str] = None,  # TODO: implement this
@@ -21,7 +21,7 @@ class Commitment(object):
         event_label_name: Optional[str] = None
     ):
 
-        self.bg = bg
+        self.background = background
         self.ch_talkobj_dict = ch_talkobj_dict
         self.tm_start = tm_start
         self.tm_stop = tm_stop-0.1
@@ -48,6 +48,15 @@ class Commitment(object):
         "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
         return (self.event_label_name is not None)
 
+    @property
+    def background(self) -> Optional[str]:
+        "Image path shown when standing at the Commitment site. And it is also the image shown before and after the conversation with a character"
+        return self._bg
+
+    @background.setter
+    def background(self, value: Optional[str]):
+        self._bg = value
+
     def getChIcons(self, ch_icons: dict[str, str]) -> list[str]:
         """returns a list of ch icons (not secondary ch)"""
         icons = []
@@ -58,11 +67,7 @@ class Commitment(object):
 
     def getTalkBackground(self, ch: str) -> str:
         "Returns the image during a conversation"
-        return self.ch_talkobj_dict[ch].getBackground()
-
-    def getBackground(self) -> str:  # TODO: convert to a property
-        "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
-        return self.bg
+        return self.ch_talkobj_dict[ch].conversation_background
 
     # doesn't seem to work
     # use something like this: renpy.call(cur_events_location[cur_room.id].event_label_name)
@@ -155,5 +160,5 @@ def getBgRoomRoutine(commitments: dict[str, Commitment], room_id) -> None:
     """Returns the first background image of the commitments based on the current room. if there are no returns None"""
     for item in commitments.values():
         if item.room_id == room_id:
-            return item.getBackground()
+            return item.background
     return

@@ -8,7 +8,6 @@ git pull https://github.com/DRincs-Productions/NQTR-System.git tool-only --allow
 
 ```
 
-
 ## Migrations
 
 Use search and replace of vscode with regex functionality enabled
@@ -54,6 +53,11 @@ Use search and replace of vscode with regex functionality enabled
 
 * `isEvent\(\)`
 * `is_event`
+
+### getBackground
+
+* `getBackground\(\)`
+* `background`
 
 # v1.0.3
 
