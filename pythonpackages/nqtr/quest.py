@@ -16,7 +16,7 @@ class Goal(object):
         description: str = None,
         is_completed: bool = False,
         need: int = 0,
-        have: int = 0
+        have: int = 0,
     ):
 
         self.id = id
@@ -113,7 +113,7 @@ class Stage(object):
     def info_image(self) -> Optional[str]:
         return self._info_image
 
-    @background.setter
+    @info_image.setter
     def info_image(self, value: Optional[str]):
         self._info_image = value
 
@@ -255,7 +255,7 @@ class Quest(object):
     def info_image(self) -> Optional[str]:
         return self._info_image
 
-    @background.setter
+    @info_image.setter
     def info_image(self, value: Optional[str]):
         self._info_image = value
 

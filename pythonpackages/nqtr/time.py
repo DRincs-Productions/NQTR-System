@@ -130,16 +130,20 @@ class TimeHandler(object):
 
     def new_hour(self, amt: int = DEFAULT_TIME_SPENT) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy """
-        if (self.hour < self.hour_of_new_day):
+        if self.hour == MAX_DAY_HOUR and amt > 0:
+            return False
+        elif self.hour == MIN_DAY_HOUR and amt < 0:
             return False
 
         self.hour += amt
         return True
 
-    def new_day(self) -> bool:
+    def new_day(self, amt: int = 0) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
+        if self.hour == 0 and amt > 0:
+            return False
         self.hour = self.hour_of_new_day
-        self.day += 1
+        self.day += amt
         return True
 
     def now_is_between(self, end: int, start: int = 0, now=None) -> bool:
