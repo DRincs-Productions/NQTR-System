@@ -40,7 +40,7 @@
         "scope": "renpy",
         "prefix": "DR_QuestAdd",
         "body": [
-            "\"${1:quest_id}\"  : Quest(id = \"${1}\", title = _(\"${2:Help [a]}\"), background = \"${3:quest ${1}}\",",
+            "\"${1:quest_id}\"  : Quest(id = \"${1}\", title = _(\"${2:Help [a]}\"), info_image = \"${3:quest ${1}}\",",
             "    stages_id = [\"${4:stages_id_1\", \"stages_id_2}\"],",
             "    description = _(\"${5:Long Description}\"),",
             "    development = True",
