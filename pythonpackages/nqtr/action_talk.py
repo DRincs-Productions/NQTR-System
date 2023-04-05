@@ -14,7 +14,7 @@ class TalkObject(Button):
     def __init__(
         self,
         # only TalkObject
-        bg: Optional[str] = None,
+        bg: Optional[str] = None,  # conversation_background
         # Button
         name: Optional[str] = None,
         label_name: Optional[str] = None,
@@ -46,9 +46,3 @@ class TalkObject(Button):
     def getBackground(self) -> str:  # TODO: convert to a property
         """Returns the image during a conversation"""
         return self.bg
-
-    def getButtonIcon(self) -> Optional[str]:  # TODO: convert to a property
-        if (self.button_icon != None):
-            return self.button_icon
-        else:
-            return None

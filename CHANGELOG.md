@@ -20,6 +20,11 @@ Use search and replace of vscode with regex functionality enabled
 * `getTalkLabelName\(\)`
 * `label_name`
 
+### getButtonIcon
+
+* `getButtonIcon\(\)`
+* `button_icon`
+
 # v1.0.3
 
 ```shell

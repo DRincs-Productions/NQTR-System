@@ -63,7 +63,7 @@ screen action_talk_button(ch_id, talk_obj, background):
             background None
 
             imagebutton:
-                idle talk_obj.getButtonIcon() or gui.default_talk_button_icon
+                idle talk_obj.button_icon or gui.default_talk_button_icon
                 hover talk_obj.getSelectedButtonOrDefault()
                 focus_mask True
                 action [
