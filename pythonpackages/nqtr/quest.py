@@ -38,8 +38,6 @@ class Goal(object):
         """returns True if the mission has been completed"""
         if (self._is_completed == True):
             return True
-        if (self.need == 0):
-            return False
         return self.need <= self.have
 
     @is_completed.setter
@@ -49,8 +47,6 @@ class Goal(object):
     def find(self, value: int = 1) -> bool:
         """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
         It is used to complete the Goals."""
-        if (self.need == 0):
-            self.is_completed = True
         self.have += value
         if (self.is_completed):
             self.is_completed = True
