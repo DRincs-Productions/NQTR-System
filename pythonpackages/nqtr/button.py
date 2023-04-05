@@ -60,7 +60,7 @@ class Button(object):
         return
 
     @label_name.setter
-    def label_name(self, value):
+    def label_name(self, value: Optional[str]):
         self._label_name = value
 
     def isButton(self) -> bool:  # TODO: convert to a property
