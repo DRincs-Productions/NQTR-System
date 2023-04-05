@@ -14,14 +14,14 @@ class Goal(object):
         self,
         id: str,
         description: str = None,
-        complete: bool = False,
+        is_completed: bool = False,
         need: int = 0,
         have: int = 0
     ):
 
         self.id = id
         self.description = description if description else ""
-        self.complete = complete
+        self.is_completed = is_completed
         self.need = need
         self.have = 0
         if (self.have < 0):
@@ -33,24 +33,29 @@ class Goal(object):
             log_warn("You have set need < 0, so it will be set to 0.",
                      "nqtr.quest.Goal.__init__")
 
-    def find(self, value: int = 1) -> bool:
-        """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
-        It is used to complete the Goals."""
-        if (self.need == 0):
-            self.complete = True
-        self.have += value
-        if (self.isComplete()):
-            self.complete = True
-            return True
-        return False
-
-    def isComplete(self) -> bool:  # TODO: convert to a property
-        """Checks the status of completion. returns True if the mission has been completed"""
-        if (self.complete == True):
+    @property
+    def is_completed(self) -> bool:
+        """returns True if the mission has been completed"""
+        if (self._is_completed == True):
             return True
         if (self.need == 0):
             return False
         return self.need <= self.have
+
+    @is_completed.setter
+    def is_completed(self, value: bool):
+        self.is_completed = value
+
+    def find(self, value: int = 1) -> bool:
+        """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
+        It is used to complete the Goals."""
+        if (self.need == 0):
+            self.is_completed = True
+        self.have += value
+        if (self.is_completed):
+            self.is_completed = True
+            return True
+        return False
 
 
 class Stage(object):
