@@ -3,21 +3,26 @@
 menu nap:
     "Nap for 3 hours":
         call wait(3)
+        return
     "Sleep":
         jump sleep
+        return
     "Return":
-        pass
+        return
 
 menu sleep:
     "What time do you want to set the alarm?"
     "[DEFAULT_HOUR_OF_NEW_DAY]:00":
         call new_day(is_check_event=True)
+        return
     "7:00":
         call new_day(time_of_new_day = 7, is_check_event=True)
+        return
     "9:00":
         call new_day(time_of_new_day = 9, is_check_event=True)
+        return
     "Return":
-        pass
+        return
 
 ## Development Label
 
@@ -66,5 +71,6 @@ menu talk_sleep:
         a "Get out of here! Now!"
         $ closed_rooms[cur_room.id] = df_routine["alice_sleep"]
         call after_spending_time
+        return
     "Leave her alone":
-        pass
+        return
