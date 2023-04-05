@@ -20,6 +20,7 @@ class Button(object):
         yalign: Optional[int] = None,
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
+        default_label_name: Optional[str] = None,
     ):
 
         self.name = name
@@ -33,6 +34,7 @@ class Button(object):
         self.yalign = yalign
         self.disabled = disabled
         self.hidden = hidden
+        self.default_label_name = default_label_name
         if (self.xalign != None and self.yalign == None):
             log_warn("xalign is set but yalign is not, so yalign set to 0",
                      "nqtr.button.Button.__init__")
@@ -44,6 +46,22 @@ class Button(object):
         if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
             log_info("You have set button_icon and picture_in_background to None, this action will be ignored",
                      "nqtr.button.Button.__init__")
+
+    @property
+    def label_name(self) -> Optional[str]:
+        # if _label_name == None does the default procedure
+        if not isNullOrEmpty(self._label_name):
+            return self._label_name
+        elif not isNullOrEmpty(self.default_label_name):
+            return self.default_label_name
+        else:
+            log_warn("label_name is null or empty",
+                     "nqtr.button.Button.label_name")
+        return
+
+    @label_name.setter
+    def label_name(self, value):
+        self._label_name = value
 
     def isButton(self) -> bool:  # TODO: convert to a property
         """This is a button?"""

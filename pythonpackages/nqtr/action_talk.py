@@ -38,28 +38,10 @@ class TalkObject(Button):
             yalign=yalign,
             disabled=disabled,
             hidden=hidden,
+            default_label_name=DEFAULT_LABEL_TALK,
         )
 
         self.bg = bg
-
-    def isButton(self) -> bool:  # TODO: convert to a property
-        """This is a button?"""
-        return not isNullOrEmpty(self.button_icon)
-
-    def isPictureInBackground(self) -> bool:  # TODO: convert to a property
-        """This is a is picture in background?"""
-        return not isNullOrEmpty(self.picture_in_background)
-
-    def getTalkLabelName(self) -> None:  # TODO: convert to a property
-        # if label_name == None does the default procedure
-        if not isNullOrEmpty(self.label_name):
-            return self.label_name
-        elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
-            return DEFAULT_LABEL_TALK
-        else:
-            log_error("DEFAULT_LABEL_TALK is null or empty",
-                      "nqtr.action_talk.TalkObject.getTalkLabelName()")
-        return
 
     def getBackground(self) -> str:  # TODO: convert to a property
         """Returns the image during a conversation"""

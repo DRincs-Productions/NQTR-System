@@ -69,7 +69,7 @@ screen action_talk_button(ch_id, talk_obj, background):
                 action [
                     SetVariable('talk_ch', ch_id),
                     SetVariable('talk_image', background),
-                    Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
+                    Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
                 ]
                 at middle_action
             # inserts the icon of the character who is currently in that room
@@ -82,7 +82,7 @@ screen action_talk_button(ch_id, talk_obj, background):
                     action [
                         SetVariable('talk_ch', ch_id),
                         SetVariable('talk_image', background),
-                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
+                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
                     ]
             if renpy.variant("pc"):
                 tooltip _("Talk")

@@ -1,3 +1,25 @@
+# version beta
+
+```shell
+git checkout -b nqtr-tool
+git checkout nqtr-tool
+git config pull.rebase false
+git pull https://github.com/DRincs-Productions/NQTR-System.git tool-only --allow-unrelated-histories
+
+```
+
+
+## Migrations
+
+Use search and replace of vscode with regex functionality enabled
+
+![image](https://user-images.githubusercontent.com/67595890/224504331-1f546922-5673-4fa9-8cc7-e3fc4e671305.png)
+
+### getTalkLabelName
+
+* `getTalkLabelName\(\)`
+* `label_name`
+
 # v1.0.3
 
 ```shell
