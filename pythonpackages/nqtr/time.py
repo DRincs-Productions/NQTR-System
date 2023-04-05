@@ -28,14 +28,6 @@ class TimeHandler(object):
             log_warn("You have set hour_of_new_day < 0, so it will be set to 0.",
                      "nqtr.time.TimeHandler.__init__")
             self.hour_of_new_day = 0
-        if self.hour < 0:
-            log_warn("You have set hour < 0, so it will be set to 0.",
-                     "nqtr.time.TimeHandler.__init__")
-            self.hour = 0
-        if self.day < 0:
-            log_warn("You have set day < 0, so it will be set to 0.",
-                     "nqtr.time.TimeHandler.__init__")
-            self.day = 0
         if self.weekend_day < 0:
             log_warn("You have set weekend_day < 0, so it will be set to 6.",
                      "nqtr.time.TimeHandler.__init__")
@@ -51,6 +43,8 @@ class TimeHandler(object):
         self._day = value
         if (self._day < 0):
             self._day = 0
+            log_warn("You have set day < 0, so it will be set to 0.",
+                     "nqtr.time.TimeHandler.day")
 
     @property
     def hour(self) -> int:
@@ -62,8 +56,12 @@ class TimeHandler(object):
         self._hour = value
         if (self._hour > MAX_DAY_HOUR):
             self._hour = MAX_DAY_HOUR
+            log_warn("You have set hour > MAX_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
+                     "nqtr.time.TimeHandler.hour")
         if (self._hour < MIN_DAY_HOUR):
             self._hour = MIN_DAY_HOUR
+            log_warn("You have set hour < MIN_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
+                     "nqtr.time.TimeHandler.hour")
 
     @property
     def hour_name(self) -> str:
