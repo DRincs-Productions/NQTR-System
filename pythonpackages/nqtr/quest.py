@@ -13,14 +13,14 @@ class Goal(object):
     def __init__(
         self,
         id: str,
-        description: str = None,
+        description: Optional[str] = None,
         is_completed: bool = False,
         need: int = 0,
         have: int = 0,
     ):
 
         self.id = id
-        self.description = description if description else ""
+        self.description = description
         self.is_completed = is_completed
         self.need = need
         self.have = have
@@ -33,6 +33,21 @@ class Goal(object):
             log_warn("You have set need < 0, so it will be set to 0.",
                      "nqtr.quest.Goal.__init__")
 
+    @property
+    def id(self) -> str:
+        """Id of the Goal"""
+        return self._id
+
+    @id.setter
+    def id(self, value: str):
+        self._id = value
+
+    @property
+    def description(self) -> str:
+        """Description of the Goal"""
+        return self._description
+
+    @description.setter
     @property
     def is_completed(self) -> bool:
         """returns True if the mission has been completed"""
