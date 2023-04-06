@@ -65,7 +65,11 @@ class TimeHandler(object):
 
     @property
     def timeslot_names(self) -> list[tuple[int, str]]:
-        return self._timeslot_names | []
+        if not self._timeslot_names is list:
+            log_warn("You have set timeslot_names to a non-list type, so it will be set to an empty list.",
+                     "nqtr.time.TimeHandler.timeslot_names")
+            self._timeslot_names = []
+        return self._timeslot_names
 
     @timeslot_names.setter
     def timeslot_names(self, value: list[tuple[int, str]]):
@@ -73,7 +77,11 @@ class TimeHandler(object):
 
     @property
     def weekday_names(self) -> list[str]:
-        return self._weekday_names | []
+        if not self._weekday_names is list:
+            log_warn("You have set weekday_names to a non-list type, so it will be set to an empty list.",
+                     "nqtr.time.TimeHandler.weekday_names")
+            self._weekday_names = []
+        return self._weekday_names
 
     @weekday_names.setter
     def weekday_names(self, value: list[str]):
@@ -98,7 +106,7 @@ class TimeHandler(object):
         This variable is used to update images that change according to time.
         es: image = "sky-[tm.timeslot_number]"""
         if len(self.timeslot_names) > 0:
-            for index in range(self.timeslot_names):
+            for index in range(len(self.timeslot_names)):
                 if self.hour >= self.timeslot_names[index][0]:
                     return index
             return len(self.timeslot_names)
