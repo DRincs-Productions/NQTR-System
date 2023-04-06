@@ -48,7 +48,7 @@ label order_product:
     return
 
 label add_product:
-    $ actions["take_product"] = Act(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", rooms=['terrace'])
+    $ actions["take_product"] = Act(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", room_ids=['terrace'])
     return
 
 label take_product:
