@@ -1,3 +1,115 @@
+# version beta
+
+```shell
+git checkout -b nqtr-tool
+git checkout nqtr-tool
+git config pull.rebase false
+git pull https://github.com/DRincs-Productions/NQTR-System.git tool-only --allow-unrelated-histories
+
+```
+
+## Migrations
+
+Use search and replace of vscode with regex functionality enabled
+
+![image](https://user-images.githubusercontent.com/67595890/224504331-1f546922-5673-4fa9-8cc7-e3fc4e671305.png)
+
+### getTalkLabelName
+
+* `getTalkLabelName\(\)`
+* `label_name`
+
+### getButtonIcon
+
+* `getButtonIcon\(\)`
+* `button_icon`
+
+### get_hour_name
+
+* `get_hour_name\(\)`
+* `timeslot_name`
+
+### get_day_number
+
+* `get_day_number\(\)`
+* `day`
+
+### get_hour_number
+
+* `get_hour_number\(\)`
+* `hour`
+
+### get_weekday_number
+
+* `get_weekday_number\(\)`
+* `weekday_number`
+
+### get_weekday_name
+
+* `get_weekday_name\(\)`
+* `weekday_name`
+
+### isEvent
+
+* `isEvent\(\)`
+* `is_event`
+
+### getBackground
+
+* `getBackground\(\)`
+* `background`
+
+### bg
+
+* `bg =(.*)`
+* `background =$1`
+
+### bg
+
+* `bg=(.*)`
+* `background =$1`
+
+### isButton
+
+* `isButton\(\)`
+* `is_button`
+
+### isPictureInBackground
+
+* `isPictureInBackground\(\)`
+* `is_picture_in_background`
+
+### getButtonOrDefault
+
+* `getButtonOrDefault\(\)`
+* `button_icon`
+
+### getPictureInBackgroundOrDefault
+
+* `getPictureInBackgroundOrDefault\(\)`
+* `picture_in_background`
+
+### getSelectedButtonOrDefault
+
+* `getSelectedButtonOrDefault\(\)`
+* `button_icon_selected`
+
+
+### getSelectedPictureInBackgroundOrDefault
+
+* `getSelectedPictureInBackgroundOrDefault\(\)`
+* `picture_in_background_selected`
+
+### image_time
+
+* `image_time`
+* `timeslot_number`
+
+### hour_names
+
+* `hour_names`
+* `timeslot_names`
+
 # v1.0.3
 
 ```shell

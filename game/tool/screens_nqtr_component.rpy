@@ -20,7 +20,7 @@ screen time_text(tm, show_wait_button = False):
                 xalign (0.5)
                 size gui.hour_text_size
                 drop_shadow [(2, 2)]
-            text tm.get_weekday_name():
+            text tm.weekday_name:
                 xalign (0.5)
                 size gui.normal_text_size
                 drop_shadow [(2, 2)]
@@ -31,30 +31,32 @@ screen time_text(tm, show_wait_button = False):
             use wait_button(small = True)
 
 screen action_button(act, show_picture_in_background = False):
-    if not show_picture_in_background:
-        if not act.isButton():
+    if not act.isHidden(flags):
+        if not show_picture_in_background:
+            if act.is_picture_in_background:
+                imagebutton:
+                    align (act.xalign, act.yalign)
+                    idle act.picture_in_background
+                    hover act.picture_in_background_selected
+                    focus_mask True
+                    action [
+                        Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
+                    ]
+                    if renpy.variant("pc"):
+                        tooltip act.name
+                    at middle_action_is_in_room
+        elif act.is_button == True:
             imagebutton:
-                align (act.xalign, act.yalign)
-                idle act.getPictureInBackgroundOrDefault()
-                hover act.getSelectedPictureInBackgroundOrDefault()
+                idle act.button_icon
+                hover act.button_icon_selected
                 focus_mask True
                 action [
                     Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
                 ]
                 if renpy.variant("pc"):
                     tooltip act.name
-                at middle_action_is_in_room
-    elif (act.isButton() == True and not act.isHidden(flags)):
-        imagebutton:
-            idle act.getButtonOrDefault()
-            hover act.getSelectedButtonOrDefault()
-            focus_mask True
-            action [
-                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-            ]
-            if renpy.variant("pc"):
-                tooltip act.name
-            at middle_action
+                at middle_action
+        # TODO else default icon button
 
 screen action_talk_button(ch_id, talk_obj, background):
     if (not talk_obj.isHidden(flags)):
@@ -63,13 +65,13 @@ screen action_talk_button(ch_id, talk_obj, background):
             background None
 
             imagebutton:
-                idle talk_obj.getButtonIcon() or gui.default_talk_button_icon
-                hover talk_obj.getSelectedButtonOrDefault()
+                idle talk_obj.button_icon or gui.default_talk_button_icon
+                hover talk_obj.button_icon_selected
                 focus_mask True
                 action [
                     SetVariable('talk_ch', ch_id),
                     SetVariable('talk_image', background),
-                    Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
+                    Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
                 ]
                 at middle_action
             # inserts the icon of the character who is currently in that room
@@ -82,7 +84,7 @@ screen action_talk_button(ch_id, talk_obj, background):
                     action [
                         SetVariable('talk_ch', ch_id),
                         SetVariable('talk_image', background),
-                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.getTalkLabelName()),
+                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
                     ]
             if renpy.variant("pc"):
                 tooltip _("Talk")
@@ -92,9 +94,9 @@ screen location_button(location):
         vbox:
             align (location.yalign, location.xalign)
             imagebutton:
-                idle location.getPictureInBackgroundOrDefault()
-                selected_idle location.getSelectedPictureInBackgroundOrDefault()
-                selected_hover location.getSelectedPictureInBackgroundOrDefault()
+                idle location.picture_in_background
+                selected_idle location.picture_in_background_selected
+                selected_hover location.picture_in_background_selected
                 selected location == cur_location
                 sensitive not location.isHidden(flags)
                 focus_mask True
@@ -149,7 +151,7 @@ screen map(maps, cur_map_id):
 
 screen room_button(room, cur_room, i, find_ch = False):
     # If the Locations where I am is the same as the Locations where the room is located
-    if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden(flags)):
+    if (room.location_id == cur_location.id and room.is_button != None and not room.isHidden(flags)):
         button:
             xysize (126, 190)
             action [
@@ -166,9 +168,9 @@ screen room_button(room, cur_room, i, find_ch = False):
                 # Room icon
                 imagebutton:
                     align (0.5, 0.0)
-                    idle room.getButtonOrDefault()
-                    selected_idle room.getSelectedButtonOrDefault()
-                    selected_hover room.getSelectedButtonOrDefault()
+                    idle room.button_icon
+                    selected_idle room.button_icon_selected
+                    selected_hover room.button_icon_selected
                     selected (True if cur_room and cur_room.id == room.id else False)
                     sensitive not room.isDisabled(flags)
                     focus_mask True

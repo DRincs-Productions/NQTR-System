@@ -1,7 +1,7 @@
 from typing import Optional
 
 from pythonpackages.nqtr.action_talk import TalkObject
-from pythonpackages.nqtr.time import MAX_DAY_HOUR, START_DAY_HOUR, TimeHandler
+from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
 
 
 class Commitment(object):
@@ -10,10 +10,10 @@ class Commitment(object):
 
     def __init__(
         self,
-        tm_start: int = START_DAY_HOUR,
+        tm_start: int = MIN_DAY_HOUR,
         tm_stop: int = MAX_DAY_HOUR,
         ch_talkobj_dict: dict[str, TalkObject] = {},
-        bg: Optional[str] = None,
+        background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
         tag: Optional[str] = None,  # TODO: implement this
@@ -21,7 +21,7 @@ class Commitment(object):
         event_label_name: Optional[str] = None
     ):
 
-        self.bg = bg
+        self.background = background
         self.ch_talkobj_dict = ch_talkobj_dict
         self.tm_start = tm_start
         self.tm_stop = tm_stop-0.1
@@ -43,6 +43,20 @@ class Commitment(object):
         # call change_room
         self.event_label_name = event_label_name
 
+    @property
+    def is_event(self) -> bool:
+        "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
+        return (self.event_label_name is not None)
+
+    @property
+    def background(self) -> Optional[str]:
+        "Image path shown when standing at the Commitment site. And it is also the image shown before and after the conversation with a character"
+        return self._bg
+
+    @background.setter
+    def background(self, value: Optional[str]):
+        self._bg = value
+
     def getChIcons(self, ch_icons: dict[str, str]) -> list[str]:
         """returns a list of ch icons (not secondary ch)"""
         icons = []
@@ -53,15 +67,7 @@ class Commitment(object):
 
     def getTalkBackground(self, ch: str) -> str:
         "Returns the image during a conversation"
-        return self.ch_talkobj_dict[ch].getBackground()
-
-    def getBackground(self) -> str:  # TODO: convert to a property
-        "Returns the BeforeTalk image of the first ch that has it. Otherwise None"
-        return self.bg
-
-    def isEvent(self) -> bool:  # TODO: convert to a property
-        "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
-        return (self.event_label_name is not None)
+        return self.ch_talkobj_dict[ch].conversation_background
 
     # doesn't seem to work
     # use something like this: renpy.call(cur_events_location[cur_room.id].event_label_name)
@@ -117,7 +123,7 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm
     events = {}
     for comm in routine.values():
         # Check Time and Location and is event
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.isEvent() == True):
+        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.is_event == True):
             events[comm.room_id] = comm
     return events
 
@@ -154,5 +160,5 @@ def getBgRoomRoutine(commitments: dict[str, Commitment], room_id) -> None:
     """Returns the first background image of the commitments based on the current room. if there are no returns None"""
     for item in commitments.values():
         if item.room_id == room_id:
-            return item.getBackground()
+            return item.background
     return

@@ -20,6 +20,7 @@ class Button(object):
         yalign: Optional[int] = None,
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
+        default_label_name: Optional[str] = None,
     ):
 
         self.name = name
@@ -33,6 +34,7 @@ class Button(object):
         self.yalign = yalign
         self.disabled = disabled
         self.hidden = hidden
+        self.default_label_name = default_label_name
         if (self.xalign != None and self.yalign == None):
             log_warn("xalign is set but yalign is not, so yalign set to 0",
                      "nqtr.button.Button.__init__")
@@ -42,14 +44,86 @@ class Button(object):
                      "nqtr.button.Button.__init__")
             self.xalign = 0
         if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
-            log_info("You have set button_icon and picture_in_background to None, this action will be ignored",
+            log_info("You have set button_icon and picture_in_background to None, this button will be ignored",
                      "nqtr.button.Button.__init__")
 
-    def isButton(self) -> bool:  # TODO: convert to a property
+    @property
+    def label_name(self) -> Optional[str]:
+        """onClick label name"""
+        if not isNullOrEmpty(self._label_name):
+            return self._label_name
+        elif not isNullOrEmpty(self.default_label_name):
+            return self.default_label_name
+        else:
+            log_warn("label_name is null or empty",
+                     "nqtr.button.Button.label_name")
+        return
+
+    @label_name.setter
+    def label_name(self, value: Optional[str]):
+        self._label_name = value
+
+    @property
+    def button_icon(self) -> Optional[str]:
+        """Button icon"""
+        if (not isNullOrEmpty(self._button_icon)):
+            return self._button_icon
+        return None
+
+    @button_icon.setter
+    def button_icon(self, value: Optional[str]):
+        self._button_icon = value
+
+    @property
+    def picture_in_background(self) -> Optional[str]:
+        """Picture in background"""
+        if (not isNullOrEmpty(self._picture_in_background)):
+            return self._picture_in_background
+        return None
+
+    @picture_in_background.setter
+    def picture_in_background(self, value: Optional[str]):
+        self._picture_in_background = value
+
+    @property
+    def button_icon_selected(self) -> Optional[str]:
+        """Selected button icon"""
+        if (not isNullOrEmpty(self._button_icon_selected)):
+            return self._button_icon_selected
+        elif (not isNullOrEmpty(self.button_icon)):
+            return self.button_icon
+        else:
+            log_info("You have set button_icon_selected and button_icon to None, this button will be ignored",
+                     "nqtr.button.Button.selected_button_icon")
+        return None
+
+    @button_icon_selected.setter
+    def button_icon_selected(self, value: Optional[str]):
+        self._button_icon_selected = value
+
+    @property
+    def picture_in_background_selected(self) -> Optional[str]:
+        """Selected picture in background"""
+        if (not isNullOrEmpty(self._picture_in_background_selected)):
+            return self._picture_in_background_selected
+        elif (not isNullOrEmpty(self.picture_in_background)):
+            return self.picture_in_background
+        else:
+            log_info("You have set picture_in_background_selected and picture_in_background to None, this button will be ignored",
+                     "nqtr.button.Button.selected_picture_in_background")
+        return None
+
+    @picture_in_background_selected.setter
+    def picture_in_background_selected(self, value: Optional[str]):
+        self._picture_in_background_selected = value
+
+    @property
+    def is_button(self) -> bool:
         """This is a button?"""
         return not isNullOrEmpty(self.button_icon)
 
-    def isPictureInBackground(self) -> bool:  # TODO: convert to a property
+    @property
+    def is_picture_in_background(self) -> bool:
         """This is a is picture in background?"""
         return not isNullOrEmpty(self.picture_in_background)
 
@@ -66,53 +140,3 @@ class Button(object):
             return getFlags(self.hidden, flags)
         else:
             return self.hidden
-
-    def getButtonOrDefault(self) -> str:  # TODO: convert to a property
-        if (not isNullOrEmpty(self.button_icon)):
-            return self.button_icon
-        elif (not isNullOrEmpty(self.picture_in_background)):
-            return self.picture_in_background
-        else:
-            log_error("You have set button_icon and picture_in_background to None, this button will be ignored",
-                      "nqtr.button.Button.getButtonOrDefault()")
-        return ""
-
-    # TODO: convert to a property
-    def getPictureInBackgroundOrDefault(self) -> str:
-        if (not isNullOrEmpty(self.picture_in_background)):
-            return self.picture_in_background
-        elif (not isNullOrEmpty(self.button_icon)):
-            return self.button_icon
-        else:
-            log_error("You have set button_icon and picture_in_background to None, this button will be ignored",
-                      "nqtr.button.Button.getPictureInBackgroundOrDefault()")
-        return ""
-
-    def getSelectedButtonOrDefault(self) -> str:  # TODO: convert to a property
-        if (not isNullOrEmpty(self.button_icon_selected)):
-            return self.button_icon_selected
-        elif (not isNullOrEmpty(self.button_icon)):
-            return self.button_icon
-        elif (not isNullOrEmpty(self.picture_in_background_selected)):
-            return self.picture_in_background_selected
-        elif (not isNullOrEmpty(self.picture_in_background)):
-            return self.picture_in_background
-        else:
-            log_info("You have set button_icon_selected and picture_in_background_selected and button_icon and picture_in_background to None, this button will be ignored",
-                     "nqtr.button.Button.getSelectedButtonOrDefault()")
-        return ""
-
-    # TODO: convert to a property
-    def getSelectedPictureInBackgroundOrDefault(self) -> str:
-        if (not isNullOrEmpty(self.picture_in_background_selected)):
-            return self.picture_in_background_selected
-        elif (not isNullOrEmpty(self.picture_in_background)):
-            return self.picture_in_background
-        elif (not isNullOrEmpty(self.button_icon_selected)):
-            return self.button_icon_selected
-        elif (not isNullOrEmpty(self.button_icon)):
-            return self.button_icon
-        else:
-            log_error("You have set picture_in_background_selected and button_icon_selected and button_icon and picture_in_background to None, this button will be ignored",
-                      "nqtr.button.Button.getSelectedPictureInBackgroundOrDefault()")
-        return ""

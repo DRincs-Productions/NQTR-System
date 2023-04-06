@@ -3,7 +3,7 @@
         "scope": "renpy",
         "prefix": "DR_RoomAdd_in_list",
         "body": [
-            "Room(id=\"${1:room_id}\", location_id=\"${2:house}\", name=_(\"${3:My room}\"), button_icon=\"icon ${4:myroom}\", bg=\"bg ${4:myroom}\", action_ids = []),",
+            "Room(id=\"${1:room_id}\", location_id=\"${2:house}\", name=_(\"${3:My room}\"), button_icon=\"icon ${4:myroom}\", background =\"bg ${4:myroom}\", action_ids = []),",
         ],
         "description": "Add a Room in dictionary"
     },
@@ -29,7 +29,7 @@
         "prefix": "DR_MapAdd_in_dict",
         "body": [
             "\"${1:map_id}\": Map(",
-            "    name = _(\"${2:Map Name}\"), bg = \"bg ${1:map_id}\",",
+            "    name = _(\"${2:Map Name}\"), background = \"bg ${1:map_id}\",",
             "    map_id_north = None,",
             "    map_id_south = None,",
             "    map_id_west = None,",

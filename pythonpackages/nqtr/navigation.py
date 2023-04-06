@@ -17,7 +17,7 @@ class Room(Button):
         id: str,
         location_id: str,
         # Room params
-        bg: str = None,
+        background: Optional[str] = None,
         action_ids: Optional[list[str]] = None,
         # Button params
         button_icon: str = None,
@@ -46,8 +46,17 @@ class Room(Button):
         # Room init
         self.id = id
         self.location_id = location_id
-        self.bg = bg
+        self.background = background
         self.action_ids = self.action_ids = action_ids if action_ids else []
+
+    @property
+    def background(self) -> Optional[str]:
+        """Image path shown when standing at the Room"""
+        return self._bg
+
+    @background.setter
+    def background(self, value: Optional[str]):
+        self._bg = value
 
 
 class Location(Button):
@@ -96,7 +105,7 @@ class Map(Button):
         self,
         # Requirement
         name: str,
-        bg: str,
+        background: str,
         map_id_north: str = None,
         map_id_south: str = None,
         map_id_west: str = None,
@@ -118,11 +127,20 @@ class Map(Button):
             disabled=disabled,
             hidden=hidden,
         )
-        self.bg = bg
+        self.background = background
         self.map_id_north = map_id_north
         self.map_id_south = map_id_south
         self.map_id_west = map_id_west
         self.map_id_east = map_id_east
+
+    @property
+    def background(self) -> str:
+        """Image path shown when standing at the Map"""
+        return self._bg
+
+    @background.setter
+    def background(self, value: str):
+        self._bg = value
 
 
 def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], now_hour: int, tm: TimeHandler) -> bool:

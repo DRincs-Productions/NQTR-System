@@ -1,7 +1,8 @@
 from pythonpackages.renpy_custom_log import *
 
-START_DAY_HOUR = 0
+MIN_DAY_HOUR = 0
 MAX_DAY_HOUR = 24
+DEFAULT_TIME_SPENT = 1
 
 
 class TimeHandler(object):
@@ -13,62 +14,124 @@ class TimeHandler(object):
         hour: int = 8,
         weekend_day: int = 6,
         day: int = 0,
-        event_duration: int = 6,
-        hour_names=(),
-        weekday_names=()
+        timeslot_names: list[tuple[int, str]] = [],
+        weekday_names: list[str] = [],
     ):
         self.hour_of_new_day = hour_of_new_day
         self.hour = hour
         self.day = day
         self.weekend_day = weekend_day
-        self.event_duration = event_duration
-        self.hour_names = hour_names
+        self.timeslot_names = timeslot_names
         self.weekday_names = weekday_names
-        # this variable is used to update images that change according to time.
-        # es image = "sky-[image_time]"
-        self.image_time = 0
-        self.update_image_time()
+
         if self.hour_of_new_day < 0:
             log_warn("You have set hour_of_new_day < 0, so it will be set to 0.",
                      "nqtr.time.TimeHandler.__init__")
             self.hour_of_new_day = 0
-        if self.hour < 0:
-            log_warn("You have set hour < 0, so it will be set to 0.",
-                     "nqtr.time.TimeHandler.__init__")
-            self.hour = 0
-        if self.day < 0:
-            log_warn("You have set day < 0, so it will be set to 0.",
-                     "nqtr.time.TimeHandler.__init__")
-            self.day = 0
         if self.weekend_day < 0:
             log_warn("You have set weekend_day < 0, so it will be set to 6.",
                      "nqtr.time.TimeHandler.__init__")
             self.weekend_day = 6
 
-    def get_hour_name(self) -> str:  # TODO: convert to a property
-        if self.hour >= 22:
-            return self.hour_names[0][1]
-        if self.hour >= 19:
-            return self.hour_names[3][1]
-        if self.hour >= 12:
-            return self.hour_names[2][1]
-        if self.hour >= self.hour_of_new_day:
-            return self.hour_names[1][1]
-        if self.hour >= 0:
-            return self.hour_names[0][1]
-        return self.hour_names[2][1]
+    @property
+    def day(self) -> int:
+        """current day number"""
+        return self._day
 
-    def get_day_number(self) -> int:  # TODO: convert to a property
-        return self.day
+    @day.setter
+    def day(self, value: int):
+        self._day = value
+        if (self._day < 0):
+            self._day = 0
+            log_warn("You have set day < 0, so it will be set to 0.",
+                     "nqtr.time.TimeHandler.day")
 
-    def get_hour_number(self) -> int:  # TODO: convert to a property
-        return self.hour
+    @property
+    def hour(self) -> int:
+        """current hour number"""
+        return self._hour
 
-    def get_weekday_number(self) -> int:  # TODO: convert to a property
-        return self.day % 7
+    @hour.setter
+    def hour(self, value: int):
+        self._hour = value
+        if (self._hour > MAX_DAY_HOUR):
+            self._hour = MAX_DAY_HOUR
+            log_warn("You have set hour > MAX_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
+                     "nqtr.time.TimeHandler.hour")
+        if (self._hour < MIN_DAY_HOUR):
+            self._hour = MIN_DAY_HOUR
+            log_warn("You have set hour < MIN_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
+                     "nqtr.time.TimeHandler.hour")
 
-    def get_weekday_name(self) -> str:  # TODO: convert to a property
-        return self.weekday_names[self.get_weekday_number()]
+    @property
+    def timeslot_names(self) -> list[tuple[int, str]]:
+        if not self._timeslot_names is list:
+            log_warn("You have set timeslot_names to a non-list type, so it will be set to an empty list.",
+                     "nqtr.time.TimeHandler.timeslot_names")
+            self._timeslot_names = []
+        return self._timeslot_names
+
+    @timeslot_names.setter
+    def timeslot_names(self, value: list[tuple[int, str]]):
+        self._timeslot_names = value
+
+    @property
+    def weekday_names(self) -> list[str]:
+        if not self._weekday_names is list:
+            log_warn("You have set weekday_names to a non-list type, so it will be set to an empty list.",
+                     "nqtr.time.TimeHandler.weekday_names")
+            self._weekday_names = []
+        return self._weekday_names
+
+    @weekday_names.setter
+    def weekday_names(self, value: list[str]):
+        self._weekday_names = value
+
+    @property
+    def timeslot_name(self) -> str:
+        """Returns the name of the current timeslot."""
+        if len(self.timeslot_names) > 0:
+            for timeslot in self.timeslot_names:
+                if self.hour >= timeslot[0]:
+                    return timeslot[1]
+            return self.timeslot_names[len(self.timeslot_names)][1]
+        else:
+            log_warn("You have not set any timeslot_names, so it will return an empty string.",
+                     "nqtr.time.TimeHandler.timeslot_name")
+            return ""
+
+    @property
+    def timeslot_number(self) -> int:
+        """Returns the number of the current timeslot.
+        This variable is used to update images that change according to time.
+        es: image = "sky-[tm.timeslot_number]"""
+        if len(self.timeslot_names) > 0:
+            for index in range(len(self.timeslot_names)):
+                if self.hour >= self.timeslot_names[index][0]:
+                    return index
+            return len(self.timeslot_names)
+        else:
+            log_error("You have not set any timeslot_names, so it will return 0.",
+                      "nqtr.time.TimeHandler.timeslot_number")
+            return 0
+
+    @property
+    def weekday_number(self) -> int:
+        if len(self.weekday_names) > 0:
+            return self.day % len(self.weekday_names)
+        else:
+            log_warn("You have not set any weekday_names, so it will return 0.",
+                     "nqtr.time.TimeHandler.weekday_number")
+            return 0
+
+    @property
+    def weekday_name(self) -> str:
+        if len(self.weekday_names) > 0:
+            return self.weekday_names[self.weekday_number]
+        else:
+            log_warn("You have not set any weekday_names, so it will return an empty string.",
+                     "nqtr.time.TimeHandler.weekday_name")
+            return ""
 
     # def get_day_of_month(self, hour=None):
     #     hour = self.get_hour(hour)
@@ -95,37 +158,29 @@ class TimeHandler(object):
     #         day -= len(month[1])
     #     return month_number
 
-    def new_hour(self, amt: int = None) -> bool:
+    def new_hour(self, amt: int = DEFAULT_TIME_SPENT) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy """
-        # if it is too late you have to use new_day()
-        if (amt == None):
-            amt = self.event_duration
-        if (self.hour < self.hour_of_new_day):
+        if self.hour == MAX_DAY_HOUR and amt > 0:
+            log_warn("Max hour reached, you can't add more hours",
+                     "nqtr.time.TimeHandler.new_hour")
+            return False
+        elif self.hour == MIN_DAY_HOUR and amt < 0:
+            log_warn("Min hour reached, you can't remove more hours",
+                     "nqtr.time.TimeHandler.new_hour")
             return False
 
         self.hour += amt
-        if (self.hour > MAX_DAY_HOUR):
-            self.hour -= MAX_DAY_HOUR
-        self.update_image_time()
         return True
 
-    def update_image_time(self) -> None:  # TODO: convert to a property
-        if (self.get_hour_name() == "Evening"):
-            self.image_time = 2
-        elif (self.get_hour_name() == "Night"):
-            self.image_time = 3
-        elif (self.get_hour_name() == "Morning"):
-            self.image_time = 0
-        else:
-            self.image_time = 1
-        return
-
-    def new_day(self) -> None:  # TODO: convert to a property
+    def new_day(self, amt: int = 1) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
+        if self.day == 0 and amt < 0:
+            log_warn("Min day reached, you can't remove more days",
+                     "nqtr.time.TimeHandler.new_day")
+            return False
         self.hour = self.hour_of_new_day
-        self.day += 1
-        self.update_image_time()
-        return
+        self.day += amt
+        return True
 
     def now_is_between(self, end: int, start: int = 0, now=None) -> bool:
         if now is None:

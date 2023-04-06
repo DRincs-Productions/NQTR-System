@@ -14,7 +14,9 @@ class TalkObject(Button):
     def __init__(
         self,
         # only TalkObject
-        bg: Optional[str] = None,
+        # Deprecation: use conversation_background
+        background: Optional[str] = None,
+        conversation_background: Optional[str] = None,
         # Button
         name: Optional[str] = None,
         label_name: Optional[str] = None,
@@ -38,35 +40,30 @@ class TalkObject(Button):
             yalign=yalign,
             disabled=disabled,
             hidden=hidden,
+            default_label_name=DEFAULT_LABEL_TALK,
         )
-
-        self.bg = bg
-
-    def isButton(self) -> bool:  # TODO: convert to a property
-        """This is a button?"""
-        return not isNullOrEmpty(self.button_icon)
-
-    def isPictureInBackground(self) -> bool:  # TODO: convert to a property
-        """This is a is picture in background?"""
-        return not isNullOrEmpty(self.picture_in_background)
-
-    def getTalkLabelName(self) -> None:  # TODO: convert to a property
-        # if label_name == None does the default procedure
-        if not isNullOrEmpty(self.label_name):
-            return self.label_name
-        elif not isNullOrEmpty(DEFAULT_LABEL_TALK):
-            return DEFAULT_LABEL_TALK
+        if conversation_background:
+            self.conversation_background = conversation_background
         else:
-            log_error("DEFAULT_LABEL_TALK is null or empty",
-                      "nqtr.action_talk.TalkObject.getTalkLabelName()")
-        return
+            self.conversation_background = background
 
-    def getBackground(self) -> str:  # TODO: convert to a property
-        """Returns the image during a conversation"""
-        return self.bg
+    @property
+    @DeprecationWarning
+    def background(self) -> Optional[str]:
+        "Deprecation: use conversation_background"
+        return self.conversation_background
 
-    def getButtonIcon(self) -> Optional[str]:  # TODO: convert to a property
-        if (self.button_icon != None):
-            return self.button_icon
-        else:
-            return None
+    @background.setter
+    @DeprecationWarning
+    def background(self, value: Optional[str]):
+        "Deprecation: use conversation_background"
+        self.conversation_background = value
+
+    @property
+    def conversation_background(self) -> Optional[str]:
+        "Image path shown during a conversation."
+        return self._bg
+
+    @conversation_background.setter
+    def conversation_background(self, value: Optional[str]):
+        self._bg = value
