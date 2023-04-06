@@ -12,8 +12,9 @@ class Room(Button):
 
     def __init__(
         self,
-        # Requirement
+        # Requirement Button params
         name: str,
+        # Requirement
         id: str,
         location_id: str,
         # Room params
@@ -33,7 +34,6 @@ class Room(Button):
         # Button init
         super().__init__(
             name=name,
-            label_name=None,
             button_icon=button_icon,
             button_icon_selected=button_icon_selected,
             picture_in_background=picture_in_background,
@@ -47,7 +47,25 @@ class Room(Button):
         self.id = id
         self.location_id = location_id
         self.background = background
-        self.action_ids = self.action_ids = action_ids if action_ids else []
+        self.action_ids = action_ids
+
+    @property
+    def id(self) -> str:
+        """Room id"""
+        return self._id
+
+    @id.setter
+    def id(self, value: str):
+        self._id = value
+
+    @property
+    def location_id(self) -> str:
+        """Location id where the Room is located"""
+        return self._location_id
+
+    @location_id.setter
+    def location_id(self, value: str):
+        self._location_id = value
 
     @property
     def background(self) -> Optional[str]:
@@ -58,6 +76,15 @@ class Room(Button):
     def background(self, value: Optional[str]):
         self._bg = value
 
+    @property
+    def action_ids(self) -> list[str]:
+        """List of action ids that can be performed in the Room"""
+        return self._action_ids
+
+    @action_ids.setter
+    def action_ids(self, value: Optional[list[str]]):
+        self._action_ids = value if value is not None else []
+
 
 class Location(Button):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location """
@@ -67,7 +94,8 @@ class Location(Button):
         # Requirement
         id: str,
         map_id: str,
-        external_room_id: str,  # Will be set this room when a location is changed
+        external_room_id: str,
+        # Requirement Button params
         name: str,
         # Button params
         button_icon: str = None,
@@ -83,7 +111,6 @@ class Location(Button):
         # Button init
         super().__init__(
             name=name,
-            label_name=None,
             button_icon=button_icon,
             button_icon_selected=button_icon_selected,
             picture_in_background=picture_in_background,
@@ -97,19 +124,49 @@ class Location(Button):
         self.map_id = map_id
         self.external_room_id = external_room_id
 
+    @property
+    def id(self) -> str:
+        """Location id"""
+        return self._id
+
+    @id.setter
+    def id(self, value: str):
+        self._id = value
+
+    @property
+    def map_id(self) -> str:
+        """Map id where the Location is located"""
+        return self._map_id
+
+    @map_id.setter
+    def map_id(self, value: str):
+        self._map_id = value
+
+    @property
+    def external_room_id(self) -> str:
+        """Room id where the Location is located.
+        Will be set this room when a location is changed"""
+        return self._external_room_id
+
+    @external_room_id.setter
+    def external_room_id(self, value: str):
+        self._external_room_id = value
+
 
 class Map(Button):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map """
 
     def __init__(
         self,
-        # Requirement
+        # Requirement Button params
         name: str,
+        # Map params
         background: str,
         map_id_north: str = None,
         map_id_south: str = None,
         map_id_west: str = None,
         map_id_east: str = None,
+        # Button params
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
@@ -117,7 +174,6 @@ class Map(Button):
         # Button init
         super().__init__(
             name=name,
-            label_name=None,
             button_icon=None,
             button_icon_selected=None,
             picture_in_background=None,
@@ -141,6 +197,42 @@ class Map(Button):
     @background.setter
     def background(self, value: str):
         self._bg = value
+
+    @property
+    def map_id_north(self) -> Optional[str]:
+        """Map id where the Map is located"""
+        return self._map_id_north
+
+    @map_id_north.setter
+    def map_id_north(self, value: Optional[str]):
+        self._map_id_north = value
+
+    @property
+    def map_id_south(self) -> Optional[str]:
+        """Map id where the Map is located"""
+        return self._map_id_south
+
+    @map_id_south.setter
+    def map_id_south(self, value: Optional[str]):
+        self._map_id_south = value
+
+    @property
+    def map_id_west(self) -> Optional[str]:
+        """Map id where the Map is located"""
+        return self._map_id_west
+
+    @map_id_west.setter
+    def map_id_west(self, value: Optional[str]):
+        self._map_id_west = value
+
+    @property
+    def map_id_east(self) -> Optional[str]:
+        """Map id where the Map is located"""
+        return self._map_id_east
+
+    @map_id_east.setter
+    def map_id_east(self, value: Optional[str]):
+        self._map_id_east = value
 
 
 def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], now_hour: int, tm: TimeHandler) -> bool:

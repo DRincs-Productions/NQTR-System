@@ -65,9 +65,6 @@ class Button(object):
     @label_name.setter
     def label_name(self, value: Optional[str]):
         self._label_name = value
-        if (isNullOrEmpty(self._label_name)):
-            log_error("You have set label_name to None or empty for the button " + self.name,
-                      "nqtr.button.Button.label_name")
 
     @property
     def button_icon(self) -> Optional[str]:

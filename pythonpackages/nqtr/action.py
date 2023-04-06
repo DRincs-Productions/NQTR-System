@@ -100,6 +100,7 @@ class Act(Button):
 
     @property
     def day_start(self) -> Optional[int]:
+        """Start day of the action"""
         return self._day_start
 
     @day_start.setter
@@ -108,6 +109,7 @@ class Act(Button):
 
     @property
     def day_deadline(self) -> Optional[int]:
+        """Deadline day of the action"""
         return self._day_deadline
 
     @day_deadline.setter
