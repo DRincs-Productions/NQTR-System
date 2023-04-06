@@ -36,7 +36,7 @@ screen action_button(act, show_picture_in_background = False):
             imagebutton:
                 align (act.xalign, act.yalign)
                 idle act.picture_in_background
-                hover act.getSelectedPictureInBackgroundOrDefault()
+                hover act.picture_in_background_selected
                 focus_mask True
                 action [
                     Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
@@ -47,7 +47,7 @@ screen action_button(act, show_picture_in_background = False):
     elif (act.is_button == True and not act.isHidden(flags)):
         imagebutton:
             idle act.button_icon
-            hover act.getSelectedButtonOrDefault()
+            hover act.button_icon_selected
             focus_mask True
             action [
                 Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
@@ -64,7 +64,7 @@ screen action_talk_button(ch_id, talk_obj, background):
 
             imagebutton:
                 idle talk_obj.button_icon or gui.default_talk_button_icon
-                hover talk_obj.getSelectedButtonOrDefault()
+                hover talk_obj.button_icon_selected
                 focus_mask True
                 action [
                     SetVariable('talk_ch', ch_id),
@@ -93,8 +93,8 @@ screen location_button(location):
             align (location.yalign, location.xalign)
             imagebutton:
                 idle location.picture_in_background
-                selected_idle location.getSelectedPictureInBackgroundOrDefault()
-                selected_hover location.getSelectedPictureInBackgroundOrDefault()
+                selected_idle location.picture_in_background_selected
+                selected_hover location.picture_in_background_selected
                 selected location == cur_location
                 sensitive not location.isHidden(flags)
                 focus_mask True
@@ -167,8 +167,8 @@ screen room_button(room, cur_room, i, find_ch = False):
                 imagebutton:
                     align (0.5, 0.0)
                     idle room.button_icon
-                    selected_idle room.getSelectedButtonOrDefault()
-                    selected_hover room.getSelectedButtonOrDefault()
+                    selected_idle room.button_icon_selected
+                    selected_hover room.button_icon_selected
                     selected (True if cur_room and cur_room.id == room.id else False)
                     sensitive not room.isDisabled(flags)
                     focus_mask True
