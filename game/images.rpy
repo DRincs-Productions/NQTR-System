@@ -15,16 +15,16 @@ image icon map gym = "/interface/map-gym.webp"
 image icon alice = "Alice/icon.webp"
 image icon ann = "Ann/icon.webp"
 
-image bg map = "location/map-[tm.image_time].webp"
+image bg map = "location/map-[tm.timeslot_number].webp"
 image bg nightcity = "location/nightcity.webp"
 
-image bg myroom = "location/myroom-[tm.image_time].webp"
-image bg aliceroom = "location/aliceroom-[tm.image_time].webp"
-image bg annroom = "location/annroom-[tm.image_time].webp"
+image bg myroom = "location/myroom-[tm.timeslot_number].webp"
+image bg aliceroom = "location/aliceroom-[tm.timeslot_number].webp"
+image bg annroom = "location/annroom-[tm.timeslot_number].webp"
 image bg bathroom = "location/bathroom.webp"
-image bg lounge = "location/lounge-[tm.image_time].webp"
-image bg terrace = "location/terrace-[tm.image_time].webp"
-image bg courtyard = "location/courtyard-[tm.image_time].webp"
+image bg lounge = "location/lounge-[tm.timeslot_number].webp"
+image bg terrace = "location/terrace-[tm.timeslot_number].webp"
+image bg courtyard = "location/courtyard-[tm.timeslot_number].webp"
 image bg gym = "location/gym.webp"
 
 image bg alice roomsleep = Composite( (1920, 1080),

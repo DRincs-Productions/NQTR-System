@@ -27,7 +27,7 @@ Use search and replace of vscode with regex functionality enabled
 ### get_hour_name
 
 * `get_hour_name\(\)`
-* `hour_name`
+* `timeslot_name`
 
 ### get_day_number
 
@@ -100,6 +100,15 @@ Use search and replace of vscode with regex functionality enabled
 * `getSelectedPictureInBackgroundOrDefault\(\)`
 * `picture_in_background_selected`
 
+### image_time
+
+* `image_time`
+* `timeslot_number`
+
+### hour_names
+
+* `hour_names`
+* `timeslot_names`
 
 # v1.0.3
 

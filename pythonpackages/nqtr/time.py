@@ -14,14 +14,14 @@ class TimeHandler(object):
         hour: int = 8,
         weekend_day: int = 6,
         day: int = 0,
-        hour_names=(),
-        weekday_names=()
+        timeslot_names: list[tuple[int, str]] = [],
+        weekday_names: list[str] = [],
     ):
         self.hour_of_new_day = hour_of_new_day
         self.hour = hour
         self.day = day
         self.weekend_day = weekend_day
-        self.hour_names = hour_names
+        self.timeslot_names = timeslot_names
         self.weekday_names = weekday_names
 
         if self.hour_of_new_day < 0:
@@ -64,44 +64,66 @@ class TimeHandler(object):
                      "nqtr.time.TimeHandler.hour")
 
     @property
-    def hour_name(self) -> str:
-        if self.hour >= 22:  # Night
-            return self.hour_names[0][1]
-        elif self.hour >= 19:  # Evening
-            return self.hour_names[3][1]
-        elif self.hour >= 12:  # Afternoon
-            return self.hour_names[2][1]
-        elif self.hour >= 5:  # Morning
-            return self.hour_names[1][1]
-        elif self.hour >= 0:  # Night
-            return self.hour_names[0][1]
-        else:  # Afternoon
-            return self.hour_names[2][1]
+    def timeslot_names(self) -> list[tuple[int, str]]:
+        return self._timeslot_names | []
+
+    @timeslot_names.setter
+    def timeslot_names(self, value: list[tuple[int, str]]):
+        self._timeslot_names = value
 
     @property
-    def image_time(self) -> str:
-        """this variable is used to update images that change according to time.
-        es: image = "sky-[tm.image_time]"""
-        if self.hour >= 22:  # Night
-            return "3"
-        elif self.hour >= 19:  # Evening
-            return "2"
-        elif self.hour >= 12:  # Afternoon
-            return "1"
-        elif self.hour >= 5:  # Morning
-            return "0"
-        elif self.hour >= 0:  # Night
-            return "3"
-        else:  # Afternoon
-            return "1"
+    def weekday_names(self) -> list[str]:
+        return self._weekday_names | []
+
+    @weekday_names.setter
+    def weekday_names(self, value: list[str]):
+        self._weekday_names = value
+
+    @property
+    def timeslot_name(self) -> str:
+        """Returns the name of the current timeslot."""
+        if len(self.timeslot_names) > 0:
+            for timeslot in self.timeslot_names:
+                if self.hour >= timeslot[0]:
+                    return timeslot[1]
+            return self.timeslot_names[len(self.timeslot_names)][1]
+        else:
+            log_warn("You have not set any timeslot_names, so it will return an empty string.",
+                     "nqtr.time.TimeHandler.timeslot_name")
+            return ""
+
+    @property
+    def timeslot_number(self) -> int:
+        """Returns the number of the current timeslot.
+        This variable is used to update images that change according to time.
+        es: image = "sky-[tm.timeslot_number]"""
+        if len(self.timeslot_names) > 0:
+            for index in range(self.timeslot_names):
+                if self.hour >= self.timeslot_names[index][0]:
+                    return index
+            return len(self.timeslot_names)
+        else:
+            log_error("You have not set any timeslot_names, so it will return 0.",
+                      "nqtr.time.TimeHandler.timeslot_number")
+            return 0
 
     @property
     def weekday_number(self) -> int:
-        return self.day % 7
+        if len(self.weekday_names) > 0:
+            return self.day % len(self.weekday_names)
+        else:
+            log_warn("You have not set any weekday_names, so it will return 0.",
+                     "nqtr.time.TimeHandler.weekday_number")
+            return 0
 
     @property
     def weekday_name(self) -> str:
-        return self.weekday_names[self.weekday_number]
+        if len(self.weekday_names) > 0:
+            return self.weekday_names[self.weekday_number]
+        else:
+            log_warn("You have not set any weekday_names, so it will return an empty string.",
+                     "nqtr.time.TimeHandler.weekday_name")
+            return ""
 
     # def get_day_of_month(self, hour=None):
     #     hour = self.get_hour(hour)

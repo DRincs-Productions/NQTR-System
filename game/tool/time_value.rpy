@@ -1,16 +1,18 @@
-define hour_names = ((2, _("Night")),
+define hour_names = [
+    (2, _("Night")),
     (8, _("Morning")),
     (14, _("Afternoon")),
     (20, _("Evening")),
-)
-define weekday_names = (_("{#weekday}Monday"),
+]
+define weekday_names = [
+    _("{#weekday}Monday"),
     _("{#weekday}Tuesday"),
     _("{#weekday}Wednesday"),
     _("{#weekday}Thursday"),
     _("{#weekday}Friday"),
     _("{#weekday}Saturday"),
     _("{#weekday}Sunday")
-)
+]
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function
 default tm = TimeHandler(

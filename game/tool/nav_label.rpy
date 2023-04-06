@@ -4,7 +4,7 @@ init python:
 # if in a room there is a different bg (taken in routine) than usual, use this one
 default sp_bg_change_room = None
 # Image of a closed door
-define bg_loc = "location/loc-[tm.image_time].webp"
+define bg_loc = "location/loc-[tm.timeslot_number].webp"
 ## Check if mc can come out
 define block_goout_dialogue = _("Now is not the time to go outside")
 
