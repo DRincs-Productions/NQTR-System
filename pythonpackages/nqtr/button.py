@@ -104,8 +104,8 @@ class Button(object):
     @property
     def picture_in_background_selected(self) -> Optional[str]:
         """Selected picture in background"""
-        if (not isNullOrEmpty(self.picture_in_background_selected)):
-            return self.picture_in_background_selected
+        if (not isNullOrEmpty(self._picture_in_background_selected)):
+            return self._picture_in_background_selected
         elif (not isNullOrEmpty(self.picture_in_background)):
             return self.picture_in_background
         else:
