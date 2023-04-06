@@ -1,3 +1,4 @@
 [submodule "NQTR-System.wiki"]
 	path = wiki
 	url = https://github.com/DRincs-Productions/NQTR-System.wiki.git
+	branch = master
