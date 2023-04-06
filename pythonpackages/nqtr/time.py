@@ -140,7 +140,7 @@ class TimeHandler(object):
 
     def new_day(self, amt: int = 0) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
-        if self.hour == 0 and amt > 0:
+        if self.day == 0 and amt < 0:
             return False
         self.hour = self.hour_of_new_day
         self.day += amt
