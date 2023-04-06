@@ -81,10 +81,7 @@ class Stage(object):
         self.description = description if description else ""
         self.advice = advice if advice else ""
         self.completed = False
-        if info_image:
-            self.info_image = info_image
-        else:
-            self.info_image = background
+        self.info_image = info_image
         # These are the requirements to start the Stage
         self.days_required_to_start = days_required_to_start if days_required_to_start else 0
         self.day_start = None  # Will be initiated when the stage is started
@@ -229,10 +226,7 @@ class Quest(object):
         self.title = title if title else ""
         self.description = description if description else ""
         self.icon = icon
-        if info_image:
-            self.info_image = info_image
-        else:
-            self.info_image = background
+        self.info_image = info_image
         self.stages_id = self.stages_id = stages_id if stages_id else []
         self.tag = tag
         self.development = development

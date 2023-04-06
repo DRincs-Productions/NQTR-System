@@ -40,10 +40,7 @@ class TalkObject(Button):
             hidden=hidden,
             default_label_name=DEFAULT_LABEL_TALK,
         )
-        if conversation_background:
-            self.conversation_background = conversation_background
-        else:
-            self.conversation_background = background
+        self.conversation_background = conversation_background
 
     @property
     @DeprecationWarning
