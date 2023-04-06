@@ -14,8 +14,6 @@ class TalkObject(Button):
     def __init__(
         self,
         # only TalkObject
-        # Deprecation: use conversation_background
-        background: Optional[str] = None,
         conversation_background: Optional[str] = None,
         # Button
         name: Optional[str] = None,

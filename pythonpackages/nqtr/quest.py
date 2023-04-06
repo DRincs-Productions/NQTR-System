@@ -64,7 +64,6 @@ class Stage(object):
         title: str = None,
         description: str = None,
         advice: str = None,
-        background: Optional[str] = None,  # Deprecate: use info_image
         info_image: Optional[str] = None,
         days_required_to_start: int = None,
         flags_requests: Optional[list[str]] = None,  # TODO: implement this
@@ -220,7 +219,6 @@ class Quest(object):
         title: str = None,
         description: str = None,
         icon: str = None,
-        background: Optional[str] = None,  # Deprecate: use info_image
         info_image: Optional[str] = None,
         stages_id: Optional[list[str]] = None,
         tag: str = None,  # TODO: implement this

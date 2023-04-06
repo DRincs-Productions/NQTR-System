@@ -2,7 +2,7 @@ from typing import Optional, Union
 
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.navigation import Room
-from pythonpackages.nqtr.time import TimeHandler
+from pythonpackages.nqtr.time import MAX_DAY_HOUR, TimeHandler
 from pythonpackages.renpy_custom_log import *
 
 
@@ -11,13 +11,13 @@ class Act(Button):
 
     def __init__(
         self,
-        # Requirement
+        # Requirement Button params
         name: str,
         label_name: str,
         # Act params
-        rooms: Optional[list[str]] = None,
-        tm_start: int = 0,
-        tm_stop: int = 25,
+        room_ids: Optional[list[str]] = None,
+        hour_start: int = 0,
+        hour_stop: int = MAX_DAY_HOUR + 1,
         day_start: Optional[int] = None,
         day_deadline: Optional[int] = None,
         # Button params
@@ -45,11 +45,11 @@ class Act(Button):
             hidden=hidden,
         )
         # Act init
-        self.tm_start = tm_start
-        self.tm_stop = tm_stop-0.1
+        self.tm_start = hour_start
+        self.tm_stop = hour_stop-0.1
         self.day_deadline = day_deadline
         self.day_start = day_start
-        self.rooms = rooms if rooms else []
+        self.room_ids = room_ids
         if self.day_start is int and self.day_start < 0:
             self.day_start = None
             log_info("You have set day_start < 0, so it will be ignored",
@@ -58,6 +58,85 @@ class Act(Button):
             self.day_deadline = None
             log_info("You have set day_deadline < 0, so it will be ignored",
                      "nqtr.action.Act.__init__")
+
+    @property
+    def room_ids(self) -> list[str]:
+        """List of room ids where this act can be done"""
+        return self._room_ids
+
+    @room_ids.setter
+    def room_ids(self, value: Optional[list[str]]):
+        self._room_ids = value if value else []
+
+    @property
+    @DeprecationWarning
+    def rooms(self) -> list[str]:
+        """Deprecated, use room_ids"""
+        return self._room_ids
+
+    @rooms.setter
+    @DeprecationWarning
+    def rooms(self, value: Optional[list[str]]):
+        """Deprecated, use room_ids"""
+        self._room_ids = value if value else []
+
+    @property
+    def hour_start(self) -> int:
+        """Start hour of the action"""
+        return self._hour_start
+
+    @hour_start.setter
+    def hour_start(self, value: int):
+        self._hour_start = value
+
+    @property
+    @DeprecationWarning
+    def tm_start(self) -> int:
+        """Deprecated, use hour_start"""
+        return self._hour_start
+
+    @tm_start.setter
+    @DeprecationWarning
+    def tm_start(self, value: int):
+        """Deprecated, use hour_start"""
+        self._hour_start = value
+
+    @property
+    def hour_stop(self) -> int:
+        """Stop hour of the action"""
+        return self._hour_stop
+
+    @hour_stop.setter
+    def hour_stop(self, value: int):
+        self._hour_stop = value
+
+    @property
+    @DeprecationWarning
+    def tm_stop(self) -> int:
+        """Deprecated, use hour_stop"""
+        return self._hour_stop
+
+    @tm_stop.setter
+    @DeprecationWarning
+    def tm_stop(self, value: int):
+        """Deprecated, use hour_stop"""
+        self._hour_stop = value
+
+    @property
+    def day_start(self) -> Optional[int]:
+        return self._day_start
+
+    @day_start.setter
+    def day_start(self, value: Optional[int]):
+        self._day_start = value
+
+    @property
+    def day_deadline(self) -> Optional[int]:
+        return self._day_deadline
+
+    @day_deadline.setter
+    def day_deadline(self, value: Optional[int]):
+        self._day_deadline = value
 
     def is_deadline(self, current_day: int) -> bool:
         """Return True if the deadline is passed"""
@@ -88,7 +167,7 @@ def getActions(actions: dict[str, Act], room: Room, now_hour: int, current_day: 
     """Return a action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
-        if room.id in act.rooms or act_id in room.action_ids:
+        if room.id in act.room_ids or act_id in room.action_ids:
             if act.have_valid_day(current_day) and tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour):
                 acts.append(act)
     return acts
