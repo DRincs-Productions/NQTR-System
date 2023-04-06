@@ -69,6 +69,11 @@ Use search and replace of vscode with regex functionality enabled
 * `bg=(.*)`
 * `background =$1`
 
+### isButton
+
+* `isButton\(\)`
+* `is_button`
+
 # v1.0.3
 
 ```shell

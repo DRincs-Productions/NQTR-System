@@ -32,7 +32,7 @@ screen time_text(tm, show_wait_button = False):
 
 screen action_button(act, show_picture_in_background = False):
     if not show_picture_in_background:
-        if not act.isButton():
+        if not act.is_button:
             imagebutton:
                 align (act.xalign, act.yalign)
                 idle act.getPictureInBackgroundOrDefault()
@@ -44,7 +44,7 @@ screen action_button(act, show_picture_in_background = False):
                 if renpy.variant("pc"):
                     tooltip act.name
                 at middle_action_is_in_room
-    elif (act.isButton() == True and not act.isHidden(flags)):
+    elif (act.is_button == True and not act.isHidden(flags)):
         imagebutton:
             idle act.getButtonOrDefault()
             hover act.getSelectedButtonOrDefault()
@@ -149,7 +149,7 @@ screen map(maps, cur_map_id):
 
 screen room_button(room, cur_room, i, find_ch = False):
     # If the Locations where I am is the same as the Locations where the room is located
-    if (room.location_id == cur_location.id and room.isButton() != None and not room.isHidden(flags)):
+    if (room.location_id == cur_location.id and room.is_button != None and not room.isHidden(flags)):
         button:
             xysize (126, 190)
             action [

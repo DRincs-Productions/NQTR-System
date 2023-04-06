@@ -68,10 +68,6 @@ class Button(object):
         """This is a button?"""
         return not isNullOrEmpty(self.button_icon)
 
-    def isButton(self) -> bool:  # TODO: convert to a property
-        """This is a button?"""
-        return not isNullOrEmpty(self._button_icon)
-
     @property
     def is_picture_in_background(self) -> bool:
         """This is a is picture in background?"""
