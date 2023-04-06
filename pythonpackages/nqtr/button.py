@@ -10,8 +10,8 @@ class Button(object):
 
     def __init__(
         self,
-        name: str,  # requirement
-        label_name: str,  # onClick label
+        name: str = "",
+        label_name: str = "",
         button_icon: Optional[str] = None,
         button_icon_selected: Optional[str] = None,
         picture_in_background: Optional[str] = None,
@@ -27,7 +27,6 @@ class Button(object):
         self.label_name = label_name
         self.button_icon = button_icon
         self.button_icon_selected = button_icon_selected
-        # Is an action that is started by clicking on an image in the room.
         self.picture_in_background = picture_in_background
         self.picture_in_background_selected = picture_in_background_selected
         self.xalign = xalign
@@ -35,6 +34,7 @@ class Button(object):
         self.disabled = disabled
         self.hidden = hidden
         self.default_label_name = default_label_name
+
         if (self.xalign != None and self.yalign == None):
             log_warn("xalign is set but yalign is not, so yalign set to 0",
                      "nqtr.button.Button.__init__")
@@ -43,9 +43,20 @@ class Button(object):
             log_warn("yalign is set but xalign is not, so xalign set to 0",
                      "nqtr.button.Button.__init__")
             self.xalign = 0
-        if (isNullOrEmpty(self.button_icon) and isNullOrEmpty(self.picture_in_background)):
-            log_info("You have set button_icon and picture_in_background to None, this button will be ignored",
+        if (not self.is_button and not self.is_picture_in_background):
+            log_warn("This button is not a button and not a picture in background, so it will be ignored",
                      "nqtr.button.Button.__init__")
+
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @name.setter
+    def name(self, value: str):
+        self._name = value
+        if (isNullOrEmpty(self._name)):
+            log_warn("You have set name to None or empty",
+                     "nqtr.button.Button.name")
 
     @property
     def label_name(self) -> Optional[str]:
@@ -62,6 +73,9 @@ class Button(object):
     @label_name.setter
     def label_name(self, value: Optional[str]):
         self._label_name = value
+        if (isNullOrEmpty(self._label_name)):
+            log_error("You have set label_name to None or empty for the button " + self.name,
+                      "nqtr.button.Button.label_name")
 
     @property
     def button_icon(self) -> Optional[str]:
@@ -73,17 +87,6 @@ class Button(object):
     @button_icon.setter
     def button_icon(self, value: Optional[str]):
         self._button_icon = value
-
-    @property
-    def picture_in_background(self) -> Optional[str]:
-        """Picture in background"""
-        if (not isNullOrEmpty(self._picture_in_background)):
-            return self._picture_in_background
-        return None
-
-    @picture_in_background.setter
-    def picture_in_background(self, value: Optional[str]):
-        self._picture_in_background = value
 
     @property
     def button_icon_selected(self) -> Optional[str]:
@@ -102,6 +105,17 @@ class Button(object):
         self._button_icon_selected = value
 
     @property
+    def picture_in_background(self) -> Optional[str]:
+        """Picture in background: Is an button that is started by clicking on an image in the room."""
+        if (not isNullOrEmpty(self._picture_in_background)):
+            return self._picture_in_background
+        return None
+
+    @picture_in_background.setter
+    def picture_in_background(self, value: Optional[str]):
+        self._picture_in_background = value
+
+    @property
     def picture_in_background_selected(self) -> Optional[str]:
         """Selected picture in background"""
         if (not isNullOrEmpty(self._picture_in_background_selected)):
@@ -116,6 +130,51 @@ class Button(object):
     @picture_in_background_selected.setter
     def picture_in_background_selected(self, value: Optional[str]):
         self._picture_in_background_selected = value
+
+    @property
+    def xalign(self) -> Optional[int]:
+        """X align"""
+        return self._xalign
+
+    @xalign.setter
+    def xalign(self, value: Optional[int]):
+        self._xalign = value
+
+    @property
+    def yalign(self) -> Optional[int]:
+        """Y align"""
+        return self._yalign
+
+    @yalign.setter
+    def yalign(self, value: Optional[int]):
+        self._yalign = value
+
+    @property
+    def disabled(self) -> Union[bool, str]:
+        """Disabled"""
+        return self._disabled
+
+    @disabled.setter
+    def disabled(self, value: Union[bool, str]):
+        self._disabled = value
+
+    @property
+    def hidden(self) -> Union[bool, str]:
+        """Hidden"""
+        return self._hidden
+
+    @hidden.setter
+    def hidden(self, value: Union[bool, str]):
+        self._hidden = value
+
+    @property
+    def default_label_name(self) -> Optional[str]:
+        """Default label name"""
+        return self._default_label_name
+
+    @default_label_name.setter
+    def default_label_name(self, value: Optional[str]):
+        self._default_label_name = value
 
     @property
     def is_button(self) -> bool:
@@ -138,5 +197,7 @@ class Button(object):
         """"If hidden is a string: get the value of the flags system"""
         if (isinstance(self.hidden, str)):
             return getFlags(self.hidden, flags)
+        elif not self.is_button and not self.is_picture_in_background:
+            return True
         else:
             return self.hidden
