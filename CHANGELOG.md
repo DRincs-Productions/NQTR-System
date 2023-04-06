@@ -110,6 +110,16 @@ Use search and replace of vscode with regex functionality enabled
 * `hour_names`
 * `timeslot_names`
 
+### tm_start
+
+* `tm_start`
+* `hour_start`
+
+### tm_stop
+
+* `tm_stop`
+* `hour_stop`
+
 # v1.0.3
 
 ```shell

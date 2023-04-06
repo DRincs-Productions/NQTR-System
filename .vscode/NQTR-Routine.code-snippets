@@ -27,7 +27,7 @@
             "    tm_start=${2:0}, tm_stop=${3:24},",
             "    room_id=\"${4:room_id}\", location_id=\"${5:home}\",",
             "    background =\"${9:bg ${6} ${1} ${4}}\",",
-            ")",
+            "),",
         ],
         "description": "Add an Routine in dictionary"
     },
@@ -53,7 +53,7 @@
             "    event_label_name = \"${6:${1}_event_label}\"",
             "    tm_start=${2:0}, tm_stop=${3:24},",
             "    room_id=\"${4:room_id}\", location_id=\"${5:home}\",",
-            ")",
+            "),",
         ],
         "description": "Add an Event in dictionary"
     },
