@@ -45,8 +45,8 @@ class Act(Button):
             hidden=hidden,
         )
         # Act init
-        self.tm_start = hour_start
-        self.tm_stop = hour_stop-0.1
+        self.hour_start = hour_start
+        self.hour_stop = hour_stop-0.1
         self.day_deadline = day_deadline
         self.day_start = day_start
         self.room_ids = room_ids
@@ -90,36 +90,12 @@ class Act(Button):
         self._hour_start = value
 
     @property
-    @DeprecationWarning
-    def tm_start(self) -> int:
-        """Deprecated, use hour_start"""
-        return self._hour_start
-
-    @tm_start.setter
-    @DeprecationWarning
-    def tm_start(self, value: int):
-        """Deprecated, use hour_start"""
-        self._hour_start = value
-
-    @property
     def hour_stop(self) -> int:
         """Stop hour of the action"""
         return self._hour_stop
 
     @hour_stop.setter
     def hour_stop(self, value: int):
-        self._hour_stop = value
-
-    @property
-    @DeprecationWarning
-    def tm_stop(self) -> int:
-        """Deprecated, use hour_stop"""
-        return self._hour_stop
-
-    @tm_stop.setter
-    @DeprecationWarning
-    def tm_stop(self, value: int):
-        """Deprecated, use hour_stop"""
         self._hour_stop = value
 
     @property
@@ -168,6 +144,6 @@ def getActions(actions: dict[str, Act], room: Room, now_hour: int, current_day: 
     acts: list[Act] = []
     for act_id, act in actions.items():
         if room.id in act.room_ids or act_id in room.action_ids:
-            if act.have_valid_day(current_day) and tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour):
+            if act.have_valid_day(current_day) and tm.now_is_between(start=act.hour_start, end=act.hour_stop, now=now_hour):
                 acts.append(act)
     return acts

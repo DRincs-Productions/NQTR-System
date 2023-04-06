@@ -10,8 +10,8 @@ class Commitment(object):
 
     def __init__(
         self,
-        tm_start: int = MIN_DAY_HOUR,
-        tm_stop: int = MAX_DAY_HOUR,
+        hour_start: int = MIN_DAY_HOUR,
+        hour_stop: int = MAX_DAY_HOUR,
         ch_talkobj_dict: dict[str, TalkObject] = {},
         background: Optional[str] = None,
         location_id: Optional[str] = None,
@@ -23,8 +23,8 @@ class Commitment(object):
 
         self.background = background
         self.ch_talkobj_dict = ch_talkobj_dict
-        self.tm_start = tm_start
-        self.tm_stop = tm_stop-0.1
+        self.hour_start = hour_start
+        self.hour_stop = hour_stop-0.1
         self.location_id = location_id
         self.room_id = room_id
         self.tag = tag
@@ -96,7 +96,7 @@ def getChsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: T
     commitments = {}
     for comm in routine.values():
         # Check Time and Location
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop)):
+        if (comm.location_id == location_id and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)):
             # Full verification
             for chKey in comm.ch_talkobj_dict.keys():
                 commitments[chKey] = None
@@ -123,7 +123,7 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm
     events = {}
     for comm in routine.values():
         # Check Time and Location and is event
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.is_event == True):
+        if (comm.location_id == location_id and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop) and comm.is_event == True):
             events[comm.room_id] = comm
     return events
 
@@ -134,7 +134,7 @@ def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> O
     first_found_commitment = None
     # special routine
     for id, comm in routine.items():
-        if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
+        if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
             if ch in comm.ch_talkobj_dict:
                 if (comm.tag != None):
                     if checkIfIsActiveByTag(tag=comm.tag, id=id):
