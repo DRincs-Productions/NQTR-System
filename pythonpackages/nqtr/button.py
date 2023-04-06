@@ -16,8 +16,8 @@ class Button(object):
         button_icon_selected: Optional[str] = None,
         picture_in_background: Optional[str] = None,
         picture_in_background_selected: Optional[str] = None,
-        xalign: Optional[int] = None,
-        yalign: Optional[int] = None,
+        xalign: Optional[Union[int, float]] = None,
+        yalign: Optional[Union[int, float]] = None,
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
         default_label_name: Optional[str] = None,
@@ -35,14 +35,6 @@ class Button(object):
         self.hidden = hidden
         self.default_label_name = default_label_name
 
-        if (self.xalign != None and self.yalign == None):
-            log_warn("xalign is set but yalign is not, so yalign set to 0",
-                     "nqtr.button.Button.__init__")
-            self.yalign = 0
-        if (self.xalign == None and self.yalign != None):
-            log_warn("yalign is set but xalign is not, so xalign set to 0",
-                     "nqtr.button.Button.__init__")
-            self.xalign = 0
         if (not self.is_button and not self.is_picture_in_background):
             log_warn("This button is not a button and not a picture in background, so it will be ignored",
                      "nqtr.button.Button.__init__")
@@ -132,22 +124,43 @@ class Button(object):
         self._picture_in_background_selected = value
 
     @property
+    def align(self) -> Optional[tuple[Union[int, float], Union[int, float]]]:
+        """X align"""
+        return self._align
+
+    @align.setter
+    def align(self, value: Optional[tuple[Union[int, float], Union[int, float]]]):
+        self._align = value
+
+    @property
     def xalign(self) -> Optional[int]:
         """X align"""
-        return self._xalign
+        if (self._align != None):
+            return self._align[0]
+        else:
+            return None
 
     @xalign.setter
     def xalign(self, value: Optional[int]):
-        self._xalign = value
+        if (self._align == None):
+            self._align = (value, 0)
+        else:
+            self._align = (value, self._align[1])
 
     @property
     def yalign(self) -> Optional[int]:
         """Y align"""
-        return self._yalign
+        if (self._align != None):
+            return self._align[1]
+        else:
+            return None
 
     @yalign.setter
     def yalign(self, value: Optional[int]):
-        self._yalign = value
+        if (self._align == None):
+            self._align = (0, value)
+        else:
+            self._align = (self._align[0], value)
 
     @property
     def disabled(self) -> Union[bool, str]:
