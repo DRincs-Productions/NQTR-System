@@ -23,7 +23,7 @@ class Goal(object):
         self.description = description if description else ""
         self.is_completed = is_completed
         self.need = need
-        self.have = 0
+        self.have = have
         if (self.have < 0):
             self.have = 0
             log_warn("You have set have < 0, so it will be set to 0.",
