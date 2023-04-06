@@ -74,6 +74,33 @@ Use search and replace of vscode with regex functionality enabled
 * `isButton\(\)`
 * `is_button`
 
+### isPictureInBackground
+
+* `isPictureInBackground\(\)`
+* `is_picture_in_background`
+
+### getButtonOrDefault
+
+* `getButtonOrDefault\(\)`
+* `button_icon`
+
+### getPictureInBackgroundOrDefault
+
+* `getPictureInBackgroundOrDefault\(\)`
+* `picture_in_background`
+
+### getSelectedButtonOrDefault
+
+* `getSelectedButtonOrDefault\(\)`
+* `button_icon_selected`
+
+
+### getSelectedPictureInBackgroundOrDefault
+
+* `getSelectedPictureInBackgroundOrDefault\(\)`
+* `picture_in_background_selected`
+
+
 # v1.0.3
 
 ```shell

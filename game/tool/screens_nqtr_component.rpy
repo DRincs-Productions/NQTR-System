@@ -35,7 +35,7 @@ screen action_button(act, show_picture_in_background = False):
         if not act.is_button:
             imagebutton:
                 align (act.xalign, act.yalign)
-                idle act.getPictureInBackgroundOrDefault()
+                idle act.picture_in_background
                 hover act.getSelectedPictureInBackgroundOrDefault()
                 focus_mask True
                 action [
@@ -46,7 +46,7 @@ screen action_button(act, show_picture_in_background = False):
                 at middle_action_is_in_room
     elif (act.is_button == True and not act.isHidden(flags)):
         imagebutton:
-            idle act.getButtonOrDefault()
+            idle act.button_icon
             hover act.getSelectedButtonOrDefault()
             focus_mask True
             action [
@@ -92,7 +92,7 @@ screen location_button(location):
         vbox:
             align (location.yalign, location.xalign)
             imagebutton:
-                idle location.getPictureInBackgroundOrDefault()
+                idle location.picture_in_background
                 selected_idle location.getSelectedPictureInBackgroundOrDefault()
                 selected_hover location.getSelectedPictureInBackgroundOrDefault()
                 selected location == cur_location
@@ -166,7 +166,7 @@ screen room_button(room, cur_room, i, find_ch = False):
                 # Room icon
                 imagebutton:
                     align (0.5, 0.0)
-                    idle room.getButtonOrDefault()
+                    idle room.button_icon
                     selected_idle room.getSelectedButtonOrDefault()
                     selected_hover room.getSelectedButtonOrDefault()
                     selected (True if cur_room and cur_room.id == room.id else False)
