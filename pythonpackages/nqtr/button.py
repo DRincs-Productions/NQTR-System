@@ -69,24 +69,21 @@ class Button(object):
         """Button icon"""
         if (not isNullOrEmpty(self._button_icon)):
             return self._button_icon
+        log_warn("button_icon is null or empty, use is_button_icon to check if it is a button icon button",
+                 "nqtr.button.Button.button_icon")
         return None
 
     @button_icon.setter
     def button_icon(self, value: Optional[str]):
-        if not isNullOrEmpty(value):
-            self._button_icon = value
-        log_warn("button_icon is null or empty, use is_button_icon to check if it is a button icon button",
-                 "nqtr.button.Button.button_icon")
-        return None
+        self._button_icon = value
 
     @property
     def button_icon_selected(self) -> Optional[str]:
         """Selected button icon"""
         if (not isNullOrEmpty(self._button_icon_selected)):
             return self._button_icon_selected
-        elif (not isNullOrEmpty(self.button_icon)):
+        else:
             return self.button_icon
-        return None
 
     @button_icon_selected.setter
     def button_icon_selected(self, value: Optional[str]):
@@ -110,9 +107,8 @@ class Button(object):
         """Selected picture in background"""
         if (not isNullOrEmpty(self._picture_in_background_selected)):
             return self._picture_in_background_selected
-        elif (not isNullOrEmpty(self.picture_in_background)):
+        else:
             return self.picture_in_background
-        return None
 
     @picture_in_background_selected.setter
     def picture_in_background_selected(self, value: Optional[str]):
