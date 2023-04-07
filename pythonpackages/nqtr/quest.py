@@ -24,14 +24,6 @@ class Goal(object):
         self.is_completed = is_completed
         self.need = need
         self.have = have
-        if (self.have < 0):
-            self.have = 0
-            log_warn("You have set have < 0, so it will be set to 0.",
-                     "nqtr.quest.Goal.__init__")
-        if (self.need < 0):
-            self.need = 0
-            log_warn("You have set need < 0, so it will be set to 0.",
-                     "nqtr.quest.Goal.__init__")
 
     @property
     def id(self) -> str:
@@ -58,6 +50,32 @@ class Goal(object):
     @is_completed.setter
     def is_completed(self, value: bool):
         self.is_completed = value
+
+    @property
+    def need(self) -> int:
+        """Number of elements needed to complete the mission"""
+        return self._need
+
+    @need.setter
+    def need(self, value: int):
+        self._need = value
+        if (self._need < 0):
+            self._need = 0
+            log_warn("You have set need < 0, so it will be set to 0.",
+                     "nqtr.quest.Goal.__init__")
+
+    @property
+    def have(self) -> int:
+        """Number of elements already collected"""
+        return self._have
+
+    @have.setter
+    def have(self, value: int):
+        self._have = value
+        if (self._have < 0):
+            self._have = 0
+            log_warn("You have set have < 0, so it will be set to 0.",
+                     "nqtr.quest.Goal.__init__")
 
     def find(self, value: int = 1) -> bool:
         """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
