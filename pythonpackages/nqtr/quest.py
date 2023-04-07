@@ -93,14 +93,14 @@ class Stage(object):
     def __init__(
         self,
         quest_id: str,
-        goals: list[str] = [],
+        goal_ids: list[str] = [],
         title: str = "",
         description: str = "",
         advice: str = "",
         info_image: Optional[str] = None,
         days_required_to_start: int = 0,
-        flags_requests: list[str] = [],
-        number_stages_completed_in_quest_requests: dict[str, int] = {},
+        flags_required: list[str] = [],
+        required_number_completed_stages: dict[str, int] = {},
         request_description: str = "",
         start_label_name: Optional[str] = None,
         end_label_name: Optional[str] = None,
@@ -108,14 +108,14 @@ class Stage(object):
     ):
 
         self.quest_id = quest_id
-        self.goals = goals
+        self.goal_ids = goal_ids
         self.title = title
         self.description = description
         self.advice = advice
         self.info_image = info_image
         self.days_required_to_start = days_required_to_start
-        self.flags_requests = flags_requests
-        self.number_stages_completed_in_quest_requests = number_stages_completed_in_quest_requests
+        self.flags_required = flags_required
+        self.required_number_completed_stages = required_number_completed_stages
         self.request_description = request_description
         self.start_label_name = start_label_name
         self.end_label_name = end_label_name
@@ -135,13 +135,13 @@ class Stage(object):
         self._quest_id = value
 
     @property
-    def goals(self) -> list[str]:
+    def goal_ids(self) -> list[str]:
         """List of the goals"""
-        return self._goals
+        return self._goal_ids
 
-    @goals.setter
-    def goals(self, value: list[str]):
-        self._goals = value
+    @goal_ids.setter
+    def goal_ids(self, value: list[str]):
+        self._goal_ids = value
 
     @property
     def title(self) -> str:
@@ -201,23 +201,23 @@ class Stage(object):
         self._days_required_to_start = value
 
     @property
-    def flags_requests(self) -> list[str]:
+    def flags_required(self) -> list[str]:
         """List of the flags required to start the Stage
         # TODO: implement this"""
         return self._flags_requests
 
-    @flags_requests.setter
-    def flags_requests(self, value: list[str]):
+    @flags_required.setter
+    def flags_required(self, value: list[str]):
         self._flags_requests = value
 
     @property
-    def number_stages_completed_in_quest_requests(self) -> dict[str, int]:
+    def required_number_completed_stages(self) -> dict[str, int]:
         """Dict of the number of stages completed in the quest required to start the Stage"""
-        return self._number_stages_completed_in_quest_requests
+        return self._required_number_completed_stages
 
-    @number_stages_completed_in_quest_requests.setter
-    def number_stages_completed_in_quest_requests(self, value: dict[str, int]):
-        self._number_stages_completed_in_quest_requests = value
+    @required_number_completed_stages.setter
+    def required_number_completed_stages(self, value: dict[str, int]):
+        self._required_number_completed_stages = value
 
     @property
     def request_description(self) -> str:
@@ -288,9 +288,9 @@ class Stage(object):
         """Add the Stage in the current_quest_stages"""
         current_quest_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
-            goals=self.goals,
-            flags_requests=self.flags_requests,
-            number_stages_completed_in_quest_requests=self.number_stages_completed_in_quest_requests,
+            goal_ids=self.goal_ids,
+            flags_required=self.flags_required,
+            required_number_completed_stages=self.required_number_completed_stages,
             request_description=self.request_description,
             start_label_name=self.start_label_name,
             end_label_name=self.end_label_name,
@@ -308,9 +308,9 @@ class Stage(object):
         """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
         current_task_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
-            goals=self.goals,
-            flags_requests=self.flags_requests,
-            number_stages_completed_in_quest_requests=self.number_stages_completed_in_quest_requests,
+            goal_ids=self.goal_ids,
+            flags_required=self.flags_required,
+            required_number_completed_stages=self.required_number_completed_stages,
             request_description=self.request_description,
             start_label_name=self.start_label_name,
             end_label_name=self.end_label_name,
@@ -338,10 +338,10 @@ class Stage(object):
         """Checks the requests, returns True if it satisfies them."""
         if (self.day_start != None and tm.day < self.day_start):
             return False
-        for quest, level in self.number_stages_completed_in_quest_requests.items():
+        for quest, level in self.required_number_completed_stages.items():
             if (number_stages_completed_in_quest[quest] < level):
                 return False
-        for item in self.flags_requests:
+        for item in self.flags_required:
             if (not getFlags(item, flags)):
                 return False
         return True
@@ -354,15 +354,15 @@ class Stage(object):
         if (not self.active):
             if (not self.start(number_stages_completed_in_quest, tm, flags)):
                 return False
-        if self.goals:
-            for x in self.goals:
+        if self.goal_ids:
+            for x in self.goal_ids:
                 if (not x.isComplete()):
                     return False
         self.is_completed = True
         return True
 
     def find(self, goals_id: str, value: int = 1) -> bool:
-        for item in self.goals:
+        for item in self.goal_ids:
             if (item.id == goals_id):
                 item.find(value)
                 return True
