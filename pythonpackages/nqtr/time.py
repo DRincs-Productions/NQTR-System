@@ -17,12 +17,12 @@ class TimeHandler(object):
         timeslot_names: list[tuple[int, str]] = [],
         weekday_names: list[str] = [],
     ):
+        self.weekday_names = weekday_names
         self.hour_of_new_day = hour_of_new_day
         self.hour = hour
         self.day = day
         self.weekday_weekend_begins = weekday_weekend_begins
         self.timeslot_names = timeslot_names
-        self.weekday_names = weekday_names
 
     @property
     def hour_of_new_day(self) -> int:
