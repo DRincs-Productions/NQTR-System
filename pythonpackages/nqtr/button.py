@@ -183,12 +183,12 @@ class Button(object):
     @property
     def is_button(self) -> bool:
         """This is a button?"""
-        return not isNullOrEmpty(self.button_icon)
+        return not isNullOrEmpty(self._button_icon)
 
     @property
     def is_picture_in_background(self) -> bool:
         """This is a is picture in background?"""
-        return not isNullOrEmpty(self.picture_in_background)
+        return not isNullOrEmpty(self._picture_in_background)
 
     def isDisabled(self, flags: dict[str, bool] = {}) -> bool:
         """"If disabled is a string: get the value of the flags system"""
