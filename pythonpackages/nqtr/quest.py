@@ -382,23 +382,59 @@ class Quest(object):
     def __init__(
         self,
         id: str,
-        title: str = None,
-        description: str = None,
-        icon: str = None,
+        title: str = "",
+        description: str = "",
+        icon: Optional[str] = None,
         info_image: Optional[str] = None,
-        stages_id: Optional[list[str]] = None,
-        tag: str = None,  # TODO: implement this
+        stage_ids: list[str] = [],
+        tag: Optional[str] = None,
         development: bool = False
     ):
 
         self.id = id
-        self.title = title if title else ""
-        self.description = description if description else ""
+        self.title = title
+        self.description = description
         self.icon = icon
         self.info_image = info_image
-        self.stages_id = self.stages_id = stages_id if stages_id else []
+        self.stage_ids = self.stage_ids = stage_ids
         self.tag = tag
         self.development = development
+
+    @property
+    def id(self) -> str:
+        """Quest ID"""
+        return self._id
+
+    @id.setter
+    def id(self, value: str):
+        self._id = value
+
+    @property
+    def title(self) -> str:
+        """Quest title"""
+        return self._title
+
+    @title.setter
+    def title(self, value: str):
+        self._title = value
+
+    @property
+    def description(self) -> str:
+        """Quest description"""
+        return self._description
+
+    @description.setter
+    def description(self, value: str):
+        self._description = value
+
+    @property
+    def icon(self) -> Optional[str]:
+        """Quest icon"""
+        return self._icon
+
+    @icon.setter
+    def icon(self, value: Optional[str]):
+        self._icon = value
 
     @property
     @DeprecationWarning
@@ -414,24 +450,53 @@ class Quest(object):
 
     @property
     def info_image(self) -> Optional[str]:
+        """Quest info image"""
         return self._info_image
 
     @info_image.setter
     def info_image(self, value: Optional[str]):
         self._info_image = value
 
+    @property
+    def stage_ids(self) -> list[str]:
+        """Quest stages"""
+        return self._stage_ids
+
+    @stage_ids.setter
+    def stage_ids(self, value: list[str]):
+        self._stage_ids = value
+
+    @property
+    def tag(self) -> Optional[str]:
+        """Quest tag
+        #TODO: implement this"""
+        return self._tag
+
+    @tag.setter
+    def tag(self, value: Optional[str]):
+        self._tag = value
+
+    @property
+    def development(self) -> bool:
+        """Quest development"""
+        return self._development
+
+    @development.setter
+    def development(self, value: bool):
+        self._development = value
+
     def isCompleted(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
         """Check if all stages have been completed."""
         if (not (self.id in number_stages_completed_in_quest)):
             return False
-        if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
+        if len(self.stage_ids)-1 == number_stages_completed_in_quest[self.id]:
             return current_quest_stages[self.id].is_completed
         else:
             return False
 
     def currentQuestId(self, number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
-        return self.stages_id[number_stages_completed_in_quest[id]]
+        return self.stage_ids[number_stages_completed_in_quest[id]]
 
     def completeStagesNumber(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
@@ -439,7 +504,7 @@ class Quest(object):
 
     def getPercentageCompletion(self, current_level: int) -> int:
         """Returns the percentage of completion"""
-        return current_level/len(self.stages_id)*100
+        return current_level/len(self.stage_ids)*100
 
     def update(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         """Function to update the various values,
@@ -455,8 +520,8 @@ class Quest(object):
                        number_stages_completed_in_quest, tm, flags)
             return
         # if you have somehow exceeded the number of stages
-        if len(self.stages_id)-1 < number_stages_completed_in_quest[self.id]:
-            number_stages_completed_in_quest[self.id] = len(self.stages_id)-1
+        if len(self.stage_ids)-1 < number_stages_completed_in_quest[self.id]:
+            number_stages_completed_in_quest[self.id] = len(self.stage_ids)-1
             return
         # if it is a completed Quest and a Stage has been added in a new update
         if (not self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].is_completed:
@@ -467,7 +532,7 @@ class Quest(object):
     def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
         number_stages_completed_in_quest[self.id] = n_stage
-        quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages(
+        quest_stages[self.stage_ids[n_stage]].addInCurrentQuestStages(
             current_quest_stages, tm)
         current_quest_stages[self.id].start(
             number_stages_completed_in_quest, tm, flags)
@@ -488,7 +553,7 @@ class Quest(object):
                      " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.afterNextStage()")
             self.update(quest_stages, current_quest_stages,
                         number_stages_completed_in_quest, tm, flags)
-        if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
+        if len(self.stage_ids)-1 == number_stages_completed_in_quest[self.id]:
             current_quest_stages[self.id].is_completed = True
             return
         number_stages_completed_in_quest[self.id] += 1
