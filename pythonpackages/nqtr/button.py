@@ -37,10 +37,6 @@ class Button(object):
         self.hidden = hidden
         self.default_label_name = default_label_name
 
-        if (not self.is_button and not self.is_picture_in_background):
-            log_warn("This button is not a button and not a picture in background, so it will be ignored",
-                     "nqtr.button.Button.__init__")
-
     @property
     def name(self) -> str:
         return self._name
@@ -77,7 +73,11 @@ class Button(object):
 
     @button_icon.setter
     def button_icon(self, value: Optional[str]):
-        self._button_icon = value
+        if not isNullOrEmpty(value):
+            self._button_icon = value
+        log_warn("button_icon is null or empty, use is_button_icon to check if it is a button icon button",
+                 "nqtr.button.Button.button_icon")
+        return None
 
     @property
     def button_icon_selected(self) -> Optional[str]:
@@ -95,8 +95,10 @@ class Button(object):
     @property
     def picture_in_background(self) -> Optional[str]:
         """Picture in background: Is an button that is started by clicking on an image in the room."""
-        if (not isNullOrEmpty(self._picture_in_background)):
+        if not isNullOrEmpty(self._picture_in_background):
             return self._picture_in_background
+        log_warn("picture_in_background is null or empty, use is_picture_in_background to check if it is a picture in background button",
+                 "nqtr.button.Button.picture_in_background")
         return None
 
     @picture_in_background.setter
