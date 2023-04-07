@@ -282,6 +282,10 @@ class Stage(object):
         """True if the Stage is active"""
         return self._active
 
+    @active.setter
+    def active(self, value: bool):
+        self._active = value
+
     # TODO: object is Stage
 
     def addInCurrentQuestStages(self, current_quest_stages: dict[str, object], tm: TimeHandler) -> None:
