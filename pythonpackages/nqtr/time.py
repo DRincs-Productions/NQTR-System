@@ -92,10 +92,6 @@ class TimeHandler(object):
     @timeslot_names.setter
     def timeslot_names(self, value: list[tuple[int, str]]):
         self._timeslot_names = value
-        if not self._timeslot_names is list:
-            log_warn("You have set timeslot_names to a non-list type, so it will be set to an empty list.",
-                     "nqtr.time.TimeHandler.timeslot_names")
-            self._timeslot_names = []
 
     @property
     def weekday_names(self) -> list[str]:
@@ -104,10 +100,6 @@ class TimeHandler(object):
     @weekday_names.setter
     def weekday_names(self, value: list[str]):
         self._weekday_names = value
-        if not self._weekday_names is list:
-            log_warn("You have set weekday_names to a non-list type, so it will be set to an empty list.",
-                     "nqtr.time.TimeHandler.weekday_names")
-            self._weekday_names = []
 
     @property
     def timeslot_name(self) -> str:
