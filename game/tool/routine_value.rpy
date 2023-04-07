@@ -33,7 +33,7 @@ define df_routine = {
     ),
     "alice_read" : Commitment(
         ch_talkobj_dict={
-            "alice" : TalkObject(background ="bg alice terrace talk"),
+            "alice" : TalkObject(conversation_background ="bg alice terrace talk"),
         },
         hour_start=14, hour_stop=20,
         location_id="house", room_id="terrace",
