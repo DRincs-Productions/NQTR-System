@@ -93,38 +93,82 @@ class Stage(object):
     def __init__(
         self,
         quest_id: str,
-        goals: Optional[list[str]] = None,
-        title: str = None,
-        description: str = None,
-        advice: str = None,
+        goals: list[str] = [],
+        title: str = "",
+        description: str = "",
+        advice: str = "",
         info_image: Optional[str] = None,
-        days_required_to_start: int = None,
-        flags_requests: Optional[list[str]] = None,  # TODO: implement this
-        number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
-        request_description: str = None,
-        start_label_name: str = None,  # Will be initiated when the stage is started
-        end_label_name: str = None,  # TODO: implement this
-        check_label_name: str = None,  # TODO: implement this
+        days_required_to_start: int = 0,
+        flags_requests: list[str] = [],
+        number_stages_completed_in_quest_requests: dict[str, int] = {},
+        request_description: str = "",
+        start_label_name: Optional[str] = None,
+        end_label_name: Optional[str] = None,
+        check_label_name: Optional[str] = None,
     ):
 
         self.quest_id = quest_id
-        self.goals = goals if goals else []
-        self.active = False
-        self.title = title if title else ""
-        self.description = description if description else ""
-        self.advice = advice if advice else ""
-        self.completed = False
+        self.goals = goals
+        self.title = title
+        self.description = description
+        self.advice = advice
         self.info_image = info_image
-        # These are the requirements to start the Stage
-        self.days_required_to_start = days_required_to_start if days_required_to_start else 0
-        self.day_start = None  # Will be initiated when the stage is started
-        self.flags_requests = flags_requests if flags_requests else []
-        self.number_stages_completed_in_quest_requests = number_stages_completed_in_quest_requests if number_stages_completed_in_quest_requests else {}
-        self.request_description = request_description if request_description else ""
-        # these labels will be started automatically at the appropriate time.
+        self.days_required_to_start = days_required_to_start
+        self.flags_requests = flags_requests
+        self.number_stages_completed_in_quest_requests = number_stages_completed_in_quest_requests
+        self.request_description = request_description
         self.start_label_name = start_label_name
         self.end_label_name = end_label_name
         self.check_label_name = check_label_name
+
+        self.day_start = None
+        self.is_completed = False
+        self.active = False
+
+    @property
+    def quest_id(self) -> str:
+        """Id of the quest"""
+        return self._quest_id
+
+    @quest_id.setter
+    def quest_id(self, value: str):
+        self._quest_id = value
+
+    @property
+    def goals(self) -> list[str]:
+        """List of the goals"""
+        return self._goals
+
+    @goals.setter
+    def goals(self, value: list[str]):
+        self._goals = value
+
+    @property
+    def title(self) -> str:
+        """Title of the Stage"""
+        return self._title
+
+    @title.setter
+    def title(self, value: str):
+        self._title = value
+
+    @property
+    def description(self) -> str:
+        """Description of the Stage"""
+        return self._description
+
+    @description.setter
+    def description(self, value: str):
+        self._description = value
+
+    @property
+    def advice(self) -> str:
+        """Advice of the Stage"""
+        return self._advice
+
+    @advice.setter
+    def advice(self, value: str):
+        self._advice = value
 
     @property
     @DeprecationWarning
@@ -145,6 +189,98 @@ class Stage(object):
     @info_image.setter
     def info_image(self, value: Optional[str]):
         self._info_image = value
+
+    @property
+    def days_required_to_start(self) -> int:
+        """Number of days required to start the Stage
+        These are the requirements to start the Stage"""
+        return self._days_required_to_start
+
+    @days_required_to_start.setter
+    def days_required_to_start(self, value: int):
+        self._days_required_to_start = value
+
+    @property
+    def flags_requests(self) -> list[str]:
+        """List of the flags required to start the Stage
+        # TODO: implement this"""
+        return self._flags_requests
+
+    @flags_requests.setter
+    def flags_requests(self, value: list[str]):
+        self._flags_requests = value
+
+    @property
+    def number_stages_completed_in_quest_requests(self) -> dict[str, int]:
+        """Dict of the number of stages completed in the quest required to start the Stage"""
+        return self._number_stages_completed_in_quest_requests
+
+    @number_stages_completed_in_quest_requests.setter
+    def number_stages_completed_in_quest_requests(self, value: dict[str, int]):
+        self._number_stages_completed_in_quest_requests = value
+
+    @property
+    def request_description(self) -> str:
+        """Description of the requirements to start the Stage"""
+        return self._request_description
+
+    @request_description.setter
+    def request_description(self, value: str):
+        self._request_description = value
+
+    @property
+    def start_label_name(self) -> Optional[str]:
+        """Name of the label to start the Stage
+        Will be initiated when the stage is started
+        these labels will be started automatically at the appropriate time."""
+        return self._start_label_name
+
+    @start_label_name.setter
+    def start_label_name(self, value: Optional[str]):
+        self._start_label_name = value
+
+    @property
+    def end_label_name(self) -> Optional[str]:
+        """Name of the label to end the Stage
+        # TODO: implement this"""
+        return self._end_label_name
+
+    @end_label_name.setter
+    def end_label_name(self, value: Optional[str]):
+        self._end_label_name = value
+
+    @property
+    def check_label_name(self) -> Optional[str]:
+        """Name of the label to check the Stage
+        # TODO: implement this"""
+        return self._check_label_name
+
+    @check_label_name.setter
+    def check_label_name(self, value: Optional[str]):
+        self._check_label_name = value
+
+    @property
+    def day_start(self) -> Optional[int]:
+        """Day when the Stage is started"""
+        return self._day_start
+
+    @day_start.setter
+    def day_start(self, value: Optional[int]):
+        self._day_start = value
+
+    @property
+    def is_completed(self) -> bool:
+        """True if the Stage is completed"""
+        return self._is_completed
+
+    @is_completed.setter
+    def is_completed(self, value: bool):
+        self._is_completed = value
+
+    @property
+    def active(self) -> bool:
+        """True if the Stage is active"""
+        return self._active
 
     # TODO: object is Stage
 
@@ -213,7 +349,7 @@ class Stage(object):
     def isCompleted(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """Check if the Stage can be complete."""
         # if (check_label_name != None)
-        if (self.completed):
+        if (self.is_completed):
             return True
         if (not self.active):
             if (not self.start(number_stages_completed_in_quest, tm, flags)):
@@ -222,7 +358,7 @@ class Stage(object):
             for x in self.goals:
                 if (not x.isComplete()):
                     return False
-        self.completed = True
+        self.is_completed = True
         return True
 
     def find(self, goals_id: str, value: int = 1) -> bool:
@@ -289,7 +425,7 @@ class Quest(object):
         if (not (self.id in number_stages_completed_in_quest)):
             return False
         if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
-            return current_quest_stages[self.id].completed
+            return current_quest_stages[self.id].is_completed
         else:
             return False
 
@@ -323,7 +459,7 @@ class Quest(object):
             number_stages_completed_in_quest[self.id] = len(self.stages_id)-1
             return
         # if it is a completed Quest and a Stage has been added in a new update
-        if (not self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].completed:
+        if (not self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].is_completed:
             self.afterNextStage(quest_stages, current_quest_stages,
                                 number_stages_completed_in_quest, tm, flags)
             return
@@ -353,7 +489,7 @@ class Quest(object):
             self.update(quest_stages, current_quest_stages,
                         number_stages_completed_in_quest, tm, flags)
         if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
-            current_quest_stages[self.id].completed = True
+            current_quest_stages[self.id].is_completed = True
             return
         number_stages_completed_in_quest[self.id] += 1
         self.start(quest_stages, current_quest_stages, number_stages_completed_in_quest,
