@@ -78,6 +78,9 @@ class Button(object):
     @button_icon.setter
     def button_icon(self, value: Optional[str]):
         self._button_icon = value
+        if isNullOrEmpty(self._button_icon):
+            log_info("You have set button_icon_selected and button_icon to None, this button will be ignored",
+                     "nqtr.button.Button.selected_button_icon")
 
     @property
     def button_icon_selected(self) -> Optional[str]:
@@ -86,9 +89,6 @@ class Button(object):
             return self._button_icon_selected
         elif (not isNullOrEmpty(self.button_icon)):
             return self.button_icon
-        else:
-            log_info("You have set button_icon_selected and button_icon to None, this button will be ignored",
-                     "nqtr.button.Button.selected_button_icon")
         return None
 
     @button_icon_selected.setter
@@ -105,6 +105,9 @@ class Button(object):
     @picture_in_background.setter
     def picture_in_background(self, value: Optional[str]):
         self._picture_in_background = value
+        if isNullOrEmpty(self._picture_in_background):
+            log_info("You have set picture_in_background_selected and picture_in_background to None, this button will be ignored",
+                     "nqtr.button.Button.selected_picture_in_background")
 
     @property
     def picture_in_background_selected(self) -> Optional[str]:
@@ -113,9 +116,6 @@ class Button(object):
             return self._picture_in_background_selected
         elif (not isNullOrEmpty(self.picture_in_background)):
             return self.picture_in_background
-        else:
-            log_info("You have set picture_in_background_selected and picture_in_background to None, this button will be ignored",
-                     "nqtr.button.Button.selected_picture_in_background")
         return None
 
     @picture_in_background_selected.setter
