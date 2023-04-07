@@ -110,15 +110,19 @@ Use search and replace of vscode with regex functionality enabled
 * `hour_names`
 * `timeslot_names`
 
-### hour_start
+### tm_start
 
+* `tm_start`
 * `hour_start`
-* `hour_start`
 
-### hour_stop
+### tm_stop
 
+* `tm_stop`
 * `hour_stop`
-* `hour_stop`
+
+### stages_id
+* `stages_id`
+* `stage_ids`
 
 # v1.0.3
 
