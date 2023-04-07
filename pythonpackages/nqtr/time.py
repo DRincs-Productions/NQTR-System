@@ -12,7 +12,7 @@ class TimeHandler(object):
         self,
         hour_of_new_day: int = 5,
         hour: int = 8,
-        weekend_day: int = 6,
+        weekday_weekend_begins: int = 6,
         day: int = 0,
         timeslot_names: list[tuple[int, str]] = [],
         weekday_names: list[str] = [],
@@ -20,31 +20,22 @@ class TimeHandler(object):
         self.hour_of_new_day = hour_of_new_day
         self.hour = hour
         self.day = day
-        self.weekend_day = weekend_day
+        self.weekday_weekend_begins = weekday_weekend_begins
         self.timeslot_names = timeslot_names
         self.weekday_names = weekday_names
 
-        if self.hour_of_new_day < 0:
-            log_warn("You have set hour_of_new_day < 0, so it will be set to 0.",
-                     "nqtr.time.TimeHandler.__init__")
-            self.hour_of_new_day = 0
-        if self.weekend_day < 0:
-            log_warn("You have set weekend_day < 0, so it will be set to 6.",
-                     "nqtr.time.TimeHandler.__init__")
-            self.weekend_day = 6
-
     @property
-    def day(self) -> int:
-        """current day number"""
-        return self._day
+    def hour_of_new_day(self) -> int:
+        """hour when the day changes"""
+        return self._hour_of_new_day
 
-    @day.setter
-    def day(self, value: int):
-        self._day = value
-        if (self._day < 0):
-            self._day = 0
-            log_warn("You have set day < 0, so it will be set to 0.",
-                     "nqtr.time.TimeHandler.day")
+    @hour_of_new_day.setter
+    def hour_of_new_day(self, value: int):
+        self._hour_of_new_day = value
+        if self._hour_of_new_day < 0:
+            log_warn("You have set hour_of_new_day < 0, so it will be set to 0.",
+                     "nqtr.time.TimeHandler.hour_of_new_day")
+            self._hour_of_new_day = 0
 
     @property
     def hour(self) -> int:
@@ -62,6 +53,37 @@ class TimeHandler(object):
             self._hour = MIN_DAY_HOUR
             log_warn("You have set hour < MIN_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
                      "nqtr.time.TimeHandler.hour")
+
+    @property
+    def weekday_weekend_begins(self) -> int:
+        """day when the weekend begins. this depends on the weekday_names list.
+        es: if weekday_names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        and weekday_weekend_begins = 6, then the weekend begins on Saturday."""
+        return self._weekday_weekend_begins
+
+    @weekday_weekend_begins.setter
+    def weekday_weekend_begins(self, value: int):
+        self._weekday_weekend_begins = value
+        if self._weekday_weekend_begins < 0:
+            log_warn("You have set weekend_day < 0, so it will be set to 6.",
+                     "nqtr.time.TimeHandler.weekend_day")
+            self._weekday_weekend_begins = 6
+        if self._weekday_weekend_begins > len(self.weekday_names):
+            log_warn("You have set weekend_day > len(weekday_names), so I ignore it.",
+                     "nqtr.time.TimeHandler.weekend_day")
+
+    @property
+    def day(self) -> int:
+        """current day number"""
+        return self._day
+
+    @day.setter
+    def day(self, value: int):
+        self._day = value
+        if (self._day < 0):
+            self._day = 0
+            log_warn("You have set day < 0, so it will be set to 0.",
+                     "nqtr.time.TimeHandler.day")
 
     @property
     def timeslot_names(self) -> list[tuple[int, str]]:
