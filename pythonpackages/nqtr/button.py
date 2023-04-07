@@ -56,7 +56,7 @@ class Button(object):
         elif not isNullOrEmpty(self.default_label_name):
             return self.default_label_name
         else:
-            log_warn("label_name is null or empty",
+            log_warn("In the button " + self.name + ", label_name is null or empty",
                      "nqtr.button.Button.label_name")
         return
 
@@ -69,7 +69,7 @@ class Button(object):
         """Button icon"""
         if (not isNullOrEmpty(self._button_icon)):
             return self._button_icon
-        log_warn("button_icon is null or empty, use is_button_icon to check if it is a button icon button",
+        log_warn("In the button " + self.name + ", button_icon is null or empty, use is_button_icon to check if it is a button icon button",
                  "nqtr.button.Button.button_icon")
         return None
 
@@ -94,7 +94,7 @@ class Button(object):
         """Picture in background: Is an button that is started by clicking on an image in the room."""
         if not isNullOrEmpty(self._picture_in_background):
             return self._picture_in_background
-        log_warn("picture_in_background is null or empty, use is_picture_in_background to check if it is a picture in background button",
+        log_warn("In the button " + self.name + ", picture_in_background is null or empty, use is_picture_in_background to check if it is a picture in background button",
                  "nqtr.button.Button.picture_in_background")
         return None
 
