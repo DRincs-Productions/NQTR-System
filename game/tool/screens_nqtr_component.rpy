@@ -45,7 +45,7 @@ screen action_button(act, show_picture_in_background = False):
                     if renpy.variant("pc"):
                         tooltip act.name
                     at middle_action_is_in_room
-        elif act.is_button == True:
+        elif act.is_button:
             imagebutton:
                 idle act.button_icon
                 hover act.button_icon_selected
@@ -65,7 +65,10 @@ screen action_talk_button(ch_id, talk_obj, background):
             background None
 
             imagebutton:
-                idle talk_obj.button_icon or gui.default_talk_button_icon
+                if talk_obj.is_button:
+                    idle talk_obj.button_icon
+                else:
+                    idle gui.default_talk_button_icon
                 hover talk_obj.button_icon_selected
                 focus_mask True
                 action [
@@ -168,7 +171,8 @@ screen room_button(room, cur_room, i, find_ch = False):
                 # Room icon
                 imagebutton:
                     align (0.5, 0.0)
-                    idle room.button_icon
+                    if room.is_button:
+                        idle room.button_icon
                     selected_idle room.button_icon_selected
                     selected_hover room.button_icon_selected
                     selected (True if cur_room and cur_room.id == room.id else False)
