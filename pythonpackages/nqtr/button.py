@@ -23,6 +23,8 @@ class Button(object):
         default_label_name: Optional[str] = None,
     ):
 
+        self.align = None
+
         self.name = name
         self.label_name = label_name
         self.button_icon = button_icon
