@@ -16,7 +16,7 @@ class Commitment(object):
         background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
-        tag: Optional[str] = None,  # TODO: implement this
+        tag: Optional[str] = None,
         day_deadline: Optional[int] = None,
         event_label_name: Optional[str] = None
     ):
@@ -29,24 +29,34 @@ class Commitment(object):
         self.room_id = room_id
         self.tag = tag
         self.day_deadline = day_deadline
-        # ATTENTION: in check_event_sp if the mc has not moved, delete the event (resolves any loops)
-        # se si vuole degli eventi fissi usare check_event_df
-        # if you want the event to be started only once and then deleted
-        # at the end of the label insert:
-        # return
-        # if you want the event to be repeated every time you go to that room
-        # at the end of the label insert:
-        # call change_room
-        # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing location_id
-        # at the end of the label insert:
-        # $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
-        # call change_room
         self.event_label_name = event_label_name
 
     @property
-    def is_event(self) -> bool:
-        "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
-        return (self.event_label_name is not None)
+    def hour_start(self) -> int:
+        """The hour when the commitment starts."""
+        return self._hour_start
+
+    @hour_start.setter
+    def hour_start(self, value: int):
+        self._hour_start = value
+
+    @property
+    def hour_stop(self) -> int:
+        """The hour when the commitment ends."""
+        return self._hour_stop
+
+    @hour_stop.setter
+    def hour_stop(self, value: int):
+        self._hour_stop = value
+
+    @property
+    def ch_talkobj_dict(self) -> dict[str, TalkObject]:
+        """Dictionary of characters and their TalkObject."""
+        return self._ch_talkobj_dict
+
+    @ch_talkobj_dict.setter
+    def ch_talkobj_dict(self, value: dict[str, TalkObject]):
+        self._ch_talkobj_dict = value
 
     @property
     def background(self) -> Optional[str]:
@@ -56,6 +66,57 @@ class Commitment(object):
     @background.setter
     def background(self, value: Optional[str]):
         self._bg = value
+
+    @property
+    def location_id(self) -> Optional[str]:
+        """The location where the commitment takes place."""
+        return self._location_id
+
+    @location_id.setter
+    def location_id(self, value: Optional[str]):
+        self._location_id = value
+
+    @property
+    def room_id(self) -> Optional[str]:
+        """The room where the commitment takes place."""
+        return self._room_id
+
+    @room_id.setter
+    def room_id(self, value: Optional[str]):
+        self._room_id = value
+
+    @property
+    def tag(self) -> Optional[str]:
+        """The tag of the commitment.
+        # TODO: implement this"""
+        return self._tag
+
+    @tag.setter
+    def tag(self, value: Optional[str]):
+        self._tag = value
+
+    @property
+    def day_deadline(self) -> Optional[int]:
+        """The day when the commitment expires."""
+        return self._day_deadline
+
+    @day_deadline.setter
+    def day_deadline(self, value: Optional[int]):
+        self._day_deadline = value
+
+    @property
+    def event_label_name(self) -> Optional[str]:
+        """The event label name."""
+        return self._event_label_name
+
+    @event_label_name.setter
+    def event_label_name(self, value: Optional[str]):
+        self._event_label_name = value
+
+    @property
+    def is_event(self) -> bool:
+        "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
+        return (self.event_label_name is not None)
 
     def getChIcons(self, ch_icons: dict[str, str]) -> list[str]:
         """returns a list of ch icons (not secondary ch)"""
@@ -131,7 +192,6 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm
 def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
-    first_found_commitment = None
     # special routine
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
