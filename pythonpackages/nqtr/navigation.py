@@ -19,7 +19,7 @@ class Room(Button):
         location_id: str,
         # Room params
         background: Optional[str] = None,
-        action_ids: Optional[list[str]] = None,
+        action_ids: list[str] = [],
         # Button params
         button_icon: str = None,
         button_icon_selected: str = None,
@@ -82,8 +82,8 @@ class Room(Button):
         return self._action_ids
 
     @action_ids.setter
-    def action_ids(self, value: Optional[list[str]]):
-        self._action_ids = value if value is not None else []
+    def action_ids(self, value: list[str]):
+        self._action_ids = value
 
 
 class Location(Button):

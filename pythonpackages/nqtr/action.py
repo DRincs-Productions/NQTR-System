@@ -15,7 +15,7 @@ class Act(Button):
         name: str,
         label_name: str,
         # Act params
-        room_ids: Optional[list[str]] = None,
+        room_ids: list[str] = [],
         hour_start: int = 0,
         hour_stop: int = MAX_DAY_HOUR + 1,
         day_start: Optional[int] = None,
@@ -65,8 +65,8 @@ class Act(Button):
         return self._room_ids
 
     @room_ids.setter
-    def room_ids(self, value: Optional[list[str]]):
-        self._room_ids = value if value else []
+    def room_ids(self, value: list[str]):
+        self._room_ids = value
 
     @property
     @DeprecationWarning
