@@ -38,7 +38,7 @@ define quest_stages = {
     "talk al about ann"     :   Stage(quest_id = "ann", title = _("Talk [a]"), description = _("Talk [a]."), start_label_name="stagestart_talkalice_aboutann"),
     "take the key"          :   Stage(quest_id = "ann", title = _("take the key"), description = _("take the key.")),
     "visit ann"  :  Stage(quest_id = "ann", title = _("Visit [an]"), days_required_to_start = 0,
-        number_stages_completed_in_quest_requests = {
+        required_number_completed_stages = {
         }
     ),
 }

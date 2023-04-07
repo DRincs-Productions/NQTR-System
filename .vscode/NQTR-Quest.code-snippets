@@ -60,7 +60,7 @@
             "    advice = _(\"${6:Advice}\"),",
             "    request_description = _(\"${7:Request Description}\"),",
             "    start_label_name=${8:\"stagestart_${1:stage_id}\"},",
-            "    number_stages_completed_in_quest_requests = {",
+            "    required_number_completed_stages = {",
             "        ${9:\"quest_1\" : 2,}",
             "    }",
             "),",

@@ -124,6 +124,10 @@ Use search and replace of vscode with regex functionality enabled
 * `stages_id`
 * `stage_ids`
 
+### number_stages_completed_in_quest_requests
+* `number_stages_completed_in_quest_requests`
+* `required_number_completed_stages`
+
 # v1.0.3
 
 ```shell
