@@ -65,12 +65,12 @@ class TimeHandler(object):
     def weekday_weekend_begins(self, value: int):
         self._weekday_weekend_begins = value
         if self._weekday_weekend_begins < 0:
-            log_warn("You have set weekend_day < 0, so it will be set to 6.",
-                     "nqtr.time.TimeHandler.weekend_day")
+            log_warn("You have set weekday_weekend_begins < 0, so it will be set to 6.",
+                     "nqtr.time.TimeHandler.weekday_weekend_begins")
             self._weekday_weekend_begins = 6
         if self._weekday_weekend_begins > len(self.weekday_names):
-            log_warn("You have set weekend_day > len(weekday_names), so I ignore it.",
-                     "nqtr.time.TimeHandler.weekend_day")
+            log_warn("You have set weekday_weekend_begins > len(weekday_names), so I ignore it.",
+                     "nqtr.time.TimeHandler.weekday_weekend_begins")
 
     @property
     def day(self) -> int:

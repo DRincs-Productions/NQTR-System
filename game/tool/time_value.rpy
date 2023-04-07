@@ -18,7 +18,7 @@ define weekday_names = [
 default tm = TimeHandler(
     hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY,
     hour = 8,
-    weekend_day = 6,
+    weekday_weekend_begins = 6,
     day = 0,
     timeslot_names = timeslot_names,
     weekday_names = weekday_names
@@ -31,17 +31,17 @@ init -8 python:
         """is used to update timeslot_names and weekday_names"""
         hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY
         hour = tm.hour
-        weekend_day = tm.weekend_day
+        weekday_weekend_begins = tm.weekday_weekend_begins
         day = tm.day
         tm = TimeHandler(
             hour_of_new_day=hour_of_new_day,
-            hour=hour, weekend_day=weekend_day, 
+            hour=hour, weekday_weekend_begins=weekday_weekend_begins, 
             day=day,
             timeslot_names = timeslot_names,
             weekday_names = weekday_names
         )
         del hour_of_new_day
         del hour
-        del weekend_day
+        del weekday_weekend_begins
         del day
         return

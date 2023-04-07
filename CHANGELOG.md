@@ -128,6 +128,10 @@ Use search and replace of vscode with regex functionality enabled
 * `number_stages_completed_in_quest_requests`
 * `required_number_completed_stages`
 
+### weekend_day
+* `weekend_day`
+* `weekday_weekend_begins`
+
 # v1.0.3
 
 ```shell
