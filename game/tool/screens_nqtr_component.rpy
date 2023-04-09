@@ -31,31 +31,29 @@ screen time_text(tm, show_wait_button = False):
             use wait_button(small = True)
 
 screen action_button(act, show_picture_in_background = False):
-    if not act.isHidden(flags):
-        if not show_picture_in_background:
-            if act.is_picture_in_background:
-                imagebutton:
-                    align (act.xalign, act.yalign)
-                    idle act.picture_in_background
-                    hover act.picture_in_background_selected
-                    focus_mask True
-                    action [
-                        Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip act.name
-                    at middle_action_is_in_room
-        elif act.is_button:
-            imagebutton:
-                idle act.button_icon
-                hover act.button_icon_selected
-                focus_mask True
-                action [
-                    Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-                ]
-                if renpy.variant("pc"):
-                    tooltip act.name
-                at middle_action
+    if show_picture_in_background and act.is_picture_in_background:
+        imagebutton:
+            align (act.xalign, act.yalign)
+            idle act.picture_in_background
+            hover act.picture_in_background_selected
+            focus_mask True
+            action [
+                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
+            ]
+            if renpy.variant("pc"):
+                tooltip act.name
+            at middle_action_is_in_room
+    elif not show_picture_in_background and act.is_button:
+        imagebutton:
+            idle act.button_icon
+            hover act.button_icon_selected
+            focus_mask True
+            action [
+                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
+            ]
+            if renpy.variant("pc"):
+                tooltip act.name
+            at middle_action
         # TODO else default icon button
 
 screen action_talk_button(ch_id, talk_obj, background):
@@ -97,9 +95,10 @@ screen location_button(location):
         vbox:
             align (location.yalign, location.xalign)
             imagebutton:
-                idle location.picture_in_background
-                selected_idle location.picture_in_background_selected
-                selected_hover location.picture_in_background_selected
+                if location.is_picture_in_background:
+                    idle location.picture_in_background
+                    selected_idle location.picture_in_background_selected
+                    selected_hover location.picture_in_background_selected
                 selected location == cur_location
                 sensitive not location.isHidden(flags)
                 focus_mask True

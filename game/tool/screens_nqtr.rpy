@@ -42,7 +42,7 @@ screen room_navigation():
             # Adds the button list of possible actions in that room
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
                 for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm):
-                    use action_button(act)
+                    use action_button(act, show_picture_in_background = True)
 
         # Normal Actions (with side button)
         vbox:
@@ -52,7 +52,7 @@ screen room_navigation():
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
                     for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm):
-                        use action_button(act, show_picture_in_background = True)
+                        use action_button(act, show_picture_in_background = False)
 
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
