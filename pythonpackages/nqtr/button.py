@@ -69,9 +69,10 @@ class Button(object):
         """Button icon"""
         if (not isNullOrEmpty(self._button_icon)):
             return self._button_icon
-        log_warn("In the button " + self.name + ", button_icon is null or empty, use is_button_icon to check if it is a button icon button",
-                 "nqtr.button.Button.button_icon")
-        return None
+        else:
+            log_warn("In the button " + self.name + ", button_icon is null or empty, use is_button_icon to check if it is a button icon button",
+                     "nqtr.button.Button.button_icon")
+            return None
 
     @button_icon.setter
     def button_icon(self, value: Optional[str]):
@@ -94,9 +95,10 @@ class Button(object):
         """Picture in background: Is an button that is started by clicking on an image in the room."""
         if not isNullOrEmpty(self._picture_in_background):
             return self._picture_in_background
-        log_warn("In the button " + self.name + ", picture_in_background is null or empty, use is_picture_in_background to check if it is a picture in background button",
-                 "nqtr.button.Button.picture_in_background")
-        return None
+        else:
+            log_warn("In the button " + self.name + ", picture_in_background is null or empty, use is_picture_in_background to check if it is a picture in background button",
+                     "nqtr.button.Button.picture_in_background")
+            return None
 
     @picture_in_background.setter
     def picture_in_background(self, value: Optional[str]):
@@ -124,7 +126,7 @@ class Button(object):
         self._align = value
 
     @property
-    def xalign(self) -> Optional[int]:
+    def xalign(self) -> Optional[Union[int, float]]:
         """X align"""
         if (self._align != None):
             return self._align[0]
@@ -132,14 +134,14 @@ class Button(object):
             return None
 
     @xalign.setter
-    def xalign(self, value: Optional[int]):
+    def xalign(self, value: Optional[Union[int, float]]):
         if (self._align == None):
             self._align = (value, 0)
         else:
             self._align = (value, self._align[1])
 
     @property
-    def yalign(self) -> Optional[int]:
+    def yalign(self) -> Optional[Union[int, float]]:
         """Y align"""
         if (self._align != None):
             return self._align[1]
@@ -147,7 +149,7 @@ class Button(object):
             return None
 
     @yalign.setter
-    def yalign(self, value: Optional[int]):
+    def yalign(self, value: Optional[Union[int, float]]):
         if (self._align == None):
             self._align = (0, value)
         else:
@@ -165,7 +167,10 @@ class Button(object):
     @property
     def hidden(self) -> Union[bool, str]:
         """Hidden"""
-        return self._hidden
+        if self._hidden:
+            return True
+        else:
+            return not self.is_button and not self.is_picture_in_background
 
     @hidden.setter
     def hidden(self, value: Union[bool, str]):
