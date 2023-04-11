@@ -60,7 +60,7 @@ screen room_navigation():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            if (not talk_obj.isHidden(flags)):
+                            if (not talk_obj.isHidden(flags = flags, check_if_has_icon = False)):
                                 use action_talk_button(ch_id, talk_obj, comm.getTalkBackground(ch_id))
 
             # Fixed button to wait

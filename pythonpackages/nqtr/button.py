@@ -39,12 +39,13 @@ class Button(object):
 
     @property
     def name(self) -> str:
-        return self._name
+        """Button name or id, is used to identify the button and in logs"""
+        return self._id
 
     @name.setter
     def name(self, value: str):
-        self._name = value
-        if (isNullOrEmpty(self._name)):
+        self._id = value
+        if (isNullOrEmpty(self._id)):
             log_warn("You have set name to None or empty",
                      "nqtr.button.Button.name")
 
@@ -202,11 +203,11 @@ class Button(object):
         else:
             return self.disabled
 
-    def isHidden(self, flags: dict[str, bool] = {}) -> bool:
+    def isHidden(self, flags: dict[str, bool] = {}, check_if_has_icon: bool = True) -> bool:
         """"If hidden is a string: get the value of the flags system"""
         if (isinstance(self.hidden, str)):
             return getFlags(self.hidden, flags)
-        elif not self.is_button and not self.is_picture_in_background:
+        elif check_if_has_icon and not self.is_button and not self.is_picture_in_background:
             return True
         else:
             return self.hidden

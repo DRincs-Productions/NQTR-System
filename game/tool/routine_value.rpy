@@ -17,7 +17,10 @@ default routine = {}
 define df_routine = {
     "alice_sleep" : Commitment(
         ch_talkobj_dict={
-            "alice" : TalkObject(label_name="talk_sleep"),
+            "alice" : TalkObject(
+                name="talk_alice_sleep",
+                conversation_background = None,
+            ),
         },
         hour_start=20, hour_stop=10,
         location_id="house", room_id="alice_room",
@@ -33,7 +36,10 @@ define df_routine = {
     ),
     "alice_read" : Commitment(
         ch_talkobj_dict={
-            "alice" : TalkObject(conversation_background ="bg alice terrace talk"),
+            "alice" : TalkObject(
+                name="talk_alice_read",
+                conversation_background ="bg alice terrace talk"
+            ),
         },
         hour_start=14, hour_stop=20,
         location_id="house", room_id="terrace",
