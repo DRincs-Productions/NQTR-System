@@ -25,7 +25,7 @@ class Button(object):
 
         self.align = None
 
-        self.name = name or ""
+        self.name = name
         self.label_name = label_name
         self.button_icon = button_icon
         self.button_icon_selected = button_icon_selected
@@ -43,8 +43,8 @@ class Button(object):
         return self._id
 
     @name.setter
-    def name(self, value: str):
-        self._id = value
+    def name(self, value: Optional[str]):
+        self._id = value or ""
         if (isNullOrEmpty(self._id)):
             log_warn("You have set name to None or empty",
                      "nqtr.button.Button.name")
