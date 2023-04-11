@@ -1,5 +1,5 @@
 init python:
-    from pythonpackages.nqtr.action import clearExpiredActions
+    from pythonpackages.nqtr.action import clear_expired_actions
     from pythonpackages.nqtr.routine import clearExpiredRoutine
     from pythonpackages.nqtr.routine import getEventsInThisLocation
     from pythonpackages.nqtr.routine import getChsInThisLocation
