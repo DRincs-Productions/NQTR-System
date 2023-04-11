@@ -127,30 +127,42 @@ class Button(object):
         self._align = value
 
     @property
-    def xalign(self) -> Optional[Union[int, float]]:
+    def xalign(self) -> Union[int, float]:
         """X align"""
         if (self._align != None):
             return self._align[0]
         else:
-            return None
+            log_warn("You have set align to None, so return 0",
+                     "nqtr.button.Button.xalign")
+            return 0
 
     @xalign.setter
     def xalign(self, value: Optional[Union[int, float]]):
+        if value == None:
+            log_warn("You have set xalign to None, use 0 instead",
+                     "nqtr.button.Button.xalign")
+            value = 0
         if (self._align == None):
             self._align = (value, 0)
         else:
             self._align = (value, self._align[1])
 
     @property
-    def yalign(self) -> Optional[Union[int, float]]:
+    def yalign(self) -> Union[int, float]:
         """Y align"""
         if (self._align != None):
             return self._align[1]
         else:
-            return None
+            log_warn("You have set align to None, so return 0",
+                     "nqtr.button.Button.yalign")
+            return 0
 
     @yalign.setter
     def yalign(self, value: Optional[Union[int, float]]):
+        if value == None:
+            log_warn("You have set yalign to None, use 0 instead",
+                     "nqtr.button.Button.yalign")
+            value = 0
         if (self._align == None):
             self._align = (0, value)
         else:
