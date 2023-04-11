@@ -141,12 +141,13 @@ def clearExpiredActions(actions: dict[str, Act], current_day: int) -> None:
     return
 
 
-def getActions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler) -> list[Act]:
+def current_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
     """Return a action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
-        if is_action_in_current_room(act_id, act, room, now_hour, current_day, tm):
-            acts.append(act)
+        if not act.isHidden(flags):
+            if is_action_in_current_room(act_id, act, room, now_hour, current_day, tm):
+                acts.append(act)
     return acts
 
 
@@ -158,7 +159,7 @@ def is_action_in_current_room(act_id: str, action: Act, room: Room, now_hour: in
     return False
 
 
-def button_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool]) -> list[Act]:
+def current_button_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
     """Return a button action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
@@ -168,7 +169,7 @@ def button_actions(actions: dict[str, Act], room: Room, now_hour: int, current_d
     return acts
 
 
-def picture_in_background_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool]) -> list[Act]:
+def current_picture_in_background_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
     """Return a picture in background action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():

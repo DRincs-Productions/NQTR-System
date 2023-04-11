@@ -1,4 +1,4 @@
-from pythonpackages.nqtr.action import Act, clearExpiredActions, getActions
+from pythonpackages.nqtr.action import Act, clearExpiredActions, current_actions
 from pythonpackages.nqtr.action_talk import TalkObject
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.navigation import (Location, Map, Room, getRoomById,
@@ -14,7 +14,7 @@ __all__ = [
     # action
     "Act",
     "clearExpiredActions",
-    "getActions",
+    "current_actions",
     # action_talk
     "TalkObject",
     # button
