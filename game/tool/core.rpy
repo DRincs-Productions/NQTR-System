@@ -9,10 +9,10 @@ label after_load:
         from pythonpackages.nqtr.routine import getChsInThisLocation
 
         updateTimeHandler(tm)
-        clearExpiredActions(actions, tm.day)
-        clearExpiredRoutine(routine, tm)
-        cur_events_location = getEventsInThisLocation(cur_location.id, routine, tm)
-        commitments_in_cur_location = getChsInThisLocation(cur_location.id, routine | df_routine, tm)
+        clear_expired_actions(actions, tm.day)
+        clear_expired_routine(routine, tm)
+        cur_events_location = characters_events_in_current_location(cur_location.id, routine, tm)
+        commitments_in_cur_location = characters_commitment_in_current_location(cur_location.id, routine | df_routine, tm)
         updateQuestsLevels()
     return
 

@@ -70,14 +70,14 @@ init python:
         log_info("quest_getPercentageCompletion", renpy.get_filename_line())
         if (not checkIfTheQuestIsInNumberStages(id)):
             return 0
-        return quests[id].getPercentageCompletion(number_stages_completed_in_quest[id])
+        return quests[id].percentage_completion(number_stages_completed_in_quest[id])
 
     def quest_setDayNumberRequiredToStart(id: str, day: int) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#add-days-waiting-before-start """
         log_info("quest_setDayNumberRequiredToStart", renpy.get_filename_line())
         if (not checkIfTheQuestIsCurrentTaskStages(id)):
             return
-        return current_task_stages[id].setDayNumberRequiredToStart(dayNumberRequired, tm)
+        return current_task_stages[id].is_completed(dayNumberRequired, tm)
 
     def quest_start(id: str, n_stage: int = 0) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
@@ -93,10 +93,10 @@ init python:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
         log_info("quest_nextStageOnlyIsCompleted", renpy.get_filename_line())
         if (id in current_task_stages):
-            if (not current_task_stages[id].isCompleted(number_stages_completed_in_quest, tm, flags)):
+            if (not current_task_stages[id].is_completed(number_stages_completed_in_quest, tm, flags)):
                 return False
         elif (id in current_quest_stages):
-            if (not current_task_stages[id].isCompleted(number_stages_completed_in_quest, tm, flags)):
+            if (not current_task_stages[id].is_completed(number_stages_completed_in_quest, tm, flags)):
                 return False
         quest_nextStage(id)
         return True
@@ -106,7 +106,7 @@ init python:
         log_info("quest_nextStage", renpy.get_filename_line())
         if (not checkIfTheQuestExist(id)):
             return
-        quests[id].nextStage(quest_stages, current_quest_stages, number_stages_completed_in_quest, current_task_stages, tm, flags)
+        quests[id].next_stage(quest_stages, current_quest_stages, number_stages_completed_in_quest, current_task_stages, tm, flags)
         notify_add(quest_updated_notify)
         return
 
@@ -124,21 +124,21 @@ init python:
         if (not (id in number_stages_completed_in_quest)):
             updateQuestsLevels()
             return False
-        return quests[id].isCompleted(current_quest_stages, number_stages_completed_in_quest)
+        return quests[id].is_completed(current_quest_stages, number_stages_completed_in_quest)
 
     def quest_currentQuestId(id: str) -> str:
         """Return the id of this current"""
         log_info("quest_currentQuestId", renpy.get_filename_line())
         if (not (id in number_stages_completed_in_quest)):
             quest_update(id)
-        return quests[id].currentQuestId(number_stages_completed_in_quest)
+        return quests[id].quest_id(number_stages_completed_in_quest)
 
     def quest_completeStagesNumber(id: str) -> int:
         """Returns the number of completed stages"""
         log_info("quest_completeStagesNumber", renpy.get_filename_line())
         if (not (id in number_stages_completed_in_quest)):
             quest_update(id)
-        return quests[id].completeStagesNumber(number_stages_completed_in_quest)
+        return quests[id].completed_stages_number(number_stages_completed_in_quest)
 
     def quest_update(id: str) -> int:
         """Function to update the various values,

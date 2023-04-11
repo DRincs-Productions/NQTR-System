@@ -157,7 +157,7 @@ def clear_expired_routine(commitments: dict[str, Commitment], tm: TimeHandler) -
 def characters_commitment_in_current_location(location_id: str, routine: dict[str, Commitment], tm: TimeHandler) -> dict[str, Commitment]:
     """Wiki: https: // github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system  # priority """
     # Create a list of ch who have a commitment in that place at that time
-    # It does not do enough checks, they will be done later with getChLocation()
+    # It does not do enough checks, they will be done later with commitment_by_character()
     commitments = {}
     for comm in routine.values():
         # Check Time and Location
@@ -184,7 +184,7 @@ def characters_events_in_current_location(location_id: str, routine: dict[str, C
     """Returns events at that location at that time.
     Checks only in routine."""
     # Create a list of ch who have a commitment in that place at that time
-    # It does not do enough checks, they will be done later with getChLocation()
+    # It does not do enough checks, they will be done later with commitment_by_character()
     events = {}
     for comm in routine.values():
         # Check Time and Location and is event

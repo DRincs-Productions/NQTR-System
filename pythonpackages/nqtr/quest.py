@@ -533,7 +533,7 @@ class Quest(object):
     def after_next_stage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
-                     " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.afterNextStage()")
+                     " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.after_next_stage()")
             self.update(quest_stages, current_quest_stages,
                         number_stages_completed_in_quest, tm, flags)
         if len(self.stage_ids)-1 == number_stages_completed_in_quest[self.id]:
@@ -547,5 +547,5 @@ class Quest(object):
 
 # TODO: Add the following functions
 # check if current_quest_stages.key is in quests, if not there delete it: Load Game
-# for isCompleted()
+# for is_completed()
 # compare current_quest_stages current_task_stages if in current_quest_stages ce an extra quest is deleted

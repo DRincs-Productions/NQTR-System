@@ -254,7 +254,7 @@ def is_closed_room(room_id: str, closed_rooms: dict[str, Commitment], now_hour: 
 def get_room_by_id(room_id: str, rooms: list[Room]) -> Optional[Room]:
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
     if not room_id:
-        log_warn("room_id is None", "nqtr.navigation.getRoomById()")
+        log_warn("room_id is None", "nqtr.navigation.get_room_by_id()")
         return
     for room in rooms:
         if room.id == room_id:
@@ -265,7 +265,8 @@ def get_room_by_id(room_id: str, rooms: list[Room]) -> Optional[Room]:
 def get_location_by_id(location_id: str, locations: list[Location]) -> Optional[Location]:
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
     if not location_id:
-        log_error("location_id is None", "nqtr.navigation.getLocationById()")
+        log_error("location_id is None",
+                  "nqtr.navigation.get_location_by_id()")
         return
     for location in locations:
         if location.id == location_id:
