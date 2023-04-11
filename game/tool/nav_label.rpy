@@ -1,5 +1,5 @@
 init python:
-    from pythonpackages.nqtr.navigation import getRoomById
+    from pythonpackages.nqtr.navigation import get_room_by_id
 
 # if in a room there is a different bg (taken in routine) than usual, use this one
 default sp_bg_change_room = None
