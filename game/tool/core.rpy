@@ -1,7 +1,7 @@
 define config.log = "log.txt"
 
 label after_load:
-    $ updateFlags()
+    $ update_flags()
     python:
         from pythonpackages.nqtr.action import clearExpiredActions
         from pythonpackages.nqtr.routine import clearExpiredRoutine

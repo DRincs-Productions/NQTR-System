@@ -58,7 +58,7 @@ label take_product:
 
 label take_key:
     mc "Are these the car keys?! Well... I should try to access the car!"
-    $ setFlags("goout", True)
+    $ set_flags("goout", True)
     $ del actions['take_key']
     $ quest_nextStage(id = "ann")
     return

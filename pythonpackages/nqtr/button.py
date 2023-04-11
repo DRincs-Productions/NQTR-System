@@ -208,14 +208,14 @@ class Button(object):
     def isDisabled(self, flags: dict[str, bool] = {}) -> bool:
         """"If disabled is a string: get the value of the flags system"""
         if (isinstance(self.disabled, str)):
-            return getFlags(self.disabled, flags)
+            return get_flags(self.disabled, flags)
         else:
             return self.disabled
 
     def isHidden(self, flags: dict[str, bool] = {}, check_if_has_icon: bool = True) -> bool:
         """"If hidden is a string: get the value of the flags system"""
         if (isinstance(self.hidden, str)):
-            return getFlags(self.hidden, flags)
+            return get_flags(self.hidden, flags)
         elif check_if_has_icon and not self.is_button and not self.is_picture_in_background:
             return True
         else:
