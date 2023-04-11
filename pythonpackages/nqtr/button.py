@@ -31,8 +31,10 @@ class Button(object):
         self.button_icon_selected = button_icon_selected
         self.picture_in_background = picture_in_background
         self.picture_in_background_selected = picture_in_background_selected
-        self.xalign = xalign
-        self.yalign = yalign
+        if not xalign == None:
+            self.xalign = xalign
+        if not yalign == None:
+            self.yalign = yalign
         self.disabled = disabled
         self.hidden = hidden
         self.default_label_name = default_label_name
