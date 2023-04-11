@@ -19,6 +19,7 @@ define df_routine = {
         ch_talkobj_dict={
             "alice" : TalkObject(
                 name="talk_alice_sleep",
+                label_name="talk_sleep",
                 conversation_background = None,
             ),
         },

@@ -10,8 +10,8 @@ class Button(object):
 
     def __init__(
         self,
-        name: str = "",
-        label_name: str = "",
+        name: Optional[str] = None,
+        label_name: Optional[str] = None,
         button_icon: Optional[str] = None,
         button_icon_selected: Optional[str] = None,
         picture_in_background: Optional[str] = None,
@@ -25,7 +25,7 @@ class Button(object):
 
         self.align = None
 
-        self.name = name
+        self.name = name or ""
         self.label_name = label_name
         self.button_icon = button_icon
         self.button_icon_selected = button_icon_selected

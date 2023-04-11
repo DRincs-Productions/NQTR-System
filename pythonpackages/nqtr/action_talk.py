@@ -43,13 +43,11 @@ class TalkObject(Button):
         self.conversation_background = conversation_background
 
     @property
-    @DeprecationWarning
     def background(self) -> Optional[str]:
         "Deprecation: use conversation_background"
         return self.conversation_background
 
     @background.setter
-    @DeprecationWarning
     def background(self, value: Optional[str]):
         "Deprecation: use conversation_background"
         self.conversation_background = value
