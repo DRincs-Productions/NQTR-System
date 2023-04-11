@@ -156,6 +156,98 @@ Use search and replace of vscode with regex functionality enabled
 * `notifyExClean\((.*)\)`
 * `notify_remove($1)`
 
+### clearExpiredActions
+* `clearExpiredActions\((.*)\)`
+* `clear_expired_actions($1)`
+
+### isDisabled
+* `isDisabled\((.*)\)`
+* `is_disabled($1)`
+
+### isHidden
+* `isHidden\((.*)\)`
+* `is_hidden($1)`
+
+### isClosedRoom
+* `isClosedRoom\((.*)\)`
+* `is_closed_room($1)`
+
+### getRoomById
+* `getRoomById\((.*)\)`
+* `get_room_by_id($1)`
+
+### getLocationById
+* `getLocationById\((.*)\)`
+* `get_location_by_id($1)`
+
+### addInCurrentQuestStages
+* `addInCurrentQuestStages\((.*)\)`
+* `add_in_current_stages($1)`
+
+### addInCurrentTaskStages
+* `addInCurrentTaskStages\((.*)\)`
+* `add_in_current_stages($1)`
+
+### respectAllRequests
+* `respectAllRequests\((.*)\)`
+* `all_requests_are_met($1)`
+
+### isCompleted
+* `isCompleted\((.*)\)`
+* `is_completed($1)`
+
+### setDayNumberRequiredToStart
+* `setDayNumberRequiredToStart\((.*)\)`
+* `is_completed($1)`
+
+### currentQuestId
+* `currentQuestId\((.*)\)`
+* `quest_id($1)`
+
+### completeStagesNumber
+* `completeStagesNumber\((.*)\)`
+* `completed_stages_number($1)`
+
+### getPercentageCompletion
+* `getPercentageCompletion\((.*)\)`
+* `percentage_completion($1)`
+
+### nextStage
+* `nextStage\((.*)\)`
+* `next_stage($1)`
+
+### afterNextStage
+* `afterNextStage\((.*)\)`
+* `after_next_stage($1)`
+
+### getChIcons
+* `getChIcons\((.*)\)`
+* `character_icons($1)`
+
+### getTalkBackground
+* `getTalkBackground\((.*)\)`
+* `conversation_background($1)`
+
+### clearExpiredRoutine
+* `clearExpiredRoutine\((.*)\)`
+* `clear_expired_routine($1)`
+
+### getChsInThisLocation
+* `getChsInThisLocation\((.*)\)`
+* `characters_commitment_in_current_location($1)`
+
+### getEventsInThisLocation
+* `getEventsInThisLocation\((.*)\)`
+* `characters_events_in_current_location($1)`
+
+### getChLocation
+* `getChLocation\((.*)\)`
+* `commitment_by_character($1)`
+
+### getBgRoomRoutine
+* `getBgRoomRoutine\((.*)\)`
+* `commitment_background($1)`
+
 # v1.0.3
 
 ```shell
