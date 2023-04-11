@@ -4,7 +4,7 @@ label after_load:
     $ update_flags()
     python:
         from pythonpackages.nqtr.action import clear_expired_actions
-        from pythonpackages.nqtr.routine import clearExpiredRoutine
+        from pythonpackages.nqtr.routine import clear_expired_routine
         from pythonpackages.nqtr.routine import characters_events_in_current_location
         from pythonpackages.nqtr.routine import characters_commitment_in_current_location
 
