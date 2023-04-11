@@ -21,12 +21,12 @@ class Room(Button):
         background: Optional[str] = None,
         action_ids: list[str] = [],
         # Button params
-        button_icon: str = None,
-        button_icon_selected: str = None,
-        picture_in_background: str = None,
-        picture_in_background_selected: str = None,
-        xalign: int = None,
-        yalign: int = None,
+        button_icon: Optional[str] = None,
+        button_icon_selected: Optional[str] = None,
+        picture_in_background: Optional[str] = None,
+        picture_in_background_selected: Optional[str] = None,
+        xalign: Optional[int] = None,
+        yalign: Optional[int] = None,
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
@@ -98,12 +98,12 @@ class Location(Button):
         # Requirement Button params
         name: str,
         # Button params
-        button_icon: str = None,
-        button_icon_selected: str = None,
-        picture_in_background: str = None,
-        picture_in_background_selected: str = None,
-        xalign: int = None,
-        yalign: int = None,
+        button_icon: Optional[str] = None,
+        button_icon_selected: Optional[str] = None,
+        picture_in_background: Optional[str] = None,
+        picture_in_background_selected: Optional[str] = None,
+        xalign: Optional[int] = None,
+        yalign: Optional[int] = None,
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
@@ -162,10 +162,10 @@ class Map(Button):
         name: str,
         # Map params
         background: str,
-        map_id_north: str = None,
-        map_id_south: str = None,
-        map_id_west: str = None,
-        map_id_east: str = None,
+        map_id_north: Optional[str] = None,
+        map_id_south: Optional[str] = None,
+        map_id_west: Optional[str] = None,
+        map_id_east: Optional[str] = None,
         # Button params
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
@@ -250,7 +250,7 @@ def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], now_hour: in
     return cur_room_is_closed
 
 
-def getRoomById(room_id: str, rooms: list[Room]) -> None:
+def getRoomById(room_id: str, rooms: list[Room]) -> Optional[Room]:
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
     if not room_id:
         log_warn("room_id is None", "nqtr.navigation.getRoomById()")
@@ -261,7 +261,7 @@ def getRoomById(room_id: str, rooms: list[Room]) -> None:
     return
 
 
-def getLocationById(location_id: str, locations: list[Room]) -> None:
+def getLocationById(location_id: str, locations: list[Location]) -> Optional[Location]:
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
     if not location_id:
         log_error("location_id is None", "nqtr.navigation.getLocationById()")
