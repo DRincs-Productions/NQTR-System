@@ -1,3 +1,4 @@
+from typing import Union
 from pythonpackages.renpy_custom_log import *
 
 MIN_DAY_HOUR = 0
@@ -196,7 +197,7 @@ class TimeHandler(object):
         self.day += amt
         return True
 
-    def now_is_between(self, end: int, start: int = 0, now=None) -> bool:
+    def now_is_between(self, end: Union[int, float], start: Union[int, float] = 0, now=None) -> bool:
         if now is None:
             return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
         else:

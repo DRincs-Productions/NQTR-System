@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from pythonpackages.nqtr.action_talk import TalkObject
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
@@ -10,8 +10,8 @@ class Commitment(object):
 
     def __init__(
         self,
-        hour_start: int = MIN_DAY_HOUR,
-        hour_stop: int = MAX_DAY_HOUR,
+        hour_start: Union[int, float] = MIN_DAY_HOUR,
+        hour_stop: Union[int, float] = MAX_DAY_HOUR,
         ch_talkobj_dict: dict[str, Optional[TalkObject]] = {},
         background: Optional[str] = None,
         location_id: Optional[str] = None,
@@ -32,21 +32,21 @@ class Commitment(object):
         self.event_label_name = event_label_name
 
     @property
-    def hour_start(self) -> int:
+    def hour_start(self) -> Union[int, float]:
         """The hour when the commitment starts."""
         return self._hour_start
 
     @hour_start.setter
-    def hour_start(self, value: int):
+    def hour_start(self, value: Union[int, float]):
         self._hour_start = value
 
     @property
-    def hour_stop(self) -> int:
+    def hour_stop(self) -> Union[int, float]:
         """The hour when the commitment ends."""
         return self._hour_stop
 
     @hour_stop.setter
-    def hour_stop(self, value: int):
+    def hour_stop(self, value: Union[int, float]):
         self._hour_stop = value
 
     @property
@@ -128,9 +128,11 @@ class Commitment(object):
 
     def getTalkBackground(self, ch: str) -> Optional[str]:
         "Returns the image during a conversation"
-        if not self.ch_talkobj_dict[ch]:
+        item = self.ch_talkobj_dict[ch]
+        if isinstance(item, TalkObject):
+            return item.conversation_background
+        else:
             return None
-        return self.ch_talkobj_dict[ch].conversation_background
 
     # doesn't seem to work
     # use something like this: renpy.call(cur_events_location[cur_room.id].event_label_name)

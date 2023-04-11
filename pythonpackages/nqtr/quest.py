@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Optional, Type
 
 import renpy.exports as renpy
 
@@ -37,9 +37,12 @@ class Goal(object):
     @property
     def description(self) -> str:
         """Description of the Goal"""
-        return self._description
+        return self._description or ""
 
     @description.setter
+    def description(self, value: Optional[str]):
+        self._description = value
+
     @property
     def is_completed(self) -> bool:
         """returns True if the mission has been completed"""
@@ -49,7 +52,7 @@ class Goal(object):
 
     @is_completed.setter
     def is_completed(self, value: bool):
-        self.is_completed = value
+        self._is_completed = value
 
     @property
     def need(self) -> int:
@@ -171,13 +174,11 @@ class Stage(object):
         self._advice = value
 
     @property
-    @DeprecationWarning
     def background(self) -> Optional[str]:
         """Deprecate: use info_image"""
         return self._info_image
 
     @background.setter
-    @DeprecationWarning
     def background(self, value: Optional[str]):
         """Deprecate: use info_image"""
         self._info_image = value
@@ -286,9 +287,8 @@ class Stage(object):
     def active(self, value: bool):
         self._active = value
 
-    # TODO: object is Stage
-
-    def addInCurrentQuestStages(self, current_quest_stages: dict[str, object], tm: TimeHandler) -> None:
+    # Any is Stage
+    def addInCurrentQuestStages(self, current_quest_stages: dict[str, Any], tm: TimeHandler) -> None:
         """Add the Stage in the current_quest_stages"""
         current_quest_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
@@ -307,8 +307,8 @@ class Stage(object):
         return
 
     # TODO: Ora questo può essere rimpiazzato con addInCurrentQuestStages
-    # TODO: object is Stage
-    def addInCurrentTaskStages(self, current_task_stages: dict[str, object], tm: TimeHandler) -> None:
+    # Any is Stage
+    def addInCurrentTaskStages(self, current_task_stages: dict[str, Any], tm: TimeHandler) -> None:
         """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
         current_task_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
@@ -441,13 +441,11 @@ class Quest(object):
         self._icon = value
 
     @property
-    @DeprecationWarning
     def background(self) -> Optional[str]:
         """Deprecate: use info_image"""
         return self._info_image
 
     @background.setter
-    @DeprecationWarning
     def background(self, value: Optional[str]):
         """Deprecate: use info_image"""
         self._info_image = value
@@ -500,13 +498,13 @@ class Quest(object):
 
     def currentQuestId(self, number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
-        return self.stage_ids[number_stages_completed_in_quest[id]]
+        return self.stage_ids[number_stages_completed_in_quest[self.id]]
 
     def completeStagesNumber(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
-        return number_stages_completed_in_quest[id]
+        return number_stages_completed_in_quest[self.id]
 
-    def getPercentageCompletion(self, current_level: int) -> int:
+    def getPercentageCompletion(self, current_level: int) -> float:
         """Returns the percentage of completion"""
         return current_level/len(self.stage_ids)*100
 
