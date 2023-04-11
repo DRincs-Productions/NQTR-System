@@ -1,4 +1,4 @@
-from typing import Any, Optional, Type
+from typing import Any, Optional
 
 import renpy.exports as renpy
 

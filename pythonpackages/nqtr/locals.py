@@ -25,6 +25,9 @@ __all__ = [
     "Room",
     "getRoomById",
     "isClosedRoom",
+    # quest
+    "Quest",
+    "Stage",
     # routine
     "Commitment",
     "clearExpiredRoutine",
