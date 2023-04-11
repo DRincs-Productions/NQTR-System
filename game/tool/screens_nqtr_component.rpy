@@ -34,7 +34,7 @@ screen action_button(act, show_picture_in_background = False):
     if show_picture_in_background:
         imagebutton:
             align (act.xalign, act.yalign)
-            if act.is_picture_in_background:
+            if act.is_picture_in_background: # for logs
                 idle act.picture_in_background
                 hover act.picture_in_background_selected
             focus_mask True
@@ -46,7 +46,7 @@ screen action_button(act, show_picture_in_background = False):
             at middle_action_is_in_room
     else:
         imagebutton:
-            if act.is_button:
+            if act.is_button: # for logs
                 idle act.button_icon
                 hover act.button_icon_selected
             focus_mask True
