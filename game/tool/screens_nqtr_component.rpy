@@ -59,38 +59,37 @@ screen action_button(act, show_picture_in_background = False):
         # TODO else default icon button
 
 screen action_talk_button(ch_id, talk_obj, background):
-    if (not talk_obj.isHidden(flags)):
-        frame:
-            xysize (120, 120)
-            background None
+    frame:
+        xysize (120, 120)
+        background None
 
-            imagebutton:
-                if talk_obj.is_button:
-                    idle talk_obj.button_icon
-                else:
-                    idle gui.default_talk_button_icon
+        imagebutton:
+            if talk_obj.is_button:
+                idle talk_obj.button_icon
                 hover talk_obj.button_icon_selected
+            else:
+                idle gui.default_talk_button_icon
+            focus_mask True
+            action [
+                SetVariable('talk_ch', ch_id),
+                SetVariable('talk_image', background),
+                Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
+            ]
+            at middle_action
+        # inserts the icon of the character who is currently in that room
+        # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
+        if (ch_id in ch_icons):
+            imagebutton:
+                idle ch_icons.get(ch_id)
                 focus_mask True
+                at small_face
                 action [
                     SetVariable('talk_ch', ch_id),
                     SetVariable('talk_image', background),
                     Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
                 ]
-                at middle_action
-            # inserts the icon of the character who is currently in that room
-            # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-            if (ch_id in ch_icons):
-                imagebutton:
-                    idle ch_icons.get(ch_id)
-                    focus_mask True
-                    at small_face
-                    action [
-                        SetVariable('talk_ch', ch_id),
-                        SetVariable('talk_image', background),
-                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
-                    ]
-            if renpy.variant("pc"):
-                tooltip _("Talk")
+        if renpy.variant("pc"):
+            tooltip _("Talk")
 
 screen location_button(location):
     if (location.map_id == cur_map_id and not location.isHidden(flags)):
