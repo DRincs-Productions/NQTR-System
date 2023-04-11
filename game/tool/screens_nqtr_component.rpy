@@ -31,11 +31,12 @@ screen time_text(tm, show_wait_button = False):
             use wait_button(small = True)
 
 screen action_button(act, show_picture_in_background = False):
-    if show_picture_in_background and act.is_picture_in_background:
+    if show_picture_in_background:
         imagebutton:
             align (act.xalign, act.yalign)
-            idle act.picture_in_background
-            hover act.picture_in_background_selected
+            if act.is_picture_in_background:
+                idle act.picture_in_background
+                hover act.picture_in_background_selected
             focus_mask True
             action [
                 Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
@@ -43,10 +44,11 @@ screen action_button(act, show_picture_in_background = False):
             if renpy.variant("pc"):
                 tooltip act.name
             at middle_action_is_in_room
-    elif not show_picture_in_background and act.is_button:
+    else:
         imagebutton:
-            idle act.button_icon
-            hover act.button_icon_selected
+            if act.is_button:
+                idle act.button_icon
+                hover act.button_icon_selected
             focus_mask True
             action [
                 Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
