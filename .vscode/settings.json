@@ -247,5 +247,6 @@
                 }
             }
         ]
-    }
+    },
+    "python.analysis.typeCheckingMode": "basic"
 }
