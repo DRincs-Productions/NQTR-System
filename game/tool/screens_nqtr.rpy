@@ -1,6 +1,6 @@
 init python:
-    from pythonpackages.nqtr.navigation import isClosedRoom
-    from pythonpackages.nqtr.routine import getBgRoomRoutine
+    from pythonpackages.nqtr.navigation import is_closed_room
+    from pythonpackages.nqtr.routine import commitment_background
     from pythonpackages.nqtr.action import current_button_actions, current_picture_in_background_actions
 
 screen room_navigation():
