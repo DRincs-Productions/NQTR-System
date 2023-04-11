@@ -17,16 +17,16 @@ class Act(Button):
         # Act params
         room_ids: list[str] = [],
         hour_start: int = 0,
-        hour_stop: int = MAX_DAY_HOUR + 1,
+        hour_stop: Union[int, float] = MAX_DAY_HOUR + 1,
         day_start: Optional[int] = None,
         day_deadline: Optional[int] = None,
         # Button params
-        button_icon: str = None,
-        button_icon_selected: str = None,
-        picture_in_background: str = None,
-        picture_in_background_selected: str = None,
-        xalign: int = None,
-        yalign: int = None,
+        button_icon: Optional[str] = None,
+        button_icon_selected: Optional[str] = None,
+        picture_in_background: Optional[str] = None,
+        picture_in_background_selected: Optional[str] = None,
+        xalign: Optional[int] = None,
+        yalign: Optional[int] = None,
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
@@ -50,11 +50,11 @@ class Act(Button):
         self.day_deadline = day_deadline
         self.day_start = day_start
         self.room_ids = room_ids
-        if self.day_start is int and self.day_start < 0:
+        if isinstance(self.day_start, int) and self.day_start < 0:
             self.day_start = None
             log_info("You have set day_start < 0, so it will be ignored",
                      "nqtr.action.Act.__init__")
-        if self.day_deadline is int and self.day_deadline < 0:
+        if isinstance(self.day_deadline, int) and self.day_deadline < 0:
             self.day_deadline = None
             log_info("You have set day_deadline < 0, so it will be ignored",
                      "nqtr.action.Act.__init__")
@@ -69,13 +69,11 @@ class Act(Button):
         self._room_ids = value
 
     @property
-    @DeprecationWarning
     def rooms(self) -> list[str]:
         """Deprecated, use room_ids"""
         return self._room_ids
 
     @rooms.setter
-    @DeprecationWarning
     def rooms(self, value: Optional[list[str]]):
         """Deprecated, use room_ids"""
         self._room_ids = value if value else []
@@ -90,12 +88,12 @@ class Act(Button):
         self._hour_start = value
 
     @property
-    def hour_stop(self) -> int:
+    def hour_stop(self) -> Union[int, float]:
         """Stop hour of the action"""
         return self._hour_stop
 
     @hour_stop.setter
-    def hour_stop(self, value: int):
+    def hour_stop(self, value: Union[int, float]):
         self._hour_stop = value
 
     @property
