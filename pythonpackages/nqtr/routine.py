@@ -12,7 +12,7 @@ class Commitment(object):
         self,
         hour_start: int = MIN_DAY_HOUR,
         hour_stop: int = MAX_DAY_HOUR,
-        ch_talkobj_dict: dict[str, TalkObject] = {},
+        ch_talkobj_dict: dict[str, Optional[TalkObject]] = {},
         background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
@@ -50,12 +50,12 @@ class Commitment(object):
         self._hour_stop = value
 
     @property
-    def ch_talkobj_dict(self) -> dict[str, TalkObject]:
+    def ch_talkobj_dict(self) -> dict[str, Optional[TalkObject]]:
         """Dictionary of characters and their TalkObject."""
         return self._ch_talkobj_dict
 
     @ch_talkobj_dict.setter
-    def ch_talkobj_dict(self, value: dict[str, TalkObject]):
+    def ch_talkobj_dict(self, value: dict[str, Optional[TalkObject]]):
         self._ch_talkobj_dict = value
 
     @property
@@ -126,8 +126,10 @@ class Commitment(object):
                 icons.append(ch_icons[ch])
         return icons
 
-    def getTalkBackground(self, ch: str) -> str:
+    def getTalkBackground(self, ch: str) -> Optional[str]:
         "Returns the image during a conversation"
+        if not self.ch_talkobj_dict[ch]:
+            return None
         return self.ch_talkobj_dict[ch].conversation_background
 
     # doesn't seem to work
@@ -206,7 +208,7 @@ def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> O
 # TODO To Move move in renpy
 
 
-def checkIfIsActiveByTag(tag: str, id: str = None) -> bool:
+def checkIfIsActiveByTag(tag: str, id: str = "") -> bool:
     """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
     # Custom code
     if (tag == None):
@@ -216,7 +218,7 @@ def checkIfIsActiveByTag(tag: str, id: str = None) -> bool:
     return False
 
 
-def getBgRoomRoutine(commitments: dict[str, Commitment], room_id) -> None:
+def getBgRoomRoutine(commitments: dict[str, Commitment], room_id) -> Optional[str]:
     """Returns the first background image of the commitments based on the current room. if there are no returns None"""
     for item in commitments.values():
         if item.room_id == room_id:
