@@ -132,6 +132,18 @@ Use search and replace of vscode with regex functionality enabled
 * `weekend_day`
 * `weekday_weekend_begins`
 
+### updateFlags
+* `updateFlags`
+* `update_flags`
+
+### getFlags
+* `getFlags`
+* `get_flags`
+
+### setFlags
+* `setFlags`
+* `set_flags`
+
 # v1.0.3
 
 ```shell
