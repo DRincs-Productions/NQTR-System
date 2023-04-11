@@ -302,8 +302,8 @@ class Stage(object):
             check_label_name=self.check_label_name,
             days_required_to_start=self.days_required_to_start,
         )
-        # setDayNumberRequiredToStart: is important to set the day_start to the current day.
-        current_stages[self.quest_id].setDayNumberRequiredToStart(
+        # add_required_days_to_start: is important to set the day_start to the current day.
+        current_stages[self.quest_id].add_required_days_to_start(
             dayNumberRequired=self.days_required_to_start, tm=tm)
         return
 
