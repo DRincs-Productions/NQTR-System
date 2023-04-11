@@ -133,16 +133,16 @@ Use search and replace of vscode with regex functionality enabled
 * `weekday_weekend_begins`
 
 ### updateFlags
-* `updateFlags`
-* `update_flags`
+* `updateFlags\((.*)\)`
+* `update_flags($1)`
 
 ### getFlags
-* `getFlags`
-* `get_flags`
+* `getFlags\((.*)\)`
+* `get_flags($1)`
 
 ### setFlags
-* `setFlags`
-* `set_flags`
+* `setFlags\((.*)\)`
+* `set_flags($1)`
 
 # v1.0.3
 
