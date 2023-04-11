@@ -1,8 +1,8 @@
 init python:
     from pythonpackages.nqtr.action import clear_expired_actions
     from pythonpackages.nqtr.routine import clearExpiredRoutine
-    from pythonpackages.nqtr.routine import getEventsInThisLocation
-    from pythonpackages.nqtr.routine import getChsInThisLocation
+    from pythonpackages.nqtr.routine import characters_events_in_current_location
+    from pythonpackages.nqtr.routine import characters_commitment_in_current_location
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#defalut-value
 # pressing the hold button will increase the time of:
