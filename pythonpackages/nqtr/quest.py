@@ -96,7 +96,7 @@ class Stage(object):
     def __init__(
         self,
         quest_id: str,
-        goal_ids: list[str] = [],
+        goals: list[Goal] = [],
         title: str = "",
         description: str = "",
         advice: str = "",
@@ -111,7 +111,7 @@ class Stage(object):
     ):
 
         self.quest_id = quest_id
-        self.goal_ids = goal_ids
+        self.goals = goals
         self.title = title
         self.description = description
         self.advice = advice
@@ -138,13 +138,13 @@ class Stage(object):
         self._quest_id = value
 
     @property
-    def goal_ids(self) -> list[str]:
+    def goals(self) -> list[Goal]:
         """List of the goals"""
-        return self._goal_ids
+        return self._goals
 
-    @goal_ids.setter
-    def goal_ids(self, value: list[str]):
-        self._goal_ids = value
+    @goals.setter
+    def goals(self, value: list[Goal]):
+        self._goals = value
 
     @property
     def title(self) -> str:
@@ -292,7 +292,7 @@ class Stage(object):
         """Add the Stage in the current_quest_stages"""
         current_quest_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
-            goal_ids=self.goal_ids,
+            goals=self.goals,
             flags_required=self.flags_required,
             required_number_completed_stages=self.required_number_completed_stages,
             request_description=self.request_description,
@@ -312,7 +312,7 @@ class Stage(object):
         """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
         current_task_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
-            goal_ids=self.goal_ids,
+            goals=self.goals,
             flags_required=self.flags_required,
             required_number_completed_stages=self.required_number_completed_stages,
             request_description=self.request_description,
@@ -358,15 +358,15 @@ class Stage(object):
         if (not self.active):
             if (not self.start(number_stages_completed_in_quest, tm, flags)):
                 return False
-        if self.goal_ids:
-            for x in self.goal_ids:
-                if (not x.isComplete()):
+        if self.goals:
+            for x in self.goals:
+                if (not x.is_completed):
                     return False
         self.is_completed = True
         return True
 
     def find(self, goals_id: str, value: int = 1) -> bool:
-        for item in self.goal_ids:
+        for item in self.goals:
             if (item.id == goals_id):
                 item.find(value)
                 return True
@@ -543,7 +543,7 @@ class Quest(object):
     def nextStage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
         if (self.id in current_task_stages):
-            del current_task_stages[self.quest_id]
+            del current_task_stages[self.id]
             return
         self.afterNextStage(quest_stages, current_quest_stages,
                             number_stages_completed_in_quest, tm, flags)
