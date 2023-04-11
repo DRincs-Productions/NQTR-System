@@ -125,7 +125,7 @@ class Stage(object):
         self.check_label_name = check_label_name
 
         self.day_start = None
-        self.is_completed = False
+        self.completed = False
         self.active = False
 
     @property
@@ -270,12 +270,12 @@ class Stage(object):
         self._day_start = value
 
     @property
-    def is_completed(self) -> bool:
+    def completed(self) -> bool:
         """True if the Stage is completed"""
         return self._is_completed
 
-    @is_completed.setter
-    def is_completed(self, value: bool):
+    @completed.setter
+    def completed(self, value: bool):
         self._is_completed = value
 
     @property
@@ -288,9 +288,10 @@ class Stage(object):
         self._active = value
 
     # Any is Stage
-    def addInCurrentQuestStages(self, current_quest_stages: dict[str, Any], tm: TimeHandler) -> None:
-        """Add the Stage in the current_quest_stages"""
-        current_quest_stages[self.quest_id] = Stage(
+    def add_in_current_stages(self, current_stages: dict[str, Any], tm: TimeHandler) -> None:
+        """Add the Stage in the current_quest_stages.
+        Can also be used for tasks: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task"""
+        current_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
             goals=self.goals,
             flags_required=self.flags_required,
@@ -302,27 +303,7 @@ class Stage(object):
             days_required_to_start=self.days_required_to_start,
         )
         # setDayNumberRequiredToStart: is important to set the day_start to the current day.
-        current_quest_stages[self.quest_id].setDayNumberRequiredToStart(
-            dayNumberRequired=self.days_required_to_start, tm=tm)
-        return
-
-    # TODO: Ora questo può essere rimpiazzato con addInCurrentQuestStages
-    # Any is Stage
-    def addInCurrentTaskStages(self, current_task_stages: dict[str, Any], tm: TimeHandler) -> None:
-        """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
-        current_task_stages[self.quest_id] = Stage(
-            quest_id=self.quest_id,
-            goals=self.goals,
-            flags_required=self.flags_required,
-            required_number_completed_stages=self.required_number_completed_stages,
-            request_description=self.request_description,
-            start_label_name=self.start_label_name,
-            end_label_name=self.end_label_name,
-            check_label_name=self.check_label_name,
-            days_required_to_start=self.days_required_to_start,
-        )
-        # setDayNumberRequiredToStart: is important to set the day_start to the current day.
-        current_task_stages[self.quest_id].setDayNumberRequiredToStart(
+        current_stages[self.quest_id].setDayNumberRequiredToStart(
             dayNumberRequired=self.days_required_to_start, tm=tm)
         return
 
@@ -331,14 +312,14 @@ class Stage(object):
         start() is used until the Stage becomes active."""
         if (self.active):
             return self.active
-        if (not self.respectAllRequests(number_stages_completed_in_quest, tm, flags)):
+        if (not self.all_requests_are_met(number_stages_completed_in_quest, tm, flags)):
             return False
         self.active = True
         if (self.start_label_name != None):
             renpy.call(self.start_label_name)
         return True
 
-    def respectAllRequests(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
+    def all_requests_are_met(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """Checks the requests, returns True if it satisfies them."""
         if (self.day_start != None and tm.day < self.day_start):
             return False
@@ -350,10 +331,10 @@ class Stage(object):
                 return False
         return True
 
-    def isCompleted(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
+    def is_completed(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """Check if the Stage can be complete."""
         # if (check_label_name != None)
-        if (self.is_completed):
+        if (self.completed):
             return True
         if (not self.active):
             if (not self.start(number_stages_completed_in_quest, tm, flags)):
@@ -362,7 +343,7 @@ class Stage(object):
             for x in self.goals:
                 if (not x.is_completed):
                     return False
-        self.is_completed = True
+        self.completed = True
         return True
 
     def find(self, goals_id: str, value: int = 1) -> bool:
@@ -372,7 +353,7 @@ class Stage(object):
                 return True
         return False
 
-    def setDayNumberRequiredToStart(self, dayNumberRequired: int, tm: TimeHandler) -> None:
+    def add_required_days_to_start(self, dayNumberRequired: int, tm: TimeHandler) -> None:
         """Add days of waiting before it starts"""
         if dayNumberRequired:
             self.day_start = tm.day + dayNumberRequired
@@ -487,24 +468,24 @@ class Quest(object):
     def development(self, value: bool):
         self._development = value
 
-    def isCompleted(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
+    def is_completed(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
         """Check if all stages have been completed."""
         if (not (self.id in number_stages_completed_in_quest)):
             return False
         if len(self.stage_ids)-1 == number_stages_completed_in_quest[self.id]:
-            return current_quest_stages[self.id].is_completed
+            return current_quest_stages[self.id].completed
         else:
             return False
 
-    def currentQuestId(self, number_stages_completed_in_quest: dict[str, int]) -> str:
+    def quest_id(self, number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
         return self.stage_ids[number_stages_completed_in_quest[self.id]]
 
-    def completeStagesNumber(self, number_stages_completed_in_quest: dict[str, int]) -> int:
+    def completed_stages_number(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
         return number_stages_completed_in_quest[self.id]
 
-    def getPercentageCompletion(self, current_level: int) -> float:
+    def percentage_completion(self, current_level: int) -> float:
         """Returns the percentage of completion"""
         return current_level/len(self.stage_ids)*100
 
@@ -512,7 +493,7 @@ class Quest(object):
         """Function to update the various values,
         If it is a completed Quest and a Stage has been added in a new update, the new Stage begins.
         Prevent errors like blocked Quests."""
-        if (self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)):
+        if (self.is_completed(current_quest_stages,  number_stages_completed_in_quest)):
             return
         if (not (self.id in current_quest_stages) and number_stages_completed_in_quest[self.id] == 0):
             return
@@ -526,37 +507,37 @@ class Quest(object):
             number_stages_completed_in_quest[self.id] = len(self.stage_ids)-1
             return
         # if it is a completed Quest and a Stage has been added in a new update
-        if (not self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].is_completed:
-            self.afterNextStage(quest_stages, current_quest_stages,
-                                number_stages_completed_in_quest, tm, flags)
+        if (not self.is_completed(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].completed:
+            self.after_next_stage(quest_stages, current_quest_stages,
+                                  number_stages_completed_in_quest, tm, flags)
             return
 
     def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
         number_stages_completed_in_quest[self.id] = n_stage
-        quest_stages[self.stage_ids[n_stage]].addInCurrentQuestStages(
+        quest_stages[self.stage_ids[n_stage]].add_in_current_stages(
             current_quest_stages, tm)
         current_quest_stages[self.id].start(
             number_stages_completed_in_quest, tm, flags)
         return
 
-    def nextStage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
+    def next_stage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
         if (self.id in current_task_stages):
             del current_task_stages[self.id]
             return
-        self.afterNextStage(quest_stages, current_quest_stages,
-                            number_stages_completed_in_quest, tm, flags)
+        self.after_next_stage(quest_stages, current_quest_stages,
+                              number_stages_completed_in_quest, tm, flags)
         return
 
-    def afterNextStage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
+    def after_next_stage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         if (not (self.id in number_stages_completed_in_quest)):
             log_warn("the Quest: "+self.id +
                      " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.afterNextStage()")
             self.update(quest_stages, current_quest_stages,
                         number_stages_completed_in_quest, tm, flags)
         if len(self.stage_ids)-1 == number_stages_completed_in_quest[self.id]:
-            current_quest_stages[self.id].is_completed = True
+            current_quest_stages[self.id].completed = True
             return
         number_stages_completed_in_quest[self.id] += 1
         self.start(quest_stages, current_quest_stages, number_stages_completed_in_quest,

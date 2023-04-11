@@ -235,7 +235,8 @@ class Map(Button):
         self._map_id_east = value
 
 
-def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], now_hour: int, tm: TimeHandler) -> bool:
+# TODO: Move in Room class
+def is_closed_room(room_id: str, closed_rooms: dict[str, Commitment], now_hour: int, tm: TimeHandler) -> bool:
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#is-closed-room """
     cur_room_is_closed = False
     closed_rooms_to_del = []
@@ -250,7 +251,7 @@ def isClosedRoom(room_id: str, closed_rooms: dict[str, Commitment], now_hour: in
     return cur_room_is_closed
 
 
-def getRoomById(room_id: str, rooms: list[Room]) -> Optional[Room]:
+def get_room_by_id(room_id: str, rooms: list[Room]) -> Optional[Room]:
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
     if not room_id:
         log_warn("room_id is None", "nqtr.navigation.getRoomById()")
@@ -261,7 +262,7 @@ def getRoomById(room_id: str, rooms: list[Room]) -> Optional[Room]:
     return
 
 
-def getLocationById(location_id: str, locations: list[Location]) -> Optional[Location]:
+def get_location_by_id(location_id: str, locations: list[Location]) -> Optional[Location]:
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
     if not location_id:
         log_error("location_id is None", "nqtr.navigation.getLocationById()")
