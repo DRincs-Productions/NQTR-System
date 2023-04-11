@@ -168,10 +168,7 @@ class Button(object):
     @property
     def hidden(self) -> Union[bool, str]:
         """Hidden"""
-        if self._hidden:
-            return True
-        else:
-            return not self.is_button and not self.is_picture_in_background
+        return self._hidden
 
     @hidden.setter
     def hidden(self, value: Union[bool, str]):
