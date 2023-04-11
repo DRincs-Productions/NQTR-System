@@ -144,6 +144,18 @@ Use search and replace of vscode with regex functionality enabled
 * `setFlags\((.*)\)`
 * `set_flags($1)`
 
+### notifyEx
+* `notifyEx\((.*)\)`
+* `notify_add($1)`
+
+### notifyExPreventsLoops
+* `notifyExPreventsLoops\((.*)\)`
+* `notify_prevents_loops($1)`
+
+### notifyExClean
+* `notifyExClean\((.*)\)`
+* `notify_remove($1)`
+
 # v1.0.3
 
 ```shell
