@@ -56,43 +56,43 @@ screen action_button(act, show_picture_in_background = False):
             if renpy.variant("pc"):
                 tooltip act.name
             at middle_action
-        # TODO else default icon button
 
 screen action_talk_button(ch_id, talk_obj, background):
-    frame:
-        xysize (120, 120)
-        background None
+    if not talk_obj.isHidden(flags = flags, check_if_has_icon = False):
+        frame:
+            xysize (120, 120)
+            background None
 
-        imagebutton:
-            if talk_obj.is_button:
-                idle talk_obj.button_icon
-                hover talk_obj.button_icon_selected
-            else:
-                idle gui.default_talk_button_icon
-            focus_mask True
-            action [
-                SetVariable('talk_ch', ch_id),
-                SetVariable('talk_image', background),
-                Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
-            ]
-            at middle_action
-        # inserts the icon of the character who is currently in that room
-        # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-        if (ch_id in ch_icons):
             imagebutton:
-                idle ch_icons.get(ch_id)
+                if talk_obj.is_button:
+                    idle talk_obj.button_icon
+                    hover talk_obj.button_icon_selected
+                else:
+                    idle gui.default_talk_button_icon
                 focus_mask True
-                at small_face
                 action [
                     SetVariable('talk_ch', ch_id),
                     SetVariable('talk_image', background),
                     Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
                 ]
-        if renpy.variant("pc"):
-            tooltip _("Talk")
+                at middle_action
+            # inserts the icon of the character who is currently in that room
+            # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
+            if (ch_id in ch_icons):
+                imagebutton:
+                    idle ch_icons.get(ch_id)
+                    focus_mask True
+                    at small_face
+                    action [
+                        SetVariable('talk_ch', ch_id),
+                        SetVariable('talk_image', background),
+                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
+                    ]
+            if renpy.variant("pc"):
+                tooltip _("Talk")
 
 screen location_button(location):
-    if (location.map_id == cur_map_id and not location.isHidden(flags)):
+    if (location.map_id == cur_map_id and not location.isHidden(flags = flags)):
         vbox:
             align (location.yalign, location.xalign)
             imagebutton:
@@ -119,19 +119,20 @@ screen location_button(location):
                 line_spacing -2
 
 screen map_button(map_id, map, align_value, rotation):
-    hbox:
-        align align_value
-        imagebutton:
-            idle "gui triangular_button"
-            focus_mask True
-            sensitive not map.isDisabled(flags)
-            action [
-                SetVariable('cur_map_id', map_id), 
-                Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-            ]
-            if renpy.variant("pc"):
-                tooltip map.name
-            at middle_map(rotation)
+    if not map.isHidden(flags = flags, check_if_has_icon = False):
+        hbox:
+            align align_value
+            imagebutton:
+                idle "gui triangular_button"
+                focus_mask True
+                sensitive not map.isDisabled(flags)
+                action [
+                    SetVariable('cur_map_id', map_id), 
+                    Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
+                ]
+                if renpy.variant("pc"):
+                    tooltip map.name
+                at middle_map(rotation)
 
 screen map(maps, cur_map_id):
     $ map_id_north = maps[cur_map_id].map_id_north
@@ -140,16 +141,16 @@ screen map(maps, cur_map_id):
     $ map_id_west = maps[cur_map_id].map_id_west
 
     # North map
-    if (not isNullOrEmpty(map_id_north) and not maps[map_id_north].isHidden(flags)):
+    if not isNullOrEmpty(map_id_north):
         use map_button(map_id = map_id_north, map = maps[map_id_north], align_value = (0.5, 0.1), rotation = 270)
     # South map
-    if (not isNullOrEmpty(map_id_south) and not maps[map_id_south].isHidden(flags)):
+    if not isNullOrEmpty(map_id_south):
         use map_button(map_id = map_id_south, map = maps[map_id_south], align_value = (0.5, 0.99), rotation = 90)
     # West map
-    if (not isNullOrEmpty(map_id_west) and not maps[map_id_west].isHidden(flags)):
+    if not isNullOrEmpty(map_id_west):
         use map_button(map_id = map_id_west, map = maps[map_id_west], align_value = (0.001, 0.5), rotation = 180)
     # East map
-    if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden(flags)):
+    if not isNullOrEmpty(map_id_east):
         use map_button(map_id = map_id_east, map = maps[map_id_east], align_value = (0.999, 0.5), rotation = 0)
 
 screen room_button(room, cur_room, i, find_ch = False):
