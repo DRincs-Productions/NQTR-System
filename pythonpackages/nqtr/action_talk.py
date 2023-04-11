@@ -14,8 +14,6 @@ class TalkObject(Button):
     def __init__(
         self,
         # only TalkObject
-        # Deprecation: use conversation_background
-        background: Optional[str] = None,
         conversation_background: Optional[str] = None,
         # Button
         name: Optional[str] = None,
@@ -42,19 +40,14 @@ class TalkObject(Button):
             hidden=hidden,
             default_label_name=DEFAULT_LABEL_TALK,
         )
-        if conversation_background:
-            self.conversation_background = conversation_background
-        else:
-            self.conversation_background = background
+        self.conversation_background = conversation_background
 
     @property
-    @DeprecationWarning
     def background(self) -> Optional[str]:
         "Deprecation: use conversation_background"
         return self.conversation_background
 
     @background.setter
-    @DeprecationWarning
     def background(self, value: Optional[str]):
         "Deprecation: use conversation_background"
         self.conversation_background = value

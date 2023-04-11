@@ -2,7 +2,7 @@ from typing import Optional, Union
 
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.navigation import Room
-from pythonpackages.nqtr.time import TimeHandler
+from pythonpackages.nqtr.time import MAX_DAY_HOUR, TimeHandler
 from pythonpackages.renpy_custom_log import *
 
 
@@ -11,22 +11,22 @@ class Act(Button):
 
     def __init__(
         self,
-        # Requirement
+        # Requirement Button params
         name: str,
         label_name: str,
         # Act params
-        rooms: Optional[list[str]] = None,
-        tm_start: int = 0,
-        tm_stop: int = 25,
+        room_ids: list[str] = [],
+        hour_start: int = 0,
+        hour_stop: Union[int, float] = MAX_DAY_HOUR + 1,
         day_start: Optional[int] = None,
         day_deadline: Optional[int] = None,
         # Button params
-        button_icon: str = None,
-        button_icon_selected: str = None,
-        picture_in_background: str = None,
-        picture_in_background_selected: str = None,
-        xalign: int = None,
-        yalign: int = None,
+        button_icon: Optional[str] = None,
+        button_icon_selected: Optional[str] = None,
+        picture_in_background: Optional[str] = None,
+        picture_in_background_selected: Optional[str] = None,
+        xalign: Optional[int] = None,
+        yalign: Optional[int] = None,
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
@@ -45,19 +45,74 @@ class Act(Button):
             hidden=hidden,
         )
         # Act init
-        self.tm_start = tm_start
-        self.tm_stop = tm_stop-0.1
+        self.hour_start = hour_start
+        self.hour_stop = hour_stop-0.1
         self.day_deadline = day_deadline
         self.day_start = day_start
-        self.rooms = rooms if rooms else []
-        if self.day_start is int and self.day_start < 0:
+        self.room_ids = room_ids
+        if isinstance(self.day_start, int) and self.day_start < 0:
             self.day_start = None
             log_info("You have set day_start < 0, so it will be ignored",
                      "nqtr.action.Act.__init__")
-        if self.day_deadline is int and self.day_deadline < 0:
+        if isinstance(self.day_deadline, int) and self.day_deadline < 0:
             self.day_deadline = None
             log_info("You have set day_deadline < 0, so it will be ignored",
                      "nqtr.action.Act.__init__")
+
+    @property
+    def room_ids(self) -> list[str]:
+        """List of room ids where this act can be done"""
+        return self._room_ids
+
+    @room_ids.setter
+    def room_ids(self, value: list[str]):
+        self._room_ids = value
+
+    @property
+    def rooms(self) -> list[str]:
+        """Deprecated, use room_ids"""
+        return self._room_ids
+
+    @rooms.setter
+    def rooms(self, value: Optional[list[str]]):
+        """Deprecated, use room_ids"""
+        self._room_ids = value if value else []
+
+    @property
+    def hour_start(self) -> int:
+        """Start hour of the action"""
+        return self._hour_start
+
+    @hour_start.setter
+    def hour_start(self, value: int):
+        self._hour_start = value
+
+    @property
+    def hour_stop(self) -> Union[int, float]:
+        """Stop hour of the action"""
+        return self._hour_stop
+
+    @hour_stop.setter
+    def hour_stop(self, value: Union[int, float]):
+        self._hour_stop = value
+
+    @property
+    def day_start(self) -> Optional[int]:
+        """Start day of the action"""
+        return self._day_start
+
+    @day_start.setter
+    def day_start(self, value: Optional[int]):
+        self._day_start = value
+
+    @property
+    def day_deadline(self) -> Optional[int]:
+        """Deadline day of the action"""
+        return self._day_deadline
+
+    @day_deadline.setter
+    def day_deadline(self, value: Optional[int]):
+        self._day_deadline = value
 
     def is_deadline(self, current_day: int) -> bool:
         """Return True if the deadline is passed"""
@@ -84,11 +139,39 @@ def clearExpiredActions(actions: dict[str, Act], current_day: int) -> None:
     return
 
 
-def getActions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler) -> list[Act]:
+def current_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
     """Return a action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
-        if room.id in act.rooms or act_id in room.action_ids:
-            if act.have_valid_day(current_day) and tm.now_is_between(start=act.tm_start, end=act.tm_stop, now=now_hour):
+        if not act.isHidden(flags):
+            if is_action_in_current_room(act_id, act, room, now_hour, current_day, tm):
+                acts.append(act)
+    return acts
+
+
+def is_action_in_current_room(act_id: str, action: Act, room: Room, now_hour: int, current_day: int, tm: TimeHandler) -> bool:
+    """Return True if the action is in the current room and available for the current time"""
+    if room.id in action.room_ids or act_id in room.action_ids:
+        if action.have_valid_day(current_day) and tm.now_is_between(start=action.hour_start, end=action.hour_stop, now=now_hour):
+            return True
+    return False
+
+
+def current_button_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
+    """Return a button action list for the current room and available for the current time"""
+    acts: list[Act] = []
+    for act_id, act in actions.items():
+        if act.is_button and not act.isHidden(flags):
+            if is_action_in_current_room(act_id, act, room, now_hour, current_day, tm):
+                acts.append(act)
+    return acts
+
+
+def current_picture_in_background_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
+    """Return a picture in background action list for the current room and available for the current time"""
+    acts: list[Act] = []
+    for act_id, act in actions.items():
+        if act.is_picture_in_background and not act.isHidden(flags):
+            if is_action_in_current_room(act_id, act, room, now_hour, current_day, tm):
                 acts.append(act)
     return acts

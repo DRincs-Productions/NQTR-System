@@ -86,7 +86,7 @@ init python:
             return False
         quests[id].start(quest_stages, current_quest_stages, number_stages_completed_in_quest, tm, flags, n_stage)
         if (n_stage == 0):
-            notifyEx(new_quest_notify)
+            notify_add(new_quest_notify)
         return True
 
     def quest_nextStageOnlyIsCompleted(id: str) -> bool:
@@ -107,7 +107,7 @@ init python:
         if (not checkIfTheQuestExist(id)):
             return
         quests[id].nextStage(quest_stages, current_quest_stages, number_stages_completed_in_quest, current_task_stages, tm, flags)
-        notifyEx(quest_updated_notify)
+        notify_add(quest_updated_notify)
         return
 
     def quest_isStarted(id: str) -> bool:

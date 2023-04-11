@@ -50,7 +50,7 @@ label go_previous_room:
 
 ## Open the map or close the map
 label open_map:
-    if(not getFlags("goout")):
+    if(not get_flags("goout")):
         "[block_goout_dialogue]"
         return
 

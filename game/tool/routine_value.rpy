@@ -17,25 +17,32 @@ default routine = {}
 define df_routine = {
     "alice_sleep" : Commitment(
         ch_talkobj_dict={
-            "alice" : TalkObject(label_name="talk_sleep"),
+            "alice" : TalkObject(
+                name="talk_alice_sleep",
+                label_name="talk_sleep",
+                conversation_background = None,
+            ),
         },
-        tm_start=20, tm_stop=10,
+        hour_start=20, hour_stop=10,
         location_id="house", room_id="alice_room",
         background ="bg alice roomsleep",
     ),
     "alice_lounge" : Commitment(
-        tm_start=10, tm_stop=14,
+        hour_start=10, hour_stop=14,
         location_id="house", room_id="lounge",
     ),
     "alice_go_school" : Commitment(
-        tm_start=10, tm_stop=14,
+        hour_start=10, hour_stop=14,
         location_id="school", tag="no_week",
     ),
     "alice_read" : Commitment(
         ch_talkobj_dict={
-            "alice" : TalkObject(background ="bg alice terrace talk"),
+            "alice" : TalkObject(
+                name="talk_alice_read",
+                conversation_background ="bg alice terrace talk"
+            ),
         },
-        tm_start=14, tm_stop=20,
+        hour_start=14, hour_stop=20,
         location_id="house", room_id="terrace",
         background ="bg alice terrace",
     ),

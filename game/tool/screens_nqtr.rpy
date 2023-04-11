@@ -1,7 +1,7 @@
 init python:
     from pythonpackages.nqtr.navigation import isClosedRoom
     from pythonpackages.nqtr.routine import getBgRoomRoutine
-    from pythonpackages.nqtr.action import getActions
+    from pythonpackages.nqtr.action import current_button_actions, current_picture_in_background_actions
 
 screen room_navigation():
     modal True
@@ -41,8 +41,8 @@ screen room_navigation():
         for room in rooms:
             # Adds the button list of possible actions in that room
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
-                for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm):
-                    use action_button(act)
+                for act in current_picture_in_background_actions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm, flags = flags):
+                    use action_button(act, show_picture_in_background = True)
 
         # Normal Actions (with side button)
         vbox:
@@ -51,8 +51,8 @@ screen room_navigation():
             for room in rooms:
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
-                    for act in getActions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm):
-                        use action_button(act, show_picture_in_background = True)
+                    for act in current_button_actions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm, flags = flags):
+                        use action_button(act, show_picture_in_background = False)
 
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
@@ -60,7 +60,8 @@ screen room_navigation():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            use action_talk_button(ch_id, talk_obj, comm.getTalkBackground(ch_id))
+                            if (talk_obj):
+                                use action_talk_button(ch_id, talk_obj, comm.getTalkBackground(ch_id))
 
             # Fixed button to wait
             use wait_button()

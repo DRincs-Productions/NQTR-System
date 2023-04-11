@@ -61,7 +61,7 @@ screen menu_memo():
 
     # Information on the current quest
     if cur_task_menu != '':
-        $ quest_menu = quest_stages[quests[cur_task_menu].stages_id[cur_quest_menu]]
+        $ quest_menu = quest_stages[quests[cur_task_menu].stage_ids[cur_quest_menu]]
         vbox:
             xalign gui.menu_memo_frame_xalign
             yalign gui.menu_memo_frame_yalign
@@ -101,7 +101,7 @@ screen menu_memo():
                         text quest_menu.advice size gui.big_normal_text_size
                         for item in quest_menu.goals:
                             text item.description size gui.big_normal_text_size
-                        if current_quest_stages[cur_task_menu].completed and (cur_quest_menu+1) == len(quests[cur_task_menu].stages_id):
+                        if current_quest_stages[cur_task_menu].completed and (cur_quest_menu+1) == len(quests[cur_task_menu].stage_ids):
                             if quests[cur_task_menu].development:
                                 text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size gui.big_normal_text_size
                             else:

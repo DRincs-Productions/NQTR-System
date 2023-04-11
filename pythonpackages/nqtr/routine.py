@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from pythonpackages.nqtr.action_talk import TalkObject
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
@@ -10,43 +10,53 @@ class Commitment(object):
 
     def __init__(
         self,
-        tm_start: int = MIN_DAY_HOUR,
-        tm_stop: int = MAX_DAY_HOUR,
-        ch_talkobj_dict: dict[str, TalkObject] = {},
+        hour_start: Union[int, float] = MIN_DAY_HOUR,
+        hour_stop: Union[int, float] = MAX_DAY_HOUR,
+        ch_talkobj_dict: dict[str, Optional[TalkObject]] = {},
         background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
-        tag: Optional[str] = None,  # TODO: implement this
+        tag: Optional[str] = None,
         day_deadline: Optional[int] = None,
         event_label_name: Optional[str] = None
     ):
 
         self.background = background
         self.ch_talkobj_dict = ch_talkobj_dict
-        self.tm_start = tm_start
-        self.tm_stop = tm_stop-0.1
+        self.hour_start = hour_start
+        self.hour_stop = hour_stop-0.1
         self.location_id = location_id
         self.room_id = room_id
         self.tag = tag
         self.day_deadline = day_deadline
-        # ATTENTION: in check_event_sp if the mc has not moved, delete the event (resolves any loops)
-        # se si vuole degli eventi fissi usare check_event_df
-        # if you want the event to be started only once and then deleted
-        # at the end of the label insert:
-        # return
-        # if you want the event to be repeated every time you go to that room
-        # at the end of the label insert:
-        # call change_room
-        # if you want the event to be repeated only once, but then it is repeated after waiting some time or changing location_id
-        # at the end of the label insert:
-        # $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
-        # call change_room
         self.event_label_name = event_label_name
 
     @property
-    def is_event(self) -> bool:
-        "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
-        return (self.event_label_name is not None)
+    def hour_start(self) -> Union[int, float]:
+        """The hour when the commitment starts."""
+        return self._hour_start
+
+    @hour_start.setter
+    def hour_start(self, value: Union[int, float]):
+        self._hour_start = value
+
+    @property
+    def hour_stop(self) -> Union[int, float]:
+        """The hour when the commitment ends."""
+        return self._hour_stop
+
+    @hour_stop.setter
+    def hour_stop(self, value: Union[int, float]):
+        self._hour_stop = value
+
+    @property
+    def ch_talkobj_dict(self) -> dict[str, Optional[TalkObject]]:
+        """Dictionary of characters and their TalkObject."""
+        return self._ch_talkobj_dict
+
+    @ch_talkobj_dict.setter
+    def ch_talkobj_dict(self, value: dict[str, Optional[TalkObject]]):
+        self._ch_talkobj_dict = value
 
     @property
     def background(self) -> Optional[str]:
@@ -57,6 +67,57 @@ class Commitment(object):
     def background(self, value: Optional[str]):
         self._bg = value
 
+    @property
+    def location_id(self) -> Optional[str]:
+        """The location where the commitment takes place."""
+        return self._location_id
+
+    @location_id.setter
+    def location_id(self, value: Optional[str]):
+        self._location_id = value
+
+    @property
+    def room_id(self) -> Optional[str]:
+        """The room where the commitment takes place."""
+        return self._room_id
+
+    @room_id.setter
+    def room_id(self, value: Optional[str]):
+        self._room_id = value
+
+    @property
+    def tag(self) -> Optional[str]:
+        """The tag of the commitment.
+        # TODO: implement this"""
+        return self._tag
+
+    @tag.setter
+    def tag(self, value: Optional[str]):
+        self._tag = value
+
+    @property
+    def day_deadline(self) -> Optional[int]:
+        """The day when the commitment expires."""
+        return self._day_deadline
+
+    @day_deadline.setter
+    def day_deadline(self, value: Optional[int]):
+        self._day_deadline = value
+
+    @property
+    def event_label_name(self) -> Optional[str]:
+        """The event label name."""
+        return self._event_label_name
+
+    @event_label_name.setter
+    def event_label_name(self, value: Optional[str]):
+        self._event_label_name = value
+
+    @property
+    def is_event(self) -> bool:
+        "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
+        return (self.event_label_name is not None)
+
     def getChIcons(self, ch_icons: dict[str, str]) -> list[str]:
         """returns a list of ch icons (not secondary ch)"""
         icons = []
@@ -65,9 +126,13 @@ class Commitment(object):
                 icons.append(ch_icons[ch])
         return icons
 
-    def getTalkBackground(self, ch: str) -> str:
+    def getTalkBackground(self, ch: str) -> Optional[str]:
         "Returns the image during a conversation"
-        return self.ch_talkobj_dict[ch].conversation_background
+        item = self.ch_talkobj_dict[ch]
+        if isinstance(item, TalkObject):
+            return item.conversation_background
+        else:
+            return None
 
     # doesn't seem to work
     # use something like this: renpy.call(cur_events_location[cur_room.id].event_label_name)
@@ -80,7 +145,7 @@ def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler) -> 
     """removes expired Commitments"""
     rlist = []
     rlist.clear()
-    for key, val in commitments.iteritems():
+    for key, val in commitments.items():
         if (val.day_deadline != None and val.day_deadline <= tm.day):
             rlist.append(key)
     for r in rlist:
@@ -96,7 +161,7 @@ def getChsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: T
     commitments = {}
     for comm in routine.values():
         # Check Time and Location
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop)):
+        if (comm.location_id == location_id and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)):
             # Full verification
             for chKey in comm.ch_talkobj_dict.keys():
                 commitments[chKey] = None
@@ -123,7 +188,7 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm
     events = {}
     for comm in routine.values():
         # Check Time and Location and is event
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.tm_start, end=comm.tm_stop) and comm.is_event == True):
+        if (comm.location_id == location_id and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop) and comm.is_event == True):
             events[comm.room_id] = comm
     return events
 
@@ -131,10 +196,9 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm
 def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
-    first_found_commitment = None
     # special routine
     for id, comm in routine.items():
-        if tm.now_is_between(start=comm.tm_start, end=comm.tm_stop):
+        if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
             if ch in comm.ch_talkobj_dict:
                 if (comm.tag != None):
                     if checkIfIsActiveByTag(tag=comm.tag, id=id):
@@ -146,7 +210,7 @@ def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> O
 # TODO To Move move in renpy
 
 
-def checkIfIsActiveByTag(tag: str, id: str = None) -> bool:
+def checkIfIsActiveByTag(tag: str, id: str = "") -> bool:
     """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
     # Custom code
     if (tag == None):
@@ -156,7 +220,7 @@ def checkIfIsActiveByTag(tag: str, id: str = None) -> bool:
     return False
 
 
-def getBgRoomRoutine(commitments: dict[str, Commitment], room_id) -> None:
+def getBgRoomRoutine(commitments: dict[str, Commitment], room_id) -> Optional[str]:
     """Returns the first background image of the commitments based on the current room. if there are no returns None"""
     for item in commitments.values():
         if item.room_id == room_id:

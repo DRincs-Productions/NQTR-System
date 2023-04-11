@@ -48,7 +48,7 @@ label order_product:
     return
 
 label add_product:
-    $ actions["take_product"] = Act(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", rooms=['terrace'])
+    $ actions["take_product"] = Act(name = _("Take product"), button_icon = "/interface/action-box.webp", label_name = "take_product", room_ids=['terrace'])
     return
 
 label take_product:
@@ -58,7 +58,7 @@ label take_product:
 
 label take_key:
     mc "Are these the car keys?! Well... I should try to access the car!"
-    $ setFlags("goout", True)
+    $ set_flags("goout", True)
     $ del actions['take_key']
     $ quest_nextStage(id = "ann")
     return

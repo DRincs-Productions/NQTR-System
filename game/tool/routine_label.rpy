@@ -2,6 +2,20 @@
 # check_event_df: and cannot be deleted.
 label check_event:
 
+# ## ATTENTION:
+# if the mc has not moved, the system delete the event (resolves any loops)
+# se si vuole degli eventi fissi usare check_event_df
+# if you want the event to be started only once and then deleted
+# at the end of the label insert:
+# return
+# if you want the event to be repeated every time you go to that room
+# at the end of the label insert:
+# call change_room
+# if you want the event to be repeated only once, but then it is repeated after waiting some time or changing location_id
+# at the end of the label insert:
+# $ del cur_events_location[cur_room.id]    # cur_room.id: i.e. the id of the room where the event is triggered
+# call change_room
+
 label check_event_sp:
     # I check if there is an event in this room, if so I start the event and then delete it
     if (cur_room.id in cur_events_location.keys()):

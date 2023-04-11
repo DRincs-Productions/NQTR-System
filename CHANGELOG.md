@@ -110,6 +110,52 @@ Use search and replace of vscode with regex functionality enabled
 * `hour_names`
 * `timeslot_names`
 
+### tm_start
+
+* `tm_start`
+* `hour_start`
+
+### tm_stop
+
+* `tm_stop`
+* `hour_stop`
+
+### stages_id
+* `stages_id`
+* `stage_ids`
+
+### number_stages_completed_in_quest_requests
+* `number_stages_completed_in_quest_requests`
+* `required_number_completed_stages`
+
+### weekend_day
+* `weekend_day`
+* `weekday_weekend_begins`
+
+### updateFlags
+* `updateFlags\((.*)\)`
+* `update_flags($1)`
+
+### getFlags
+* `getFlags\((.*)\)`
+* `get_flags($1)`
+
+### setFlags
+* `setFlags\((.*)\)`
+* `set_flags($1)`
+
+### notifyEx
+* `notifyEx\((.*)\)`
+* `notify_add($1)`
+
+### notifyExPreventsLoops
+* `notifyExPreventsLoops\((.*)\)`
+* `notify_prevents_loops($1)`
+
+### notifyExClean
+* `notifyExClean\((.*)\)`
+* `notify_remove($1)`
+
 # v1.0.3
 
 ```shell

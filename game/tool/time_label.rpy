@@ -13,7 +13,7 @@ define DEFAULT_BLOCK_SPENDTIME_DIALOGUE = _("You can't do that now")
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day
 label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, is_check_event=True):
-    if(not getFlags("not_can_spend_time")):
+    if(not get_flags("not_can_spend_time")):
         python:
             tm.new_day()
             # removes expired Commitments
@@ -28,7 +28,7 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, is_check_event=True):
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#wait
 label wait(wait_hour=DEFAULT_WAIT_HOUR, is_check_event=True):
-    if(not getFlags(flag_id = "not_can_spend_time")):
+    if(not get_flags(flag_id = "not_can_spend_time")):
         if(tm.new_hour(wait_hour)):
             if (not map_open):
                 call after_spending_time(is_check_event = is_check_event)

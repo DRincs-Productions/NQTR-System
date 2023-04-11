@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Any, Optional
 
 import renpy.exports as renpy
 
@@ -13,25 +13,35 @@ class Goal(object):
     def __init__(
         self,
         id: str,
-        description: str = None,
+        description: Optional[str] = None,
         is_completed: bool = False,
         need: int = 0,
         have: int = 0,
     ):
 
         self.id = id
-        self.description = description if description else ""
+        self.description = description
         self.is_completed = is_completed
         self.need = need
-        self.have = 0
-        if (self.have < 0):
-            self.have = 0
-            log_warn("You have set have < 0, so it will be set to 0.",
-                     "nqtr.quest.Goal.__init__")
-        if (self.need < 0):
-            self.need = 0
-            log_warn("You have set need < 0, so it will be set to 0.",
-                     "nqtr.quest.Goal.__init__")
+        self.have = have
+
+    @property
+    def id(self) -> str:
+        """Id of the Goal"""
+        return self._id
+
+    @id.setter
+    def id(self, value: str):
+        self._id = value
+
+    @property
+    def description(self) -> str:
+        """Description of the Goal"""
+        return self._description or ""
+
+    @description.setter
+    def description(self, value: Optional[str]):
+        self._description = value
 
     @property
     def is_completed(self) -> bool:
@@ -42,7 +52,33 @@ class Goal(object):
 
     @is_completed.setter
     def is_completed(self, value: bool):
-        self.is_completed = value
+        self._is_completed = value
+
+    @property
+    def need(self) -> int:
+        """Number of elements needed to complete the mission"""
+        return self._need
+
+    @need.setter
+    def need(self, value: int):
+        self._need = value
+        if (self._need < 0):
+            self._need = 0
+            log_warn("You have set need < 0, so it will be set to 0.",
+                     "nqtr.quest.Goal.__init__")
+
+    @property
+    def have(self) -> int:
+        """Number of elements already collected"""
+        return self._have
+
+    @have.setter
+    def have(self, value: int):
+        self._have = value
+        if (self._have < 0):
+            self._have = 0
+            log_warn("You have set have < 0, so it will be set to 0.",
+                     "nqtr.quest.Goal.__init__")
 
     def find(self, value: int = 1) -> bool:
         """Adds in element to the target, then checks the completion status. In case a need is null completes the mission. Returns True if the mission has been completed.
@@ -60,51 +96,89 @@ class Stage(object):
     def __init__(
         self,
         quest_id: str,
-        goals: Optional[list[str]] = None,
-        title: str = None,
-        description: str = None,
-        advice: str = None,
-        background: Optional[str] = None,  # Deprecate: use info_image
+        goals: list[Goal] = [],
+        title: str = "",
+        description: str = "",
+        advice: str = "",
         info_image: Optional[str] = None,
-        days_required_to_start: int = None,
-        flags_requests: Optional[list[str]] = None,  # TODO: implement this
-        number_stages_completed_in_quest_requests: Optional[dict[str, int]] = None,
-        request_description: str = None,
-        start_label_name: str = None,  # Will be initiated when the stage is started
-        end_label_name: str = None,  # TODO: implement this
-        check_label_name: str = None,  # TODO: implement this
+        days_required_to_start: int = 0,
+        flags_required: list[str] = [],
+        required_number_completed_stages: dict[str, int] = {},
+        request_description: str = "",
+        start_label_name: Optional[str] = None,
+        end_label_name: Optional[str] = None,
+        check_label_name: Optional[str] = None,
     ):
 
         self.quest_id = quest_id
-        self.goals = goals if goals else []
-        self.active = False
-        self.title = title if title else ""
-        self.description = description if description else ""
-        self.advice = advice if advice else ""
-        self.completed = False
-        if info_image:
-            self.info_image = info_image
-        else:
-            self.info_image = background
-        # These are the requirements to start the Stage
-        self.days_required_to_start = days_required_to_start if days_required_to_start else 0
-        self.day_start = None  # Will be initiated when the stage is started
-        self.flags_requests = flags_requests if flags_requests else []
-        self.number_stages_completed_in_quest_requests = number_stages_completed_in_quest_requests if number_stages_completed_in_quest_requests else {}
-        self.request_description = request_description if request_description else ""
-        # these labels will be started automatically at the appropriate time.
+        self.goals = goals
+        self.title = title
+        self.description = description
+        self.advice = advice
+        self.info_image = info_image
+        self.days_required_to_start = days_required_to_start
+        self.flags_required = flags_required
+        self.required_number_completed_stages = required_number_completed_stages
+        self.request_description = request_description
         self.start_label_name = start_label_name
         self.end_label_name = end_label_name
         self.check_label_name = check_label_name
 
+        self.day_start = None
+        self.is_completed = False
+        self.active = False
+
     @property
-    @DeprecationWarning
+    def quest_id(self) -> str:
+        """Id of the quest"""
+        return self._quest_id
+
+    @quest_id.setter
+    def quest_id(self, value: str):
+        self._quest_id = value
+
+    @property
+    def goals(self) -> list[Goal]:
+        """List of the goals"""
+        return self._goals
+
+    @goals.setter
+    def goals(self, value: list[Goal]):
+        self._goals = value
+
+    @property
+    def title(self) -> str:
+        """Title of the Stage"""
+        return self._title
+
+    @title.setter
+    def title(self, value: str):
+        self._title = value
+
+    @property
+    def description(self) -> str:
+        """Description of the Stage"""
+        return self._description
+
+    @description.setter
+    def description(self, value: str):
+        self._description = value
+
+    @property
+    def advice(self) -> str:
+        """Advice of the Stage"""
+        return self._advice
+
+    @advice.setter
+    def advice(self, value: str):
+        self._advice = value
+
+    @property
     def background(self) -> Optional[str]:
         """Deprecate: use info_image"""
         return self._info_image
 
     @background.setter
-    @DeprecationWarning
     def background(self, value: Optional[str]):
         """Deprecate: use info_image"""
         self._info_image = value
@@ -117,15 +191,110 @@ class Stage(object):
     def info_image(self, value: Optional[str]):
         self._info_image = value
 
-    # TODO: object is Stage
+    @property
+    def days_required_to_start(self) -> int:
+        """Number of days required to start the Stage
+        These are the requirements to start the Stage"""
+        return self._days_required_to_start
 
-    def addInCurrentQuestStages(self, current_quest_stages: dict[str, object], tm: TimeHandler) -> None:
+    @days_required_to_start.setter
+    def days_required_to_start(self, value: int):
+        self._days_required_to_start = value
+
+    @property
+    def flags_required(self) -> list[str]:
+        """List of the flags required to start the Stage
+        # TODO: implement this"""
+        return self._flags_requests
+
+    @flags_required.setter
+    def flags_required(self, value: list[str]):
+        self._flags_requests = value
+
+    @property
+    def required_number_completed_stages(self) -> dict[str, int]:
+        """Dict of the number of stages completed in the quest required to start the Stage"""
+        return self._required_number_completed_stages
+
+    @required_number_completed_stages.setter
+    def required_number_completed_stages(self, value: dict[str, int]):
+        self._required_number_completed_stages = value
+
+    @property
+    def request_description(self) -> str:
+        """Description of the requirements to start the Stage"""
+        return self._request_description
+
+    @request_description.setter
+    def request_description(self, value: str):
+        self._request_description = value
+
+    @property
+    def start_label_name(self) -> Optional[str]:
+        """Name of the label to start the Stage
+        Will be initiated when the stage is started
+        these labels will be started automatically at the appropriate time."""
+        return self._start_label_name
+
+    @start_label_name.setter
+    def start_label_name(self, value: Optional[str]):
+        self._start_label_name = value
+
+    @property
+    def end_label_name(self) -> Optional[str]:
+        """Name of the label to end the Stage
+        # TODO: implement this"""
+        return self._end_label_name
+
+    @end_label_name.setter
+    def end_label_name(self, value: Optional[str]):
+        self._end_label_name = value
+
+    @property
+    def check_label_name(self) -> Optional[str]:
+        """Name of the label to check the Stage
+        # TODO: implement this"""
+        return self._check_label_name
+
+    @check_label_name.setter
+    def check_label_name(self, value: Optional[str]):
+        self._check_label_name = value
+
+    @property
+    def day_start(self) -> Optional[int]:
+        """Day when the Stage is started"""
+        return self._day_start
+
+    @day_start.setter
+    def day_start(self, value: Optional[int]):
+        self._day_start = value
+
+    @property
+    def is_completed(self) -> bool:
+        """True if the Stage is completed"""
+        return self._is_completed
+
+    @is_completed.setter
+    def is_completed(self, value: bool):
+        self._is_completed = value
+
+    @property
+    def active(self) -> bool:
+        """True if the Stage is active"""
+        return self._active
+
+    @active.setter
+    def active(self, value: bool):
+        self._active = value
+
+    # Any is Stage
+    def addInCurrentQuestStages(self, current_quest_stages: dict[str, Any], tm: TimeHandler) -> None:
         """Add the Stage in the current_quest_stages"""
         current_quest_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
             goals=self.goals,
-            flags_requests=self.flags_requests,
-            number_stages_completed_in_quest_requests=self.number_stages_completed_in_quest_requests,
+            flags_required=self.flags_required,
+            required_number_completed_stages=self.required_number_completed_stages,
             request_description=self.request_description,
             start_label_name=self.start_label_name,
             end_label_name=self.end_label_name,
@@ -138,14 +307,14 @@ class Stage(object):
         return
 
     # TODO: Ora questo può essere rimpiazzato con addInCurrentQuestStages
-    # TODO: object is Stage
-    def addInCurrentTaskStages(self, current_task_stages: dict[str, object], tm: TimeHandler) -> None:
+    # Any is Stage
+    def addInCurrentTaskStages(self, current_task_stages: dict[str, Any], tm: TimeHandler) -> None:
         """Add the Stage in the current_task_stages, Task: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#task """
         current_task_stages[self.quest_id] = Stage(
             quest_id=self.quest_id,
             goals=self.goals,
-            flags_requests=self.flags_requests,
-            number_stages_completed_in_quest_requests=self.number_stages_completed_in_quest_requests,
+            flags_required=self.flags_required,
+            required_number_completed_stages=self.required_number_completed_stages,
             request_description=self.request_description,
             start_label_name=self.start_label_name,
             end_label_name=self.end_label_name,
@@ -173,27 +342,27 @@ class Stage(object):
         """Checks the requests, returns True if it satisfies them."""
         if (self.day_start != None and tm.day < self.day_start):
             return False
-        for quest, level in self.number_stages_completed_in_quest_requests.items():
+        for quest, level in self.required_number_completed_stages.items():
             if (number_stages_completed_in_quest[quest] < level):
                 return False
-        for item in self.flags_requests:
-            if (not getFlags(item, flags)):
+        for item in self.flags_required:
+            if (not get_flags(item, flags)):
                 return False
         return True
 
     def isCompleted(self, number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> bool:
         """Check if the Stage can be complete."""
         # if (check_label_name != None)
-        if (self.completed):
+        if (self.is_completed):
             return True
         if (not self.active):
             if (not self.start(number_stages_completed_in_quest, tm, flags)):
                 return False
         if self.goals:
             for x in self.goals:
-                if (not x.isComplete()):
+                if (not x.is_completed):
                     return False
-        self.completed = True
+        self.is_completed = True
         return True
 
     def find(self, goals_id: str, value: int = 1) -> bool:
@@ -217,68 +386,127 @@ class Quest(object):
     def __init__(
         self,
         id: str,
-        title: str = None,
-        description: str = None,
-        icon: str = None,
-        background: Optional[str] = None,  # Deprecate: use info_image
+        title: str = "",
+        description: str = "",
+        icon: Optional[str] = None,
         info_image: Optional[str] = None,
-        stages_id: Optional[list[str]] = None,
-        tag: str = None,  # TODO: implement this
+        stage_ids: list[str] = [],
+        tag: Optional[str] = None,
         development: bool = False
     ):
 
         self.id = id
-        self.title = title if title else ""
-        self.description = description if description else ""
+        self.title = title
+        self.description = description
         self.icon = icon
-        if info_image:
-            self.info_image = info_image
-        else:
-            self.info_image = background
-        self.stages_id = self.stages_id = stages_id if stages_id else []
+        self.info_image = info_image
+        self.stage_ids = self.stage_ids = stage_ids
         self.tag = tag
         self.development = development
 
     @property
-    @DeprecationWarning
+    def id(self) -> str:
+        """Quest ID"""
+        return self._id
+
+    @id.setter
+    def id(self, value: str):
+        self._id = value
+
+    @property
+    def title(self) -> str:
+        """Quest title"""
+        return self._title
+
+    @title.setter
+    def title(self, value: str):
+        self._title = value
+
+    @property
+    def description(self) -> str:
+        """Quest description"""
+        return self._description
+
+    @description.setter
+    def description(self, value: str):
+        self._description = value
+
+    @property
+    def icon(self) -> Optional[str]:
+        """Quest icon"""
+        return self._icon
+
+    @icon.setter
+    def icon(self, value: Optional[str]):
+        self._icon = value
+
+    @property
     def background(self) -> Optional[str]:
         """Deprecate: use info_image"""
         return self._info_image
 
     @background.setter
-    @DeprecationWarning
     def background(self, value: Optional[str]):
         """Deprecate: use info_image"""
         self._info_image = value
 
     @property
     def info_image(self) -> Optional[str]:
+        """Quest info image"""
         return self._info_image
 
     @info_image.setter
     def info_image(self, value: Optional[str]):
         self._info_image = value
 
+    @property
+    def stage_ids(self) -> list[str]:
+        """Quest stages"""
+        return self._stage_ids
+
+    @stage_ids.setter
+    def stage_ids(self, value: list[str]):
+        self._stage_ids = value
+
+    @property
+    def tag(self) -> Optional[str]:
+        """Quest tag
+        #TODO: implement this"""
+        return self._tag
+
+    @tag.setter
+    def tag(self, value: Optional[str]):
+        self._tag = value
+
+    @property
+    def development(self) -> bool:
+        """Quest development"""
+        return self._development
+
+    @development.setter
+    def development(self, value: bool):
+        self._development = value
+
     def isCompleted(self, current_quest_stages: dict[str, Stage],  number_stages_completed_in_quest: dict[str, int]) -> bool:
         """Check if all stages have been completed."""
         if (not (self.id in number_stages_completed_in_quest)):
             return False
-        if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
-            return current_quest_stages[self.id].completed
+        if len(self.stage_ids)-1 == number_stages_completed_in_quest[self.id]:
+            return current_quest_stages[self.id].is_completed
         else:
             return False
 
     def currentQuestId(self, number_stages_completed_in_quest: dict[str, int]) -> str:
         """Return the id of this current"""
-        return self.stages_id[number_stages_completed_in_quest[id]]
+        return self.stage_ids[number_stages_completed_in_quest[self.id]]
 
     def completeStagesNumber(self, number_stages_completed_in_quest: dict[str, int]) -> int:
         """Returns the number of completed stages"""
-        return number_stages_completed_in_quest[id]
+        return number_stages_completed_in_quest[self.id]
 
-    def getPercentageCompletion(self, current_level: int) -> int:
+    def getPercentageCompletion(self, current_level: int) -> float:
         """Returns the percentage of completion"""
-        return current_level/len(self.stages_id)*100
+        return current_level/len(self.stage_ids)*100
 
     def update(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         """Function to update the various values,
@@ -294,11 +522,11 @@ class Quest(object):
                        number_stages_completed_in_quest, tm, flags)
             return
         # if you have somehow exceeded the number of stages
-        if len(self.stages_id)-1 < number_stages_completed_in_quest[self.id]:
-            number_stages_completed_in_quest[self.id] = len(self.stages_id)-1
+        if len(self.stage_ids)-1 < number_stages_completed_in_quest[self.id]:
+            number_stages_completed_in_quest[self.id] = len(self.stage_ids)-1
             return
         # if it is a completed Quest and a Stage has been added in a new update
-        if (not self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].completed:
+        if (not self.isCompleted(current_quest_stages,  number_stages_completed_in_quest)) and current_quest_stages[self.id].is_completed:
             self.afterNextStage(quest_stages, current_quest_stages,
                                 number_stages_completed_in_quest, tm, flags)
             return
@@ -306,7 +534,7 @@ class Quest(object):
     def start(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], tm: TimeHandler, flags: dict[str, bool] = {}, n_stage: int = 0) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#start-a-quest """
         number_stages_completed_in_quest[self.id] = n_stage
-        quest_stages[self.stages_id[n_stage]].addInCurrentQuestStages(
+        quest_stages[self.stage_ids[n_stage]].addInCurrentQuestStages(
             current_quest_stages, tm)
         current_quest_stages[self.id].start(
             number_stages_completed_in_quest, tm, flags)
@@ -315,7 +543,7 @@ class Quest(object):
     def nextStage(self, quest_stages: dict[str, Stage], current_quest_stages: dict[str, Stage], number_stages_completed_in_quest: dict[str, int], current_task_stages: dict[str, Stage], tm: TimeHandler, flags: dict[str, bool] = {}) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
         if (self.id in current_task_stages):
-            del current_task_stages[self.quest_id]
+            del current_task_stages[self.id]
             return
         self.afterNextStage(quest_stages, current_quest_stages,
                             number_stages_completed_in_quest, tm, flags)
@@ -327,8 +555,8 @@ class Quest(object):
                      " not is in number_stages_completed_in_quest, so i update it",  "nqtr.quest.Quest.afterNextStage()")
             self.update(quest_stages, current_quest_stages,
                         number_stages_completed_in_quest, tm, flags)
-        if len(self.stages_id)-1 == number_stages_completed_in_quest[self.id]:
-            current_quest_stages[self.id].completed = True
+        if len(self.stage_ids)-1 == number_stages_completed_in_quest[self.id]:
+            current_quest_stages[self.id].is_completed = True
             return
         number_stages_completed_in_quest[self.id] += 1
         self.start(quest_stages, current_quest_stages, number_stages_completed_in_quest,

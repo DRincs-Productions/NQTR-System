@@ -55,6 +55,6 @@ default map_open = False
 
 # list of closed rooms is checked change_room
 # is composed of id = room_id and Commitment()
-# expired elements are checked in after_spending_time, if you don't want an expiration: tm_stop = None
+# expired elements are checked in after_spending_time, if you don't want an expiration: hour_stop = None
 # TODO: Wiki
 default closed_rooms = {}

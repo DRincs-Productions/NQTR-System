@@ -31,42 +31,44 @@ screen time_text(tm, show_wait_button = False):
             use wait_button(small = True)
 
 screen action_button(act, show_picture_in_background = False):
-    if not act.isHidden(flags):
-        if not show_picture_in_background:
-            if act.is_picture_in_background:
-                imagebutton:
-                    align (act.xalign, act.yalign)
-                    idle act.picture_in_background
-                    hover act.picture_in_background_selected
-                    focus_mask True
-                    action [
-                        Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-                    ]
-                    if renpy.variant("pc"):
-                        tooltip act.name
-                    at middle_action_is_in_room
-        elif act.is_button == True:
-            imagebutton:
+    if show_picture_in_background:
+        imagebutton:
+            align (act.xalign, act.yalign)
+            if act.is_picture_in_background: # for logs
+                idle act.picture_in_background
+                hover act.picture_in_background_selected
+            focus_mask True
+            action [
+                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
+            ]
+            if renpy.variant("pc"):
+                tooltip act.name
+            at middle_action_is_in_room
+    else:
+        imagebutton:
+            if act.is_button: # for logs
                 idle act.button_icon
                 hover act.button_icon_selected
-                focus_mask True
-                action [
-                    Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-                ]
-                if renpy.variant("pc"):
-                    tooltip act.name
-                at middle_action
-        # TODO else default icon button
+            focus_mask True
+            action [
+                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
+            ]
+            if renpy.variant("pc"):
+                tooltip act.name
+            at middle_action
 
 screen action_talk_button(ch_id, talk_obj, background):
-    if (not talk_obj.isHidden(flags)):
+    if not talk_obj.isHidden(flags = flags, check_if_has_icon = False):
         frame:
             xysize (120, 120)
             background None
 
             imagebutton:
-                idle talk_obj.button_icon or gui.default_talk_button_icon
-                hover talk_obj.button_icon_selected
+                if talk_obj.is_button:
+                    idle talk_obj.button_icon
+                    hover talk_obj.button_icon_selected
+                else:
+                    idle gui.default_talk_button_icon
                 focus_mask True
                 action [
                     SetVariable('talk_ch', ch_id),
@@ -90,13 +92,14 @@ screen action_talk_button(ch_id, talk_obj, background):
                 tooltip _("Talk")
 
 screen location_button(location):
-    if (location.map_id == cur_map_id and not location.isHidden(flags)):
+    if (location.map_id == cur_map_id and not location.isHidden(flags = flags)):
         vbox:
             align (location.yalign, location.xalign)
             imagebutton:
-                idle location.picture_in_background
-                selected_idle location.picture_in_background_selected
-                selected_hover location.picture_in_background_selected
+                if location.is_picture_in_background:
+                    idle location.picture_in_background
+                    selected_idle location.picture_in_background_selected
+                    selected_hover location.picture_in_background_selected
                 selected location == cur_location
                 sensitive not location.isHidden(flags)
                 focus_mask True
@@ -116,19 +119,20 @@ screen location_button(location):
                 line_spacing -2
 
 screen map_button(map_id, map, align_value, rotation):
-    hbox:
-        align align_value
-        imagebutton:
-            idle "gui triangular_button"
-            focus_mask True
-            sensitive not map.isDisabled(flags)
-            action [
-                SetVariable('cur_map_id', map_id), 
-                Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
-            ]
-            if renpy.variant("pc"):
-                tooltip map.name
-            at middle_map(rotation)
+    if not map.isHidden(flags = flags, check_if_has_icon = False):
+        hbox:
+            align align_value
+            imagebutton:
+                idle "gui triangular_button"
+                focus_mask True
+                sensitive not map.isDisabled(flags)
+                action [
+                    SetVariable('cur_map_id', map_id), 
+                    Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
+                ]
+                if renpy.variant("pc"):
+                    tooltip map.name
+                at middle_map(rotation)
 
 screen map(maps, cur_map_id):
     $ map_id_north = maps[cur_map_id].map_id_north
@@ -137,16 +141,16 @@ screen map(maps, cur_map_id):
     $ map_id_west = maps[cur_map_id].map_id_west
 
     # North map
-    if (not isNullOrEmpty(map_id_north) and not maps[map_id_north].isHidden(flags)):
+    if not isNullOrEmpty(map_id_north):
         use map_button(map_id = map_id_north, map = maps[map_id_north], align_value = (0.5, 0.1), rotation = 270)
     # South map
-    if (not isNullOrEmpty(map_id_south) and not maps[map_id_south].isHidden(flags)):
+    if not isNullOrEmpty(map_id_south):
         use map_button(map_id = map_id_south, map = maps[map_id_south], align_value = (0.5, 0.99), rotation = 90)
     # West map
-    if (not isNullOrEmpty(map_id_west) and not maps[map_id_west].isHidden(flags)):
+    if not isNullOrEmpty(map_id_west):
         use map_button(map_id = map_id_west, map = maps[map_id_west], align_value = (0.001, 0.5), rotation = 180)
     # East map
-    if (not isNullOrEmpty(map_id_east) and not maps[map_id_east].isHidden(flags)):
+    if not isNullOrEmpty(map_id_east):
         use map_button(map_id = map_id_east, map = maps[map_id_east], align_value = (0.999, 0.5), rotation = 0)
 
 screen room_button(room, cur_room, i, find_ch = False):
@@ -168,7 +172,8 @@ screen room_button(room, cur_room, i, find_ch = False):
                 # Room icon
                 imagebutton:
                     align (0.5, 0.0)
-                    idle room.button_icon
+                    if room.is_button:
+                        idle room.button_icon
                     selected_idle room.button_icon_selected
                     selected_hover room.button_icon_selected
                     selected (True if cur_room and cur_room.id == room.id else False)
