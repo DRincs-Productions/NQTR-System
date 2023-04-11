@@ -40,12 +40,12 @@ class Button(object):
     @property
     def name(self) -> str:
         """Button name or id, is used to identify the button and in logs"""
-        return self._id
+        return self._name
 
     @name.setter
     def name(self, value: Optional[str]):
-        self._id = value or ""
-        if (isNullOrEmpty(self._id)):
+        self._name = value or ""
+        if (isNullOrEmpty(self._name)):
             log_warn("You have set name to None or empty",
                      "nqtr.button.Button.name")
 
