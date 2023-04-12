@@ -13,7 +13,7 @@
         "scope": "renpy",
         "prefix": "DR_QuestNextStage",
         "body": [
-            "$ quest_nextStage(\"${1:quest_id}\")",
+            "$ quest_next_stage(\"${1:quest_id}\")",
             "",
         ],
         "description": "Next Stage"
@@ -22,7 +22,7 @@
         "scope": "renpy",
         "prefix": "DR_QuestNextStageIfIsCompleted",
         "body": [
-            "$ quest_nextStageOnlyIsCompleted(\"${1:quest_id}\")",
+            "$ quest_next_stage_only_is_completed(\"${1:quest_id}\")",
             "",
         ],
         "description": "Next Stage Only it is completed"

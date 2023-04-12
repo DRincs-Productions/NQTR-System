@@ -24,7 +24,7 @@ screen menu_memo():
     use menu_tile(_("{b}Memo{/b}"))
 
     # Synchronize number_stages_completed_in_quest with quests
-    $ updateQuestsLevels()
+    $ update_quests_levels()
 
     use close_button("menu_memo")
 

@@ -13,7 +13,7 @@ label after_load:
         clear_expired_routine(routine, tm)
         cur_events_location = characters_events_in_current_location(cur_location.id, routine, tm)
         commitments_in_cur_location = characters_commitment_in_current_location(cur_location.id, routine | df_routine, tm)
-        updateQuestsLevels()
+        update_quests_levels()
     return
 
 init python:

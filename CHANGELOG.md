@@ -388,17 +388,17 @@ Use search and replace of vscode with regex functionality enabled
 ### quest_nextStage
 
 * `quests\["(.*)"\].nextStage\(\)`
-* `quest_nextStage(id = "$1")`
+* `quest_next_stage(id = "$1")`
 
 ### quest_nextStageOnlyIsCompleted
 
 * `quests\["(.*)"\].nextStageOnlyIsCompleted\(\)`
-* `quest_nextStageOnlyIsCompleted(id = "$1")`
+* `quest_next_stage_only_is_completed(id = "$1")`
 
 ### quest_setDayNumberRequiredToStart
 
 * `quests\["(.*)"\].SetDayNumberRequiredToStart\((.*)\)`
-* `quest_setDayNumberRequiredToStart(id = "$1",$2)`
+* `quest_add_required_days_to_start(id = "$1",$2)`
 
 ### new_day
 
