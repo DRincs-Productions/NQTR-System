@@ -74,7 +74,7 @@ label stage_talkalice:
         mc "Ok"
         a "Thanks"
 
-        $ addTalkChoice(choice_id = "alice", choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
+        $ add_talk_choice(choice_id = "alice", choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
 
         $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", room_ids=["my_room"])
 
@@ -91,7 +91,7 @@ label stage_talkalice:
         mc "Here's your book."
         a "Thank you, I can finally read something new."
         $ quest_next_stage(id = "alice")
-        $ delTalkChoice(choice_id = "alice", choice_text = _("About the book"), dict_choices = talkch_choices)
+        $ del_talk_choice(choice_id = "alice", choice_text = _("About the book"), dict_choices = talkch_choices)
     return
 
 # Quest "ann"
@@ -106,5 +106,5 @@ label stage_talkalice_aboutann:
         xalign = 608/1920, yalign = 667/1080)
 
     $ quest_next_stage(id = "ann")
-    $ delTalkChoice(choice_id = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
+    $ del_talk_choice(choice_id = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
     return

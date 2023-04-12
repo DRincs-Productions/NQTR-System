@@ -349,6 +349,16 @@ Use search and replace of vscode with regex functionality enabled
 * `quest_completeStagesNumber\((.*)\)`
 * `quest_complete_stages_number($1)`
 
+### addTalkChoice
+
+* `addTalkChoice\((.*)\)`
+* `add_talk_choice($1)`
+
+### delTalkChoice
+
+* `delTalkChoice\((.*)\)`
+* `del_talk_choice($1)`
+
 # v1.0.3
 
 ```shell
