@@ -316,6 +316,7 @@ class Stage(object):
             return False
         self.active = True
         if (self.start_label_name != None):
+            # TODO TO Move in Renpy
             renpy.call(self.start_label_name)
         return True
 
