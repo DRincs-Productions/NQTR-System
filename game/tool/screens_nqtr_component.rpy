@@ -58,7 +58,7 @@ screen action_button(act, show_picture_in_background = False):
             at middle_action
 
 screen action_talk_button(ch_id, talk_obj, background):
-    if not talk_obj.isHidden(flags = flags, check_if_has_icon = False):
+    if not talk_obj.is_hidden(flags = flags, check_if_has_icon = False):
         frame:
             xysize (120, 120)
             background None
@@ -92,7 +92,7 @@ screen action_talk_button(ch_id, talk_obj, background):
                 tooltip _("Talk")
 
 screen location_button(location):
-    if (location.map_id == cur_map_id and not location.isHidden(flags = flags)):
+    if (location.map_id == cur_map_id and not location.is_hidden(flags = flags)):
         vbox:
             align (location.yalign, location.xalign)
             imagebutton:
@@ -101,7 +101,7 @@ screen location_button(location):
                     selected_idle location.picture_in_background_selected
                     selected_hover location.picture_in_background_selected
                 selected location == cur_location
-                sensitive not location.isHidden(flags)
+                sensitive not location.is_hidden(flags)
                 focus_mask True
                 action [
                     SetVariable('cur_location', location),
@@ -119,13 +119,13 @@ screen location_button(location):
                 line_spacing -2
 
 screen map_button(map_id, map, align_value, rotation):
-    if not map.isHidden(flags = flags, check_if_has_icon = False):
+    if not map.is_hidden(flags = flags, check_if_has_icon = False):
         hbox:
             align align_value
             imagebutton:
                 idle "gui triangular_button"
                 focus_mask True
-                sensitive not map.isDisabled(flags)
+                sensitive not map.is_disabled(flags)
                 action [
                     SetVariable('cur_map_id', map_id), 
                     Call("after_return_from_room_navigation", label_name_to_call = "set_image_map"),
@@ -155,7 +155,7 @@ screen map(maps, cur_map_id):
 
 screen room_button(room, cur_room, i, find_ch = False):
     # If the Locations where I am is the same as the Locations where the room is located
-    if (room.location_id == cur_location.id and room.is_button != None and not room.isHidden(flags)):
+    if (room.location_id == cur_location.id and room.is_button != None and not room.is_hidden(flags)):
         button:
             xysize (126, 190)
             action [
@@ -177,7 +177,7 @@ screen room_button(room, cur_room, i, find_ch = False):
                     selected_idle room.button_icon_selected
                     selected_hover room.button_icon_selected
                     selected (True if cur_room and cur_room.id == room.id else False)
-                    sensitive not room.isDisabled(flags)
+                    sensitive not room.is_disabled(flags)
                     focus_mask True
                     action [
                         SetVariable('prev_room', cur_room),
@@ -195,10 +195,10 @@ screen room_button(room, cur_room, i, find_ch = False):
                         for comm in commitments_in_cur_location.values():
                             # If it is the selected room
                             if room.id == comm.room_id:
-                                for ch_icon in comm.getChIcons(ch_icons):
+                                for ch_icon in comm.character_icons(ch_icons):
                                     imagebutton:
                                         idle ch_icon
-                                        sensitive not room.isDisabled(flags)
+                                        sensitive not room.is_disabled(flags)
                                         focus_mask True
                                         action [
                                             SetVariable('prev_room', cur_room),

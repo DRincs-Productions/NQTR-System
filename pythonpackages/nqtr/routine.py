@@ -118,15 +118,15 @@ class Commitment(object):
         "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
         return (self.event_label_name is not None)
 
-    def getChIcons(self, ch_icons: dict[str, str]) -> list[str]:
-        """returns a list of ch icons (not secondary ch)"""
+    def character_icons(self, ch_icons: dict[str, str]) -> list[str]:
+        """Returns a list of paths to the icons of the characters in the commitment."""
         icons = []
         for ch in self.ch_talkobj_dict.keys():
             if (ch in ch_icons):
                 icons.append(ch_icons[ch])
         return icons
 
-    def getTalkBackground(self, ch: str) -> Optional[str]:
+    def conversation_background(self, ch: str) -> Optional[str]:
         "Returns the image during a conversation"
         item = self.ch_talkobj_dict[ch]
         if isinstance(item, TalkObject):
@@ -141,7 +141,7 @@ class Commitment(object):
     #         renpy.call(self.event_label_name)
 
 
-def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler) -> None:
+def clear_expired_routine(commitments: dict[str, Commitment], tm: TimeHandler) -> None:
     """removes expired Commitments"""
     rlist = []
     rlist.clear()
@@ -154,10 +154,10 @@ def clearExpiredRoutine(commitments: dict[str, Commitment], tm: TimeHandler) -> 
     return
 
 
-def getChsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: TimeHandler) -> dict[str, Commitment]:
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority """
+def characters_commitment_in_current_location(location_id: str, routine: dict[str, Commitment], tm: TimeHandler) -> dict[str, Commitment]:
+    """Wiki: https: // github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system  # priority """
     # Create a list of ch who have a commitment in that place at that time
-    # It does not do enough checks, they will be done later with getChLocation()
+    # It does not do enough checks, they will be done later with commitment_by_character()
     commitments = {}
     for comm in routine.values():
         # Check Time and Location
@@ -169,7 +169,7 @@ def getChsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: T
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
     commitments_key_to_del = []
     for ch in commitments.keys():
-        commitments[ch] = getChLocation(ch, routine, tm)
+        commitments[ch] = commitment_by_character(ch, routine, tm)
         if commitments[ch] == None:
             commitments_key_to_del.append(ch)
         elif commitments[ch].location_id != location_id:
@@ -180,11 +180,11 @@ def getChsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: T
     return commitments
 
 
-def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm: TimeHandler) -> dict[str, Commitment]:
+def characters_events_in_current_location(location_id: str, routine: dict[str, Commitment], tm: TimeHandler) -> dict[str, Commitment]:
     """Returns events at that location at that time.
     Checks only in routine."""
     # Create a list of ch who have a commitment in that place at that time
-    # It does not do enough checks, they will be done later with getChLocation()
+    # It does not do enough checks, they will be done later with commitment_by_character()
     events = {}
     for comm in routine.values():
         # Check Time and Location and is event
@@ -193,7 +193,7 @@ def getEventsInThisLocation(location_id: str, routine: dict[str, Commitment], tm
     return events
 
 
-def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> Optional[Commitment]:
+def commitment_by_character(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
     # special routine
@@ -207,9 +207,8 @@ def getChLocation(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> O
                     return comm
     return None
 
+
 # TODO To Move move in renpy
-
-
 def checkIfIsActiveByTag(tag: str, id: str = "") -> bool:
     """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
     # Custom code
@@ -220,7 +219,7 @@ def checkIfIsActiveByTag(tag: str, id: str = "") -> bool:
     return False
 
 
-def getBgRoomRoutine(commitments: dict[str, Commitment], room_id) -> Optional[str]:
+def commitment_background(commitments: dict[str, Commitment], room_id) -> Optional[str]:
     """Returns the first background image of the commitments based on the current room. if there are no returns None"""
     for item in commitments.values():
         if item.room_id == room_id:

@@ -94,7 +94,6 @@ Use search and replace of vscode with regex functionality enabled
 * `getSelectedButtonOrDefault\(\)`
 * `button_icon_selected`
 
-
 ### getSelectedPictureInBackgroundOrDefault
 
 * `getSelectedPictureInBackgroundOrDefault\(\)`
@@ -121,40 +120,244 @@ Use search and replace of vscode with regex functionality enabled
 * `hour_stop`
 
 ### stages_id
+
 * `stages_id`
 * `stage_ids`
 
 ### number_stages_completed_in_quest_requests
+
 * `number_stages_completed_in_quest_requests`
 * `required_number_completed_stages`
 
 ### weekend_day
+
 * `weekend_day`
 * `weekday_weekend_begins`
 
 ### updateFlags
+
 * `updateFlags\((.*)\)`
 * `update_flags($1)`
 
 ### getFlags
+
 * `getFlags\((.*)\)`
 * `get_flags($1)`
 
 ### setFlags
+
 * `setFlags\((.*)\)`
 * `set_flags($1)`
 
 ### notifyEx
+
 * `notifyEx\((.*)\)`
 * `notify_add($1)`
 
 ### notifyExPreventsLoops
+
 * `notifyExPreventsLoops\((.*)\)`
 * `notify_prevents_loops($1)`
 
 ### notifyExClean
+
 * `notifyExClean\((.*)\)`
 * `notify_remove($1)`
+
+### clearExpiredActions
+
+* `clearExpiredActions\((.*)\)`
+* `clear_expired_actions($1)`
+
+### isDisabled
+
+* `isDisabled\((.*)\)`
+* `is_disabled($1)`
+
+### isHidden
+
+* `isHidden\((.*)\)`
+* `is_hidden($1)`
+
+### isClosedRoom
+
+* `isClosedRoom\((.*)\)`
+* `is_closed_room($1)`
+
+### getRoomById
+
+* `getRoomById\((.*)\)`
+* `get_room_by_id($1)`
+
+### getLocationById
+
+* `getLocationById\((.*)\)`
+* `get_location_by_id($1)`
+
+### addInCurrentQuestStages
+
+* `addInCurrentQuestStages\((.*)\)`
+* `add_in_current_stages($1)`
+
+### addInCurrentTaskStages
+
+* `addInCurrentTaskStages\((.*)\)`
+* `add_in_current_stages($1)`
+
+### respectAllRequests
+
+* `respectAllRequests\((.*)\)`
+* `all_requests_are_met($1)`
+
+### isCompleted
+
+* `isCompleted\((.*)\)`
+* `is_completed($1)`
+
+### setDayNumberRequiredToStart
+
+* `setDayNumberRequiredToStart\((.*)\)`
+* `add_required_days_to_start($1)`
+
+### currentQuestId
+
+* `currentQuestId\((.*)\)`
+* `quest_id($1)`
+
+### completeStagesNumber
+
+* `completeStagesNumber\((.*)\)`
+* `completed_stages_number($1)`
+
+### getPercentageCompletion
+
+* `getPercentageCompletion\((.*)\)`
+* `percentage_completion($1)`
+
+### nextStage
+
+* `nextStage\((.*)\)`
+* `next_stage($1)`
+
+### afterNextStage
+
+* `afterNextStage\((.*)\)`
+* `after_next_stage($1)`
+
+### getChIcons
+
+* `getChIcons\((.*)\)`
+* `character_icons($1)`
+
+### getTalkBackground
+
+* `getTalkBackground\((.*)\)`
+* `conversation_background($1)`
+
+### clearExpiredRoutine
+
+* `clearExpiredRoutine\((.*)\)`
+* `clear_expired_routine($1)`
+
+### getChsInThisLocation
+
+* `getChsInThisLocation\((.*)\)`
+* `characters_commitment_in_current_location($1)`
+
+### getEventsInThisLocation
+
+* `getEventsInThisLocation\((.*)\)`
+* `characters_events_in_current_location($1)`
+
+### getChLocation
+
+* `getChLocation\((.*)\)`
+* `commitment_by_character($1)`
+
+### getBgRoomRoutine
+
+* `getBgRoomRoutine\((.*)\)`
+* `commitment_background($1)`
+
+### updateQuestsLevels
+
+* `updateQuestsLevels\((.*)\)`
+* `update_quests_levels($1)`
+
+### checkInactiveStage
+
+* `checkInactiveStage\((.*)\)`
+* `check_inactive_stage($1)`
+
+### checkIfTheQuestExist
+
+* `checkIfTheQuestExist\((.*)\)`
+* `is_quest_existing($1)`
+
+### checkIfTheQuestIsInNumberStages
+
+* `checkIfTheQuestIsInNumberStages\((.*)\)`
+* `is_quest_in_number_stages($1)`
+
+### checkIfTheQuestIsCurrentTaskStages
+
+* `checkIfTheQuestIsCurrentTaskStages\((.*)\)`
+* `is_quest_in_current_task_stages($1)`
+
+### checkIfTheQuestIsCurrentQuestStages
+
+* `checkIfTheQuestIsCurrentQuestStages\((.*)\)`
+* `is_quest_in_current_quest_stages($1)`
+
+### quest_getPercentageCompletion
+
+* `quest_getPercentageCompletion\((.*)\)`
+* `quest_percentage_completion($1)`
+
+### quest_setDayNumberRequiredToStart
+
+* `quest_setDayNumberRequiredToStart\((.*)\)`
+* `quest_add_required_days_to_start($1)`
+
+### quest_nextStageOnlyIsCompleted
+
+* `quest_nextStageOnlyIsCompleted\((.*)\)`
+* `quest_next_stage_only_is_completed($1)`
+
+### quest_nextStage
+
+* `quest_nextStage\((.*)\)`
+* `quest_next_stage($1)`
+
+### quest_isStarted
+
+* `quest_isStarted\((.*)\)`
+* `quest_is_started($1)`
+
+### quest_isCompleted
+
+* `quest_isCompleted\((.*)\)`
+* `quest_is_completed($1)`
+
+### quest_currentQuestId
+
+* `quest_currentQuestId\((.*)\)`
+* `quest_current_quest_id($1)`
+
+### quest_completeStagesNumber
+
+* `quest_completeStagesNumber\((.*)\)`
+* `quest_complete_stages_number($1)`
+
+### addTalkChoice
+
+* `addTalkChoice\((.*)\)`
+* `add_talk_choice($1)`
+
+### delTalkChoice
+
+* `delTalkChoice\((.*)\)`
+* `del_talk_choice($1)`
 
 # v1.0.3
 
@@ -195,17 +398,17 @@ Use search and replace of vscode with regex functionality enabled
 ### quest_nextStage
 
 * `quests\["(.*)"\].nextStage\(\)`
-* `quest_nextStage(id = "$1")`
+* `quest_next_stage(id = "$1")`
 
 ### quest_nextStageOnlyIsCompleted
 
 * `quests\["(.*)"\].nextStageOnlyIsCompleted\(\)`
-* `quest_nextStageOnlyIsCompleted(id = "$1")`
+* `quest_next_stage_only_is_completed(id = "$1")`
 
 ### quest_setDayNumberRequiredToStart
 
 * `quests\["(.*)"\].SetDayNumberRequiredToStart\((.*)\)`
-* `quest_setDayNumberRequiredToStart(id = "$1",$2)`
+* `quest_add_required_days_to_start(id = "$1",$2)`
 
 ### new_day
 

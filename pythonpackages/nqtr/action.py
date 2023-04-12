@@ -127,7 +127,7 @@ class Act(Button):
         return not self.is_deadline(current_day)
 
 
-def clearExpiredActions(actions: dict[str, Act], current_day: int) -> None:
+def clear_expired_actions(actions: dict[str, Act], current_day: int) -> None:
     """Delete Expired Actions"""
     actions_to_del = []
     for id, act in actions.items():
@@ -143,7 +143,7 @@ def current_actions(actions: dict[str, Act], room: Room, now_hour: int, current_
     """Return a action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
-        if not act.isHidden(flags):
+        if not act.is_hidden(flags):
             if is_action_in_current_room(act_id, act, room, now_hour, current_day, tm):
                 acts.append(act)
     return acts
@@ -161,7 +161,7 @@ def current_button_actions(actions: dict[str, Act], room: Room, now_hour: int, c
     """Return a button action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
-        if act.is_button and not act.isHidden(flags):
+        if act.is_button and not act.is_hidden(flags):
             if is_action_in_current_room(act_id, act, room, now_hour, current_day, tm):
                 acts.append(act)
     return acts
@@ -171,7 +171,7 @@ def current_picture_in_background_actions(actions: dict[str, Act], room: Room, n
     """Return a picture in background action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
-        if act.is_picture_in_background and not act.isHidden(flags):
+        if act.is_picture_in_background and not act.is_hidden(flags):
             if is_action_in_current_room(act_id, act, room, now_hour, current_day, tm):
                 acts.append(act)
     return acts

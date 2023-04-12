@@ -44,7 +44,7 @@ label order_product:
     mc "OK! Let's see, let's look for a book...."
     mc "Here's R****, for $1. Just the thing for me."
     $ del actions['order_product']
-    $ quest_nextStage(id = "alice")
+    $ quest_next_stage(id = "alice")
     return
 
 label add_product:
@@ -53,14 +53,14 @@ label add_product:
 
 label take_product:
     $ del actions['take_product']
-    $ quest_nextStage(id = "alice")
+    $ quest_next_stage(id = "alice")
     return
 
 label take_key:
     mc "Are these the car keys?! Well... I should try to access the car!"
     $ set_flags("goout", True)
     $ del actions['take_key']
-    $ quest_nextStage(id = "ann")
+    $ quest_next_stage(id = "ann")
     return
 
 menu talk_sleep:

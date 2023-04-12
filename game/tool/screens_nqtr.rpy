@@ -1,6 +1,6 @@
 init python:
-    from pythonpackages.nqtr.navigation import isClosedRoom
-    from pythonpackages.nqtr.routine import getBgRoomRoutine
+    from pythonpackages.nqtr.navigation import is_closed_room
+    from pythonpackages.nqtr.routine import commitment_background
     from pythonpackages.nqtr.action import current_button_actions, current_picture_in_background_actions
 
 screen room_navigation():
@@ -61,7 +61,7 @@ screen room_navigation():
                         # Insert in talk for every ch, main in that room
                         for ch_id, talk_obj in comm.ch_talkobj_dict.items():
                             if (talk_obj):
-                                use action_talk_button(ch_id, talk_obj, comm.getTalkBackground(ch_id))
+                                use action_talk_button(ch_id, talk_obj, comm.conversation_background(ch_id))
 
             # Fixed button to wait
             use wait_button()
@@ -178,11 +178,11 @@ screen room_navigation():
 
 label set_background_nqtr:
     if (not map_open):
-        if(isClosedRoom(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.hour, tm = tm)):
+        if(is_closed_room(room_id= cur_room.id, closed_rooms= closed_rooms, now_hour= tm.hour, tm = tm)):
             # Change the background image to the current room image.
             call closed_room_event
         else:
-            $ sp_bg_change_room = getBgRoomRoutine(commitments_in_cur_location, cur_room.id)
+            $ sp_bg_change_room = commitment_background(commitments_in_cur_location, cur_room.id)
             call set_room_background(sp_bg_change_room)
     return
 

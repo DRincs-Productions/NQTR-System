@@ -1,8 +1,8 @@
 init python:
-    from pythonpackages.nqtr.action import clearExpiredActions
-    from pythonpackages.nqtr.routine import clearExpiredRoutine
-    from pythonpackages.nqtr.routine import getEventsInThisLocation
-    from pythonpackages.nqtr.routine import getChsInThisLocation
+    from pythonpackages.nqtr.action import clear_expired_actions
+    from pythonpackages.nqtr.routine import clear_expired_routine
+    from pythonpackages.nqtr.routine import characters_events_in_current_location
+    from pythonpackages.nqtr.routine import characters_commitment_in_current_location
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#defalut-value
 # pressing the hold button will increase the time of:
@@ -17,9 +17,9 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, is_check_event=True):
         python:
             tm.new_day()
             # removes expired Commitments
-            clearExpiredRoutine(routine, tm)
-            clearExpiredActions(actions, tm.day)
-            checkInactiveStage(current_stages= current_quest_stages | current_task_stages)
+            clear_expired_routine(routine, tm)
+            clear_expired_actions(actions, tm.day)
+            check_inactive_stage(current_stages= current_quest_stages | current_task_stages)
             tm.hour= time_of_new_day
         call after_spending_time(is_check_event = is_check_event)
     else:
@@ -42,10 +42,10 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, is_check_event=True):
 label after_spending_time(is_check_event=False, is_check_routines=True):
     if(is_check_routines):
         # this step is to change the background based on the presence of a ch
-        $ commitments_in_cur_location = getChsInThisLocation(cur_location.id, routine | df_routine, tm)
+        $ commitments_in_cur_location = characters_commitment_in_current_location(cur_location.id, routine | df_routine, tm)
     # check event
     if (is_check_event):
-        $ cur_events_location = getEventsInThisLocation(cur_location.id, routine, tm)
+        $ cur_events_location = characters_events_in_current_location(cur_location.id, routine, tm)
         call check_event
     call set_background_nqtr
     return

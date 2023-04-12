@@ -50,5 +50,5 @@ label stagestart_talkalice:
 
 # Quest "ann"
 label stagestart_talkalice_aboutann:
-    $ addTalkChoice(choice_id = "alice", choice_text = _("About the Ann"), label_name = "stage_talkalice_aboutann", dict_choices = talkch_choices)
+    $ add_talk_choice(choice_id = "alice", choice_text = _("About the Ann"), label_name = "stage_talkalice_aboutann", dict_choices = talkch_choices)
     return

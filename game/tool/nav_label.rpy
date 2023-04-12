@@ -1,5 +1,5 @@
 init python:
-    from pythonpackages.nqtr.navigation import getRoomById
+    from pythonpackages.nqtr.navigation import get_room_by_id
 
 # if in a room there is a different bg (taken in routine) than usual, use this one
 default sp_bg_change_room = None
@@ -13,13 +13,13 @@ define block_goout_dialogue = _("Now is not the time to go outside")
 label change_room(room_id = None):
     if room_id:
         python:
-            new_room = getRoomById(room_id = room_id, rooms = rooms)
+            new_room = get_room_by_id(room_id = room_id, rooms = rooms)
             prev_room = cur_room
             cur_room = new_room
             del new_room
     if cur_location.id != cur_room.location_id:
         python:
-            new_location = getLocationById(location_id = cur_room.location_id, locations = locations)
+            new_location = get_location_by_id(location_id = cur_room.location_id, locations = locations)
             prev_location = cur_location
             cur_location = new_location
             del new_location
@@ -30,7 +30,7 @@ label change_room(room_id = None):
 label change_location(location_id = None, close_map = True):
     if location_id:
         python:
-            new_location = getLocationById(location_id = location_id, locations = locations)
+            new_location = get_location_by_id(location_id = location_id, locations = locations)
             prev_location = cur_location
             cur_location = new_location
             del new_location
