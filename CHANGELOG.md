@@ -279,6 +279,76 @@ Use search and replace of vscode with regex functionality enabled
 * `getBgRoomRoutine\((.*)\)`
 * `commitment_background($1)`
 
+### updateQuestsLevels
+
+* `updateQuestsLevels\((.*)\)`
+* `update_quests_levels($1)`
+
+### checkInactiveStage
+
+* `checkInactiveStage\((.*)\)`
+* `check_inactive_stage($1)`
+
+### checkIfTheQuestExist
+
+* `checkIfTheQuestExist\((.*)\)`
+* `is_quest_existing($1)`
+
+### checkIfTheQuestIsInNumberStages
+
+* `checkIfTheQuestIsInNumberStages\((.*)\)`
+* `is_quest_in_number_stages($1)`
+
+### checkIfTheQuestIsCurrentTaskStages
+
+* `checkIfTheQuestIsCurrentTaskStages\((.*)\)`
+* `is_quest_in_current_task_stages($1)`
+
+### checkIfTheQuestIsCurrentQuestStages
+
+* `checkIfTheQuestIsCurrentQuestStages\((.*)\)`
+* `is_quest_in_current_quest_stages($1)`
+
+### quest_getPercentageCompletion
+
+* `quest_getPercentageCompletion\((.*)\)`
+* `quest_percentage_completion($1)`
+
+### quest_setDayNumberRequiredToStart
+
+* `quest_setDayNumberRequiredToStart\((.*)\)`
+* `quest_add_required_days_to_start($1)`
+
+### quest_nextStageOnlyIsCompleted
+
+* `quest_nextStageOnlyIsCompleted\((.*)\)`
+* `quest_next_stage_only_is_completed($1)`
+
+### quest_nextStage
+
+* `quest_nextStage\((.*)\)`
+* `quest_next_stage($1)`
+
+### quest_isStarted
+
+* `quest_isStarted\((.*)\)`
+* `quest_is_started($1)`
+
+### quest_isCompleted
+
+* `quest_isCompleted\((.*)\)`
+* `quest_is_completed($1)`
+
+### quest_currentQuestId
+
+* `quest_currentQuestId\((.*)\)`
+* `quest_current_quest_id($1)`
+
+### quest_completeStagesNumber
+
+* `quest_completeStagesNumber\((.*)\)`
+* `quest_complete_stages_number($1)`
+
 # v1.0.3
 
 ```shell
