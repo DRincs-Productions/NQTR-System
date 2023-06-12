@@ -1,8 +1,8 @@
+import os
+import re
+import shutil
 from fileinput import FileInput
 from glob import glob
-import os
-import shutil
-import re
 
 # ATTENTION: there must not be 2 equal key or value
 # regex: https://www.w3schools.com/python/python_regex.asp
@@ -43,10 +43,10 @@ dict = {
     r'msgstr "(.*?) \[special_delimiter\] (.*?)"':      r'    "\1" "\2"',
     r':\nmsgid "(.*?)"':                                r':\n    # "\1"',
     r'    #(.*?)\nmsgstr "\[_(.*?)\_] (.*?)"':            r'    #\1\n    \2 "\3"',
+    r'    #(.*?)\nmsgstr "\[_(.*?)\_](.*?)"':            r'    #\1\n    \2 "\3"',
     r'    # (.*?)\nmsgstr "(.*?)"':                     r'    # \1\n    "\2"',
     # after
     r'    # "\[_(.*?)\_] (.*?)"':                         r'    # \1 "\2"',
-    r'    # "\[_(.*?)\_](.*?)"':                         r'    # \1 "\2"',
     # Comment
     r':\n    # ':                                                   r':\n\n    # ',
     r'rpy:(.*?) #-#-# translate':                                   r'rpy:\1\ntranslate',
@@ -145,4 +145,5 @@ def fileRename(pathFile, extension):
     return pre + extension
 
 
-potorpy("crowdin")
+potorpy("italian")
+potorpy("french")
