@@ -1,9 +1,7 @@
 init python:
     import pythonpackages.renpy_utility.flags as myFlags
 
-# flags are Boolean values, a good use is for example in quests to know quickly if MC has the possibility to do a certain thing, after unlocking it somehow.
-# has the same alements as flag_keys, all set as False
-# I suggest to leave it empty and add the elements only if it is an initial value and set as True
+# https://github.com/DRincs-Productions/renpy-utility-lib/wiki/Flags
 default flags = {}
 define flag_keys = [
 ]
