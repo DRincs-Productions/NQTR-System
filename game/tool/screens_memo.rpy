@@ -35,8 +35,9 @@ screen menu_memo():
         ysize gui.lateralframescroll_ysize
         background None
         # task title list
-        viewport mousewheel True draggable True id 'vp1':
-            has vbox spacing 5
+        viewport mousewheel True draggable True id 'menu_memo_task_title_list':
+            has vbox
+            spacing 5
             for task_id in current_quest_stages.keys():
                 button:
                     xpos gui.interface_text_size
@@ -57,7 +58,7 @@ screen menu_memo():
                         ]
                         selected cur_task_menu == task_id
         # scroll bar
-        vbar value YScrollValue('vp1') style 'menu_vscroll'
+        vbar value YScrollValue('menu_memo_task_title_list') style 'menu_vscroll'
 
     # Information on the current quest
     if cur_task_menu != '':
