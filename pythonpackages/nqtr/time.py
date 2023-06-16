@@ -1,5 +1,5 @@
 from typing import Union
-from pythonpackages.renpy_custom_log import *
+from pythonpackages.renpy_utility.renpy_custom_log import *
 
 MIN_DAY_HOUR = 0
 MAX_DAY_HOUR = 24
@@ -7,7 +7,7 @@ DEFAULT_TIME_SPENT = 1
 
 
 class TimeHandler(object):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#time-handler """
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#time-handler"""
 
     def __init__(
         self,
@@ -34,8 +34,10 @@ class TimeHandler(object):
     def hour_of_new_day(self, value: int):
         self._hour_of_new_day = value
         if self._hour_of_new_day < 0:
-            log_warn("You have set hour_of_new_day < 0, so it will be set to 0.",
-                     "nqtr.time.TimeHandler.hour_of_new_day")
+            log_warn(
+                "You have set hour_of_new_day < 0, so it will be set to 0.",
+                "nqtr.time.TimeHandler.hour_of_new_day",
+            )
             self._hour_of_new_day = 0
 
     @property
@@ -46,14 +48,18 @@ class TimeHandler(object):
     @hour.setter
     def hour(self, value: int):
         self._hour = value
-        if (self._hour > MAX_DAY_HOUR):
+        if self._hour > MAX_DAY_HOUR:
             self._hour = MAX_DAY_HOUR
-            log_warn("You have set hour > MAX_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
-                     "nqtr.time.TimeHandler.hour")
-        if (self._hour < MIN_DAY_HOUR):
+            log_warn(
+                "You have set hour > MAX_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
+                "nqtr.time.TimeHandler.hour",
+            )
+        if self._hour < MIN_DAY_HOUR:
             self._hour = MIN_DAY_HOUR
-            log_warn("You have set hour < MIN_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
-                     "nqtr.time.TimeHandler.hour")
+            log_warn(
+                "You have set hour < MIN_DAY_HOUR, so it will be set to MAX_DAY_HOUR.",
+                "nqtr.time.TimeHandler.hour",
+            )
 
     @property
     def weekday_weekend_begins(self) -> int:
@@ -66,12 +72,16 @@ class TimeHandler(object):
     def weekday_weekend_begins(self, value: int):
         self._weekday_weekend_begins = value
         if self._weekday_weekend_begins < 0:
-            log_warn("You have set weekday_weekend_begins < 0, so it will be set to 6.",
-                     "nqtr.time.TimeHandler.weekday_weekend_begins")
+            log_warn(
+                "You have set weekday_weekend_begins < 0, so it will be set to 6.",
+                "nqtr.time.TimeHandler.weekday_weekend_begins",
+            )
             self._weekday_weekend_begins = 6
         if self._weekday_weekend_begins > len(self.weekday_names):
-            log_warn("You have set weekday_weekend_begins > len(weekday_names), so I ignore it.",
-                     "nqtr.time.TimeHandler.weekday_weekend_begins")
+            log_warn(
+                "You have set weekday_weekend_begins > len(weekday_names), so I ignore it.",
+                "nqtr.time.TimeHandler.weekday_weekend_begins",
+            )
 
     @property
     def day(self) -> int:
@@ -81,10 +91,12 @@ class TimeHandler(object):
     @day.setter
     def day(self, value: int):
         self._day = value
-        if (self._day < 0):
+        if self._day < 0:
             self._day = 0
-            log_warn("You have set day < 0, so it will be set to 0.",
-                     "nqtr.time.TimeHandler.day")
+            log_warn(
+                "You have set day < 0, so it will be set to 0.",
+                "nqtr.time.TimeHandler.day",
+            )
 
     @property
     def timeslot_names(self) -> list[tuple[int, str]]:
@@ -111,8 +123,10 @@ class TimeHandler(object):
                     return timeslot[1]
             return self.timeslot_names[len(self.timeslot_names)][1]
         else:
-            log_warn("You have not set any timeslot_names, so it will return an empty string.",
-                     "nqtr.time.TimeHandler.timeslot_name")
+            log_warn(
+                "You have not set any timeslot_names, so it will return an empty string.",
+                "nqtr.time.TimeHandler.timeslot_name",
+            )
             return ""
 
     @property
@@ -126,8 +140,10 @@ class TimeHandler(object):
                     return index
             return len(self.timeslot_names)
         else:
-            log_error("You have not set any timeslot_names, so it will return 0.",
-                      "nqtr.time.TimeHandler.timeslot_number")
+            log_error(
+                "You have not set any timeslot_names, so it will return 0.",
+                "nqtr.time.TimeHandler.timeslot_number",
+            )
             return 0
 
     @property
@@ -135,8 +151,10 @@ class TimeHandler(object):
         if len(self.weekday_names) > 0:
             return self.day % len(self.weekday_names)
         else:
-            log_warn("You have not set any weekday_names, so it will return 0.",
-                     "nqtr.time.TimeHandler.weekday_number")
+            log_warn(
+                "You have not set any weekday_names, so it will return 0.",
+                "nqtr.time.TimeHandler.weekday_number",
+            )
             return 0
 
     @property
@@ -144,8 +162,10 @@ class TimeHandler(object):
         if len(self.weekday_names) > 0:
             return self.weekday_names[self.weekday_number]
         else:
-            log_warn("You have not set any weekday_names, so it will return an empty string.",
-                     "nqtr.time.TimeHandler.weekday_name")
+            log_warn(
+                "You have not set any weekday_names, so it will return an empty string.",
+                "nqtr.time.TimeHandler.weekday_name",
+            )
             return ""
 
     # def get_day_of_month(self, hour=None):
@@ -174,31 +194,43 @@ class TimeHandler(object):
     #     return month_number
 
     def new_hour(self, amt: int = DEFAULT_TIME_SPENT) -> bool:
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy """
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy"""
         if self.hour == MAX_DAY_HOUR and amt > 0:
-            log_warn("Max hour reached, you can't add more hours",
-                     "nqtr.time.TimeHandler.new_hour")
+            log_warn(
+                "Max hour reached, you can't add more hours",
+                "nqtr.time.TimeHandler.new_hour",
+            )
             return False
         elif self.hour == MIN_DAY_HOUR and amt < 0:
-            log_warn("Min hour reached, you can't remove more hours",
-                     "nqtr.time.TimeHandler.new_hour")
+            log_warn(
+                "Min hour reached, you can't remove more hours",
+                "nqtr.time.TimeHandler.new_hour",
+            )
             return False
 
         self.hour += amt
         return True
 
     def new_day(self, amt: int = 1) -> bool:
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy """
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day-manualy"""
         if self.day == 0 and amt < 0:
-            log_warn("Min day reached, you can't remove more days",
-                     "nqtr.time.TimeHandler.new_day")
+            log_warn(
+                "Min day reached, you can't remove more days",
+                "nqtr.time.TimeHandler.new_day",
+            )
             return False
         self.hour = self.hour_of_new_day
         self.day += amt
         return True
 
-    def now_is_between(self, end: Union[int, float], start: Union[int, float] = 0, now=None) -> bool:
+    def now_is_between(
+        self, end: Union[int, float], start: Union[int, float] = 0, now=None
+    ) -> bool:
         if now is None:
-            return (((self.hour >= start or start > end) and self.hour < end) or (self.hour >= start and (self.hour < end or start > end)))
+            return ((self.hour >= start or start > end) and self.hour < end) or (
+                self.hour >= start and (self.hour < end or start > end)
+            )
         else:
-            return (((now >= start or start > end) and now < end) or (now >= start and (now < end or start > end)))
+            return ((now >= start or start > end) and now < end) or (
+                now >= start and (now < end or start > end)
+            )

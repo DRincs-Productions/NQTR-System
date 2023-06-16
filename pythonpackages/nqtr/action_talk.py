@@ -1,15 +1,15 @@
 from typing import Optional, Union
 
 from pythonpackages.nqtr.button import Button
-from pythonpackages.renpy_custom_log import *
-from pythonpackages.utility import *
+from pythonpackages.renpy_utility.renpy_custom_log import *
+from pythonpackages.renpy_utility.utility import *
 
 # TODO to move in renpy
 DEFAULT_LABEL_TALK = "talk"
 
 
 class TalkObject(Button):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system """
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system"""
 
     def __init__(
         self,

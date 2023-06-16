@@ -1,5 +1,5 @@
 init -999 python:
-    import pythonpackages.utility as utility
+    import pythonpackages.renpy_utility.utility as utility
 
     def isNullOrEmpty(item: str) -> bool:
         return utility.isNullOrEmpty(item)

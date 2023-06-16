@@ -1,14 +1,13 @@
-
 from typing import Optional, Union
 
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.routine import Commitment
 from pythonpackages.nqtr.time import TimeHandler
-from pythonpackages.renpy_custom_log import *
+from pythonpackages.renpy_utility.renpy_custom_log import *
 
 
 class Room(Button):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room """
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#room"""
 
     def __init__(
         self,
@@ -30,7 +29,6 @@ class Room(Button):
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
-
         # Button init
         super().__init__(
             name=name,
@@ -87,7 +85,7 @@ class Room(Button):
 
 
 class Location(Button):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location """
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location"""
 
     def __init__(
         self,
@@ -107,7 +105,6 @@ class Location(Button):
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
-
         # Button init
         super().__init__(
             name=name,
@@ -154,7 +151,7 @@ class Location(Button):
 
 
 class Map(Button):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map """
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#map"""
 
     def __init__(
         self,
@@ -170,7 +167,6 @@ class Map(Button):
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
-
         # Button init
         super().__init__(
             name=name,
@@ -236,14 +232,20 @@ class Map(Button):
 
 
 # TODO: Move in Room class
-def is_closed_room(room_id: str, closed_rooms: dict[str, Commitment], now_hour: int, tm: TimeHandler) -> bool:
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#is-closed-room """
+def is_closed_room(
+    room_id: str, closed_rooms: dict[str, Commitment], now_hour: int, tm: TimeHandler
+) -> bool:
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#is-closed-room"""
     cur_room_is_closed = False
     closed_rooms_to_del = []
     for id, item in closed_rooms.items():
-        if (id == room_id and tm.now_is_between(start=item.hour_start, end=item.hour_stop, now=now_hour)):
+        if id == room_id and tm.now_is_between(
+            start=item.hour_start, end=item.hour_stop, now=now_hour
+        ):
             cur_room_is_closed = True
-        elif (item.hour_stop != None and not tm.now_is_between(start=item.hour_start, end=item.hour_stop, now=now_hour)):
+        elif item.hour_stop != None and not tm.now_is_between(
+            start=item.hour_start, end=item.hour_stop, now=now_hour
+        ):
             closed_rooms_to_del.append(id)
     for id in closed_rooms_to_del:
         del closed_rooms[id]
@@ -252,7 +254,7 @@ def is_closed_room(room_id: str, closed_rooms: dict[str, Commitment], now_hour: 
 
 
 def get_room_by_id(room_id: str, rooms: list[Room]) -> Optional[Room]:
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room """
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room"""
     if not room_id:
         log_warn("room_id is None", "nqtr.navigation.get_room_by_id()")
         return
@@ -262,11 +264,12 @@ def get_room_by_id(room_id: str, rooms: list[Room]) -> Optional[Room]:
     return
 
 
-def get_location_by_id(location_id: str, locations: list[Location]) -> Optional[Location]:
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location """
+def get_location_by_id(
+    location_id: str, locations: list[Location]
+) -> Optional[Location]:
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-location"""
     if not location_id:
-        log_error("location_id is None",
-                  "nqtr.navigation.get_location_by_id()")
+        log_error("location_id is None", "nqtr.navigation.get_location_by_id()")
         return
     for location in locations:
         if location.id == location_id:

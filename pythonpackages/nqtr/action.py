@@ -3,11 +3,11 @@ from typing import Optional, Union
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.navigation import Room
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, TimeHandler
-from pythonpackages.renpy_custom_log import *
+from pythonpackages.renpy_utility.renpy_custom_log import *
 
 
 class Act(Button):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action """
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Action"""
 
     def __init__(
         self,
@@ -30,7 +30,6 @@ class Act(Button):
         disabled: Union[bool, str] = False,
         hidden: Union[bool, str] = False,
     ):
-
         # Button init
         super().__init__(
             name=name,
@@ -46,18 +45,22 @@ class Act(Button):
         )
         # Act init
         self.hour_start = hour_start
-        self.hour_stop = hour_stop-0.1
+        self.hour_stop = hour_stop - 0.1
         self.day_deadline = day_deadline
         self.day_start = day_start
         self.room_ids = room_ids
         if isinstance(self.day_start, int) and self.day_start < 0:
             self.day_start = None
-            log_info("You have set day_start < 0, so it will be ignored",
-                     "nqtr.action.Act.__init__")
+            log_info(
+                "You have set day_start < 0, so it will be ignored",
+                "nqtr.action.Act.__init__",
+            )
         if isinstance(self.day_deadline, int) and self.day_deadline < 0:
             self.day_deadline = None
-            log_info("You have set day_deadline < 0, so it will be ignored",
-                     "nqtr.action.Act.__init__")
+            log_info(
+                "You have set day_deadline < 0, so it will be ignored",
+                "nqtr.action.Act.__init__",
+            )
 
     @property
     def room_ids(self) -> list[str]:
@@ -131,7 +134,7 @@ def clear_expired_actions(actions: dict[str, Act], current_day: int) -> None:
     """Delete Expired Actions"""
     actions_to_del = []
     for id, act in actions.items():
-        if (act.is_deadline(current_day)):
+        if act.is_deadline(current_day):
             actions_to_del.append(id)
     for act_id in actions_to_del:
         del actions[act_id]
@@ -139,7 +142,14 @@ def clear_expired_actions(actions: dict[str, Act], current_day: int) -> None:
     return
 
 
-def current_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
+def current_actions(
+    actions: dict[str, Act],
+    room: Room,
+    now_hour: int,
+    current_day: int,
+    tm: TimeHandler,
+    flags: dict[str, bool] = {},
+) -> list[Act]:
     """Return a action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
@@ -149,15 +159,31 @@ def current_actions(actions: dict[str, Act], room: Room, now_hour: int, current_
     return acts
 
 
-def is_action_in_current_room(act_id: str, action: Act, room: Room, now_hour: int, current_day: int, tm: TimeHandler) -> bool:
+def is_action_in_current_room(
+    act_id: str,
+    action: Act,
+    room: Room,
+    now_hour: int,
+    current_day: int,
+    tm: TimeHandler,
+) -> bool:
     """Return True if the action is in the current room and available for the current time"""
     if room.id in action.room_ids or act_id in room.action_ids:
-        if action.have_valid_day(current_day) and tm.now_is_between(start=action.hour_start, end=action.hour_stop, now=now_hour):
+        if action.have_valid_day(current_day) and tm.now_is_between(
+            start=action.hour_start, end=action.hour_stop, now=now_hour
+        ):
             return True
     return False
 
 
-def current_button_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
+def current_button_actions(
+    actions: dict[str, Act],
+    room: Room,
+    now_hour: int,
+    current_day: int,
+    tm: TimeHandler,
+    flags: dict[str, bool] = {},
+) -> list[Act]:
     """Return a button action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
@@ -167,7 +193,14 @@ def current_button_actions(actions: dict[str, Act], room: Room, now_hour: int, c
     return acts
 
 
-def current_picture_in_background_actions(actions: dict[str, Act], room: Room, now_hour: int, current_day: int, tm: TimeHandler, flags: dict[str, bool] = {}) -> list[Act]:
+def current_picture_in_background_actions(
+    actions: dict[str, Act],
+    room: Room,
+    now_hour: int,
+    current_day: int,
+    tm: TimeHandler,
+    flags: dict[str, bool] = {},
+) -> list[Act]:
     """Return a picture in background action list for the current room and available for the current time"""
     acts: list[Act] = []
     for act_id, act in actions.items():
