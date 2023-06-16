@@ -1,3 +1,16 @@
+## TO DOWNLOAD THIS TEST PROJECT
+
+```shell
+# Basic command to download projects from git
+git clone https://github.com/DRincs-Productions/NQTR-System
+# IMPORTANT -> Will add the libraries needed to run the program
+cd NQTR-System
+git submodule update --remote
+
+```
+
+---
+
 # Navigation Quest Time Routine System for Ren'py
 
 ![Last commit](https://img.shields.io/github/last-commit/DRincs-Productions/NQTR-System)
