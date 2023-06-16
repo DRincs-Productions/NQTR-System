@@ -30,32 +30,30 @@ screen time_text(tm, show_wait_button = False):
             # Fixed button to wait
             use wait_button(small = True)
 
-screen action_button(act, show_picture_in_background = False):
-    if show_picture_in_background:
-        imagebutton:
-            align (act.xalign, act.yalign)
-            if act.is_picture_in_background: # for logs
-                idle act.picture_in_background
-                hover act.picture_in_background_selected
-            focus_mask True
-            action [
-                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-            ]
-            if renpy.variant("pc"):
-                tooltip act.name
-            at middle_action_is_in_room
-    else:
-        imagebutton:
-            if act.is_button: # for logs
-                idle act.button_icon
-                hover act.button_icon_selected
-            focus_mask True
-            action [
-                Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-            ]
-            if renpy.variant("pc"):
-                tooltip act.name
-            at middle_action
+screen action_button(act):
+    imagebutton:
+        idle act.button_icon
+        hover act.button_icon_selected
+        focus_mask True
+        action [
+            Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
+        ]
+        if renpy.variant("pc"):
+            tooltip act.name
+        at middle_action
+
+screen action_picture_in_background(act):
+    imagebutton:
+        align (act.xalign, act.yalign)
+        idle act.picture_in_background
+        hover act.picture_in_background_selected
+        focus_mask True
+        action [
+            Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
+        ]
+        if renpy.variant("pc"):
+            tooltip act.name
+        at middle_action_is_in_room
 
 screen action_talk_button(ch_id, talk_obj, background):
     if not talk_obj.is_hidden(flags = flags, check_if_has_icon = False):
