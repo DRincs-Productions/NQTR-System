@@ -17,7 +17,9 @@ label after_load:
     return
 
 init python:
+    # ignore the rollback in the menu_memo
     def myrollback():
+        # TODO: Obsolete
         ui.add(renpy.Keymap(rollback=If(renpy.get_screen('menu_memo'), NullAction(), Rollback())))
 
     config.overlay_functions.append(myrollback)
