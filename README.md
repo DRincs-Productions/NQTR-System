@@ -17,6 +17,6 @@ git checkout -b renpy-utility-lib
 git checkout renpy-utility-lib
 git config pull.rebase false
 git pull https://github.com/DRincs-Productions/renpy-utility-lib.git tool-only --allow-unrelated-histories
-git submodule update --remote
+git submodule update --init --recursive
 
 ```
