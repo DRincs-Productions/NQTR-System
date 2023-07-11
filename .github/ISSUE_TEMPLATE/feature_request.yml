@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest an idea for this project
+title: "[Request]"
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What would you like to see implemented?
+    validations:
+      required: true
+  - type: textarea
+    id: solutions
+    attributes:
+      label: Possible solutions or advice
+      description: Do you have a solution or various alternatives in mind? 
+    validations:
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Would you be of sposte to implement it yourself?
+      description: Support is very important to us. (Also consider your skills)
+      options:
+        - label: Yes I want to help
+          required: false
