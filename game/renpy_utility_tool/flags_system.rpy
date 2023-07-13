@@ -1,11 +1,6 @@
 init python:
     import pythonpackages.renpy_utility.flags as myFlags
 
-# https://github.com/DRincs-Productions/renpy-utility-lib/wiki/Flags
-default flags = {}
-define flag_keys = [
-]
-
 init python:
     def update_flags():
         """update flags by making it with the same elements of flag_keys. in case you have to add them set them as False"""
