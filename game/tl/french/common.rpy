@@ -683,7 +683,7 @@ translate french strings:
 
     # renpy/common/00preferences.rpy:618
     old "Self-voicing would say \"[renpy.display.tts.last]\". Press 'alt+shift+V' to disable."
-    new "La lecture vocale veut dire « [renpy.display.tts.last] ». Pressez « Alt+Maj+V » pour la désactiver."
+    new "La lecture vocale veut dire \"[renpy.display.tts.last]\". Pressez 'alt+shift+V' pour la désactiver."
 
     # renpy/common/00preferences.rpy:620
     old "Self-voicing enabled. Press 'v' to disable."
@@ -747,7 +747,7 @@ translate french strings:
 
     # renpy/common/00updater.rpy:1637
     old "[u.version] is available. Do you want to install it?"
-    new "[u.version] est disponible. Voulez-vous l’installer ?"
+    new "[u.version] est disponible. Voulez-vous l’installer?"
 
     # renpy/common/00updater.rpy:1639
     old "Preparing to download the updates."
@@ -1211,7 +1211,7 @@ translate french strings:
 
     # renpy/common/00console.rpy:862
     old "reload: reloads the game, refreshing the scripts"
-    new "reload : recharge le jeu, rafraîchit les scripts"
+    new "reload: recharge le jeu, rafraîchit les scripts"
 
     # renpy/common/00console.rpy:870
     old "watch <expression>: watch a python expression\n watch short: makes the representation of traced expressions short (default)\n watch long: makes the representation of traced expressions as is"
@@ -1223,7 +1223,7 @@ translate french strings:
 
     # renpy/common/00console.rpy:953
     old "unwatchall: stop watching all expressions"
-    new "unwatchall : arrêter de surveiller toutes les expressions"
+    new "unwatchall: arrêter de surveiller toutes les expressions"
 
     # renpy/common/00console.rpy:974
     old "jump <label>: jumps to label"
@@ -1231,17 +1231,17 @@ translate french strings:
 
     # renpy/common/00console.rpy:990
     old "short: Shorten the representation of objects on the console (default)."
-    new "short : Raccourcit la représentation des objets sur la console (par défaut)."
+    new "short: Raccourcit la représentation des objets sur la console (par défaut)."
 
     # renpy/common/00console.rpy:994
     old "long: Print the full representation of objects on the console."
-    new "long : Affiche la representation entière des objets dans la console."
+    new "long: Affiche la representation entière des objets dans la console."
 
     # renpy/common/00console.rpy:998
     old "escape: Enables escaping of unicode symbols in unicode strings."
-    new "escape : Active l'échappage des symboles unicode dans les chaînes de caractères unicode."
+    new "escape: Active l'échappage des symboles unicode dans les chaînes de caractères unicode."
 
     # renpy/common/00console.rpy:1002
     old "unescape: Disables escaping of unicode symbols in unicode strings and print it as is (default)."
-    new "unescape : Désactive l'échappage des symboles unicode dans les chaînes de caractères unicode et les affiche telles quelles (par défaut)."
+    new "unescape: Désactive l'échappage des symboles unicode dans les chaînes de caractères unicode et les affiche telles quelles (par défaut)."
 
