@@ -15,12 +15,3 @@ label after_load:
         commitments_in_cur_location = characters_commitment_in_current_location(cur_location.id, routine | df_routine, tm)
         update_quests_levels()
     return
-
-init python:
-    # ignore the rollback in the menu_memo
-    def myrollback():
-        # TODO: Obsolete
-        ui.add(renpy.Keymap(rollback=If(renpy.get_screen('menu_memo'), NullAction(), Rollback())))
-
-    config.overlay_functions.append(myrollback)
-
