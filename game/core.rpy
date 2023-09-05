@@ -1,7 +1,10 @@
 define config.log = "log.txt"
 
 label after_load:
+    # renpy-utility-lib
     $ update_flags()
+
+    # nqtr
     python:
         # timeHandler update: if you update TimeHandler settings into a new version, you can use this function to update the old save files.
         updateTimeHandler(tm)
