@@ -28,7 +28,8 @@ init -8 python:
     from pythonpackages.nqtr.time import TimeHandler
 
     def updateTimeHandler(tm: TimeHandler) -> None:
-        """is used to update timeslot_names and weekday_names"""
+        """If you update TimeHandler settings into a new version, you can use this function to update the old save files. 
+        Is used to update timeslot_names and weekday_names"""
         hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY
         hour = tm.hour
         weekday_weekend_begins = tm.weekday_weekend_begins
