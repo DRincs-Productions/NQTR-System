@@ -8,7 +8,7 @@ git pull https://github.com/DRincs-Productions/NQTR-System.git tool-only --allow
 
 ```
 
-add into your game `core.rpy`:
+add `after_load` into `core.rpy`:
 
 ```renpy
 label after_load:
