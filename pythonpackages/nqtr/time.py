@@ -137,10 +137,6 @@ class TimeHandler(object):
         res = 0
         if len(self.timeslot_names) > 0:
             for index, timeslot in enumerate(self.timeslot_names):
-                log_info(
-                    f"hour: {self.hour} >= timeslothour: {timeslot[0]} and index: {index} < res: {res}",
-                    "nqtr.time.TimeHandler.timeslot_number",
-                )
                 if self.hour >= timeslot[0] and index > res:
                     res = index
             return res
