@@ -55,7 +55,7 @@ screen action_picture_in_background(act):
             tooltip act.name
         at middle_action_is_in_room
 
-screen action_talk_button(ch_id, talk_obj, background):
+screen action_talk_button(character, talk_obj, background):
     if not talk_obj.is_hidden(flags = flags, check_if_has_icon = False):
         frame:
             xysize (120, 120)
@@ -69,23 +69,22 @@ screen action_talk_button(ch_id, talk_obj, background):
                     idle gui.default_talk_button_icon
                 focus_mask True
                 action [
-                    SetVariable('talk_ch', ch_id),
+                    SetVariable('talk_ch', character),
                     SetVariable('talk_image', background),
                     Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
                 ]
                 at middle_action
             # inserts the icon of the character who is currently in that room
-            # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-            if (ch_id in ch_icons):
-                imagebutton:
-                    idle ch_icons.get(ch_id)
-                    focus_mask True
-                    at small_face
-                    action [
-                        SetVariable('talk_ch', ch_id),
-                        SetVariable('talk_image', background),
-                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
-                    ]
+            # TODO: for now insert only the icon of the main character, I have to insert also the icon of the other secondary character
+            imagebutton:
+                idle character.image
+                focus_mask True
+                at small_face
+                action [
+                    SetVariable('talk_ch', character),
+                    SetVariable('talk_image', background),
+                    Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
+                ]
             if renpy.variant("pc"):
                 tooltip _("Talk")
 
@@ -193,7 +192,7 @@ screen room_button(room, cur_room, i, find_ch = False):
                         for comm in commitments_in_cur_location.values():
                             # If it is the selected room
                             if room.id == comm.room_id:
-                                for ch_icon in comm.character_icons(ch_icons):
+                                for ch_icon in comm.character_icons:
                                     imagebutton:
                                         idle ch_icon
                                         sensitive not room.is_disabled(flags)

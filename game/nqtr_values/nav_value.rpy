@@ -39,12 +39,6 @@ define maps = {
     ),
 }
 
-# TODO: Wiki
-define ch_icons = {
-    "alice"     : "icon/Alice.webp",
-    "ann"       : "icon/Ann.webp",
-}
-
 default prev_room = None
 default cur_room = rooms[0]
 default prev_location = None

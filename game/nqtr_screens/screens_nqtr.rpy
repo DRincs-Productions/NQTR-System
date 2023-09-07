@@ -59,9 +59,9 @@ screen room_navigation():
                 for comm in commitments_in_cur_location.values():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
-                        for ch_id, talk_obj in comm.ch_talkobj_dict.items():
+                        for character, talk_obj in comm.ch_talkobj_dict.items():
                             if (talk_obj):
-                                use action_talk_button(ch_id, talk_obj, comm.conversation_background(ch_id))
+                                use action_talk_button(character, talk_obj, comm.conversation_background(character))
 
             # Fixed button to wait
             use wait_button()

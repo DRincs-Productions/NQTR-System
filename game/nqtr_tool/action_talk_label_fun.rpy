@@ -34,7 +34,7 @@ label talk:
         return
 
     # Costume Code
-    if(talk_ch == "alice"):
+    if(talk_ch == a):
         mc "Hi [a]"
         a "Hi, can you tell me something?"
     else:

@@ -1,35 +1,42 @@
 from typing import Optional, Union
+import typing
 
 from pythonpackages.nqtr.action_talk import TalkObject
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
+import renpy
 
 
 class Commitment(object):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#commitment
-    event_label_name: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#events """
+    event_label_name: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#events
+    """
 
     def __init__(
         self,
         hour_start: Union[int, float] = MIN_DAY_HOUR,
         hour_stop: Union[int, float] = MAX_DAY_HOUR,
-        ch_talkobj_dict: dict[str, Optional[TalkObject]] = {},
+        ch_talkobj_dict: dict[object, Optional[TalkObject]] = {},
         background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
         tag: Optional[str] = None,
         day_deadline: Optional[int] = None,
-        event_label_name: Optional[str] = None
+        event_label_name: Optional[str] = None,
+        characters: Optional[list] = None,
     ):
-
         self.background = background
         self.ch_talkobj_dict = ch_talkobj_dict
         self.hour_start = hour_start
-        self.hour_stop = hour_stop-0.1
+        self.hour_stop = hour_stop - 0.1
         self.location_id = location_id
         self.room_id = room_id
         self.tag = tag
         self.day_deadline = day_deadline
         self.event_label_name = event_label_name
+        if characters == None:
+            self.characters = []
+        else:
+            self.characters = characters
 
     @property
     def hour_start(self) -> Union[int, float]:
@@ -50,12 +57,12 @@ class Commitment(object):
         self._hour_stop = value
 
     @property
-    def ch_talkobj_dict(self) -> dict[str, Optional[TalkObject]]:
+    def ch_talkobj_dict(self) -> dict[object, Optional[TalkObject]]:
         """Dictionary of characters and their TalkObject."""
         return self._ch_talkobj_dict
 
     @ch_talkobj_dict.setter
-    def ch_talkobj_dict(self, value: dict[str, Optional[TalkObject]]):
+    def ch_talkobj_dict(self, value: dict[object, Optional[TalkObject]]):
         self._ch_talkobj_dict = value
 
     @property
@@ -114,16 +121,30 @@ class Commitment(object):
         self._event_label_name = value
 
     @property
+    def characters(self) -> list:
+        """The characters in the commitment."""
+        return self._characters
+
+    @characters.setter
+    def characters(self, value: list):
+        if isinstance(value, list):
+            self._characters = value
+        else:
+            self._characters = [value]
+
+    @property
     def is_event(self) -> bool:
         "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
-        return (self.event_label_name is not None)
+        return self.event_label_name is not None
 
-    def character_icons(self, ch_icons: dict[str, str]) -> list[str]:
+    @property
+    def character_icons(self) -> list[str]:
         """Returns a list of paths to the icons of the characters in the commitment."""
         icons = []
-        for ch in self.ch_talkobj_dict.keys():
-            if (ch in ch_icons):
-                icons.append(ch_icons[ch])
+        for ch in self.characters:
+            # if ch have a property image
+            if hasattr(ch, "image") and isinstance(ch.image, str):
+                icons.append(ch.image)
         return icons
 
     def conversation_background(self, ch: str) -> Optional[str]:
@@ -146,7 +167,7 @@ def clear_expired_routine(commitments: dict[str, Commitment], tm: TimeHandler) -
     rlist = []
     rlist.clear()
     for key, val in commitments.items():
-        if (val.day_deadline != None and val.day_deadline <= tm.day):
+        if val.day_deadline != None and val.day_deadline <= tm.day:
             rlist.append(key)
     for r in rlist:
         del commitments[r]
@@ -154,14 +175,18 @@ def clear_expired_routine(commitments: dict[str, Commitment], tm: TimeHandler) -
     return
 
 
-def characters_commitment_in_current_location(location_id: str, routine: dict[str, Commitment], tm: TimeHandler) -> dict[str, Commitment]:
-    """Wiki: https: // github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system  # priority """
+def characters_commitment_in_current_location(
+    location_id: str, routine: dict[str, Commitment], tm: TimeHandler
+) -> dict[str, Commitment]:
+    """Wiki: https: // github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system  # priority"""
     # Create a list of ch who have a commitment in that place at that time
     # It does not do enough checks, they will be done later with commitment_by_character()
     commitments = {}
     for comm in routine.values():
         # Check Time and Location
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)):
+        if comm.location_id == location_id and tm.now_is_between(
+            start=comm.hour_start, end=comm.hour_stop
+        ):
             # Full verification
             for chKey in comm.ch_talkobj_dict.keys():
                 commitments[chKey] = None
@@ -180,7 +205,9 @@ def characters_commitment_in_current_location(location_id: str, routine: dict[st
     return commitments
 
 
-def characters_events_in_current_location(location_id: str, routine: dict[str, Commitment], tm: TimeHandler) -> dict[str, Commitment]:
+def characters_events_in_current_location(
+    location_id: str, routine: dict[str, Commitment], tm: TimeHandler
+) -> dict[str, Commitment]:
     """Returns events at that location at that time.
     Checks only in routine."""
     # Create a list of ch who have a commitment in that place at that time
@@ -188,19 +215,25 @@ def characters_events_in_current_location(location_id: str, routine: dict[str, C
     events = {}
     for comm in routine.values():
         # Check Time and Location and is event
-        if (comm.location_id == location_id and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop) and comm.is_event == True):
+        if (
+            comm.location_id == location_id
+            and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)
+            and comm.is_event == True
+        ):
             events[comm.room_id] = comm
     return events
 
 
-def commitment_by_character(ch: str, routine: dict[str, Commitment], tm: TimeHandler) -> Optional[Commitment]:
+def commitment_by_character(
+    ch: str, routine: dict[str, Commitment], tm: TimeHandler
+) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
     # special routine
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
             if ch in comm.ch_talkobj_dict:
-                if (comm.tag != None):
+                if comm.tag != None:
                     if checkIfIsActiveByTag(tag=comm.tag, id=id):
                         return comm
                 else:
@@ -210,11 +243,11 @@ def commitment_by_character(ch: str, routine: dict[str, Commitment], tm: TimeHan
 
 # TODO To Move move in renpy
 def checkIfIsActiveByTag(tag: str, id: str = "") -> bool:
-    """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag """
+    """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag"""
     # Custom code
-    if (tag == None):
+    if tag == None:
         return False
-    if (tag == "no_week"):
+    if tag == "no_week":
         return True
     return False
 
