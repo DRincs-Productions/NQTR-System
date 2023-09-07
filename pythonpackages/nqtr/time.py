@@ -196,13 +196,13 @@ class TimeHandler(object):
     def new_hour(self, amt: int = DEFAULT_TIME_SPENT) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy"""
         if self.hour == MAX_DAY_HOUR and amt > 0:
-            log_warn(
+            log_info(
                 "Max hour reached, you can't add more hours",
                 "nqtr.time.TimeHandler.new_hour",
             )
             return False
         elif self.hour == MIN_DAY_HOUR and amt < 0:
-            log_warn(
+            log_info(
                 "Min hour reached, you can't remove more hours",
                 "nqtr.time.TimeHandler.new_hour",
             )
