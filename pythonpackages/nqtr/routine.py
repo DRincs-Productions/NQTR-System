@@ -2,6 +2,7 @@ from typing import Optional, Union
 
 from pythonpackages.nqtr.action_talk import TalkObject
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
+from pythonpackages.renpy_utility.character_custom import DRCharacter
 
 
 class Commitment(object):
@@ -118,12 +119,12 @@ class Commitment(object):
         "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
         return self.event_label_name is not None
 
-    def character_icons(self, ch_icons: dict[str, str]) -> list[str]:
+    def character_icons(self, character_dict: dict[str, DRCharacter]) -> list[str]:
         """Returns a list of paths to the icons of the characters in the commitment."""
-        icons = []
+        icons: list[str] = []
         for ch in self.ch_talkobj_dict.keys():
-            if ch in ch_icons:
-                icons.append(ch_icons[ch])
+            if ch in character_dict:
+                icons.append(character_dict[ch].icon)
         return icons
 
     def conversation_background(self, ch: str) -> Optional[str]:

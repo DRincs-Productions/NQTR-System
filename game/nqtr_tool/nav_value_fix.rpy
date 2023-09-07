@@ -5,5 +5,3 @@ init python:
         locations = []
     if not "maps" in locals() | globals():
         maps = {}
-    if not "ch_icons" in locals() | globals():
-        ch_icons = {}

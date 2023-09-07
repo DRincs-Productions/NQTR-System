@@ -38,9 +38,3 @@ define maps = {
         map_id_east = None,
     ),
 }
-
-# TODO: Wiki
-define ch_icons = {
-    "alice"     : "icon/Alice.webp",
-    "ann"       : "icon/Ann.webp",
-}
