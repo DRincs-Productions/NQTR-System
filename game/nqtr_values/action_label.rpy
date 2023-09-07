@@ -12,7 +12,7 @@ menu nap:
 
 menu sleep:
     "What time do you want to set the alarm?"
-    "[DEFAULT_HOUR_OF_NEW_DAY]:00":
+    "[tm.hour_of_new_day]:00":
         call new_day(is_check_event=True)
         return
     "7:00":
@@ -23,20 +23,6 @@ menu sleep:
         return
     "Return":
         return
-
-## Development Label
-
-label development:
-    "In development"
-    return
-
-label development_characters_info:
-    "In development in another repo: {a=https://github.com/DRincs-Productions/DS-toolkit}DS toolkit{/a}"
-    return
-
-label development_inventory:
-    "In development in another repo: {a=https://github.com/DRincs-Productions/Inventory-System-toolkit}Inventory System{/a}"
-    return
 
 ## Various actions
 

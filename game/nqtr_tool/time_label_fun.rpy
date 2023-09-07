@@ -8,11 +8,10 @@ init python:
 # pressing the hold button will increase the time of:
 define DEFAULT_WAIT_HOUR = 1
 # using the default new day function the time of the next day will be:
-define DEFAULT_HOUR_OF_NEW_DAY = 5
 define DEFAULT_BLOCK_SPENDTIME_DIALOGUE = _("You can't do that now")
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-day
-label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, is_check_event=True):
+label new_day(time_of_new_day = None, is_check_event=True):
     if(not get_flags("not_can_spend_time")):
         python:
             tm.new_day()
@@ -20,6 +19,8 @@ label new_day(time_of_new_day = DEFAULT_HOUR_OF_NEW_DAY, is_check_event=True):
             clear_expired_routine(routine, tm)
             clear_expired_actions(actions, tm.day)
             check_inactive_stage(current_stages= current_quest_stages | current_task_stages)
+            if (time_of_new_day is not None):
+                tm.hour = tm.hour_of_new_day
             tm.hour= time_of_new_day
         call after_spending_time(is_check_event = is_check_event)
     else:

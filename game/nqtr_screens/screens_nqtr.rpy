@@ -84,17 +84,18 @@ screen room_navigation():
             else:
                 at small_menu_mobile
 
-        imagebutton:
-            idle '/interface/menu-user.webp'
-            focus_mask True
-            action [
-                Call("after_return_from_room_navigation", label_name_to_call = "development_characters_info"),
-            ]
-            if renpy.variant("pc"):
-                at small_menu
-                tooltip _("Characters info")
-            else:
-                at small_menu_mobile
+        if renpy.has_label("open_characters_info"):
+            imagebutton:
+                idle '/interface/menu-user.webp'
+                focus_mask True
+                action [
+                    Call("after_return_from_room_navigation", label_name_to_call = "open_characters_info"),
+                ]
+                if renpy.variant("pc"):
+                    at small_menu
+                    tooltip _("Characters info")
+                else:
+                    at small_menu_mobile
 
         if len(current_quest_stages) > 0 :
             imagebutton:
@@ -129,29 +130,31 @@ screen room_navigation():
             size gui.interface_text_size
             drop_shadow [(2, 2)]
 
-        imagebutton:
-            idle '/interface/menu-inventory.webp'
-            focus_mask True
-            action [
-                Call("after_return_from_room_navigation", label_name_to_call = "development_inventory"),
-            ]
-            if renpy.variant("pc"):
-                at small_menu
-                tooltip _("Backpack")
-            else:
-                at small_menu_mobile
+        if renpy.has_label("open_inventory"):
+            imagebutton:
+                idle '/interface/menu-inventory.webp'
+                focus_mask True
+                action [
+                    Call("after_return_from_room_navigation", label_name_to_call = "open_inventory"),
+                ]
+                if renpy.variant("pc"):
+                    at small_menu
+                    tooltip _("Backpack")
+                else:
+                    at small_menu_mobile
 
-        imagebutton:
-            idle '/interface/menu-phone.webp'
-            focus_mask True
-            action [
-                Call("after_return_from_room_navigation", label_name_to_call = "development"),
-            ]
-            if renpy.variant("pc"):
-                at small_menu
-                tooltip _("Smartphone")
-            else:
-                at small_menu_mobile
+        if renpy.has_label("open_smartphone"):
+            imagebutton:
+                idle '/interface/menu-phone.webp'
+                focus_mask True
+                action [
+                    Call("after_return_from_room_navigation", label_name_to_call = "open_smartphone"),
+                ]
+                if renpy.variant("pc"):
+                    at small_menu
+                    tooltip _("Smartphone")
+                else:
+                    at small_menu_mobile
 
         imagebutton:
             idle '/interface/menu-map.webp'

@@ -5,6 +5,7 @@ git checkout -b nqtr-tool
 git checkout nqtr-tool
 git config pull.rebase false
 git pull https://github.com/DRincs-Productions/NQTR-System.git tool-only --allow-unrelated-histories
+git submodule update --init --recursive
 
 ```
 
