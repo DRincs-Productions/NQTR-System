@@ -12,7 +12,7 @@ menu nap:
 
 menu sleep:
     "What time do you want to set the alarm?"
-    "[DEFAULT_HOUR_OF_NEW_DAY]:00":
+    "[tm.hour_of_new_day]:00":
         call new_day(is_check_event=True)
         return
     "7:00":

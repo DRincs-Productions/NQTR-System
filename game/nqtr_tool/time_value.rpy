@@ -16,7 +16,7 @@ define weekday_names = [
 # ATTENTION here it is initialized
 # when a save is loaded it is created with the updateTimeHandler() function
 default tm = TimeHandler(
-    hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY,
+    hour_of_new_day = 5,
     hour = 8,
     weekday_weekend_begins = 6,
     day = 0,
@@ -29,7 +29,7 @@ init -8 python:
 
     def updateTimeHandler(tm: TimeHandler) -> None:
         """is used to update timeslot_names and weekday_names"""
-        hour_of_new_day = DEFAULT_HOUR_OF_NEW_DAY
+        hour_of_new_day = tm.hour_of_new_day
         hour = tm.hour
         weekday_weekend_begins = tm.weekday_weekend_begins
         day = tm.day

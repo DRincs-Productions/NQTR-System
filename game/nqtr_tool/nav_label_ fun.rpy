@@ -8,7 +8,6 @@ define bg_loc = "location/loc-[tm.timeslot_number].webp"
 ## Check if mc can come out
 define block_goout_dialogue = _("Now is not the time to go outside")
 
-
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room
 label change_room(room_id = None):
     if room_id:
@@ -47,7 +46,6 @@ label go_previous_room:
         del temp_room
     return
 
-
 ## Open the map or close the map
 label open_map:
     if(not get_flags("goout")):
@@ -64,6 +62,7 @@ label open_map:
         $ map_open = True
         call screen room_navigation
         return
+
 ## Close the map
 label close_map:
     python:

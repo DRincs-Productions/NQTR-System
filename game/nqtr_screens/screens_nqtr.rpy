@@ -84,7 +84,7 @@ screen room_navigation():
             else:
                 at small_menu_mobile
 
-        if renpy.has_label("open_characters_info")
+        if renpy.has_label("open_characters_info"):
             imagebutton:
                 idle '/interface/menu-user.webp'
                 focus_mask True
@@ -130,7 +130,7 @@ screen room_navigation():
             size gui.interface_text_size
             drop_shadow [(2, 2)]
 
-        if renpy.has_label("open_inventory")
+        if renpy.has_label("open_inventory"):
             imagebutton:
                 idle '/interface/menu-inventory.webp'
                 focus_mask True
@@ -143,7 +143,7 @@ screen room_navigation():
                 else:
                     at small_menu_mobile
 
-        if renpy.has_label("open_smartphone")
+        if renpy.has_label("open_smartphone"):
             imagebutton:
                 idle '/interface/menu-phone.webp'
                 focus_mask True
