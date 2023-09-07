@@ -13,12 +13,19 @@ init -8 python:
         hour = tm.hour
         weekday_weekend_begins = tm.weekday_weekend_begins
         day = tm.day
+        int_timeslot_names = tm.int_timeslot_names
+        int_weekday_names = tm.int_weekday_names
+        if not "timeslot_names" in locals() | globals():
+            int_timeslot_names = timeslot_names
+        if not "weekday_names" in locals() | globals():
+            int_weekday_names = weekday_names
         tm = TimeHandler(
             hour_of_new_day=hour_of_new_day,
-            hour=hour, weekday_weekend_begins=weekday_weekend_begins, 
+            hour=hour,
+            weekday_weekend_begins=weekday_weekend_begins, 
             day=day,
-            timeslot_names = timeslot_names,
-            weekday_names = weekday_names
+            timeslot_names = int_timeslot_names,
+            weekday_names = int_weekday_names
         )
         del hour_of_new_day
         del hour

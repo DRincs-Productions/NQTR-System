@@ -134,11 +134,16 @@ class TimeHandler(object):
         """Returns the number of the current timeslot.
         This variable is used to update images that change according to time.
         es: image = "sky-[tm.timeslot_number]"""
+        res = 0
         if len(self.timeslot_names) > 0:
-            for index in range(len(self.timeslot_names)):
-                if self.hour >= self.timeslot_names[index][0]:
-                    return index
-            return len(self.timeslot_names)
+            for index, timeslot in enumerate(self.timeslot_names):
+                log_info(
+                    f"hour: {self.hour} >= timeslothour: {timeslot[0]} and index: {index} < res: {res}",
+                    "nqtr.time.TimeHandler.timeslot_number",
+                )
+                if self.hour >= timeslot[0] and index > res:
+                    res = index
+            return res
         else:
             log_error(
                 "You have not set any timeslot_names, so it will return 0.",
