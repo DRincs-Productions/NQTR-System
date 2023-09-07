@@ -205,8 +205,6 @@ label after_return_from_room_navigation(label_name_to_call = ""):
     else:
         $ renpy.call(label_name_to_call)
     call set_background_nqtr
-    # Custom Code:
-    # ...
     call screen room_navigation
     $ log_error("thera is a anomaly in room_navigation. value: " + label_name_to_call, renpy.get_filename_line())
     jump after_return_from_room_navigation

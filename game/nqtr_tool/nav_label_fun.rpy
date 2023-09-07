@@ -71,9 +71,8 @@ label close_map:
 
 # Is opened in change_room when a room id is in closed rooms
 label closed_room_event:
-    # Custom code
-    # if (cur_room == ...):
-        # ...
+    if renpy.has_label("closed_room_event_custom"):
+        call closed_room_event_custom
     scene expression (bg_loc) as bg
     return
 
