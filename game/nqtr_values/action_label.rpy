@@ -24,20 +24,6 @@ menu sleep:
     "Return":
         return
 
-## Development Label
-
-label development:
-    "In development"
-    return
-
-label development_characters_info:
-    "In development in another repo: {a=https://github.com/DRincs-Productions/DS-toolkit}DS toolkit{/a}"
-    return
-
-label development_inventory:
-    "In development in another repo: {a=https://github.com/DRincs-Productions/Inventory-System-toolkit}Inventory System{/a}"
-    return
-
 ## Various actions
 
 label order_product:
