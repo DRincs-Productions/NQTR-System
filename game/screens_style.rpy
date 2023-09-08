@@ -4,7 +4,7 @@ define gui.normal_text_size = 24
 define gui.big_normal_text_size = 28
 define gui.hour_text_size = 60
 
-image gui triangular_button = "/interface/button/triangular_button.webp"
+image gui triangular_button = "/nqtr_interface/button/triangular_button.webp"
 
 style menu_vscroll is vscrollbar:
     xsize 7
