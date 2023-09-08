@@ -12,6 +12,7 @@ default gui.menu_memo_frame_yalign = 0.6
 
 screen menu_memo():
 
+    roll_forward True
     tag menu
 
     ## Avoid predicting this screen, as it can be very large.

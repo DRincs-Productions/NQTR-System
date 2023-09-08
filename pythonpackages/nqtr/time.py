@@ -134,11 +134,12 @@ class TimeHandler(object):
         """Returns the number of the current timeslot.
         This variable is used to update images that change according to time.
         es: image = "sky-[tm.timeslot_number]"""
+        res = 0
         if len(self.timeslot_names) > 0:
-            for index in range(len(self.timeslot_names)):
-                if self.hour >= self.timeslot_names[index][0]:
-                    return index
-            return len(self.timeslot_names)
+            for index, timeslot in enumerate(self.timeslot_names):
+                if self.hour >= timeslot[0] and index > res:
+                    res = index
+            return res
         else:
             log_error(
                 "You have not set any timeslot_names, so it will return 0.",
@@ -196,13 +197,13 @@ class TimeHandler(object):
     def new_hour(self, amt: int = DEFAULT_TIME_SPENT) -> bool:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Time-system#new-houre-manualy"""
         if self.hour == MAX_DAY_HOUR and amt > 0:
-            log_warn(
+            log_info(
                 "Max hour reached, you can't add more hours",
                 "nqtr.time.TimeHandler.new_hour",
             )
             return False
         elif self.hour == MIN_DAY_HOUR and amt < 0:
-            log_warn(
+            log_info(
                 "Min hour reached, you can't remove more hours",
                 "nqtr.time.TimeHandler.new_hour",
             )
