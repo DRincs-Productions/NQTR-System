@@ -9,8 +9,8 @@ image icon courtyard = "location/courtyard-icon.webp"
 image icon gym = "location/gym-icon.webp"
 
 # locations
-image icon map home = "/interface/map-home.webp"
-image icon map gym = "/interface/map-gym.webp"
+image icon map home = "/nqtr_interface/map-home.webp"
+image icon map gym = "/nqtr_interface/map-gym.webp"
 
 image icon alice = "Alice/icon.webp"
 image icon ann = "Ann/icon.webp"

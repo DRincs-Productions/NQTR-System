@@ -31,7 +31,7 @@ label stage_talkalice:
 
         $ add_talk_choice(choice_id = "alice", choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
 
-        $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/interface/action-pc.webp", label_name = "order_product", room_ids=["my_room"])
+        $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/nqtr_interface/action-pc.webp", label_name = "order_product", room_ids=["my_room"])
 
         $ quest_next_stage(id = "alice")
     elif (number_stages_completed_in_quest["alice"] == 1):
