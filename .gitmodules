@@ -13,3 +13,4 @@
 [submodule "game/screens_style"]
 	path = game/screens_style
 	url = https://github.com/DRincs-Productions/renpy-screens-style
+	branch = 1080p

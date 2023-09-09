@@ -1,13 +1,23 @@
-# Beta Version
+# LTS Version
 
-```shell
-git checkout -b nqtr-tool
-git checkout nqtr-tool
-git config pull.rebase false
-git pull https://github.com/DRincs-Productions/NQTR-System.git tool-only --allow-unrelated-histories
-git submodule update --init --recursive
+## Install
+You can install this library manually: download the zip and extract it in your project folder.
+But I recommend you to use git submodule:
+```bash
+# renpy-utility-lib
+git submodule add -b python-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'pythonpackages/renpy_utility'
+git submodule add -b renpy-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'game/renpy_utility_tool'
+# renpy-utility-lib
+git submodule add -b 1080p -- https://github.com/DRincs-Productions/renpy-screens-style 'game/screens_style'
+# NQTR-System
+git submodule add -b python-lib -- https://github.com/DRincs-Productions/NQTR-System 'pythonpackages/nqtr'
+git submodule add -b renpy-lib -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_tool'
+git submodule add -b screens -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_screens'
+git submodule add -b interface-images -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_interface'
 
 ```
+
+**AND** create a empty file `__init__.py` into pythonpackages `pythonpackages/` so `pythonpackages/__init__.py`.
 
 add `after_load` into `core.rpy` for update values after game update:
 

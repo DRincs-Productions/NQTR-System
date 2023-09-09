@@ -39,29 +39,29 @@ Feel free to contribute, fork this and send a pull request. 😄
 
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/67595890/179365279-0d0b6d45-0048-4a0d-8c6d-9571b9c328f4.gif)
 
-## Insert Toolkit in your project
-
-I recommend the following ways to include it in your project:
-
-- [**Pull branch**](#pull-branch) (to **insert** it into your game and **update** it easily)
-- [**Fork**](https://docs.github.com/en/get-started/quickstart/fork-a-repo) (to improve the repo or create a Toolkit based on mine)
-- [Manually](https://github.com/DRincs-Productions/NQTR-System/releases) (not recommended)
-
-### Pull branch
-
-To **insert** or **update** the Toolkit in your repo with Pull branch I recommend the following procedure:
-
-(only if you want to insert the repo) Create a new empty branch, in the example I'll use **nqtr-tool**
-
-```shell
-git checkout -b nqtr-tool
-git checkout nqtr-tool
-git config pull.rebase false
-git pull https://github.com/DRincs-Productions/NQTR-System.git tool-only --allow-unrelated-histories
+## Install LTS Version
+You can install this library manually: download the zip and extract it in your project folder.
+But I recommend you to use git submodule:
+```bash
+# renpy-utility-lib
+git submodule add -b python-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'pythonpackages/renpy_utility'
+git submodule add -b renpy-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'game/renpy_utility_tool'
+# renpy-utility-lib
+git submodule add -b 1080p -- https://github.com/DRincs-Productions/renpy-screens-style 'game/screens_style'
+# NQTR-System
+git submodule add -b python-lib -- https://github.com/DRincs-Productions/NQTR-System 'pythonpackages/nqtr'
+git submodule add -b renpy-lib -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_tool'
+git submodule add -b screens -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_screens'
+git submodule add -b interface-images -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_interface'
 
 ```
 
-At the end make a merge inside the arm of the project.
+**AND** create a empty file `__init__.py` into pythonpackages `pythonpackages/` so `pythonpackages/__init__.py`.
+
+## Update new version
+```bash
+git submodule update --init --recursive
+```
 
 ## Preview
 
