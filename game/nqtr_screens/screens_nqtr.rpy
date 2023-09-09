@@ -75,7 +75,7 @@ screen room_navigation():
         spacing 2
 
         imagebutton:
-            idle '/interface/menu-options.webp'
+            idle '/nqtr_interface/menu-options.webp'
             focus_mask True
             action ShowMenu('save')
             if renpy.variant("pc"):
@@ -86,7 +86,7 @@ screen room_navigation():
 
         if renpy.has_label("open_characters_info"):
             imagebutton:
-                idle '/interface/menu-user.webp'
+                idle '/nqtr_interface/menu-user.webp'
                 focus_mask True
                 action [
                     Call("after_return_from_room_navigation", label_name_to_call = "open_characters_info"),
@@ -99,7 +99,7 @@ screen room_navigation():
 
         if len(current_quest_stages) > 0 :
             imagebutton:
-                idle '/interface/menu-memo.webp'
+                idle '/nqtr_interface/menu-memo.webp'
                 focus_mask True
                 action [
                     Show('menu_memo'),
@@ -111,7 +111,7 @@ screen room_navigation():
                     at small_menu_mobile
 
         imagebutton:
-            idle '/interface/menu-help.webp'
+            idle '/nqtr_interface/menu-help.webp'
             focus_mask True
             action ShowMenu('help')
             if renpy.variant("pc"):
@@ -132,7 +132,7 @@ screen room_navigation():
 
         if renpy.has_label("open_inventory"):
             imagebutton:
-                idle '/interface/menu-inventory.webp'
+                idle '/nqtr_interface/menu-inventory.webp'
                 focus_mask True
                 action [
                     Call("after_return_from_room_navigation", label_name_to_call = "open_inventory"),
@@ -145,7 +145,7 @@ screen room_navigation():
 
         if renpy.has_label("open_smartphone"):
             imagebutton:
-                idle '/interface/menu-phone.webp'
+                idle '/nqtr_interface/menu-phone.webp'
                 focus_mask True
                 action [
                     Call("after_return_from_room_navigation", label_name_to_call = "open_smartphone"),
@@ -157,7 +157,7 @@ screen room_navigation():
                     at small_menu_mobile
 
         imagebutton:
-            idle '/interface/menu-map.webp'
+            idle '/nqtr_interface/menu-map.webp'
             focus_mask True
             action [
                 Call("after_return_from_room_navigation", label_name_to_call = "open_map"),
@@ -205,8 +205,6 @@ label after_return_from_room_navigation(label_name_to_call = ""):
     else:
         $ renpy.call(label_name_to_call)
     call set_background_nqtr
-    # Custom Code:
-    # ...
     call screen room_navigation
     $ log_error("thera is a anomaly in room_navigation. value: " + label_name_to_call, renpy.get_filename_line())
     jump after_return_from_room_navigation

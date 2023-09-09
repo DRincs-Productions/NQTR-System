@@ -2,7 +2,7 @@ screen wait_button(small = False):
     imagebutton:
         if small:
             xysize (300, 300)
-        idle '/interface/action-wait.webp'
+        idle '/nqtr_interface/action-wait.webp'
         focus_mask True
         action [
             Call("after_return_from_room_navigation", label_name_to_call = "wait"),
@@ -76,9 +76,9 @@ screen action_talk_button(ch_id, talk_obj, background):
                 at middle_action
             # inserts the icon of the character who is currently in that room
             # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-            if (ch_id in ch_icons):
+            if (ch_id in character_dict):
                 imagebutton:
-                    idle ch_icons.get(ch_id)
+                    idle character_dict.get(ch_id).icon
                     focus_mask True
                     at small_face
                     action [
@@ -193,7 +193,7 @@ screen room_button(room, cur_room, i, find_ch = False):
                         for comm in commitments_in_cur_location.values():
                             # If it is the selected room
                             if room.id == comm.room_id:
-                                for ch_icon in comm.character_icons(ch_icons):
+                                for ch_icon in comm.character_icons(character_dict):
                                     imagebutton:
                                         idle ch_icon
                                         sensitive not room.is_disabled(flags)

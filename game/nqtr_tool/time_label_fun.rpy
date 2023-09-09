@@ -20,8 +20,9 @@ label new_day(time_of_new_day = None, is_check_event=True):
             clear_expired_actions(actions, tm.day)
             check_inactive_stage(current_stages= current_quest_stages | current_task_stages)
             if (time_of_new_day is not None):
-                tm.hour = tm.hour_of_new_day
-            tm.hour= time_of_new_day
+                tm.hour = time_of_new_day
+            else:
+                tm.hour= tm.hour_of_new_day
         call after_spending_time(is_check_event = is_check_event)
     else:
         "[DEFAULT_BLOCK_SPENDTIME_DIALOGUE]"

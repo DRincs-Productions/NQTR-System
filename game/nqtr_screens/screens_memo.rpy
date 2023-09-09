@@ -12,6 +12,7 @@ default gui.menu_memo_frame_yalign = 0.6
 
 screen menu_memo():
 
+    roll_forward True
     tag menu
 
     ## Avoid predicting this screen, as it can be very large.
@@ -114,18 +115,18 @@ screen menu_memo():
     if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
         # increases and decreases cur_quest menu
         imagebutton align (680/1920, 340/1080):
-            idle '/interface/button/prev_idle.webp'
-            hover '/interface/button/prev_hover.webp'
-            insensitive '/interface/button/prev_insensitive.webp'
+            idle '/nqtr_interface/button/prev_idle.webp'
+            hover '/nqtr_interface/button/prev_hover.webp'
+            insensitive '/nqtr_interface/button/prev_insensitive.webp'
             focus_mask True
             sensitive (cur_quest_menu > 0)
             action [
                 SetVariable('cur_quest_menu', cur_quest_menu-1),
             ]
         imagebutton align (1580/1920, 340/1080):
-            idle '/interface/button/next_idle.webp'
-            hover '/interface/button/next_hover.webp'
-            insensitive '/interface/button/next_insensitive.webp'
+            idle '/nqtr_interface/button/next_idle.webp'
+            hover '/nqtr_interface/button/next_hover.webp'
+            insensitive '/nqtr_interface/button/next_insensitive.webp'
             focus_mask True
             sensitive (cur_quest_menu < number_stages_completed_in_quest[cur_task_menu])
             action [
