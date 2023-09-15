@@ -59,10 +59,11 @@ screen action_picture_in_background(act):
 screen action_talk_button(ch_id, talk_obj, background):
     if not talk_obj.is_hidden(flags = flags, check_if_has_icon = False):
         frame:
-            xysize (gui.action_talk_button_size, gui.action_talk_button_size)
+            xysize (gui.middle_action_size, gui.middle_action_size)
             background None
 
             imagebutton:
+                align (0.5, 0.0)
                 if talk_obj.is_button:
                     idle talk_obj.button_icon
                     hover talk_obj.button_icon_selected
