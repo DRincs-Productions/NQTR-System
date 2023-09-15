@@ -29,8 +29,10 @@ Download the: [link](https://github.com/DRincs-Productions/NQTR-System/releases/
 ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/67595890/179365279-0d0b6d45-0048-4a0d-8c6d-9571b9c328f4.gif)
 
 ## Install LTS Version
+
 You can install this library manually: download the zip and extract it in your project folder.
 But I recommend you to use git submodule:
+
 ```bash
 # renpy-utility-lib
 git submodule add -b python-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'pythonpackages/renpy_utility'
@@ -48,6 +50,7 @@ git submodule add -b interface-images -- https://github.com/DRincs-Productions/N
 **AND** create a empty file `__init__.py` into pythonpackages `pythonpackages/` so `pythonpackages/__init__.py`.
 
 ## Update new version
+
 ```bash
 git submodule update --init --recursive
 ```
