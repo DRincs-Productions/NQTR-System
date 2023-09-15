@@ -155,17 +155,9 @@ screen map(maps, cur_map_id):
 screen room_button(room, cur_room, i, find_ch = False):
     # If the Locations where I am is the same as the Locations where the room is located
     if (room.location_id == cur_location.id and room.is_button != None and not room.is_hidden(flags)):
-        button:
-            xysize (126, 190)
-            action [
-                SetVariable('prev_room', cur_room),
-                SetVariable('cur_room', room),
-                Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-            ]
-            has vbox xsize 126 spacing 0
-
+        vbox:
             frame:
-                xysize (126, 140)
+                xysize (gui.middle_action_size, gui.middle_action_size + gui.little_text_size)
                 background None
 
                 # Room icon
@@ -187,9 +179,8 @@ screen room_button(room, cur_room, i, find_ch = False):
 
                 if find_ch:
                     hbox:
-                        ypos 73
                         xalign 0.5
-                        spacing - 30
+                        yalign 0.99
 
                         for comm in commitments_in_cur_location.values():
                             # If it is the selected room
@@ -205,7 +196,6 @@ screen room_button(room, cur_room, i, find_ch = False):
                                             Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
                                         ]
                                         at small_face
-
             # Room name
             text room.name:
                 size gui.little_text_size
