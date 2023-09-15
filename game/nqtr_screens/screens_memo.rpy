@@ -107,24 +107,22 @@ screen menu_memo():
 
     if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
         # increases and decreases cur_quest menu
-        imagebutton align (680/1920, 340/1080):
-            idle '/nqtr_interface/button/prev_idle.webp'
-            hover '/nqtr_interface/button/prev_hover.webp'
-            insensitive '/nqtr_interface/button/prev_insensitive.webp'
-            focus_mask True
-            sensitive (cur_quest_menu > 0)
-            action [
-                SetVariable('cur_quest_menu', cur_quest_menu-1),
-            ]
-        imagebutton align (1580/1920, 340/1080):
-            idle '/nqtr_interface/button/next_idle.webp'
-            hover '/nqtr_interface/button/next_hover.webp'
-            insensitive '/nqtr_interface/button/next_insensitive.webp'
-            focus_mask True
-            sensitive (cur_quest_menu < number_stages_completed_in_quest[cur_task_menu])
-            action [
-                SetVariable('cur_quest_menu', cur_quest_menu+1),
-            ]
+        use next_button(
+            action_value = [
+                SetVariable('cur_quest_menu', cur_quest_menu - 1),
+            ],
+            sensitive = cur_quest_menu > 0,
+            align_value = (680/1920, 340/1080),
+            rotation = 180,
+            )
+        use next_button(
+            action_value = [
+                SetVariable('cur_quest_menu', cur_quest_menu + 1),
+            ],
+            sensitive = cur_quest_menu < number_stages_completed_in_quest[cur_task_menu],
+            align_value = (1580/1920, 340/1080),
+            rotation = 0,
+            )
 
     key 'K_ESCAPE' action Hide('menu_memo')
     key 'mouseup_3' action Hide('menu_memo')
