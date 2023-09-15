@@ -3,13 +3,6 @@ default cur_task_menu = ""
 # quest level based on the task selected in the menu
 default cur_quest_menu = ""
 
-default gui.menu_memo_image_ysize = 400
-default gui.menu_memo_image_xsize = 800
-default gui.menu_memo_frame_xsize = 1190
-default gui.menu_memo_frame_ysize = 400
-default gui.menu_memo_frame_xalign = 0.72
-default gui.menu_memo_frame_yalign = 0.6
-
 screen menu_memo():
 
     roll_forward True
