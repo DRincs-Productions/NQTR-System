@@ -58,8 +58,8 @@ screen menu_memo():
     if cur_task_menu != '':
         $ quest_menu = quest_stages[quests[cur_task_menu].stage_ids[cur_quest_menu]]
         vbox:
-            xalign gui.menu_memo_frame_xalign
-            yalign gui.menu_memo_frame_yalign
+            xalign 0.72
+            yalign 0.6
             # Image
             if quest_menu.info_image != '' and quest_menu.info_image != None:
                 add Frame(quest_menu.info_image, Borders(0,0,0,0)):
