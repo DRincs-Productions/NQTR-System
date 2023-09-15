@@ -12,6 +12,14 @@ screen wait_button(small = False):
         else:
             at middle_action
 
+screen character_icon(character_id):
+    if (character_id in character_dict):
+        imagebutton:
+            idle character_dict.get(character_id).icon
+            focus_mask True
+            action []
+            at small_face
+
 screen time_text(tm, show_wait_button = False):
     hbox:
         align (0.5, 0.01)
@@ -78,16 +86,13 @@ screen action_talk_button(ch_id, talk_obj, background):
                 at middle_action
             # inserts the icon of the character who is currently in that room
             # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
+            # TODO: use character_icon
             if (ch_id in character_dict):
                 imagebutton:
                     idle character_dict.get(ch_id).icon
                     focus_mask True
+                    action []
                     at small_face
-                    action [
-                        SetVariable('talk_ch', ch_id),
-                        SetVariable('talk_image', background),
-                        Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
-                    ]
             if renpy.variant("pc"):
                 tooltip _("Talk")
 
@@ -186,17 +191,8 @@ screen room_button(room, cur_room, i, find_ch = False):
                         for comm in commitments_in_cur_location.values():
                             # If it is the selected room
                             if room.id == comm.room_id:
-                                for ch_icon in comm.character_icons(character_dict):
-                                    imagebutton:
-                                        idle ch_icon
-                                        sensitive not room.is_disabled(flags)
-                                        focus_mask True
-                                        action [
-                                            SetVariable('prev_room', cur_room),
-                                            SetVariable('cur_room', room),
-                                            Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-                                        ]
-                                        at small_face
+                                for character_id in comm.ch_talkobj_dict:
+                                    use character_icon(character_id)
             # Room name
             text room.name:
                 size gui.little_text_size
