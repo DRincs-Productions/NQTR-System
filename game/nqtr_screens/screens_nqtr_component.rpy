@@ -84,17 +84,10 @@ screen action_talk_button(ch_id, talk_obj, background):
                     Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
                 ]
                 at middle_action
-            # inserts the icon of the character who is currently in that room
-            # TODO: for now insert only the icon of the main ch_id, I have to insert also the icon of the other secondary ch_id
-            # TODO: use character_icon
-            if (ch_id in character_dict):
-                imagebutton:
-                    idle character_dict.get(ch_id).icon
-                    focus_mask True
-                    action []
-                    at small_face
-            if renpy.variant("pc"):
-                tooltip _("Talk")
+                if renpy.variant("pc"):
+                    tooltip _("Talk")
+
+            use character_icon(ch_id)
 
 screen location_button(location):
     if (location.map_id == cur_map_id and not location.is_hidden(flags = flags)):
