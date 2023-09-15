@@ -13,8 +13,8 @@ init -8 python:
         hour = tm.hour
         weekday_weekend_begins = tm.weekday_weekend_begins
         day = tm.day
-        int_timeslot_names = tm.int_timeslot_names
-        int_weekday_names = tm.int_weekday_names
+        int_timeslot_names = tm.timeslot_names
+        int_weekday_names = tm.timeslot_names
         if not "timeslot_names" in locals() | globals():
             int_timeslot_names = timeslot_names
         if not "weekday_names" in locals() | globals():
