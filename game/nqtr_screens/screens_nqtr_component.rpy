@@ -1,7 +1,7 @@
 screen wait_button(small = False):
     imagebutton:
         if small:
-            xysize (300, 300)
+            xysize (gui.wait_button_size, gui.wait_button_size)
         idle '/nqtr_interface/action-wait.webp'
         focus_mask True
         action [
@@ -58,7 +58,7 @@ screen action_picture_in_background(act):
 screen action_talk_button(ch_id, talk_obj, background):
     if not talk_obj.is_hidden(flags = flags, check_if_has_icon = False):
         frame:
-            xysize (120, 120)
+            xysize (gui.action_talk_button_size, gui.action_talk_button_size)
             background None
 
             imagebutton:
