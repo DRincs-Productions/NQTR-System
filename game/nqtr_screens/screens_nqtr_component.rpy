@@ -1,7 +1,5 @@
 screen wait_button(small = False):
     imagebutton:
-        if small:
-            xysize (gui.wait_button_size, gui.wait_button_size)
         idle '/nqtr_interface/action-wait.webp'
         focus_mask True
         action [
@@ -9,7 +7,10 @@ screen wait_button(small = False):
         ]
         if renpy.variant("pc"):
             tooltip _("Wait")
-        at middle_action
+        if small:
+            at small_map
+        else:
+            at middle_action
 
 screen time_text(tm, show_wait_button = False):
     hbox:
