@@ -102,6 +102,8 @@ screen room_navigation():
                 idle '/nqtr_interface/menu-memo.webp'
                 focus_mask True
                 action [
+                    SetVariable('cur_task_menu', ""),
+                    SetVariable('cur_quest_menu', ""),
                     Show('menu_memo'),
                 ]
                 if renpy.variant("pc"):

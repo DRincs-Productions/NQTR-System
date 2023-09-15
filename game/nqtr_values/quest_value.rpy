@@ -18,7 +18,7 @@ define quests = {
         id = "ann",
         title = _("Help [an]"),
         info_image = None,
-        stage_ids = ["talk al about ann", "take the key", "visit ann"], 
+        stage_ids = ["talk al about ann", "take the key"], 
         description = _("Long Description"),
         development = True,
     ),
@@ -32,10 +32,6 @@ define quest_stages = {
     # Quest "ann"
     "talk al about ann"     :   Stage(quest_id = "ann", title = _("Talk [a]"), description = _("Talk [a]."), start_label_name="stagestart_talkalice_aboutann"),
     "take the key"          :   Stage(quest_id = "ann", title = _("take the key"), description = _("take the key.")),
-    "visit ann"  :  Stage(quest_id = "ann", title = _("Visit [an]"), days_required_to_start = 0,
-        required_number_completed_stages = {
-        }
-    ),
 }
 
 # Quest "alice"
