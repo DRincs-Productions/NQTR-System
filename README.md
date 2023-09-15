@@ -47,7 +47,7 @@ git submodule add -b interface-images -- https://github.com/DRincs-Productions/N
 
 ```
 
-**AND** create a empty file `__init__.py` into pythonpackages `pythonpackages/` so `pythonpackages/__init__.py`.
+**AND** create a empty file `__init__.py` into `pythonpackages/` so `pythonpackages/__init__.py`.
 
 ## Update new version
 
