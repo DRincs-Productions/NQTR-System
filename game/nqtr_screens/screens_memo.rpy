@@ -23,10 +23,10 @@ screen menu_memo():
     use close_button("menu_memo")
 
     frame:
-        ypos 170
-        xpos 80
-        xsize 400
-        ysize gui.lateralframescroll_ysize
+        ypos gui.nqtr_menu_memo_ypos
+        xpos gui.nqtr_menu_memo_xpos
+        ysize gui.nqtr_menu_memo_ysize
+        xsize gui.nqtr_menu_memo_xsize
         background None
         # task title list
         viewport mousewheel True draggable True id 'menu_memo_task_title_list':
@@ -63,14 +63,14 @@ screen menu_memo():
             # Image
             if quest_menu.info_image != '' and quest_menu.info_image != None:
                 add Frame(quest_menu.info_image, Borders(0,0,0,0)):
-                    xsize gui.menu_memo_image_xsize
-                    ysize gui.menu_memo_image_ysize
+                    xsize gui.nqtr_menu_memo_image_xsize
+                    ysize gui.nqtr_menu_memo_image_ysize
                     xalign 0.5
                     yalign 0
             elif quests[cur_task_menu].info_image != '' and quests[cur_task_menu].info_image != None:
                 add Frame(quests[cur_task_menu].info_image, Borders(0,0,0,0)):
-                    xsize gui.menu_memo_image_xsize
-                    ysize gui.menu_memo_image_ysize
+                    xsize gui.nqtr_menu_memo_image_xsize
+                    ysize gui.nqtr_menu_memo_image_ysize
                     xalign 0.5
                     yalign 0
 
@@ -80,8 +80,8 @@ screen menu_memo():
 
             frame:
                 # area (0, 0, 1190, 400)
-                xsize gui.menu_memo_frame_xsize
-                ysize gui.menu_memo_frame_ysize
+                xsize gui.nqtr_menu_memo_frame_xsize
+                ysize gui.nqtr_menu_memo_frame_ysize
                 background None
 
                 has hbox
