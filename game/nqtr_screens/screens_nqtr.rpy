@@ -79,10 +79,8 @@ screen room_navigation():
             focus_mask True
             action ShowMenu('save')
             if renpy.variant("pc"):
-                at small_menu
                 tooltip _("Settings")
-            else:
-                at small_menu_mobile
+            at small_menu
 
         if renpy.has_label("open_characters_info"):
             imagebutton:
@@ -92,10 +90,8 @@ screen room_navigation():
                     Call("after_return_from_room_navigation", label_name_to_call = "open_characters_info"),
                 ]
                 if renpy.variant("pc"):
-                    at small_menu
                     tooltip _("Characters info")
-                else:
-                    at small_menu_mobile
+                at small_menu
 
         if len(current_quest_stages) > 0 :
             imagebutton:
@@ -107,20 +103,16 @@ screen room_navigation():
                     Show('menu_memo'),
                 ]
                 if renpy.variant("pc"):
-                    at small_menu
                     tooltip _("Memo")
-                else:
-                    at small_menu_mobile
+                at small_menu
 
         imagebutton:
             idle '/nqtr_interface/menu-help.webp'
             focus_mask True
             action ShowMenu('help')
             if renpy.variant("pc"):
-                at small_menu
                 tooltip _("Help")
-            else:
-                at small_menu_mobile
+            at small_menu
 
     hbox:
         align (0.99, 0.01)
@@ -140,10 +132,8 @@ screen room_navigation():
                     Call("after_return_from_room_navigation", label_name_to_call = "open_inventory"),
                 ]
                 if renpy.variant("pc"):
-                    at small_menu
                     tooltip _("Backpack")
-                else:
-                    at small_menu_mobile
+                at small_menu
 
         if renpy.has_label("open_smartphone"):
             imagebutton:
@@ -153,10 +143,8 @@ screen room_navigation():
                     Call("after_return_from_room_navigation", label_name_to_call = "open_smartphone"),
                 ]
                 if renpy.variant("pc"):
-                    at small_menu
                     tooltip _("Smartphone")
-                else:
-                    at small_menu_mobile
+                at small_menu
 
         imagebutton:
             idle '/nqtr_interface/menu-map.webp'
@@ -165,10 +153,8 @@ screen room_navigation():
                 Call("after_return_from_room_navigation", label_name_to_call = "open_map"),
             ]
             if renpy.variant("pc"):
-                at small_menu
                 tooltip _("Map")
-            else:
-                at small_menu_mobile
+            at small_menu
 
     # More information by hovering the mouse
     if renpy.variant("pc"):
