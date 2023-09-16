@@ -88,21 +88,21 @@ screen menu_memo():
                 viewport mousewheel True draggable True id 'vp2':
                     has vbox spacing 30
                     if cur_task_menu in quests_descriptions:
-                        text quests_descriptions[cur_task_menu] size gui.normal_text_size color gui.accent_color
+                        text quests_descriptions[cur_task_menu] size gui.dr_normal_text_size color gui.accent_color
                     else:
-                        text quests[cur_task_menu].description size gui.normal_text_size color gui.accent_color
+                        text quests[cur_task_menu].description size gui.dr_normal_text_size color gui.accent_color
                     if (current_quest_stages[cur_task_menu].active):
-                        text quest_menu.description size gui.normal_text_size
-                        text quest_menu.advice size gui.big_normal_text_size
+                        text quest_menu.description size gui.dr_normal_text_size
+                        text quest_menu.advice size gui.dr_big_normal_text_size
                         for item in quest_menu.goals:
-                            text item.description size gui.big_normal_text_size
+                            text item.description size gui.dr_big_normal_text_size
                         if current_quest_stages[cur_task_menu].completed and (cur_quest_menu+1) == len(quests[cur_task_menu].stage_ids):
                             if quests[cur_task_menu].development:
-                                text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size gui.big_normal_text_size
+                                text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size gui.dr_big_normal_text_size
                             else:
-                                text _("You have completed all the quests.") size gui.big_normal_text_size
+                                text _("You have completed all the quests.") size gui.dr_big_normal_text_size
                     else:
-                        text quest_menu.request_description size gui.normal_text_size color gui.accent_color
+                        text quest_menu.request_description size gui.dr_normal_text_size color gui.accent_color
                 vbar value YScrollValue('vp2') style 'menu_vscroll'
 
     if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
@@ -114,7 +114,7 @@ screen menu_memo():
             action [
                 SetVariable('cur_quest_menu', cur_quest_menu - 1),
             ]
-            at next_button_tran(180)
+            at dr_button_next_transform(180)
         imagebutton align (1580/1920, 340/1080):
             idle '/nqtr_interface/button/next_idle.webp'
             focus_mask True
@@ -122,7 +122,7 @@ screen menu_memo():
             action [
                 SetVariable('cur_quest_menu', cur_quest_menu + 1),
             ]
-            at next_button_tran(0)
+            at dr_button_next_transform(0)
 
     key 'K_ESCAPE' action Hide('menu_memo')
     key 'mouseup_3' action Hide('menu_memo')

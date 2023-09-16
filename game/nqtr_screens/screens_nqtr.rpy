@@ -80,7 +80,7 @@ screen room_navigation():
             action ShowMenu('save')
             if renpy.variant("pc"):
                 tooltip _("Settings")
-            at small_menu
+            at dr_button_menu_transform
 
         if renpy.has_label("open_characters_info"):
             imagebutton:
@@ -91,7 +91,7 @@ screen room_navigation():
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Characters info")
-                at small_menu
+                at dr_button_menu_transform
 
         if len(current_quest_stages) > 0 :
             imagebutton:
@@ -104,7 +104,7 @@ screen room_navigation():
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Memo")
-                at small_menu
+                at dr_button_menu_transform
 
         imagebutton:
             idle '/nqtr_interface/menu-help.webp'
@@ -112,7 +112,7 @@ screen room_navigation():
             action ShowMenu('help')
             if renpy.variant("pc"):
                 tooltip _("Help")
-            at small_menu
+            at dr_button_menu_transform
 
     hbox:
         align (0.99, 0.01)
@@ -133,7 +133,7 @@ screen room_navigation():
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Backpack")
-                at small_menu
+                at dr_button_menu_transform
 
         if renpy.has_label("open_smartphone"):
             imagebutton:
@@ -144,7 +144,7 @@ screen room_navigation():
                 ]
                 if renpy.variant("pc"):
                     tooltip _("Smartphone")
-                at small_menu
+                at dr_button_menu_transform
 
         imagebutton:
             idle '/nqtr_interface/menu-map.webp'
@@ -154,7 +154,7 @@ screen room_navigation():
             ]
             if renpy.variant("pc"):
                 tooltip _("Map")
-            at small_menu
+            at dr_button_menu_transform
 
     # More information by hovering the mouse
     if renpy.variant("pc"):
@@ -163,7 +163,7 @@ screen room_navigation():
             text "[text]":
                 xpos x-20
                 ypos y-20
-                size gui.little_text_size 
+                size gui.dr_little_text_size 
                 drop_shadow [(2, 2)] 
                 outlines [(2, "#000", 0, 1)]
 
