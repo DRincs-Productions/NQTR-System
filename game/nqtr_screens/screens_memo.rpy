@@ -15,7 +15,7 @@ screen menu_memo():
     style_prefix "game_menu"
     add "gui/overlay/game_menu.png"
 
-    use menu_tile(_("{b}Memo{/b}"))
+    use menu_tile(_("Memo"))
 
     # Synchronize number_stages_completed_in_quest with quests
     $ update_quests_levels()
