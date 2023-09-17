@@ -1,4 +1,4 @@
-# Navigation Quest Time Routine System for Ren'py
+# Navigation Quest Time Routine System for Ren'Py
 
 ![Last commit](https://img.shields.io/github/last-commit/DRincs-Productions/NQTR-System)
 ![License](https://img.shields.io/github/license/DRincs-Productions/NQTR-System)
