@@ -52,7 +52,7 @@ screen menu_memo():
                         ]
                         selected cur_task_menu == task_id
         # scroll bar
-        vbar value YScrollValue('menu_memo_task_title_list') style 'menu_vscroll'
+        vbar value YScrollValue('menu_memo_task_title_list') style 'dr_menu_vscroll'
 
     # Information on the current quest
     if cur_task_menu != '':
@@ -103,7 +103,7 @@ screen menu_memo():
                                 text _("You have completed all the quests.") size gui.dr_big_normal_text_size
                     else:
                         text quest_menu.request_description size gui.dr_normal_text_size color gui.accent_color
-                vbar value YScrollValue('vp2') style 'menu_vscroll'
+                vbar value YScrollValue('vp2') style 'dr_menu_vscroll'
 
     if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
         # increases and decreases cur_quest menu
