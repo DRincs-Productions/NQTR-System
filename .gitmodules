@@ -13,7 +13,7 @@
 [submodule "game/screens_style"]
 	path = game/screens_style
 	url = https://github.com/DRincs-Productions/renpy-screens-style
-	branch = 1080p
+	branch = main
 [submodule "game/tl"]
 	path = game/tl
 	url = https://github.com/BlackRam-oss/NQTR-translations

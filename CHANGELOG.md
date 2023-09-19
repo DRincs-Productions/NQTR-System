@@ -8,7 +8,7 @@ But I recommend you to use git submodule:
 git submodule add -b python-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'pythonpackages/renpy_utility'
 git submodule add -b renpy-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'game/renpy_utility_tool'
 # renpy-utility-lib
-git submodule add -b 1080p -- https://github.com/DRincs-Productions/renpy-screens-style 'game/screens_style'
+git submodule add -b main -- https://github.com/DRincs-Productions/renpy-screens-style 'game/screens_style'
 # NQTR-System
 git submodule add -b python-lib -- https://github.com/DRincs-Productions/NQTR-System 'pythonpackages/nqtr'
 git submodule add -b renpy-lib -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_tool'
