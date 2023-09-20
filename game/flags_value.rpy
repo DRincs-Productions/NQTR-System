@@ -4,3 +4,7 @@ define flag_keys = [
     "not_can_spend_time",
     "goout",
 ]
+
+label update_current_flags_custom:
+    # Custom code
+    return
