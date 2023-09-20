@@ -23,7 +23,7 @@ Feel free to contribute, fork this and send a pull request. 😄
 # Basic command to download projects from git
 git clone https://github.com/DRincs-Productions/NQTR-System
 # IMPORTANT -> Will add the libraries needed to run the program
-cd Renpygame
+cd NQTR-System
 git submodule update --init --recursive
 
 ```
