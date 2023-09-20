@@ -3,6 +3,7 @@ from typing import Optional, Union
 from pythonpackages.nqtr.action_talk import TalkObject
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
 from pythonpackages.renpy_utility.character_custom import DRCharacter
+from pythonpackages.renpy_utility.utility import IsNullOrWhiteSpace
 
 
 class Commitment(object):
@@ -156,7 +157,10 @@ def clear_expired_routine(commitments: dict[str, Commitment], tm: TimeHandler) -
 
 
 def characters_commitment_in_current_location(
-    location_id: str, routine: dict[str, Commitment], tm: TimeHandler
+    location_id: str,
+    routine: dict[str, Commitment],
+    tm: TimeHandler,
+    not_active_tags: list[str] = [],
 ) -> dict[str, Commitment]:
     """Wiki: https: // github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system  # priority"""
     # Create a list of ch who have a commitment in that place at that time
@@ -174,7 +178,7 @@ def characters_commitment_in_current_location(
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
     commitments_key_to_del = []
     for ch in commitments.keys():
-        commitments[ch] = commitment_by_character(ch, routine, tm)
+        commitments[ch] = commitment_by_character(ch, routine, tm, not_active_tags)
         if commitments[ch] == None:
             commitments_key_to_del.append(ch)
         elif commitments[ch].location_id != location_id:
@@ -205,7 +209,10 @@ def characters_events_in_current_location(
 
 
 def commitment_by_character(
-    ch: str, routine: dict[str, Commitment], tm: TimeHandler
+    ch: str,
+    routine: dict[str, Commitment],
+    tm: TimeHandler,
+    not_active_tags: list[str] = [],
 ) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
@@ -213,23 +220,9 @@ def commitment_by_character(
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
             if ch in comm.ch_talkobj_dict:
-                if comm.tag != None:
-                    if checkIfIsActiveByTag(tag=comm.tag, id=id):
-                        return comm
-                else:
+                if IsNullOrWhiteSpace(comm.tag) or comm.tag not in not_active_tags:
                     return comm
     return None
-
-
-# TODO To Move move in renpy
-def checkIfIsActiveByTag(tag: str, id: str = "") -> bool:
-    """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag"""
-    # Custom code
-    if tag == None:
-        return False
-    if tag == "no_week":
-        return True
-    return False
 
 
 def commitment_background(commitments: dict[str, Commitment], room_id) -> Optional[str]:
