@@ -1,8 +1,8 @@
 define timeslot_names = [
-    (2, _("Night")),
     (8, _("Morning")),
     (14, _("Afternoon")),
-    (20, _("Evening")),
+    (19, _("Evening")),
+    (22, _("Night")),
 ]
 define weekday_names = [
     _("{#weekday}Monday"),

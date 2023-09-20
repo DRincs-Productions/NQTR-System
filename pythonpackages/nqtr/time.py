@@ -118,10 +118,7 @@ class TimeHandler(object):
     def timeslot_name(self) -> str:
         """Returns the name of the current timeslot."""
         if len(self.timeslot_names) > 0:
-            for timeslot in self.timeslot_names:
-                if self.hour >= timeslot[0]:
-                    return timeslot[1]
-            return self.timeslot_names[len(self.timeslot_names)][1]
+            return self.timeslot_names[self.timeslot_number][1]
         else:
             log_warn(
                 "You have not set any timeslot_names, so it will return an empty string.",
@@ -135,10 +132,13 @@ class TimeHandler(object):
         This variable is used to update images that change according to time.
         es: image = "sky-[tm.timeslot_number]"""
         res = 0
+        current = None
         if len(self.timeslot_names) > 0:
             for index, timeslot in enumerate(self.timeslot_names):
-                if self.hour >= timeslot[0] and index > res:
-                    res = index
+                if self.hour >= timeslot[0]:
+                    if current == None or timeslot[0] > current[0]:
+                        res = index
+                        current = timeslot
             return res
         else:
             log_error(
