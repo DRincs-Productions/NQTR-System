@@ -16,6 +16,19 @@ In order to simplify the update work and avoid errors in saving I created functi
 
 Feel free to contribute, fork this and send a pull request. 😄
 
+----
+
+## TO DOWNLOAD THIS TEST PROJECT
+```shell
+# Basic command to download projects from git
+git clone https://github.com/DRincs-Productions/NQTR-System
+# IMPORTANT -> Will add the libraries needed to run the program
+cd Renpygame
+git submodule update --init --recursive
+
+```
+----
+
 ## Documentation
 
 **[Wiki](https://github.com/DRincs-Productions/NQTR-System/wiki)**
