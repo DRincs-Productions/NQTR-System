@@ -5,8 +5,8 @@
 
 init -1:
     define mc = Character("Player")
-    define a = Character("Alice")
-    define an = Character("Ann")
+    define a = Character("Alice", icon = "icon/Alice.webp")
+    define an = Character("Ann", icon = "icon/Ann.webp")
 
 
 # The game starts here.

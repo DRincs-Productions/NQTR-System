@@ -50,6 +50,11 @@ class Conversation(Button):
                 characters = [characters]
         else:
             characters = []
+        if len(characters) == 0:
+            log_error(
+                f"Conversation {self.name} has no characters. This not work.",
+                filename_line="pythonpackages/nqtr/action_talk.py:Conversation.__init__",
+            )
         self.characters = characters
         self.conversation_background = conversation_background
 
@@ -80,3 +85,30 @@ class Conversation(Button):
     @characters.setter
     def characters(self, value: list[character.ADVCharacter]):
         self._characters = value
+
+    @property
+    def character(self) -> Optional[character.ADVCharacter]:
+        """The first character involved in the conversation."""
+        if len(self.characters) > 0:
+            return self.characters[0]
+        else:
+            return None
+
+    @property
+    def character_icons(self) -> list[str]:
+        """List of character icons involved in the conversation."""
+        icons: list[str] = []
+        for ch in self.characters:
+            # if ch have a property icon
+            if "icon" in ch.properties and isinstance(ch.properties["icon"], str):
+                icons.append(ch.properties["icon"])
+        return icons
+
+    @property
+    def character_icon(self) -> Optional[str]:
+        """Returns the first icon of the characters in the commitment."""
+        for ch in self.characters:
+            # if ch have a property icon
+            if "icon" in ch.properties and isinstance(ch.properties["icon"], str):
+                return ch.properties["icon"]
+        return None

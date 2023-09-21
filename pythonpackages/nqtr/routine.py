@@ -142,6 +142,7 @@ class Commitment(DisabledClass):
         "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
         return self.event_label_name is not None
 
+    @property
     def character_icons(self) -> list[str]:
         """Returns a list of paths to the icons of the characters in the commitment."""
         icons: list[str] = []
@@ -150,6 +151,15 @@ class Commitment(DisabledClass):
             if "icon" in ch.properties and isinstance(ch.properties["icon"], str):
                 icons.append(ch.properties["icon"])
         return icons
+
+    @property
+    def character_icon(self) -> Optional[str]:
+        """Returns the first icon of the characters in the commitment."""
+        for ch in self.characters:
+            # if ch have a property icon
+            if "icon" in ch.properties and isinstance(ch.properties["icon"], str):
+                return ch.properties["icon"]
+        return None
 
     def get_conversation_by_character(
         self, ch: character.ADVCharacter
@@ -160,11 +170,13 @@ class Commitment(DisabledClass):
                 return item
         return None
 
-    def conversation_background(self, ch: character.ADVCharacter) -> Optional[str]:
+    def conversation_background(
+        self, character: character.ADVCharacter
+    ) -> Optional[str]:
         "Returns the image during a conversation"
-        item = self.get_conversation_by_character(ch)
-        if isinstance(item, Conversation):
-            return item.conversation_background
+        conversation = self.get_conversation_by_character(character)
+        if isinstance(conversation, Conversation):
+            return conversation.conversation_background
         else:
             return None
 
@@ -228,12 +240,12 @@ def characters_events_in_current_location(
     routine: dict[character.ADVCharacter, Commitment],
     tm: TimeHandler,
     flags: dict[str, bool] = {},
-) -> dict[character.ADVCharacter, Commitment]:
+) -> dict[str, Commitment]:
     """Returns events at that location at that time.
     Checks only in routine."""
     # Create a list of ch who have a commitment in that place at that time
     # It does not do enough checks, they will be done later with commitment_by_character()
-    events = {}
+    events: dict[str, Commitment] = {}
     for comm in routine.values():
         # Check Time and Location and is event
         if (
@@ -241,6 +253,7 @@ def characters_events_in_current_location(
             and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)
             and comm.is_event == True
             and not comm.is_disabled(flags)
+            and comm.room_id
         ):
             events[comm.room_id] = comm
     return events
@@ -255,11 +268,11 @@ def commitment_by_character(
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
     # special routine
-    for id, comm in routine.items():
-        if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
-            if ch in comm.conversations:
-                if not comm.is_disabled(flags):
-                    return comm
+    for commitment in routine.values():
+        if tm.now_is_between(start=commitment.hour_start, end=commitment.hour_stop):
+            if ch in commitment.characters:
+                if not commitment.is_disabled(flags):
+                    return commitment
     return None
 
 
