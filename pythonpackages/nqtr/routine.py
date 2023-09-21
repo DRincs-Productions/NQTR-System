@@ -16,6 +16,7 @@ class Commitment(DisabledClass):
         self,
         hour_start: Union[int, float] = MIN_DAY_HOUR,
         hour_stop: Union[int, float] = MAX_DAY_HOUR,
+        characters: Optional[list[str] | str] = [],
         ch_talkobj_dict: dict[str, Optional[TalkObject]] = {},
         background: Optional[str] = None,
         location_id: Optional[str] = None,
@@ -26,6 +27,13 @@ class Commitment(DisabledClass):
     ):
         # Button init
         super().__init__(disabled=disabled)
+        # Fix a character values
+        if characters:
+            if isinstance(characters, str):
+                characters = [characters]
+            for ch in characters:
+                if ch not in ch_talkobj_dict:
+                    ch_talkobj_dict[ch] = None
         # Commitment init
         self.background = background
         self.ch_talkobj_dict = ch_talkobj_dict
@@ -62,6 +70,11 @@ class Commitment(DisabledClass):
     @ch_talkobj_dict.setter
     def ch_talkobj_dict(self, value: dict[str, Optional[TalkObject]]):
         self._ch_talkobj_dict = value
+
+    @property
+    def characters(self) -> list[str]:
+        """List of characters"""
+        return list(self.ch_talkobj_dict.keys())
 
     @property
     def background(self) -> Optional[str]:
@@ -116,7 +129,7 @@ class Commitment(DisabledClass):
     def character_icons(self, character_dict: dict[str, DRCharacter]) -> list[str]:
         """Returns a list of paths to the icons of the characters in the commitment."""
         icons: list[str] = []
-        for ch in self.ch_talkobj_dict.keys():
+        for ch in self.characters:
             if ch in character_dict:
                 icons.append(character_dict[ch].icon)
         return icons
@@ -166,7 +179,7 @@ def characters_commitment_in_current_location(
             and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)
             and not comm.is_disabled(flags)
         ):
-            for chKey in comm.ch_talkobj_dict.keys():
+            for chKey in comm.characters:
                 if chKey not in characters_into_current_location:
                     characters_into_current_location.append(chKey)
     # Check I enter the current commitments of the ch.

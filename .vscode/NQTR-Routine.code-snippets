@@ -5,6 +5,7 @@
         "body": [
             "python:",
             "    routine[\"${1:routine_id}\"] = Commitment(",
+            "        characters=[],",
             "        ch_talkobj_dict={",
             "            \"${6:character_id}\" : TalkObject(",
             "                name=\"${7:talk_${1}}\",",
@@ -25,6 +26,7 @@
         "prefix": "DR_RoutineAdd_in_dict",
         "body": [
             "\"${1:routine_id}\" : Commitment(",
+            "    characters=[],",
             "    ch_talkobj_dict={",
             "        \"${6:character_id}\" : TalkObject(",
             "            name=\"${7:talk_${1}}\",",
@@ -45,6 +47,7 @@
         "body": [
             "python:",
             "    routine[\"${1:routine_id}\"] = Commitment(",
+            "        characters=[],",
             "        event_label_name = \"${6:${1}_event_label}\"",
             "        hour_start=${2:0}, hour_stop=${3:24},",
             "        room_id=\"${4:room_id}\", location_id=\"${5:home}\",",
@@ -58,6 +61,7 @@
         "prefix": "DR_EventAdd_in_dict",
         "body": [
             "\"${1:routine_id}\" : Commitment(",
+            "    characters=[],",
             "    event_label_name = \"${6:${1}_event_label}\"",
             "    hour_start=${2:0}, hour_stop=${3:24},",
             "    room_id=\"${4:room_id}\", location_id=\"${5:home}\",",

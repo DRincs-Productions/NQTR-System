@@ -19,9 +19,7 @@ define df_routine = {
     ),
     # alice_go_school have more priority than alice_read, because it is before in the dictionary
     "alice_go_school" : Commitment(
-        ch_talkobj_dict={
-            "alice" : None,
-        },
+        characters="alice", # characters can be a string or a list of strings
         hour_start=10, hour_stop=14,
         location_id="school",
         disabled="weekend",
