@@ -396,7 +396,6 @@ class Quest(object):
         icon: Optional[str] = None,
         info_image: Optional[str] = None,
         stage_ids: list[str] = [],
-        tag: Optional[str] = None,
         development: bool = False,
     ):
         self.id = id
@@ -405,7 +404,6 @@ class Quest(object):
         self.icon = icon
         self.info_image = info_image
         self.stage_ids = self.stage_ids = stage_ids
-        self.tag = tag
         self.development = development
 
     @property
@@ -471,16 +469,6 @@ class Quest(object):
     @stage_ids.setter
     def stage_ids(self, value: list[str]):
         self._stage_ids = value
-
-    @property
-    def tag(self) -> Optional[str]:
-        """Quest tag
-        #TODO: implement this"""
-        return self._tag
-
-    @tag.setter
-    def tag(self, value: Optional[str]):
-        self._tag = value
 
     @property
     def development(self) -> bool:

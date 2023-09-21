@@ -1,11 +1,12 @@
 from typing import Optional, Union
+from pythonpackages.nqtr.disabled_solution import DisabledClass
 
 from pythonpackages.renpy_utility.flags import *
 from pythonpackages.renpy_utility.renpy_custom_log import *
 from pythonpackages.renpy_utility.utility import *
 
 
-class Button(object):
+class Button(DisabledClass):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Button"""
 
     def __init__(
@@ -22,6 +23,9 @@ class Button(object):
         hidden: Union[bool, str] = False,
         default_label_name: Optional[str] = None,
     ):
+        # DisabledClass init
+        super().__init__(disabled=disabled)
+        # Button init
         self.align = None
 
         self.name = name
@@ -34,7 +38,6 @@ class Button(object):
             self.xalign = xalign
         if not yalign == None:
             self.yalign = yalign
-        self.disabled = disabled
         self.hidden = hidden
         self.default_label_name = default_label_name
 
@@ -195,15 +198,6 @@ class Button(object):
             self._align = (self._align[0], value)
 
     @property
-    def disabled(self) -> Union[bool, str]:
-        """Disabled"""
-        return self._disabled
-
-    @disabled.setter
-    def disabled(self, value: Union[bool, str]):
-        self._disabled = value
-
-    @property
     def hidden(self) -> Union[bool, str]:
         """Hidden"""
         return self._hidden
@@ -230,13 +224,6 @@ class Button(object):
     def is_picture_in_background(self) -> bool:
         """This is a is picture in background?"""
         return not isNullOrEmpty(self._picture_in_background)
-
-    def is_disabled(self, flags: dict[str, bool] = {}) -> bool:
-        """ "If disabled is a string: get the value of the flags system"""
-        if isinstance(self.disabled, str):
-            return get_flags(self.disabled, flags)
-        else:
-            return self.disabled
 
     def is_hidden(
         self, flags: dict[str, bool] = {}, check_if_has_icon: bool = True

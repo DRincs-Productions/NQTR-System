@@ -3,7 +3,7 @@ define config.log = "log.txt"
 label after_load:
     # renpy-utility-lib
     $ update_flags()
-    call update_current_flags_custom
+    call update_current_flags
 
     # nqtr
     python:
@@ -18,7 +18,7 @@ label after_load:
         from pythonpackages.nqtr.routine import characters_events_in_current_location
         from pythonpackages.nqtr.routine import characters_commitment_in_current_location
         cur_events_location = characters_events_in_current_location(cur_location.id, routine, tm)
-        commitments_in_cur_location = characters_commitment_in_current_location(cur_location.id, routine | df_routine, tm)
+        commitments_in_cur_location = characters_commitment_in_current_location(cur_location.id, routine | df_routine, tm, flags)
         # update the quest levels, if ypu add a new stage in the quest, you can use this function to start the new stage
         update_quests_levels()
     return

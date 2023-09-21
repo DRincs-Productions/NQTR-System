@@ -20,10 +20,12 @@ define df_routine = {
     "alice_lounge" : Commitment(
         hour_start=10, hour_stop=14,
         location_id="house", room_id="lounge",
+        disabled="not_week_end",
     ),
     "alice_go_school" : Commitment(
         hour_start=10, hour_stop=14,
-        location_id="school", tag="no_week",
+        location_id="school",
+        disabled="week_end",
     ),
     "alice_read" : Commitment(
         ch_talkobj_dict={

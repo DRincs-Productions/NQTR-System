@@ -1,12 +1,12 @@
 from typing import Optional, Union
 
 from pythonpackages.nqtr.action_talk import TalkObject
+from pythonpackages.nqtr.disabled_solution import DisabledClass
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
 from pythonpackages.renpy_utility.character_custom import DRCharacter
-from pythonpackages.renpy_utility.utility import IsNullOrWhiteSpace
 
 
-class Commitment(object):
+class Commitment(DisabledClass):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#commitment
     event_label_name: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#events
     """
@@ -19,17 +19,19 @@ class Commitment(object):
         background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
-        tag: Optional[str] = None,
         day_deadline: Optional[int] = None,
         event_label_name: Optional[str] = None,
+        disabled: Union[bool, str] = False,
     ):
+        # Button init
+        super().__init__(disabled=disabled)
+        # Commitment init
         self.background = background
         self.ch_talkobj_dict = ch_talkobj_dict
         self.hour_start = hour_start
         self.hour_stop = hour_stop - 0.1
         self.location_id = location_id
         self.room_id = room_id
-        self.tag = tag
         self.day_deadline = day_deadline
         self.event_label_name = event_label_name
 
@@ -86,16 +88,6 @@ class Commitment(object):
     @room_id.setter
     def room_id(self, value: Optional[str]):
         self._room_id = value
-
-    @property
-    def tag(self) -> Optional[str]:
-        """The tag of the commitment.
-        # TODO: implement this"""
-        return self._tag
-
-    @tag.setter
-    def tag(self, value: Optional[str]):
-        self._tag = value
 
     @property
     def day_deadline(self) -> Optional[int]:
@@ -160,7 +152,7 @@ def characters_commitment_in_current_location(
     location_id: str,
     routine: dict[str, Commitment],
     tm: TimeHandler,
-    not_active_tags: list[str] = [],
+    flags: dict[str, bool] = {},
 ) -> dict[str, Commitment]:
     """Wiki: https: // github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system  # priority"""
     # Create a list of ch who have a commitment in that place at that time
@@ -178,7 +170,7 @@ def characters_commitment_in_current_location(
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
     commitments_key_to_del = []
     for ch in commitments.keys():
-        commitments[ch] = commitment_by_character(ch, routine, tm, not_active_tags)
+        commitments[ch] = commitment_by_character(ch, routine, tm, flags)
         if commitments[ch] == None:
             commitments_key_to_del.append(ch)
         elif commitments[ch].location_id != location_id:
@@ -212,7 +204,7 @@ def commitment_by_character(
     ch: str,
     routine: dict[str, Commitment],
     tm: TimeHandler,
-    not_active_tags: list[str] = [],
+    flags: dict[str, bool] = {},
 ) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
@@ -220,7 +212,7 @@ def commitment_by_character(
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
             if ch in comm.ch_talkobj_dict:
-                if IsNullOrWhiteSpace(comm.tag) or comm.tag not in not_active_tags:
+                if not comm.is_disabled(flags):
                     return comm
     return None
 
