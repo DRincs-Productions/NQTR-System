@@ -4,6 +4,7 @@ from pythonpackages.nqtr.action_talk import TalkObject
 from pythonpackages.nqtr.disabled_solution import DisabledClass
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
 from pythonpackages.renpy_utility.character_custom import DRCharacter
+from pythonpackages.renpy_utility.renpy_custom_log import log_info
 
 
 class Commitment(DisabledClass):
@@ -154,14 +155,16 @@ def characters_commitment_in_current_location(
     tm: TimeHandler,
     flags: dict[str, bool] = {},
 ) -> dict[str, Commitment]:
-    """Wiki: https: // github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system  # priority"""
+    """Priority wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority"""
     # Create a list of ch who have a commitment in that place at that time
     # It does not do enough checks, they will be done later with commitment_by_character()
     commitments = {}
     for comm in routine.values():
         # Check Time and Location
-        if comm.location_id == location_id and tm.now_is_between(
-            start=comm.hour_start, end=comm.hour_stop
+        if (
+            comm.location_id == location_id
+            and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)
+            and not comm.is_disabled(flags)
         ):
             # Full verification
             for chKey in comm.ch_talkobj_dict.keys():
@@ -170,10 +173,12 @@ def characters_commitment_in_current_location(
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
     commitments_key_to_del = []
     for ch in commitments.keys():
-        commitments[ch] = commitment_by_character(ch, routine, tm, flags)
-        if commitments[ch] == None:
+        commitment_item = commitment_by_character(ch, routine, tm, flags)
+        if commitment_item == None:
+            # the item can be None if the commitment is disabled
             commitments_key_to_del.append(ch)
-        elif commitments[ch].location_id != location_id:
+        elif commitment_item.location_id != location_id:
+            # the item can be in another location, because the character has a commitment in another location whit more priority
             commitments_key_to_del.append(ch)
     for ch in commitments_key_to_del:
         del commitments[ch]
@@ -182,7 +187,10 @@ def characters_commitment_in_current_location(
 
 
 def characters_events_in_current_location(
-    location_id: str, routine: dict[str, Commitment], tm: TimeHandler
+    location_id: str,
+    routine: dict[str, Commitment],
+    tm: TimeHandler,
+    flags: dict[str, bool] = {},
 ) -> dict[str, Commitment]:
     """Returns events at that location at that time.
     Checks only in routine."""
@@ -195,6 +203,7 @@ def characters_events_in_current_location(
             comm.location_id == location_id
             and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)
             and comm.is_event == True
+            and not comm.is_disabled(flags)
         ):
             events[comm.room_id] = comm
     return events
@@ -212,6 +221,9 @@ def commitment_by_character(
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
             if ch in comm.ch_talkobj_dict:
+                log_info(
+                    f"{ch} has a routine. The commitment is {id} and is Disabled: {comm.is_disabled(flags)}"
+                )
                 if not comm.is_disabled(flags):
                     return comm
     return None

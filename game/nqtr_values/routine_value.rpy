@@ -17,16 +17,6 @@ define df_routine = {
         location_id="house", room_id="alice_room",
         background ="bg alice roomsleep",
     ),
-    "alice_lounge" : Commitment(
-        hour_start=10, hour_stop=14,
-        location_id="house", room_id="lounge",
-        disabled="not_weekend",
-    ),
-    "alice_go_school" : Commitment(
-        hour_start=10, hour_stop=14,
-        location_id="school",
-        disabled="weekend",
-    ),
     "alice_read" : Commitment(
         ch_talkobj_dict={
             "alice" : TalkObject(
@@ -34,8 +24,17 @@ define df_routine = {
                 conversation_background ="bg alice terrace talk"
             ),
         },
-        hour_start=14, hour_stop=20,
+        hour_start=10, hour_stop=20,
         location_id="house", room_id="terrace",
         background ="bg alice terrace",
+    ),
+    # alice_go_school have more priority than alice_read, because it is after alice_read
+    "alice_go_school" : Commitment(
+        ch_talkobj_dict={
+            "alice" : None,
+        },
+        hour_start=10, hour_stop=14,
+        location_id="school",
+        disabled="not_weekend",
     ),
 }

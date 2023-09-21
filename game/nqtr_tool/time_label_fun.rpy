@@ -50,7 +50,7 @@ label after_spending_time(is_check_event=False, is_check_routines=True):
         $ commitments_in_cur_location = characters_commitment_in_current_location(cur_location.id, routine | df_routine, tm, flags)
     # check event
     if (is_check_event):
-        $ cur_events_location = characters_events_in_current_location(cur_location.id, routine, tm)
+        $ cur_events_location = characters_events_in_current_location(cur_location.id, routine, tm, flags)
         call check_event
     call set_background_nqtr
     return
