@@ -100,8 +100,8 @@ class Conversation(Button):
         icons: list[str] = []
         for ch in self.characters:
             # if ch have a property icon
-            if "icon" in ch.properties and isinstance(ch.properties["icon"], str):
-                icons.append(ch.properties["icon"])
+            if "icon" in ch.who_args and isinstance(ch.who_args["icon"], str):
+                icons.append(ch.who_args["icon"])
         return icons
 
     @property
@@ -109,6 +109,6 @@ class Conversation(Button):
         """Returns the first icon of the characters in the commitment."""
         for ch in self.characters:
             # if ch have a property icon
-            if "icon" in ch.properties and isinstance(ch.properties["icon"], str):
-                return ch.properties["icon"]
+            if "icon" in ch.who_args and isinstance(ch.who_args["icon"], str):
+                return ch.who_args["icon"]
         return None
