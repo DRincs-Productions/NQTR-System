@@ -9,7 +9,6 @@ define flag_keys = [
 # Wiki: https://github.com/DRincs-Productions/renpy-utility-lib/wiki/Flags#update_current_flags
 label update_current_flags_custom:
     # Custom code
-    $ log_info("is_weekend: " + str(tm.is_weekend))
     if tm.is_weekend:
         $ set_flags("weekend", True)
     else:

@@ -16,7 +16,7 @@ class Commitment(DisabledClass):
         self,
         hour_start: Union[int, float] = MIN_DAY_HOUR,
         hour_stop: Union[int, float] = MAX_DAY_HOUR,
-        characters: Optional[list[str] | str] = [],
+        characters: Optional[Union[list[str], str]] = [],
         ch_talkobj_dict: dict[str, Optional[TalkObject]] = {},
         background: Optional[str] = None,
         location_id: Optional[str] = None,
