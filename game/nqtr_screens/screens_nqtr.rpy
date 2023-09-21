@@ -61,7 +61,7 @@ screen room_navigation():
                         # Insert in talk for every ch, main in that room
                         for conversation in comm.conversations:
                             if (conversation):
-                                use action_talk_button(conversation, comm.conversation_background(character))
+                                use action_talk_button(conversation, comm.conversation_background(conversation.character))
 
             # Fixed button to wait
             use wait_button()
