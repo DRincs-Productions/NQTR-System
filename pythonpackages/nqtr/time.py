@@ -84,6 +84,11 @@ class TimeHandler(object):
             )
 
     @property
+    def is_weekend(self) -> bool:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-System/wiki/Time-system#is-weekend"""
+        return self.weekday_number >= self.weekday_weekend_begins
+
+    @property
     def day(self) -> int:
         """current day number"""
         return self._day
