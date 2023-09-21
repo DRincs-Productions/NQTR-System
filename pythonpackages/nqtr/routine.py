@@ -1,11 +1,13 @@
 from typing import Optional, Union
 
 from pythonpackages.nqtr.action_talk import TalkObject
+from pythonpackages.nqtr.disabled_solution import DisabledClass
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
 from pythonpackages.renpy_utility.character_custom import DRCharacter
+from pythonpackages.renpy_utility.renpy_custom_log import log_info
 
 
-class Commitment(object):
+class Commitment(DisabledClass):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#commitment
     event_label_name: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#events
     """
@@ -18,17 +20,19 @@ class Commitment(object):
         background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
-        tag: Optional[str] = None,
         day_deadline: Optional[int] = None,
         event_label_name: Optional[str] = None,
+        disabled: Union[bool, str] = False,
     ):
+        # Button init
+        super().__init__(disabled=disabled)
+        # Commitment init
         self.background = background
         self.ch_talkobj_dict = ch_talkobj_dict
         self.hour_start = hour_start
         self.hour_stop = hour_stop - 0.1
         self.location_id = location_id
         self.room_id = room_id
-        self.tag = tag
         self.day_deadline = day_deadline
         self.event_label_name = event_label_name
 
@@ -85,16 +89,6 @@ class Commitment(object):
     @room_id.setter
     def room_id(self, value: Optional[str]):
         self._room_id = value
-
-    @property
-    def tag(self) -> Optional[str]:
-        """The tag of the commitment.
-        # TODO: implement this"""
-        return self._tag
-
-    @tag.setter
-    def tag(self, value: Optional[str]):
-        self._tag = value
 
     @property
     def day_deadline(self) -> Optional[int]:
@@ -156,37 +150,43 @@ def clear_expired_routine(commitments: dict[str, Commitment], tm: TimeHandler) -
 
 
 def characters_commitment_in_current_location(
-    location_id: str, routine: dict[str, Commitment], tm: TimeHandler
+    location_id: str,
+    routine: dict[str, Commitment],
+    tm: TimeHandler,
+    flags: dict[str, bool] = {},
 ) -> dict[str, Commitment]:
-    """Wiki: https: // github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system  # priority"""
+    """Priority wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority"""
     # Create a list of ch who have a commitment in that place at that time
     # It does not do enough checks, they will be done later with commitment_by_character()
-    commitments = {}
+    characters_into_current_location: list[str] = []
     for comm in routine.values():
         # Check Time and Location
-        if comm.location_id == location_id and tm.now_is_between(
-            start=comm.hour_start, end=comm.hour_stop
+        if (
+            comm.location_id == location_id
+            and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)
+            and not comm.is_disabled(flags)
         ):
-            # Full verification
             for chKey in comm.ch_talkobj_dict.keys():
-                commitments[chKey] = None
+                if chKey not in characters_into_current_location:
+                    characters_into_current_location.append(chKey)
     # Check I enter the current commitments of the ch.
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
-    commitments_key_to_del = []
-    for ch in commitments.keys():
-        commitments[ch] = commitment_by_character(ch, routine, tm)
-        if commitments[ch] == None:
-            commitments_key_to_del.append(ch)
-        elif commitments[ch].location_id != location_id:
-            commitments_key_to_del.append(ch)
-    for ch in commitments_key_to_del:
-        del commitments[ch]
-    del commitments_key_to_del
+    commitments: dict[str, Commitment] = {}
+    for ch in characters_into_current_location:
+        commitment_item = commitment_by_character(ch, routine, tm, flags)
+        # the item can be None if the commitment is disabled
+        # the item can be in another location, because the character has a commitment in another location whit more priority
+        if commitment_item is not None and commitment_item.location_id == location_id:
+            commitments[ch] = commitment_item
+    del characters_into_current_location
     return commitments
 
 
 def characters_events_in_current_location(
-    location_id: str, routine: dict[str, Commitment], tm: TimeHandler
+    location_id: str,
+    routine: dict[str, Commitment],
+    tm: TimeHandler,
+    flags: dict[str, bool] = {},
 ) -> dict[str, Commitment]:
     """Returns events at that location at that time.
     Checks only in routine."""
@@ -199,13 +199,17 @@ def characters_events_in_current_location(
             comm.location_id == location_id
             and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)
             and comm.is_event == True
+            and not comm.is_disabled(flags)
         ):
             events[comm.room_id] = comm
     return events
 
 
 def commitment_by_character(
-    ch: str, routine: dict[str, Commitment], tm: TimeHandler
+    ch: str,
+    routine: dict[str, Commitment],
+    tm: TimeHandler,
+    flags: dict[str, bool] = {},
 ) -> Optional[Commitment]:
     """Returns the current commitment of the ch.
     Give priority to valid first found."""
@@ -213,28 +217,16 @@ def commitment_by_character(
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
             if ch in comm.ch_talkobj_dict:
-                if comm.tag != None:
-                    if checkIfIsActiveByTag(tag=comm.tag, id=id):
-                        return comm
-                else:
+                if not comm.is_disabled(flags):
                     return comm
     return None
 
 
-# TODO To Move move in renpy
-def checkIfIsActiveByTag(tag: str, id: str = "") -> bool:
-    """Priority: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Tag#check-if-is-active-by-tag"""
-    # Custom code
-    if tag == None:
-        return False
-    if tag == "no_week":
-        return True
-    return False
-
-
-def commitment_background(commitments: dict[str, Commitment], room_id) -> Optional[str]:
+def commitment_background(
+    commitments: dict[str, Commitment], room_id: str
+) -> Optional[str]:
     """Returns the first background image of the commitments based on the current room. if there are no returns None"""
     for item in commitments.values():
-        if item.room_id == room_id:
+        if item and item.room_id == room_id:
             return item.background
     return

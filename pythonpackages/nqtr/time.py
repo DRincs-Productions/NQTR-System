@@ -64,6 +64,7 @@ class TimeHandler(object):
     @property
     def weekday_weekend_begins(self) -> int:
         """day when the weekend begins. this depends on the weekday_names list.
+        start from 0.
         es: if weekday_names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         and weekday_weekend_begins = 6, then the weekend begins on Saturday."""
         return self._weekday_weekend_begins
@@ -82,6 +83,11 @@ class TimeHandler(object):
                 "You have set weekday_weekend_begins > len(weekday_names), so I ignore it.",
                 "nqtr.time.TimeHandler.weekday_weekend_begins",
             )
+
+    @property
+    def is_weekend(self) -> bool:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-System/wiki/Time-system#is-weekend"""
+        return self.weekday_number >= (self.weekday_weekend_begins - 1)
 
     @property
     def day(self) -> int:
@@ -149,6 +155,7 @@ class TimeHandler(object):
 
     @property
     def weekday_number(self) -> int:
+        """Starts from 0. Returns the number of the current weekday."""
         if len(self.weekday_names) > 0:
             return self.day % len(self.weekday_names)
         else:
