@@ -1,10 +1,9 @@
 from typing import Optional, Union
 
-from pythonpackages.nqtr.action_talk import TalkObject
+from pythonpackages.nqtr.action_talk import Conversation
 from pythonpackages.nqtr.disabled_solution import DisabledClass
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
-from pythonpackages.renpy_utility.character_custom import DRCharacter
-from pythonpackages.renpy_utility.renpy_custom_log import log_info
+import renpy.character as character
 
 
 class Commitment(DisabledClass):
@@ -16,8 +15,10 @@ class Commitment(DisabledClass):
         self,
         hour_start: Union[int, float] = MIN_DAY_HOUR,
         hour_stop: Union[int, float] = MAX_DAY_HOUR,
-        characters: Optional[Union[list[str], str]] = [],
-        ch_talkobj_dict: dict[str, Optional[TalkObject]] = {},
+        characters: Optional[
+            Union[list[character.ADVCharacter], character.ADVCharacter]
+        ] = [],
+        conversations: Optional[Union[list[Conversation], Conversation]] = [],
         background: Optional[str] = None,
         location_id: Optional[str] = None,
         room_id: Optional[str] = None,
@@ -29,14 +30,25 @@ class Commitment(DisabledClass):
         super().__init__(disabled=disabled)
         # Fix a character values
         if characters:
-            if isinstance(characters, str):
+            if isinstance(characters, character.ADVCharacter):
                 characters = [characters]
-            for ch in characters:
-                if ch not in ch_talkobj_dict:
-                    ch_talkobj_dict[ch] = None
+        else:
+            characters = []
+        if conversations:
+            if isinstance(conversations, Conversation):
+                conversations = [conversations]
+        else:
+            conversations = []
+
+        for item in conversations:
+            for ch in item.characters:
+                if ch not in characters:
+                    characters.append(ch)
+
         # Commitment init
         self.background = background
-        self.ch_talkobj_dict = ch_talkobj_dict
+        self.conversations = conversations
+        self.characters = characters
         self.hour_start = hour_start
         self.hour_stop = hour_stop - 0.1
         self.location_id = location_id
@@ -63,18 +75,22 @@ class Commitment(DisabledClass):
         self._hour_stop = value
 
     @property
-    def ch_talkobj_dict(self) -> dict[str, Optional[TalkObject]]:
+    def conversations(self) -> list[Conversation]:
         """Dictionary of characters and their TalkObject."""
         return self._ch_talkobj_dict
 
-    @ch_talkobj_dict.setter
-    def ch_talkobj_dict(self, value: dict[str, Optional[TalkObject]]):
+    @conversations.setter
+    def conversations(self, value: list[Conversation]):
         self._ch_talkobj_dict = value
 
     @property
-    def characters(self) -> list[str]:
+    def characters(self) -> list[character.ADVCharacter]:
         """List of characters"""
-        return list(self.ch_talkobj_dict.keys())
+        return self._characters
+
+    @characters.setter
+    def characters(self, value: list[character.ADVCharacter]):
+        self._characters = value
 
     @property
     def background(self) -> Optional[str]:
@@ -126,18 +142,28 @@ class Commitment(DisabledClass):
         "Returns True if it is an event: if you go to the room of the having the event label it will start an automatic."
         return self.event_label_name is not None
 
-    def character_icons(self, character_dict: dict[str, DRCharacter]) -> list[str]:
+    def character_icons(self) -> list[str]:
         """Returns a list of paths to the icons of the characters in the commitment."""
         icons: list[str] = []
         for ch in self.characters:
-            if ch in character_dict:
-                icons.append(character_dict[ch].icon)
+            # if ch have a property icon
+            if "icon" in ch.properties and isinstance(ch.properties["icon"], str):
+                icons.append(ch.properties["icon"])
         return icons
 
-    def conversation_background(self, ch: str) -> Optional[str]:
+    def get_conversation_by_character(
+        self, ch: character.ADVCharacter
+    ) -> Optional[Conversation]:
+        "Returns the conversation of the character"
+        for item in self.conversations:
+            if ch in item.characters:
+                return item
+        return None
+
+    def conversation_background(self, ch: character.ADVCharacter) -> Optional[str]:
         "Returns the image during a conversation"
-        item = self.ch_talkobj_dict[ch]
-        if isinstance(item, TalkObject):
+        item = self.get_conversation_by_character(ch)
+        if isinstance(item, Conversation):
             return item.conversation_background
         else:
             return None
@@ -149,7 +175,9 @@ class Commitment(DisabledClass):
     #         renpy.call(self.event_label_name)
 
 
-def clear_expired_routine(commitments: dict[str, Commitment], tm: TimeHandler) -> None:
+def clear_expired_routine(
+    commitments: dict[character.ADVCharacter, Commitment], tm: TimeHandler
+) -> None:
     """removes expired Commitments"""
     rlist = []
     rlist.clear()
@@ -164,14 +192,14 @@ def clear_expired_routine(commitments: dict[str, Commitment], tm: TimeHandler) -
 
 def characters_commitment_in_current_location(
     location_id: str,
-    routine: dict[str, Commitment],
+    routine: dict[character.ADVCharacter, Commitment],
     tm: TimeHandler,
     flags: dict[str, bool] = {},
-) -> dict[str, Commitment]:
+) -> dict[character.ADVCharacter, Commitment]:
     """Priority wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority"""
     # Create a list of ch who have a commitment in that place at that time
     # It does not do enough checks, they will be done later with commitment_by_character()
-    characters_into_current_location: list[str] = []
+    characters_into_current_location: list[character.ADVCharacter] = []
     for comm in routine.values():
         # Check Time and Location
         if (
@@ -184,7 +212,7 @@ def characters_commitment_in_current_location(
                     characters_into_current_location.append(chKey)
     # Check I enter the current commitments of the ch.
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
-    commitments: dict[str, Commitment] = {}
+    commitments: dict[character.ADVCharacter, Commitment] = {}
     for ch in characters_into_current_location:
         commitment_item = commitment_by_character(ch, routine, tm, flags)
         # the item can be None if the commitment is disabled
@@ -197,10 +225,10 @@ def characters_commitment_in_current_location(
 
 def characters_events_in_current_location(
     location_id: str,
-    routine: dict[str, Commitment],
+    routine: dict[character.ADVCharacter, Commitment],
     tm: TimeHandler,
     flags: dict[str, bool] = {},
-) -> dict[str, Commitment]:
+) -> dict[character.ADVCharacter, Commitment]:
     """Returns events at that location at that time.
     Checks only in routine."""
     # Create a list of ch who have a commitment in that place at that time
@@ -219,8 +247,8 @@ def characters_events_in_current_location(
 
 
 def commitment_by_character(
-    ch: str,
-    routine: dict[str, Commitment],
+    ch: character.ADVCharacter,
+    routine: dict[character.ADVCharacter, Commitment],
     tm: TimeHandler,
     flags: dict[str, bool] = {},
 ) -> Optional[Commitment]:
@@ -229,14 +257,14 @@ def commitment_by_character(
     # special routine
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
-            if ch in comm.ch_talkobj_dict:
+            if ch in comm.conversations:
                 if not comm.is_disabled(flags):
                     return comm
     return None
 
 
 def commitment_background(
-    commitments: dict[str, Commitment], room_id: str
+    commitments: dict[character.ADVCharacter, Commitment], room_id: str
 ) -> Optional[str]:
     """Returns the first background image of the commitments based on the current room. if there are no returns None"""
     for item in commitments.values():

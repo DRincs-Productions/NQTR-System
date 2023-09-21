@@ -3,18 +3,22 @@ from typing import Optional, Union
 from pythonpackages.nqtr.button import Button
 from pythonpackages.renpy_utility.renpy_custom_log import *
 from pythonpackages.renpy_utility.utility import *
+import renpy.character as character
 
 # TODO to move in renpy
 DEFAULT_LABEL_TALK = "talk"
 
 
-class TalkObject(Button):
+class Conversation(Button):
     """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system"""
 
     def __init__(
         self,
         # only TalkObject
         conversation_background: Optional[str] = None,
+        characters: Optional[
+            Union[list[character.ADVCharacter], character.ADVCharacter]
+        ] = [],
         # Button
         name: Optional[str] = None,
         label_name: Optional[str] = None,
@@ -40,6 +44,13 @@ class TalkObject(Button):
             hidden=hidden,
             default_label_name=DEFAULT_LABEL_TALK,
         )
+
+        if characters:
+            if isinstance(characters, character.ADVCharacter):
+                characters = [characters]
+        else:
+            characters = []
+        self.characters = characters
         self.conversation_background = conversation_background
 
     @property
@@ -60,3 +71,12 @@ class TalkObject(Button):
     @conversation_background.setter
     def conversation_background(self, value: Optional[str]):
         self._bg = value
+
+    @property
+    def characters(self) -> list[character.ADVCharacter]:
+        """List of characters involved in the conversation."""
+        return self._characters
+
+    @characters.setter
+    def characters(self, value: list[character.ADVCharacter]):
+        self._characters = value
