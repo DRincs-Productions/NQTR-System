@@ -158,7 +158,7 @@ def characters_commitment_in_current_location(
     """Priority wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Routine-system#priority"""
     # Create a list of ch who have a commitment in that place at that time
     # It does not do enough checks, they will be done later with commitment_by_character()
-    commitments = {}
+    characters_into_current_location: list[str] = []
     for comm in routine.values():
         # Check Time and Location
         if (
@@ -166,23 +166,19 @@ def characters_commitment_in_current_location(
             and tm.now_is_between(start=comm.hour_start, end=comm.hour_stop)
             and not comm.is_disabled(flags)
         ):
-            # Full verification
             for chKey in comm.ch_talkobj_dict.keys():
-                commitments[chKey] = None
+                if chKey not in characters_into_current_location:
+                    characters_into_current_location.append(chKey)
     # Check I enter the current commitments of the ch.
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
-    commitments_key_to_del = []
-    for ch in commitments.keys():
+    commitments: dict[str, Commitment] = {}
+    for ch in characters_into_current_location:
         commitment_item = commitment_by_character(ch, routine, tm, flags)
-        if commitment_item == None:
-            # the item can be None if the commitment is disabled
-            commitments_key_to_del.append(ch)
-        elif commitment_item.location_id != location_id:
-            # the item can be in another location, because the character has a commitment in another location whit more priority
-            commitments_key_to_del.append(ch)
-    for ch in commitments_key_to_del:
-        del commitments[ch]
-    del commitments_key_to_del
+        # the item can be None if the commitment is disabled
+        # the item can be in another location, because the character has a commitment in another location whit more priority
+        if commitment_item is not None and commitment_item.location_id == location_id:
+            commitments[ch] = commitment_item
+    del characters_into_current_location
     return commitments
 
 
@@ -221,17 +217,16 @@ def commitment_by_character(
     for id, comm in routine.items():
         if tm.now_is_between(start=comm.hour_start, end=comm.hour_stop):
             if ch in comm.ch_talkobj_dict:
-                log_info(
-                    f"{ch} has a routine. The commitment is {id} and is Disabled: {comm.is_disabled(flags)}"
-                )
                 if not comm.is_disabled(flags):
                     return comm
     return None
 
 
-def commitment_background(commitments: dict[str, Commitment], room_id) -> Optional[str]:
+def commitment_background(
+    commitments: dict[str, Commitment], room_id: str
+) -> Optional[str]:
     """Returns the first background image of the commitments based on the current room. if there are no returns None"""
     for item in commitments.values():
-        if item.room_id == room_id:
+        if item and item.room_id == room_id:
             return item.background
     return
