@@ -40,12 +40,10 @@ label wait(wait_hour=DEFAULT_WAIT_HOUR, is_check_event=True):
         "[DEFAULT_BLOCK_SPENDTIME_DIALOGUE]"
     return
 
+# is a label that is called always after spending time, 
+# or into special cases before checking the event, or routine...
+# this label is used to update all the variables that are used in the time system
 label after_spending_time(is_check_event=False, is_check_routines=True):
-    """
-    is a label that is called always after spending time, 
-    or into special cases before checking the event, or routine...
-    this label is used to update all the variables that are used in the time system
-    """
     call update_current_flags
     if(is_check_routines):
         # this step is to change the background based on the presence of a ch
