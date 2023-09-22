@@ -3,7 +3,7 @@ default talk_image = None
 # used in talk_menu, internally there are the possible choices that you can make in a dialog with a certain ch
 # is structured like this:
 # 'alice'   :   [("Choice 1", "label_one"), ("Choice 2", "label_two")]
-default talkch_choices = {}
+default conversations = {}
 
 define gui.default_talk_button_icon = "/nqtr_interface/action-talk.webp"
 
@@ -11,8 +11,8 @@ define gui.default_talk_button_icon = "/nqtr_interface/action-talk.webp"
 label talk_menu:
     # check if there is already a list of menu choices for current_conversation_character
     # if it does not exist it creates it
-    if (current_conversation_character in talkch_choices.keys()):
-        $ talk_choices = talkch_choices[current_conversation_character]
+    if (current_conversation_character in conversations.keys()):
+        $ talk_choices = conversations[current_conversation_character]
     else:
         $ talk_choices = []
 

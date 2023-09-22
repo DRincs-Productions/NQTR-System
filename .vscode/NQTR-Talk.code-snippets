@@ -3,7 +3,7 @@
         "scope": "renpy",
         "prefix": "DR_TalkChoiceAdd",
         "body": [
-            "$ add_conversation_choice(choice_character = ${1:character_name}, choice_text = _(\"${2:Name}\"), label_name = \"${3:label_be_started}\", dict_choices = talkch_choices)",
+            "$ add_conversation_choice(choice_character = ${1:character_name}, choice_text = _(\"${2:Name}\"), label_name = \"${3:label_be_started}\", dict_choices = conversations)",
             "",
         ],
         "description": "Add an Action in DEFAULT_LABEL_TALK"
@@ -12,7 +12,7 @@
         "scope": "renpy",
         "prefix": "DR_TalkChoiceDel",
         "body": [
-            "$ del_conversation_choice(choice_character = ${1:character_name}, choice_text = _(\"${2:Name}\"), dict_choices = talkch_choices)",
+            "$ del_conversation_choice(choice_character = ${1:character_name}, choice_text = _(\"${2:Name}\"), dict_choices = conversations)",
             "",
         ],
         "description": "Delete an Action in DEFAULT_LABEL_TALK"
