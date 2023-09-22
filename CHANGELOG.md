@@ -492,6 +492,48 @@ python:
 * `delTalkChoice\((.*)\)`
 * `del_conversation_choice($1)`
 
+## What's Changed
+
+* Create LICENSE by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/1>
+* Ren'Py 8.0.0 by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/8>
+* 9 typify python by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/10>
+* 14 code snippets by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/27>
+* 11 improving the quest system by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/33>
+* 12 pass by object reference by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/34>
+* 16 after closing a label it should not be mandatory to close with call screen room navigation by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/37>
+* Update time_label.rpy by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/38>
+* fix by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/41>
+* align cash label by @01010100010100100100100101000111 in <https://github.com/DRincs-Productions/NQTR-System/pull/44>
+* Fixes for #42 and #43 by @01010100010100100100100101000111 in <https://github.com/DRincs-Productions/NQTR-System/pull/45>
+* clean by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/49>
+* 15 create a button class to be extended by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/50>
+* 4 map navigation possibility to use multiple maps by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/51>
+* fix and improve by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/53>
+* 20 add notifications and improve log by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/54>
+* 55 convert pos to align by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/56>
+* 57 convert all class in library py by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/58>
+* 60 improve repetitive screen by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/61>
+* improve menu by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/63>
+* 64 convert functions without parameters to property by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/65>
+* 66 convert all in property by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/67>
+* 68 alignment to good python syntax by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/69>
+* Update README.md by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/70>
+* 71 improve installation by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/73>
+* Update README.md by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/74>
+* Update README.md by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/75>
+* Update README.md by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/76>
+* Update README.md by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/77>
+* Update README.md by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/78>
+* 79 move into renpy checkifisactivebytag by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/81>
+* 80 improve charanter into commitment and conversation by @BlackRam-oss in <https://github.com/DRincs-Productions/NQTR-System/pull/82>
+
+## New Contributors
+
+* @BlackRam-oss made their first contribution in <https://github.com/DRincs-Productions/NQTR-System/pull/1>
+* @01010100010100100100100101000111 made their first contribution in <https://github.com/DRincs-Productions/NQTR-System/pull/44>
+
+**Full Changelog**: <https://github.com/DRincs-Productions/NQTR-System/commits/v2.0.0>
+
 # v1.0.3
 
 ```shell
