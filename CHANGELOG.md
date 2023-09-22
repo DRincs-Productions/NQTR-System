@@ -49,6 +49,57 @@ label after_load:
     return
 ```
 
+# v2.0.0
+
+## Install
+
+You can install this library manually: download the zip and extract it in your project folder.
+But I recommend you to use git submodule:
+
+```bash
+# renpy-utility-lib
+git submodule add -b python-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'pythonpackages/renpy_utility'
+git submodule add -b renpy-lib -- https://github.com/DRincs-Productions/renpy-utility-lib 'game/renpy_utility_tool'
+# renpy-utility-lib
+git submodule add -b main -- https://github.com/DRincs-Productions/renpy-screens-style 'game/screens_style'
+# NQTR-System
+git submodule add -b python-lib -- https://github.com/DRincs-Productions/NQTR-System 'pythonpackages/nqtr'
+git submodule add -b renpy-lib -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_tool'
+git submodule add -b screens -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_screens'
+git submodule add -b interface-images -- https://github.com/DRincs-Productions/NQTR-System 'game/nqtr_interface'
+
+```
+
+**AND** create a empty file `__init__.py` into pythonpackages `pythonpackages/` so `pythonpackages/__init__.py`.
+
+add `after_load` into `core.rpy` for update values after game update:
+
+```renpy
+label after_load:
+    # ...
+
+    # renpy-utility-lib
+    call update_current_flags(update_dictionary = True)
+
+    # nqtr
+    python:
+        # timeHandler update: if you update TimeHandler settings into a new version, you can use this function to update the old save files.
+        updateTimeHandler(tm)
+        # clear the expired actions and routine
+        from pythonpackages.nqtr.action import clear_expired_actions
+        from pythonpackages.nqtr.routine import clear_expired_routine
+        clear_expired_actions(actions, tm.day)
+        clear_expired_routine(routine, tm)
+        # recheck the character's events and commitments in current location
+        from pythonpackages.nqtr.routine import characters_events_in_current_location
+        from pythonpackages.nqtr.routine import characters_commitment_in_current_location
+        cur_events_location = characters_events_in_current_location(cur_location.id, routine, tm, flags)
+        commitments_in_cur_location = characters_commitment_in_current_location(cur_location.id, routine | df_routine, tm, flags)
+        # update the quest levels, if ypu add a new stage in the quest, you can use this function to start the new stage
+        update_quests_levels()
+    return
+```
+
 ## Migrations
 
 Use search and replace of vscode with regex functionality enabled
