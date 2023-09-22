@@ -45,7 +45,8 @@ Download the: [link](https://github.com/DRincs-Productions/NQTR-System/releases/
 
 ## Install LTS Version
 
-You can install this library manually: download the zip and extract it in your project folder.
+To install a precise version install it manually: [Releases](https://github.com/DRincs-Productions/NQTR-System/releases).
+
 But I recommend you to use git submodule:
 
 ```bash
