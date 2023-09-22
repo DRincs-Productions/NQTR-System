@@ -79,7 +79,7 @@ screen action_talk_button(conversation, background):
                     idle gui.default_talk_button_icon
                 focus_mask True
                 action [
-                    SetVariable('talk_ch', conversation.character),
+                    SetVariable('current_conversation_character', conversation.character),
                     SetVariable('talk_image', background),
                     Call("after_return_from_room_navigation", label_name_to_call = conversation.label_name),
                 ]

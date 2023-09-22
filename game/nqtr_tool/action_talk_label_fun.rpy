@@ -1,4 +1,4 @@
-define talk_ch = None
+define current_conversation_character = None
 default talk_image = None
 # used in talk_menu, internally there are the possible choices that you can make in a dialog with a certain ch
 # is structured like this:
@@ -9,10 +9,10 @@ define gui.default_talk_button_icon = "/nqtr_interface/action-talk.webp"
 
 # Opens the choice menu, with the various dialogs you can currently do with a ch
 label talk_menu:
-    # check if there is already a list of menu choices for talk_ch
+    # check if there is already a list of menu choices for current_conversation_character
     # if it does not exist it creates it
-    if (talk_ch in talkch_choices.keys()):
-        $ talk_choices = talkch_choices[talk_ch]
+    if (current_conversation_character in talkch_choices.keys()):
+        $ talk_choices = talkch_choices[current_conversation_character]
     else:
         $ talk_choices = []
 
@@ -29,16 +29,9 @@ label talk:
     if (talk_image != None):
         scene expression (talk_image) as bg
 
-    if(talk_ch == None):
-        $ log_error("talk_ch is None", renpy.get_filename_line())
+    if(current_conversation_character == None):
+        $ log_error("current_conversation_character is None", renpy.get_filename_line())
         return
-
-    # Costume Code
-    if(talk_ch == "alice"):
-        mc "Hi [a]"
-        a "Hi, can you tell me something?"
-    else:
-        "Now is busy test later."
 
     call talk_menu
     return
