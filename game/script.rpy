@@ -7,6 +7,7 @@
 # The game starts here.
 
 label start:
+
     # enable a notify screen
     call enable_notifyEx
 
@@ -15,4 +16,6 @@ label start:
     call after_spending_time
     # open the room navigation screen
     call screen room_navigation
+    return
+tion
     return
