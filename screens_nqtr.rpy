@@ -59,9 +59,9 @@ screen room_navigation():
                 for comm in commitments_in_cur_location.values():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
-                        for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            if (talk_obj):
-                                use action_talk_button(ch_id, talk_obj, comm.conversation_background(ch_id))
+                        for conversation in comm.conversations:
+                            if (conversation):
+                                use action_talk_button(conversation, comm.conversation_background(conversation.character))
 
             # Fixed button to wait
             use wait_button()
@@ -79,10 +79,8 @@ screen room_navigation():
             focus_mask True
             action ShowMenu('save')
             if renpy.variant("pc"):
-                at small_menu
                 tooltip _("Settings")
-            else:
-                at small_menu_mobile
+            at dr_button_menu_transform
 
         if renpy.has_label("open_characters_info"):
             imagebutton:
@@ -92,33 +90,29 @@ screen room_navigation():
                     Call("after_return_from_room_navigation", label_name_to_call = "open_characters_info"),
                 ]
                 if renpy.variant("pc"):
-                    at small_menu
                     tooltip _("Characters info")
-                else:
-                    at small_menu_mobile
+                at dr_button_menu_transform
 
         if len(current_quest_stages) > 0 :
             imagebutton:
                 idle '/nqtr_interface/menu-memo.webp'
                 focus_mask True
                 action [
+                    SetVariable('cur_task_menu', ""),
+                    SetVariable('cur_quest_menu', ""),
                     Show('menu_memo'),
                 ]
                 if renpy.variant("pc"):
-                    at small_menu
                     tooltip _("Memo")
-                else:
-                    at small_menu_mobile
+                at dr_button_menu_transform
 
         imagebutton:
             idle '/nqtr_interface/menu-help.webp'
             focus_mask True
             action ShowMenu('help')
             if renpy.variant("pc"):
-                at small_menu
                 tooltip _("Help")
-            else:
-                at small_menu_mobile
+            at dr_button_menu_transform
 
     hbox:
         align (0.99, 0.01)
@@ -138,10 +132,8 @@ screen room_navigation():
                     Call("after_return_from_room_navigation", label_name_to_call = "open_inventory"),
                 ]
                 if renpy.variant("pc"):
-                    at small_menu
                     tooltip _("Backpack")
-                else:
-                    at small_menu_mobile
+                at dr_button_menu_transform
 
         if renpy.has_label("open_smartphone"):
             imagebutton:
@@ -151,10 +143,8 @@ screen room_navigation():
                     Call("after_return_from_room_navigation", label_name_to_call = "open_smartphone"),
                 ]
                 if renpy.variant("pc"):
-                    at small_menu
                     tooltip _("Smartphone")
-                else:
-                    at small_menu_mobile
+                at dr_button_menu_transform
 
         imagebutton:
             idle '/nqtr_interface/menu-map.webp'
@@ -163,10 +153,8 @@ screen room_navigation():
                 Call("after_return_from_room_navigation", label_name_to_call = "open_map"),
             ]
             if renpy.variant("pc"):
-                at small_menu
                 tooltip _("Map")
-            else:
-                at small_menu_mobile
+            at dr_button_menu_transform
 
     # More information by hovering the mouse
     if renpy.variant("pc"):
@@ -175,7 +163,7 @@ screen room_navigation():
             text "[text]":
                 xpos x-20
                 ypos y-20
-                size gui.little_text_size 
+                size gui.dr_little_text_size 
                 drop_shadow [(2, 2)] 
                 outlines [(2, "#000", 0, 1)]
 
@@ -202,6 +190,8 @@ label set_room_background(sp_bg_change_room = ""):
 label after_return_from_room_navigation(label_name_to_call = ""):
     if isNullOrEmpty(label_name_to_call):
         $ log_error("label_name_to_call is empty", renpy.get_filename_line())
+    elif not renpy.has_label(label_name_to_call):
+        $ log_error("label_name_to_call: " + label_name_to_call + " not found", renpy.get_filename_line())
     else:
         $ renpy.call(label_name_to_call)
     call set_background_nqtr
