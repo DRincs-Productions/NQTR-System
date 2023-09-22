@@ -1,8 +1,8 @@
 default prev_room = None
-default cur_room = None
+default cur_room = rooms[0]
 default prev_location = None
-default cur_location = None
-default cur_map_id = None
+default cur_location = locations[0]
+default cur_map_id = cur_location.map_id
 # Variable to check the map screen: if it is True then the player is viewing the map.
 default map_open = False
 
