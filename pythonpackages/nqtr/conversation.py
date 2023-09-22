@@ -6,7 +6,7 @@ from pythonpackages.renpy_utility.utility import *
 import renpy.character as character
 
 # TODO to move in renpy
-DEFAULT_LABEL_TALK = "talk"
+DEFAULT_LABEL_TALK = "nqtr_talk"
 
 
 class Conversation(Button):

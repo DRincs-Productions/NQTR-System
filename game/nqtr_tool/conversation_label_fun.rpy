@@ -24,8 +24,8 @@ label talk_menu:
     call expression menu_result
     return
 
-# label talk: is a label used to give the possibility to customize the dialog even more.
-label talk:
+# label nqtr_talk: is a label used to give the possibility to customize the dialog even more.
+label nqtr_talk:
     if (conversation_image != None):
         scene expression (conversation_image) as bg
 
