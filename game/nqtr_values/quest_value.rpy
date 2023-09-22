@@ -36,10 +36,10 @@ define quest_stages = {
 
 # Quest "alice"
 label stagestart_talkalice:
-    $ routine["stagealice1"] = Commitment(ch_talkobj_dict={"alice" : None}, hour_start=14, hour_stop=20, location_id="house", room_id="terrace", event_label_name="stage_talkalice")
+    $ routine["stagealice1"] = Commitment(characters=a, hour_start=14, hour_stop=20, location_id="house", room_id="terrace", event_label_name="stage_talkalice")
     return
 
 # Quest "ann"
 label stagestart_talkalice_aboutann:
-    $ add_talk_choice(choice_id = "alice", choice_text = _("About the Ann"), label_name = "stage_talkalice_aboutann", dict_choices = talkch_choices)
+    $ add_conversation_choice(choice_character = a, choice_text = _("About the Ann"), label_name = "stage_talkalice_aboutann")
     return

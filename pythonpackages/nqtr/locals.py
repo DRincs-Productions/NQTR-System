@@ -1,5 +1,5 @@
 from pythonpackages.nqtr.action import Act, clear_expired_actions, current_actions
-from pythonpackages.nqtr.action_talk import TalkObject
+from pythonpackages.nqtr.conversation import Conversation
 from pythonpackages.nqtr.button import Button
 from pythonpackages.nqtr.navigation import (
     Location,
@@ -24,7 +24,7 @@ __all__ = [
     "clear_expired_actions",
     "current_actions",
     # action_talk
-    "TalkObject",
+    "Conversation",
     # button
     "Button",
     # navigation

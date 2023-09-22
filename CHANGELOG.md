@@ -55,6 +55,90 @@ Use search and replace of vscode with regex functionality enabled
 
 ![image](https://user-images.githubusercontent.com/67595890/224504331-1f546922-5673-4fa9-8cc7-e3fc4e671305.png)
 
+### Routine Migration
+
+For exemple:
+
+the old routine:
+
+```renpy
+init python:
+    from pythonpackages.nqtr.routine import Commitment
+    from pythonpackages.nqtr.action_talk import TalkObject
+
+define df_routine = {
+    # ...
+    "alice_read" : Commitment(
+        ch_talkobj_dict={
+            "alice" : TalkObject(
+                name="talk_alice_read",
+
+                conversation_background ="bg alice terrace talk"
+            ),
+        },
+        hour_start=10, hour_stop=20,
+        location_id="house", room_id="terrace",
+        background ="bg alice terrace",
+    ),
+}
+```
+
+the new routine:
+
+```renpy
+init python:
+    from pythonpackages.nqtr.routine import Commitment
+    from pythonpackages.nqtr.conversation import Conversation
+
+define df_routine = {
+    # ...
+    "alice_read" : Commitment(
+        conversations = [
+            Conversation(
+                name="talk_alice_read",
+                characters=a,
+                conversation_background ="bg alice terrace talk"
+            ),
+        ],
+        hour_start=10, hour_stop=20,
+        location_id="house", room_id="terrace",
+        background ="bg alice terrace",
+    ),
+}
+```
+
+### Conversation Migration
+
+For exemple:
+
+to add conversation:
+
+```renpy
+python:
+    add_talk_choice(choice_id = "alice", choice_text = _("About the Ann"), label_name = "stage_talkalice_aboutann", dict_choices = talkch_choices)
+```
+
+now:
+
+```renpy
+python:
+    add_conversation_choice(choice_character = a, choice_text = _("About the Ann"), label_name = "stage_talkalice_aboutann")
+```
+
+to remove conversation:
+
+```renpy
+python:
+    del_talk_choice(choice_id = "alice", choice_text = _("About the Ann"), dict_choices = talkch_choices)
+```
+
+now:
+
+```renpy
+python:
+    del_conversation_choice(choice_character = a, choice_text = _("About the Ann"))
+```
+
 ### getTalkLabelName
 
 * `getTalkLabelName\(\)`
@@ -393,12 +477,12 @@ Use search and replace of vscode with regex functionality enabled
 ### addTalkChoice
 
 * `addTalkChoice\((.*)\)`
-* `add_talk_choice($1)`
+* `add_conversation_choice($1)`
 
 ### delTalkChoice
 
 * `delTalkChoice\((.*)\)`
-* `del_talk_choice($1)`
+* `del_conversation_choice($1)`
 
 # v1.0.3
 

@@ -12,10 +12,10 @@ screen wait_button(small = False):
         else:
             at nqtr_button_action_transform
 
-screen character_icon(character_id):
-    if (character_id in character_dict):
+screen character_icon_screen(icon):
+    if icon:
         imagebutton:
-            idle character_dict.get(character_id).icon
+            idle icon
             focus_mask True
             action []
             at dr_small_face_transform
@@ -64,30 +64,30 @@ screen action_picture_in_background(act):
             tooltip act.name
         at nqtr_button_action_picture_transform
 
-screen action_talk_button(ch_id, talk_obj, background):
-    if not talk_obj.is_hidden(flags = flags, check_if_has_icon = False):
+screen action_talk_button(conversation, background):
+    if not conversation.is_hidden(flags = flags, check_if_has_icon = False):
         frame:
             xysize (gui.nqtr_button_action_size, gui.nqtr_button_action_size)
             background None
 
             imagebutton:
                 align (0.5, 0.0)
-                if talk_obj.is_button:
-                    idle talk_obj.button_icon
-                    hover talk_obj.button_icon_selected
+                if conversation.is_button:
+                    idle conversation.button_icon
+                    hover conversation.button_icon_selected
                 else:
                     idle gui.default_talk_button_icon
                 focus_mask True
                 action [
-                    SetVariable('talk_ch', ch_id),
-                    SetVariable('talk_image', background),
-                    Call("after_return_from_room_navigation", label_name_to_call = talk_obj.label_name),
+                    SetVariable('current_conversation_character', conversation.character),
+                    SetVariable('conversation_image', background),
+                    Call("after_return_from_room_navigation", label_name_to_call = conversation.label_name),
                 ]
                 at nqtr_button_action_transform
                 if renpy.variant("pc"):
                     tooltip _("Talk")
 
-            use character_icon(ch_id)
+            use character_icon_screen(conversation.character_icon)
 
 screen location_button(location):
     if (location.map_id == cur_map_id and not location.is_hidden(flags = flags)):
@@ -184,8 +184,7 @@ screen room_button(room, cur_room, i, find_ch = False):
                         for comm in commitments_in_cur_location.values():
                             # If it is the selected room
                             if room.id == comm.room_id:
-                                for character_id in comm.ch_talkobj_dict:
-                                    use character_icon(character_id)
+                                use character_icon_screen(comm.character_icon)
             # Room name
             text room.name:
                 size gui.dr_little_text_size

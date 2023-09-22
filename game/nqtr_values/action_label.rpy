@@ -61,6 +61,15 @@ menu talk_sleep:
     "Leave her alone":
         return
 
+label alice_talk_menu:
+    if(current_conversation_character == a):
+        mc "Hi [a]"
+        a "Hi, can you tell me something?"
+    else:
+        "Now is busy test later."
+
+    call talk_menu
+
 ## Development Label
 
 label open_smartphone:

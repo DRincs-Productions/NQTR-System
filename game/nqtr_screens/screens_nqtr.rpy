@@ -59,9 +59,9 @@ screen room_navigation():
                 for comm in commitments_in_cur_location.values():
                     if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
                         # Insert in talk for every ch, main in that room
-                        for ch_id, talk_obj in comm.ch_talkobj_dict.items():
-                            if (talk_obj):
-                                use action_talk_button(ch_id, talk_obj, comm.conversation_background(ch_id))
+                        for conversation in comm.conversations:
+                            if (conversation):
+                                use action_talk_button(conversation, comm.conversation_background(conversation.character))
 
             # Fixed button to wait
             use wait_button()
@@ -190,6 +190,8 @@ label set_room_background(sp_bg_change_room = ""):
 label after_return_from_room_navigation(label_name_to_call = ""):
     if isNullOrEmpty(label_name_to_call):
         $ log_error("label_name_to_call is empty", renpy.get_filename_line())
+    elif not renpy.has_label(label_name_to_call):
+        $ log_error("label_name_to_call: " + label_name_to_call + " not found", renpy.get_filename_line())
     else:
         $ renpy.call(label_name_to_call)
     call set_background_nqtr
