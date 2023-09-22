@@ -1,5 +1,5 @@
 init python:
-    def add_talk_choice(choice_character, choice_text: str, label_name: str, dict_choices: dict[str, list]) -> None:
+    def add_conversation_choice(choice_character, choice_text: str, label_name: str, dict_choices: dict[str, list]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#add-an-talk-choice-in-default_label_talk """
         if (choice_character in dict_choices.keys()):
             dict_choices[choice_character].append((choice_text, label_name))

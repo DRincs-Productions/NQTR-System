@@ -393,7 +393,7 @@ Use search and replace of vscode with regex functionality enabled
 ### addTalkChoice
 
 * `addTalkChoice\((.*)\)`
-* `add_talk_choice($1)`
+* `add_conversation_choice($1)`
 
 ### delTalkChoice
 

@@ -29,7 +29,7 @@ label stage_talkalice:
         mc "Ok"
         a "Thanks"
 
-        $ add_talk_choice(choice_character = a, choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
+        $ add_conversation_choice(choice_character = a, choice_text = _("About the book"), label_name = "stage_talkalice", dict_choices = talkch_choices)
 
         $ actions["order_product"] = Act(name = _("Order product"),  button_icon = "/nqtr_interface/action-pc.webp", label_name = "order_product", room_ids=["my_room"])
 
