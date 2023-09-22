@@ -88,7 +88,7 @@ the new routine:
 ```renpy
 init python:
     from pythonpackages.nqtr.routine import Commitment
-    from pythonpackages.nqtr.action_talk import Conversation
+    from pythonpackages.nqtr.conversation import Conversation
 
 define df_routine = {
     # ...

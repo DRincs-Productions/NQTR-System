@@ -14,7 +14,7 @@ class Conversation(Button):
 
     def __init__(
         self,
-        # only TalkObject
+        # only Conversation
         conversation_background: Optional[str] = None,
         characters: Optional[
             Union[list[character.ADVCharacter], character.ADVCharacter]

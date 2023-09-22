@@ -1,6 +1,6 @@
 from typing import Optional, Union
 
-from pythonpackages.nqtr.action_talk import Conversation
+from pythonpackages.nqtr.conversation import Conversation
 from pythonpackages.nqtr.disabled_solution import DisabledClass
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
 import renpy.character as character
@@ -76,7 +76,7 @@ class Commitment(DisabledClass):
 
     @property
     def conversations(self) -> list[Conversation]:
-        """Dictionary of characters and their TalkObject."""
+        """Dictionary of characters and their Conversation."""
         return self._ch_talkobj_dict
 
     @conversations.setter
