@@ -80,7 +80,7 @@ screen action_talk_button(conversation, background):
                 focus_mask True
                 action [
                     SetVariable('current_conversation_character', conversation.character),
-                    SetVariable('talk_image', background),
+                    SetVariable('conversation_image', background),
                     Call("after_return_from_room_navigation", label_name_to_call = conversation.label_name),
                 ]
                 at nqtr_button_action_transform

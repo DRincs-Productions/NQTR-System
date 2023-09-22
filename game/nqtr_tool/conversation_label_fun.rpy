@@ -1,5 +1,5 @@
 define current_conversation_character = None
-default talk_image = None
+default conversation_image = None
 # used in talk_menu, internally there are the possible choices that you can make in a dialog with a certain ch
 # is structured like this:
 # 'alice'   :   [("Choice 1", "label_one"), ("Choice 2", "label_two")]
@@ -26,8 +26,8 @@ label talk_menu:
 
 # label talk: is a label used to give the possibility to customize the dialog even more.
 label talk:
-    if (talk_image != None):
-        scene expression (talk_image) as bg
+    if (conversation_image != None):
+        scene expression (conversation_image) as bg
 
     if(current_conversation_character == None):
         $ log_error("current_conversation_character is None", renpy.get_filename_line())
