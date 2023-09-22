@@ -29,7 +29,6 @@ define df_routine = {
         conversations = [
             Conversation(
                 name="talk_alice_read",
-                label_name="talk_read",
                 characters=a,
                 conversation_background ="bg alice terrace talk"
             ),
