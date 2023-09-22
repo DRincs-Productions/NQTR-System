@@ -12,7 +12,7 @@
         "scope": "renpy",
         "prefix": "DR_TalkChoiceDel",
         "body": [
-            "$ del_talk_choice(choice_character = ${1:character_name}, choice_text = _(\"${2:Name}\"), dict_choices = talkch_choices)",
+            "$ del_conversation_choice(choice_character = ${1:character_name}, choice_text = _(\"${2:Name}\"), dict_choices = talkch_choices)",
             "",
         ],
         "description": "Delete an Action in DEFAULT_LABEL_TALK"

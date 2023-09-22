@@ -398,7 +398,7 @@ Use search and replace of vscode with regex functionality enabled
 ### delTalkChoice
 
 * `delTalkChoice\((.*)\)`
-* `del_talk_choice($1)`
+* `del_conversation_choice($1)`
 
 # v1.0.3
 
