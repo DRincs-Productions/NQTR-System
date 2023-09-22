@@ -10,7 +10,7 @@ DEFAULT_LABEL_TALK = "talk"
 
 
 class Conversation(Button):
-    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system"""
+    """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Conversation-system"""
 
     def __init__(
         self,

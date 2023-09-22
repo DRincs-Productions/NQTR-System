@@ -1,6 +1,6 @@
 init python:
     def add_conversation_choice(choice_character, choice_text: str, label_name: str, dict_choices: dict[str, list] = None) -> None:
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#add-an-talk-choice-in-default_label_talk """
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Conversation-system#add-an-talk-choice-in-default_label_talk """
         if not dict_choices:
             dict_choices = conversations
         if (choice_character in dict_choices.keys()):
@@ -14,7 +14,7 @@ init python:
 
 
     def del_conversation_choice(choice_character: str, choice_text: str, dict_choices: dict[str, list] = None) -> None:
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#delete-an-action-in-default_label_talk """
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Conversation-system#delete-an-action-in-default_label_talk """
         val = 0
         if not dict_choices:
             dict_choices = conversations
