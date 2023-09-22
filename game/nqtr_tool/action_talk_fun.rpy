@@ -11,7 +11,7 @@ init python:
         return
 
 
-    def del_conversation_choice(choice_text: str, choice_character: str, dict_choices: dict[str, list]) -> None:
+    def del_conversation_choice(choice_character: str, choice_text: str, dict_choices: dict[str, list]) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Talk-system#delete-an-action-in-default_label_talk """
         val = 0
         ch_to_del = choice_character
