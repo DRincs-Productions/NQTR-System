@@ -12,8 +12,14 @@ image icon gym = "location/gym-icon.webp"
 image icon map home = "/nqtr_interface/map-home.webp"
 image icon map gym = "/nqtr_interface/map-gym.webp"
 
-image icon alice = "Alice/icon.webp"
-image icon ann = "Ann/icon.webp"
+image pre icon alice = Transform("icon/Alice.webp", xysize=(700, 700))
+image icon alice = LayeredImageMask("pre icon alice",
+    Transform(crop=(0, 0, 700, 700)),
+    mask="sprite mask elaborate",
+    foreground="sprite foreground elaborate",
+    background="sprite background elaborate" 
+)
+image icon ann = "icon/Ann.webp"
 
 image bg map = "location/map-[tm.timeslot_number].webp"
 image bg nightcity = "location/nightcity.webp"
