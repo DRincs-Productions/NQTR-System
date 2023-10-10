@@ -1,12 +1,60 @@
 # rooms
-image icon myroom = "location/myroom-icon.webp"
-image icon aliceroom = "location/aliceroom-icon.webp"
-image icon annroom = "location/annroom-icon.webp"
-image icon bathroom = "location/bathroom-icon.webp"
-image icon lounge = "location/lounge-icon.webp"
-image icon terrace = "location/terrace-icon.webp"
-image icon courtyard = "location/courtyard-icon.webp"
-image icon gym = "location/gym-icon.webp"
+image pre icon myroom = Transform("location/myroom-[tm.timeslot_number].webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon myroom = LayeredImageMask("pre icon myroom",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background" 
+)
+image pre icon aliceroom = Transform("location/aliceroom-[tm.timeslot_number].webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon aliceroom = LayeredImageMask("pre icon aliceroom",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background" 
+)
+image pre icon annroom = Transform("location/annroom-[tm.timeslot_number].webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon annroom = LayeredImageMask("pre icon annroom",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background" 
+)
+image pre icon bathroom = Transform("location/bathroom.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon bathroom = LayeredImageMask("pre icon bathroom",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background" 
+)
+image pre icon lounge = Transform("location/lounge-[tm.timeslot_number].webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon lounge = LayeredImageMask("pre icon lounge",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background" 
+)
+image pre icon terrace = Transform("location/terrace-[tm.timeslot_number].webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon terrace = LayeredImageMask("pre icon terrace",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background" 
+)
+image pre icon courtyard = Transform("location/courtyard-[tm.timeslot_number].webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon courtyard = LayeredImageMask("pre icon courtyard",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background" 
+)
+image pre icon gym = Transform("location/gym.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon gym = LayeredImageMask("pre icon gym",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background" 
+)
 
 # locations
 image icon map home = "/nqtr_interface/map-home.webp"
