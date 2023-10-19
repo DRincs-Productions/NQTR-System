@@ -83,6 +83,4 @@ image bg gym = "location/gym.webp"
 
 image bg alice roomsleep = "Alice/roomsleep0A.webp"
 image bg alice terrace = "/Alice/terrace0A.webp"
-image bg alice terrace talk = Composite( (1920, 1080),
-    (0, 0), "/Alice/terrace0.webp",
-    (0, 0), "/Alice/terrace0At.webp")
+image bg alice terrace talk = "/Alice/terrace0At.webp"
