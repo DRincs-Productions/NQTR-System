@@ -81,12 +81,8 @@ image bg terrace = "location/terrace-[tm.timeslot_number].webp"
 image bg courtyard = "location/courtyard-[tm.timeslot_number].webp"
 image bg gym = "location/gym.webp"
 
-image bg alice roomsleep = Composite( (1920, 1080),
-    (0, 0), "/Alice/roomsleep0.webp",
-    (0, 0), "/Alice/roomsleep0A.webp")
-image bg alice terrace = Composite( (1920, 1080),
-    (0, 0), "/Alice/terrace0.webp",
-    (0, 0), "/Alice/terrace0A.webp")
+image bg alice roomsleep = "Alice/roomsleep0A.webp"
+image bg alice terrace = "/Alice/terrace0A.webp"
 image bg alice terrace talk = Composite( (1920, 1080),
     (0, 0), "/Alice/terrace0.webp",
     (0, 0), "/Alice/terrace0At.webp")
