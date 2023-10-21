@@ -100,8 +100,8 @@ git submodule update --init --recursive
 
 ## Preview
 
-![Navigation](https://user-images.githubusercontent.com/67595890/178109985-6244ffe0-a7d6-426e-a26b-ac93ad8a300a.jpg)
+![Navigation](https://github.com/DRincs-Productions/NQTR-System/assets/67595890/6b493f40-d809-46f1-80ee-b2a905f1951d)
 
 ![Map](https://user-images.githubusercontent.com/67595890/178110045-34cd7b96-5010-48bb-89a0-5598d5848fb0.jpg)
 
-![Routine](https://user-images.githubusercontent.com/67595890/178110207-3b0d2932-dd08-4937-8897-47b65c70b33d.jpg)
+![Routine](https://github.com/DRincs-Productions/NQTR-System/assets/67595890/f1d04e2a-d38c-443b-a1a7-49e774efb513)
