@@ -12,6 +12,8 @@ This repo is a complete set of tools to create a game where you can explore and 
 
 Feel free to contribute, fork this and send a pull request. 😄
 
+Itch.io Page: https://drincs-productions.itch.io/nqtr-system
+
 ----
 
 ## TO DOWNLOAD THIS TEST PROJECT
