@@ -161,7 +161,7 @@ screen room_button(room, cur_room, i, find_ch = False):
 
                 # Room icon
                 imagebutton:
-                    align (0.5, 0.0)
+                    align (0, - 0.15)
                     if room.is_button:
                         idle room.button_icon
                     selected_idle room.button_icon_selected
@@ -176,23 +176,24 @@ screen room_button(room, cur_room, i, find_ch = False):
                     ]
                     at nqtr_button_room_transform
 
+                # Character icon
                 if find_ch:
                     hbox:
-                        xalign 0.5
-                        yalign 0.99
-
+                        align (0.5, 0.6)
                         for comm in commitments_in_cur_location.values():
                             # If it is the selected room
                             if room.id == comm.room_id:
                                 use character_icon_screen(comm.character_icon)
-            # Room name
-            text room.name:
-                size gui.dr_little_text_size
-                drop_shadow [(2, 2)]
-                xalign 0.5
-                text_align 0.5
-                line_leading 0
-                line_spacing -2
+
+                # Room name
+                text room.name:
+                    align (0.5, 0.99)
+                    size gui.dr_little_text_size
+                    drop_shadow [(2, 2)]
+                    text_align 0.5
+                    line_leading 0
+                    line_spacing -2
+
         key str(i) action [
             SetVariable('prev_room', cur_room),
             SetVariable('cur_room', room),

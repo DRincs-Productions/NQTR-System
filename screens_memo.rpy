@@ -3,7 +3,7 @@ default cur_task_menu = ""
 # quest level based on the task selected in the menu
 default cur_quest_menu = ""
 
-screen menu_memo():
+screen menu_memo(close_actions = [ Hide("menu_memo") ]):
 
     roll_forward True
     tag menu
@@ -20,7 +20,7 @@ screen menu_memo():
     # Synchronize number_stages_completed_in_quest with quests
     $ update_quests_levels()
 
-    use close_button("menu_memo")
+    use close_button(close_actions)
 
     frame:
         ypos gui.dr_drawer_ypos
@@ -123,6 +123,3 @@ screen menu_memo():
                 SetVariable('cur_quest_menu', cur_quest_menu + 1),
             ]
             at dr_button_next_transform(0)
-
-    key 'K_ESCAPE' action Hide('menu_memo')
-    key 'mouseup_3' action Hide('menu_memo')
