@@ -155,7 +155,10 @@ class TimeHandler(object):
 
     @property
     def weekday_number(self) -> int:
-        """Starts from 0. Returns the number of the current weekday."""
+        """
+        Starts from 0. Returns the number of the current weekday.
+        https://github.com/DRincs-Productions/NQTR-System/wiki/Time-system#check-of-the-day-of-the-week
+        """
         if len(self.weekday_names) > 0:
             return self.day % len(self.weekday_names)
         else:
