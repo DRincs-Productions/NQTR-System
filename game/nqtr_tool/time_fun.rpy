@@ -15,9 +15,9 @@ init -8 python:
         day = tm.day
         int_timeslot_names = tm.timeslot_names
         int_weekday_names = tm.timeslot_names
-        if not "timeslot_names" in locals() | globals():
+        if "timeslot_names" in locals() | globals():
             int_timeslot_names = timeslot_names
-        if not "weekday_names" in locals() | globals():
+        if "weekday_names" in locals() | globals():
             int_weekday_names = weekday_names
         tm = TimeHandler(
             hour_of_new_day=hour_of_new_day,
