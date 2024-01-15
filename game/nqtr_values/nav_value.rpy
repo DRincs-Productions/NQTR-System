@@ -13,6 +13,7 @@ define rooms = [
     Room(id="ann_room", location_id="house_Ann", name=_("Ann room"), button_icon="icon annroom", background ="bg annroom"),
     Room(id="courtyard", location_id="house_Ann", name=_("Courtyard"), button_icon="icon courtyard", background ="bg courtyard"), 
     Room(id="gym_room", location_id="gym", name=_("Gym"), button_icon="icon gym", background ="bg gym"), 
+    Room(id="shop_gym", location_id="gym", name=_("Gym Shop"), button_icon="icon gym", background ="bg gym"), 
 ]
 
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#location
