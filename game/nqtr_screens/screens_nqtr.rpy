@@ -5,7 +5,6 @@ init python:
 
 screen room_navigation():
     modal True
-    $ i = 0
     # More information by hovering the mouse
     $ (x,y) = renpy.get_mouse_pos()
 
@@ -19,23 +18,7 @@ screen room_navigation():
 
     else:
         # Rooms
-        hbox:
-            yalign 0.99
-            xalign 0.01
-            spacing 2
-
-            for room in rooms:
-                $ i += 1
-
-                # Check the presence of ch in that room
-                $ there_are_ch = False
-                for comm in commitments_in_cur_location.values():
-                    # If it is the selected room
-                    if comm != None and room.id == comm.room_id:
-                        # I insert hbox only if they are sure that someone is there
-                        $ there_are_ch = True
-
-                use room_button(room, cur_room, i, there_are_ch)
+        use room_button_list(rooms, commitments_in_cur_location)
 
         # Action wich Picture in background
         for room in rooms:
