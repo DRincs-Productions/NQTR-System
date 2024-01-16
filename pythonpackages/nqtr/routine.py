@@ -3,6 +3,7 @@ from typing import Optional, Union
 from pythonpackages.nqtr.conversation import Conversation
 from pythonpackages.nqtr.disabled_solution import DisabledClass
 from pythonpackages.nqtr.time import MAX_DAY_HOUR, MIN_DAY_HOUR, TimeHandler
+from pythonpackages.renpy_utility.utility import find_character_into_list
 import renpy.character as character
 
 
@@ -166,7 +167,8 @@ class Commitment(DisabledClass):
     ) -> Optional[Conversation]:
         "Returns the conversation of the character"
         for item in self.conversations:
-            if ch in item.characters:
+            item_2 = find_character_into_list(ch, item.characters)
+            if item_2:
                 return item
         return None
 
@@ -220,7 +222,8 @@ def characters_commitment_in_current_location(
             and not comm.is_disabled(flags)
         ):
             for chKey in comm.characters:
-                if chKey not in characters_into_current_location:
+                item = find_character_into_list(chKey, characters_into_current_location)
+                if not item:
                     characters_into_current_location.append(chKey)
     # Check I enter the current commitments of the ch.
     # In case the commitment is not in the place I want to go or they are null and void I delete the ch.
@@ -270,7 +273,7 @@ def commitment_by_character(
     # special routine
     for commitment in routine.values():
         if tm.now_is_between(start=commitment.hour_start, end=commitment.hour_stop):
-            if ch in commitment.characters:
+            if find_character_into_list(ch, commitment.characters):
                 if not commitment.is_disabled(flags):
                     return commitment
     return None

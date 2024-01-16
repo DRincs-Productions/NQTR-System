@@ -4,8 +4,9 @@
 # name of the character.
 
 init -1:
+    default a_name = "Test"
     define mc = Character("Player")
-    define a = Character("Alice", icon = "icon alice")
+    define a = Character("[a_name]", icon = "icon alice")
     define an = Character("Ann", icon = "icon ann")
 
 
@@ -27,6 +28,8 @@ label start:
     # the first time it opens room navigation screen use after_spending_time
     # for update routine, event...
     call after_spending_time
+    "Hello, this is a test of NQTR-System."
+    $ a_name = "Alice"
     # open the room navigation screen
     call screen room_navigation
     return

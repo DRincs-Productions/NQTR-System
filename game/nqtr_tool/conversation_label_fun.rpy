@@ -11,9 +11,8 @@ define gui.default_talk_button_icon = "/nqtr_interface/action-talk.webp"
 label talk_menu:
     # check if there is already a list of menu choices for current_conversation_character
     # if it does not exist it creates it
-    if (current_conversation_character in conversations.keys()):
-        $ talk_choices = conversations[current_conversation_character]
-    else:
+    $ talk_choices = get_value_by_character_key(current_conversation_character, conversations)
+    if not talk_choices:
         $ talk_choices = []
 
     $ talk_choices.append((_("Back"), "talk_back"))

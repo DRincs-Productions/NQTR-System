@@ -3,7 +3,7 @@ init python:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Conversation-system#add-an-talk-choice-in-default_label_talk """
         if not dict_choices:
             dict_choices = conversations
-        if (choice_character in dict_choices.keys()):
+        if get_value_by_character_key(choice_character, dict_choices):
             dict_choices[choice_character].append((choice_text, label_name))
         else:
             talk_choices = []
@@ -19,7 +19,7 @@ init python:
         if not dict_choices:
             dict_choices = conversations
         ch_to_del = choice_character
-        for cur_choice in dict_choices[choice_character]:
+        for cur_choice in get_value_by_character_key(choice_character, dict_choices):
             if cur_choice[0] == choice_text:
                 ch_to_del = choice_character
                 break
