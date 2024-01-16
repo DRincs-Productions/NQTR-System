@@ -151,51 +151,72 @@ screen map(maps, cur_map_id):
     if not isNullOrEmpty(map_id_east):
         use map_button(map_id = map_id_east, map = maps[map_id_east], align_value = (0.999, 0.5), rotation = 0)
 
-screen room_button(room, cur_room, i, find_ch = False):
-    # If the Locations where I am is the same as the Locations where the room is located
-    if (room.location_id == cur_location.id and room.is_button != None and not room.is_hidden(flags)):
-        vbox:
-            frame:
-                xysize (gui.nqtr_button_action_size, gui.nqtr_button_action_size + gui.dr_little_text_size)
-                background None
+screen room_button_list(rooms, commitments_in_cur_location):
+        $ key_room = 0
+        # Rooms
+        hbox:
+            yalign 0.99
+            xalign 0.01
+            spacing 2
 
-                # Room icon
-                imagebutton:
-                    align (0, - 0.15)
-                    if room.is_button:
-                        idle room.button_icon
-                    selected_idle room.button_icon_selected
-                    selected_hover room.button_icon_selected
-                    selected (True if cur_room and cur_room.id == room.id else False)
-                    sensitive not room.is_disabled(flags)
-                    focus_mask True
-                    action [
-                        SetVariable('prev_room', cur_room),
-                        SetVariable('cur_room', room),
-                        Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-                    ]
-                    at nqtr_button_room_transform
+            for room in rooms:
+                # Check the presence of ch in that room
+                $ there_are_ch = False
+                for comm in commitments_in_cur_location.values():
+                    # If it is the selected room
+                    if comm != None and room.id == comm.room_id:
+                        # I insert hbox only if they are sure that someone is there
+                        $ there_are_ch = True
 
-                # Character icon
-                if find_ch:
-                    hbox:
-                        align (0.5, 0.6)
-                        for comm in commitments_in_cur_location.values():
-                            # If it is the selected room
-                            if room.id == comm.room_id:
-                                use character_icon_screen(comm.character_icon)
+                $ key_room += 1
+                # If the Locations where I am is the same as the Locations where the room is located
+                if (room.location_id == cur_location.id and room.is_button != None and not room.is_hidden(flags)):
+                    use room_button(room, cur_room, key_room, there_are_ch)
 
-                # Room name
-                text room.name:
-                    align (0.5, 0.99)
-                    size gui.dr_little_text_size
-                    drop_shadow [(2, 2)]
-                    text_align 0.5
-                    line_leading 0
-                    line_spacing -2
+screen room_button(room, cur_room, key_room, find_ch = False):
+    python:
+        room_action = [
+                SetVariable('prev_room', cur_room),
+                SetVariable('cur_room', room),
+                Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
+            ]
+    vbox:
+        frame:
+            xysize (gui.nqtr_button_action_size, gui.nqtr_button_action_size + gui.dr_little_text_size)
+            background None
 
-        key str(i) action [
-            SetVariable('prev_room', cur_room),
-            SetVariable('cur_room', room),
-            Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-        ]
+            # Room icon
+            imagebutton:
+                align (0, - 0.15)
+                if room.is_button:
+                    idle room.button_icon
+                selected_idle room.button_icon_selected
+                selected_hover room.button_icon_selected
+                selected (True if cur_room and cur_room.id == room.id else False)
+                sensitive not room.is_disabled(flags)
+                focus_mask True
+                action room_action
+                at nqtr_button_room_transform
+
+            # Character icon
+            if find_ch:
+                hbox:
+                    align (0.5, 0.6)
+                    for comm in commitments_in_cur_location.values():
+                        # If it is the selected room
+                        if room.id == comm.room_id:
+                            use character_icon_screen(comm.character_icon)
+
+            # Room name
+            text room.name:
+                align (0.5, 0.99)
+                size gui.dr_little_text_size
+                drop_shadow [(2, 2)]
+                text_align 0.5
+                line_leading 0
+                line_spacing -2
+
+        if key_room < 10:
+            key str(key_room) action room_action
+        elif key_room == 10:
+            key str(0) action room_action
