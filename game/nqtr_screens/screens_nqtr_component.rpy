@@ -168,9 +168,9 @@ screen room_button_list(rooms, commitments_in_cur_location):
                         # I insert hbox only if they are sure that someone is there
                         $ there_are_ch = True
 
-                $ key_room += 1
                 # If the Locations where I am is the same as the Locations where the room is located
                 if (room.location_id == cur_location.id and room.is_button != None and not room.is_hidden(flags)):
+                    $ key_room += 1
                     use room_button(room, cur_room, key_room, there_are_ch)
 
 screen room_button(room, cur_room, key_room, find_ch = False):
