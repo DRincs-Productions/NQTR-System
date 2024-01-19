@@ -34,7 +34,7 @@ label order_product:
     return
 
 label add_product:
-    $ actions["take_product"] = Act(name = _("Take product"), button_icon = "/nqtr_interface/action-box.webp", label_name = "take_product", room_ids=['terrace'])
+    $ actions["take_product"] = Act(name = _("Take product"), button_icon = "action box", label_name = "take_product", room_ids=['terrace'])
     return
 
 label take_product:

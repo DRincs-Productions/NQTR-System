@@ -100,3 +100,17 @@ image action sleep = LayeredImageMask("pre action sleep",
     foreground="sprite foreground",
     background="sprite background"
 )
+image pre action box = Transform("/nqtr_interface/box.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image action box = LayeredImageMask("pre action box",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
+image pre action pc = Transform("/nqtr_interface/pc.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image action pc = LayeredImageMask("pre action pc",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
