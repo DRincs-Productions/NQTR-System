@@ -1,6 +1,6 @@
 screen wait_button(small = False):
     imagebutton:
-        idle '/nqtr_interface/action-wait.webp'
+        idle nqtr_menu_icon_wait
         focus_mask True
         action [
             Call("after_return_from_room_navigation", label_name_to_call = "wait"),
