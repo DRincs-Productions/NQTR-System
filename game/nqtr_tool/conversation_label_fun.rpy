@@ -5,8 +5,6 @@ default conversation_image = None
 # 'alice'   :   [("Choice 1", "label_one"), ("Choice 2", "label_two")]
 default conversations = {}
 
-define gui.default_talk_button_icon = "/nqtr_interface/action-talk.webp"
-
 # Opens the choice menu, with the various dialogs you can currently do with a ch
 label talk_menu:
     # check if there is already a list of menu choices for current_conversation_character
