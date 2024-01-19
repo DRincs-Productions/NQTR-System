@@ -84,3 +84,19 @@ image bg gym = "location/gym.webp"
 image bg alice roomsleep = "Alice/roomsleep0A.webp"
 image bg alice terrace = "/Alice/terrace0A.webp"
 image bg alice terrace talk = "/Alice/terrace0At.webp"
+
+# Action
+image pre action alarm = Transform("/nqtr_interface/alarm.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image action alarm = LayeredImageMask("pre action alarm",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
+image pre action sleep = Transform("/nqtr_interface/sleep.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image action sleep = LayeredImageMask("pre action sleep",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
