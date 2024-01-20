@@ -57,7 +57,7 @@ image icon gym = LayeredImageMask("pre icon gym",
 )
 
 # locations
-image pre map home = Transform("/nqtr_interface/home-0.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image pre map home = Transform("/nqtr_interface/home-00.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
 image icon map home = LayeredImageMask("pre map home",
     Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
     mask="sprite mask",
