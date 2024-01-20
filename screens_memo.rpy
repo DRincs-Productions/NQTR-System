@@ -108,7 +108,7 @@ screen menu_memo(close_actions = [ Hide("menu_memo") ]):
     if (cur_task_menu != '' and number_stages_completed_in_quest[cur_task_menu] > 0):
         # increases and decreases cur_quest menu
         imagebutton align (680/1920, 340/1080):
-            idle '/nqtr_interface/button/next_idle.webp'
+            idle "/screens_style/images/next_button.webp"
             focus_mask True
             sensitive (cur_quest_menu > 0)
             action [
@@ -116,7 +116,7 @@ screen menu_memo(close_actions = [ Hide("menu_memo") ]):
             ]
             at dr_button_next_transform(180)
         imagebutton align (1580/1920, 340/1080):
-            idle '/nqtr_interface/button/next_idle.webp'
+            idle "/screens_style/images/next_button.webp"
             focus_mask True
             sensitive (cur_quest_menu < number_stages_completed_in_quest[cur_task_menu])
             action [
