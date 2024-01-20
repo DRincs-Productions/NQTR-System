@@ -1,6 +1,6 @@
 screen wait_button(small = False):
     imagebutton:
-        idle '/nqtr_interface/action-wait.webp'
+        idle nqtr_menu_icon_wait
         focus_mask True
         action [
             Call("after_return_from_room_navigation", label_name_to_call = "wait"),
@@ -76,7 +76,7 @@ screen action_talk_button(conversation, background):
                     idle conversation.button_icon
                     hover conversation.button_icon_selected
                 else:
-                    idle gui.default_talk_button_icon
+                    idle nqtr_menu_icon_talk
                 focus_mask True
                 action [
                     SetVariable('current_conversation_character', conversation.character),
