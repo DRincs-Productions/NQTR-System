@@ -57,8 +57,20 @@ image icon gym = LayeredImageMask("pre icon gym",
 )
 
 # locations
-image icon map home = "/nqtr_interface/map-home.webp"
-image icon map gym = "/nqtr_interface/map-gym.webp"
+image pre map home = Transform("/nqtr_interface/home-00.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon map home = LayeredImageMask("pre map home",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
+image pre map gym = Transform("/nqtr_interface/gym.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image icon map gym = LayeredImageMask("pre map gym",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
 
 image pre icon alice = Transform("icon/Alice.webp", xysize=(gui.sprite_elaborate_size, gui.sprite_elaborate_size))
 image icon alice = LayeredImageMask("pre icon alice",
@@ -84,3 +96,33 @@ image bg gym = "location/gym.webp"
 image bg alice roomsleep = "Alice/roomsleep0A.webp"
 image bg alice terrace = "/Alice/terrace0A.webp"
 image bg alice terrace talk = "/Alice/terrace0At.webp"
+
+# Action
+image pre action alarm = Transform("/nqtr_interface/alarm.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image action alarm = LayeredImageMask("pre action alarm",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
+image pre action sleep = Transform("/nqtr_interface/sleep.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image action sleep = LayeredImageMask("pre action sleep",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
+image pre action box = Transform("/nqtr_interface/box.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image action box = LayeredImageMask("pre action box",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
+image pre action pc = Transform("/nqtr_interface/pc.webp", xysize=(gui.sprite_size_x, gui.sprite_size))
+image action pc = LayeredImageMask("pre action pc",
+    Transform(crop=(gui.sprite_size_padding_x, 0, gui.sprite_size_x, gui.sprite_size_x)),
+    mask="sprite mask",
+    foreground="sprite foreground",
+    background="sprite background"
+)
