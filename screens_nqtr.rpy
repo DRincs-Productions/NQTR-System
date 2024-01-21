@@ -31,6 +31,7 @@ screen room_navigation():
         vbox:
             yalign 0.95
             xalign 0.99
+            spacing 2
             for room in rooms:
                 # Adds the button list of possible actions in that room
                 if (cur_room and room.id == cur_room.id):
