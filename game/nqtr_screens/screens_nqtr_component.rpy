@@ -12,12 +12,12 @@ screen wait_button(small = False):
         else:
             at nqtr_button_action_transform
 
-screen character_icon_screen(icon):
+screen character_icon_screen(icon, my_action = []):
     if icon:
         imagebutton:
             idle icon
             focus_mask True
-            action []
+            action my_action
             at dr_small_face_transform
 
 screen time_text(tm, show_wait_button = False):
@@ -65,9 +65,15 @@ screen action_picture_in_background(act):
         at nqtr_button_action_picture_transform
 
 screen action_talk_button(conversation, background):
+    python:
+        my_action = [
+            SetVariable('current_conversation_character', conversation.character),
+            SetVariable('conversation_image', background),
+            Call("after_return_from_room_navigation", label_name_to_call = conversation.label_name),
+        ]
     if not conversation.is_hidden(flags = flags, check_if_has_icon = False):
         frame:
-            xysize (gui.nqtr_button_action_size, gui.nqtr_button_action_size)
+            xysize (gui.nqtr_button_action_size, gui.nqtr_button_action_size + gui.nqtr_button_action_size_error)
             background None
 
             imagebutton:
@@ -78,16 +84,12 @@ screen action_talk_button(conversation, background):
                 else:
                     idle nqtr_menu_icon_talk
                 focus_mask True
-                action [
-                    SetVariable('current_conversation_character', conversation.character),
-                    SetVariable('conversation_image', background),
-                    Call("after_return_from_room_navigation", label_name_to_call = conversation.label_name),
-                ]
+                action my_action
                 at nqtr_button_action_transform
                 if renpy.variant("pc"):
                     tooltip _("Talk")
 
-            use character_icon_screen(conversation.character_icon)
+            use character_icon_screen(conversation.character_icon, my_action)
 
 screen location_button(location):
     if (location.map_id == cur_map_id and not location.is_hidden(flags = flags)):
@@ -182,12 +184,12 @@ screen room_button(room, cur_room, key_room, find_ch = False):
             ]
     vbox:
         frame:
-            xysize (gui.nqtr_button_action_size, gui.nqtr_button_action_size + gui.dr_little_text_size)
+            xysize (gui.nqtr_button_room_size, gui.nqtr_button_room_size + gui.dr_little_text_size)
             background None
 
             # Room icon
             imagebutton:
-                align (0, - 0.15)
+                align (0.5, - 0.15)
                 if room.is_button:
                     idle room.button_icon
                 selected_idle room.button_icon_selected
@@ -205,7 +207,7 @@ screen room_button(room, cur_room, key_room, find_ch = False):
                     for comm in commitments_in_cur_location.values():
                         # If it is the selected room
                         if room.id == comm.room_id:
-                            use character_icon_screen(comm.character_icon)
+                            use character_icon_screen(comm.character_icon, room_action)
 
             # Room name
             text room.name:
