@@ -62,7 +62,8 @@ screen action_picture_in_background(act):
         ]
         if renpy.variant("pc"):
             tooltip act.name
-        at nqtr_button_action_picture_transform
+        if act.picture_in_background_selected == act.picture_in_background:
+            at nqtr_button_action_picture_transform
 
 screen action_talk_button(conversation, background):
     python:
