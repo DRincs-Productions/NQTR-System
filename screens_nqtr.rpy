@@ -17,15 +17,15 @@ screen room_navigation():
             use location_button(location)
 
     else:
-        # Rooms
-        use room_button_list(rooms, commitments_in_cur_location)
-
         # Action wich Picture in background
         for room in rooms:
             # Adds the button list of possible actions in that room
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
                 for act in current_picture_in_background_actions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm, flags = flags):
                     use action_picture_in_background(act)
+
+        # Rooms
+        use room_button_list(rooms, commitments_in_cur_location)
 
         # Normal Actions (with side button)
         vbox:
