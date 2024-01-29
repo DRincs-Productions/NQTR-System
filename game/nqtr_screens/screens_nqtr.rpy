@@ -17,8 +17,10 @@ screen room_navigation():
             use location_button(location)
 
     else:
-        # Action wich Picture in background
+        # Action and Room with Picture in background
         for room in rooms:
+            if rooms.is_picture_in_background and not room.is_hidden(flags = flags):
+                use room_picture_in_background(room)
             # Adds the button list of possible actions in that room
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
                 for act in current_picture_in_background_actions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm, flags = flags):

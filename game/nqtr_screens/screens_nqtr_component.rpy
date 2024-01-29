@@ -223,3 +223,19 @@ screen room_button(room, cur_room, key_room, find_ch = False):
             key str(key_room) action room_action
         elif key_room == 10:
             key str(0) action room_action
+
+screen room_picture_in_background(room):
+    imagebutton:
+        align (room.xalign, room.yalign)
+        idle room.picture_in_background
+        hover room.picture_in_background_selected
+        focus_mask True
+        action [
+            SetVariable('prev_room', cur_room),
+            SetVariable('cur_room', room),
+            Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
+        ]
+        if renpy.variant("pc"):
+            tooltip room.name
+        if room.picture_in_background_selected == room.picture_in_background:
+            at nqtr_button_picture_transform
