@@ -106,12 +106,6 @@ class Button(DisabledClass):
         if not isNullOrEmpty(self._picture_in_background):
             return self._picture_in_background
         else:
-            log_warn(
-                "In the button "
-                + self.name
-                + ", picture_in_background is null or empty, use is_picture_in_background to check if it is a picture in background button",
-                "nqtr.button.Button.picture_in_background",
-            )
             return None
 
     @picture_in_background.setter
