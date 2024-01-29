@@ -39,6 +39,18 @@ screen time_text(tm, show_wait_button = False):
             # Fixed button to wait
             use wait_button(small = True)
 
+screen button_picture_in_background(button, my_actions = []):
+    imagebutton:
+        align (button.xalign, button.yalign)
+        idle button.picture_in_background
+        hover button.picture_in_background_selected
+        focus_mask True
+        action my_actions
+        if renpy.variant("pc"):
+            tooltip button.name
+        if button.picture_in_background_selected == button.picture_in_background:
+            at nqtr_button_picture_transform
+
 screen action_button(act):
     imagebutton:
         idle act.button_icon
@@ -52,20 +64,11 @@ screen action_button(act):
         at nqtr_button_action_transform
 
 screen action_picture_in_background(act):
-    imagebutton:
-        align (act.xalign, act.yalign)
-        idle act.picture_in_background
-        hover act.picture_in_background_selected
-        focus_mask True
-        action [
-            Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
-        ]
-        if renpy.variant("pc"):
-            tooltip act.name
-        if act.picture_in_background_selected == act.picture_in_background:
-            at nqtr_button_picture_transform
+    use button_picture_in_background(act, [
+        Call("after_return_from_room_navigation", label_name_to_call = act.label_name),
+    ])
 
-screen action_talk_button(conversation, background):
+screen conversation_button(conversation, background):
     python:
         my_action = [
             SetVariable('current_conversation_character', conversation.character),
@@ -91,6 +94,13 @@ screen action_talk_button(conversation, background):
                     tooltip _("Talk")
 
             use character_icon_screen(conversation.character_icon, my_action)
+
+screen conversation_picture_in_background(conversation):
+    use button_picture_in_background(conversation, [
+        SetVariable('current_conversation_character', conversation.character),
+        SetVariable('conversation_image', background),
+        Call("after_return_from_room_navigation", label_name_to_call = conversation.label_name),
+    ])
 
 screen location_button(location):
     if (location.map_id == cur_map_id and not location.is_hidden(flags = flags)):
@@ -225,17 +235,8 @@ screen room_button(room, cur_room, key_room, find_ch = False):
             key str(0) action room_action
 
 screen room_picture_in_background(room):
-    imagebutton:
-        align (room.xalign, room.yalign)
-        idle room.picture_in_background
-        hover room.picture_in_background_selected
-        focus_mask True
-        action [
-            SetVariable('prev_room', cur_room),
-            SetVariable('cur_room', room),
-            Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
-        ]
-        if renpy.variant("pc"):
-            tooltip room.name
-        if room.picture_in_background_selected == room.picture_in_background:
-            at nqtr_button_picture_transform
+    use button_picture_in_background(room, [
+        SetVariable('prev_room', cur_room),
+        SetVariable('cur_room', room),
+        Call("after_return_from_room_navigation", label_name_to_call = "change_room"),
+    ])
