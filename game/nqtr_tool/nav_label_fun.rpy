@@ -13,7 +13,7 @@ label change_room(room_id = None):
     if room_id:
         $ new_room = get_room_by_id(room_id = room_id, rooms = rooms)
         if new_room is None:
-            $ log_error("Room with id [room_id] not found")
+            $ log_error("Room with id [room_id] not found", renpy.get_filename_line())
             return
         python:
             prev_room = cur_room

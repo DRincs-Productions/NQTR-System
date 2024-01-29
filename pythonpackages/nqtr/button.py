@@ -139,12 +139,6 @@ class Button(DisabledClass):
         if self._align != None:
             return self._align[0]
         else:
-            log_warn(
-                "In the button "
-                + self.name
-                + ", you have set align to None, so return 0",
-                "nqtr.button.Button.xalign",
-            )
             return 0
 
     @xalign.setter
@@ -168,12 +162,6 @@ class Button(DisabledClass):
         if self._align != None:
             return self._align[1]
         else:
-            log_warn(
-                "In the button "
-                + self.name
-                + ", you have set align to None, so return 0",
-                "nqtr.button.Button.yalign",
-            )
             return 0
 
     @yalign.setter
