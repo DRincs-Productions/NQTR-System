@@ -19,7 +19,7 @@ screen room_navigation():
     else:
         # Action and Room with Picture in background
         for room in rooms:
-            if rooms.is_picture_in_background and not room.is_hidden(flags = flags):
+            if room.is_picture_in_background and not room.is_hidden(flags = flags):
                 use room_picture_in_background(room)
             # Adds the button list of possible actions in that room
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
