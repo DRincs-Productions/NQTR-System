@@ -11,8 +11,11 @@ define block_goout_dialogue = _("Now is not the time to go outside")
 # Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Navigation-and-Map#change-room
 label change_room(room_id = None):
     if room_id:
+        $ new_room = get_room_by_id(room_id = room_id, rooms = rooms)
+        if new_room is None:
+            $ log_error("Room with id [room_id] not found")
+            return
         python:
-            new_room = get_room_by_id(room_id = room_id, rooms = rooms)
             prev_room = cur_room
             cur_room = new_room
             del new_room
