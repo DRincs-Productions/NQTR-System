@@ -38,7 +38,7 @@
         ],
         "description": "Remove an Action"
     },
-    "DRincs Add an Action wich Picture in background": {
+    "DRincs Add an Action with Picture in background": {
         "scope": "renpy",
         "prefix": "DR_ActionAdd_inBG",
         "body": [
@@ -54,7 +54,7 @@
         ],
         "description": "Add an Action"
     },
-    "DRincs Add an Action wich Picture in background in dictionary": {
+    "DRincs Add an Action with Picture in background in dictionary": {
         "scope": "renpy",
         "prefix": "DR_ActionAdd_inBG_in_dict",
         "body": [
