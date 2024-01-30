@@ -50,9 +50,9 @@ image nqtr_icon map = LayeredImageMask("pre nqtr_icon map",
     foreground="sprite foreground",
     background="sprite background" 
 )
-image pre nqtr_icon wait = Transform("/nqtr_interface/wait.webp", xysize=(gui.sprite_size, gui.sprite_size))
+image pre nqtr_icon wait = Transform("/nqtr_interface/wait.webp", xysize=(gui.nqtr_icon_small, gui.nqtr_icon_small))
 image nqtr_icon wait = LayeredImageMask("pre nqtr_icon wait",
-    Transform(crop=(0, 0, gui.sprite_size, gui.sprite_size)),
+    Transform(crop=(gui.nqtr_icon_small_crop, gui.nqtr_icon_small_crop, gui.sprite_size, gui.sprite_size)),
     mask="sprite mask",
     foreground="sprite foreground",
     background="sprite background"
