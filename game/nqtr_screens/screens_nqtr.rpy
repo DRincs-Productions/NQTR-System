@@ -2,6 +2,7 @@ init python:
     from pythonpackages.nqtr.navigation import is_closed_room
     from pythonpackages.nqtr.routine import commitment_background
     from pythonpackages.nqtr.action import current_button_actions, current_picture_in_background_actions
+    from pythonpackages.nqtr.conversation_fun import current_button_conversations, current_picture_in_background_conversations
 
 screen room_navigation():
     modal True
@@ -17,12 +18,18 @@ screen room_navigation():
             use location_button(location)
 
     else:
-        # Action wich Picture in background
+        # Action and Room with Picture in background
         for room in rooms:
+            if room.is_picture_in_background and not room.is_hidden(flags = flags):
+                use room_picture_in_background(room)
             # Adds the button list of possible actions in that room
             if (cur_room and room.id == cur_room.id and not room.id in closed_rooms):
                 for act in current_picture_in_background_actions(actions= actions | df_actions, room = room, now_hour = tm.hour , current_day = tm.day, tm = tm, flags = flags):
                     use action_picture_in_background(act)
+            # Talk
+            # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
+            for conversation, comm in current_picture_in_background_conversations(commitments_in_cur_location, room, cur_room):
+                use conversation_picture_in_background(conversation, comm.conversation_background(conversation.character))
 
         # Rooms
         use room_button_list(rooms, commitments_in_cur_location)
@@ -40,12 +47,8 @@ screen room_navigation():
 
                 # Talk
                 # Adds a talk for each ch (NPC) and at the talk interval adds the icon for each secondary ch
-                for comm in commitments_in_cur_location.values():
-                    if (cur_room and comm and room.id == comm.room_id and room.id == cur_room.id):
-                        # Insert in talk for every ch, main in that room
-                        for conversation in comm.conversations:
-                            if (conversation):
-                                use action_talk_button(conversation, comm.conversation_background(conversation.character))
+                for conversation, comm in current_button_conversations(commitments_in_cur_location, room, cur_room):
+                    use conversation_button(conversation, comm.conversation_background(conversation.character))
 
             # Fixed button to wait
             use wait_button()

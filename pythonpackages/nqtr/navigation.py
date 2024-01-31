@@ -261,6 +261,7 @@ def get_room_by_id(room_id: str, rooms: list[Room]) -> Optional[Room]:
     for room in rooms:
         if room.id == room_id:
             return room
+    log_warn(f"Room with id {room_id} not found", "nqtr.navigation.get_room_by_id()")
     return
 
 
