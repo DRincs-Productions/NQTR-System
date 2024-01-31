@@ -53,7 +53,7 @@ class Conversation(Button):
         if len(characters) == 0:
             log_error(
                 f"Conversation {self.name} has no characters. This not work.",
-                filename_line="pythonpackages/nqtr/action_talk.py:Conversation.__init__",
+                filename_line="pythonpackages/nqtr/conversation.py:Conversation.__init__",
             )
         self.characters = characters
         self.conversation_background = conversation_background

@@ -23,7 +23,7 @@ __all__ = [
     "Act",
     "clear_expired_actions",
     "current_actions",
-    # action_talk
+    # conversation
     "Conversation",
     # button
     "Button",

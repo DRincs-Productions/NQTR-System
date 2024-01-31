@@ -106,12 +106,6 @@ class Button(DisabledClass):
         if not isNullOrEmpty(self._picture_in_background):
             return self._picture_in_background
         else:
-            log_warn(
-                "In the button "
-                + self.name
-                + ", picture_in_background is null or empty, use is_picture_in_background to check if it is a picture in background button",
-                "nqtr.button.Button.picture_in_background",
-            )
             return None
 
     @picture_in_background.setter
@@ -145,12 +139,6 @@ class Button(DisabledClass):
         if self._align != None:
             return self._align[0]
         else:
-            log_warn(
-                "In the button "
-                + self.name
-                + ", you have set align to None, so return 0",
-                "nqtr.button.Button.xalign",
-            )
             return 0
 
     @xalign.setter
@@ -174,12 +162,6 @@ class Button(DisabledClass):
         if self._align != None:
             return self._align[1]
         else:
-            log_warn(
-                "In the button "
-                + self.name
-                + ", you have set align to None, so return 0",
-                "nqtr.button.Button.yalign",
-            )
             return 0
 
     @yalign.setter
