@@ -89,17 +89,18 @@ init python:
             notify_add(new_quest_notify)
         return True
 
-    def quest_next_stage_only_is_completed(id: str) -> bool:
-        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-it-is-completed """
-        log_info("quest_nextStageOnlyIsCompleted", renpy.get_filename_line())
+    def quest_next_stage_only_if_completed(id: str) -> None:
+        """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage-only-if-is-completed """
         if (id in current_task_stages):
             if (not current_task_stages[id].is_completed(number_stages_completed_in_quest, tm, flags)):
-                return False
+                log_info(" The stage is not completed, so it is not possible to go to the next stage.", renpy.get_filename_line())
+                return
         elif (id in current_quest_stages):
             if (not current_task_stages[id].is_completed(number_stages_completed_in_quest, tm, flags)):
-                return False
+                log_info(" The stage is not completed, so it is not possible to go to the next stage.", renpy.get_filename_line())
+                return
         quest_next_stage(id)
-        return True
+        return
 
     def quest_next_stage(id: str) -> None:
         """Wiki: https://github.com/DRincs-Productions/NQTR-toolkit/wiki/Quest#next-stage """
