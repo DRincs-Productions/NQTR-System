@@ -20,9 +20,9 @@
     },
     "DRincs Next Stage Only it is completed": {
         "scope": "renpy",
-        "prefix": "DR_QuestNextStageIfIsCompleted",
+        "prefix": "DR_QuestNextStageIfCompleted",
         "body": [
-            "$ quest_next_stage_only_is_completed(\"${1:quest_id}\")",
+            "$ quest_next_stage_only_if_completed(\"${1:quest_id}\")",
             "",
         ],
         "description": "Next Stage Only it is completed"
