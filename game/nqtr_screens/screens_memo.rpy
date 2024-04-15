@@ -96,7 +96,7 @@ screen menu_memo(close_actions = [ Hide("menu_memo") ]):
                         text quest_menu.advice size gui.dr_big_normal_text_size
                         for item in quest_menu.goals:
                             text item.description size gui.dr_big_normal_text_size
-                        if current_quest_stages[cur_task_menu].completed and (cur_quest_menu+1) == len(quests[cur_task_menu].stage_ids):
+                        if quests[cur_task_menu].is_completed(current_quest_stages, number_stages_completed_in_quest):
                             if quests[cur_task_menu].development:
                                 text _("It is currently the end of this story, unfortunately you have to wait for an update to continue this story.") size gui.dr_big_normal_text_size
                             else:
